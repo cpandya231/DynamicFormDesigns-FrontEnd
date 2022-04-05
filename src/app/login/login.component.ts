@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginModel } from './login-model';
+import { UsersService } from 'src/services/users.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,7 @@ import { LoginModel } from './login-model';
 export class LoginComponent implements OnInit {
 
   loginModel = new LoginModel("", "");
-  constructor() { }
+  constructor(private usersService: UsersService) { }
 
   submitted = false;
 
@@ -20,6 +21,9 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     console.log(`Inside submit ${JSON.stringify(this.loginModel)}`);
+    this.usersService.getToken(this.loginModel).subscribe(token => {
+      console.log(`Got response ${JSON.stringify(token)}`);
+    });
 
   }
 
