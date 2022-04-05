@@ -26,7 +26,10 @@ export class UsersService {
         })
     };
     getToken(loginModel: LoginModel) {
-        return this.http.post<any>(this.configUrl, loginModel, this.httpOptions);
+        const httpParams = new HttpParams()
+            .set('username', loginModel.username)
+            .set('password', loginModel.password);
+        return this.http.post<any>(this.configUrl, httpParams.toString(), this.httpOptions);
     }
 }
 

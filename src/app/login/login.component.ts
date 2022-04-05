@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
 
   submitted = false;
 
+  token = {};
   ngOnInit(): void {
   }
 
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
     console.log(`Inside submit ${JSON.stringify(this.loginModel)}`);
     this.usersService.getToken(this.loginModel).subscribe(token => {
       console.log(`Got response ${JSON.stringify(token)}`);
+      this.token = JSON.stringify(token);
     });
 
   }
