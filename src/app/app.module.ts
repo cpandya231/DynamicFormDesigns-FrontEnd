@@ -8,12 +8,14 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { PasswordPatternDirective } from './directives/password-pattern.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    PasswordPatternDirective
   ],
   imports: [
     BrowserModule,

@@ -81,6 +81,7 @@
 .login-screen-item {
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .label-style {
@@ -186,6 +187,10 @@
 }
 
 .error-message {
-    text-align: center;
+
     color: red;
+    width: 20rem;
+    font-size: 0.7rem;
+
+
 }

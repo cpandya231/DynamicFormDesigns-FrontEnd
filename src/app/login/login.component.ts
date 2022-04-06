@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginModel } from './login-model';
-import { UsersService } from 'src/services/users.service';
+import { UsersService } from 'src/app/services/users.service';
 import {
   Router, Resolve,
   RouterStateSnapshot,
