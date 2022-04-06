@@ -1,60 +1,63 @@
-.wrapper{
+.wrapper {
     position: relative;
 }
-#background-image{
+
+#background-image {
     position: absolute;
     top: -10em;
     left: -10em;
     z-index: -999;
 }
-#login-screen{
-    
+
+#login-screen {
+
     position: relative;
     border-color: #c4c4c4;
     border-radius: 10px;
-    border-style:solid;
+    border-style: solid;
     border-width: thin;
-   height: 90vh;
-   margin:2em;
-   display: flex;
-   overflow: hidden;
-   
-  
-   
+    height: 90vh;
+    margin: 2em;
+    display: flex;
+    overflow: hidden;
+
+
+
 }
 
-.login-screen-subparent{
-    flex:0 1 calc(50%);
+.login-screen-subparent {
+    flex: 0 1 calc(50%);
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
 }
-.welcome-screen{
+
+.welcome-screen {
     background-color: #0A1931;
-  
+
     font-weight: bold;
     font-size: xx-large;
     color: #fff;
     -moz-border-radius: 10px 10px 0 0;
 }
-    
 
-#login-screen-box{
+
+#login-screen-box {
     display: flex;
     height: 80%;
     flex-direction: column;
-    
+
     justify-content: center;
 }
 
-.login-screen-header{
+.login-screen-header {
     color: #185ADB;
     text-align: center;
     position: relative;
 }
 
-.login-screen-header::after{
+.login-screen-header::after {
     content: '';
 
     /* this sets the position and size of the pseudo-element */
@@ -68,24 +71,24 @@
     z-index: -1;
 }
 
-#login-screen-item-container{
+#login-screen-item-container {
     display: flex;
-flex-direction: column;
-justify-content: space-evenly;
-height: 60%;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 60%;
 }
 
-.login-screen-item{
-    display:flex;
-    flex-direction: column;   
+.login-screen-item {
+    display: flex;
+    flex-direction: column;
 }
 
-.label-style{
+.label-style {
     color: black;
 
 }
 
-.textbox-style{
+.textbox-style {
     margin-top: 0.5em;
     outline: none;
     /* transition: border .2s ease; */
@@ -94,18 +97,20 @@ height: 60%;
     height: 2.5em;
     border-radius: 5px;
     background-color: #c4c4c430;
-    
-   
+
+
 }
-.textbox-style::placeholder{
+
+.textbox-style::placeholder {
     font-size: x-small;
     font-weight: lighter;
 
 }
 
-.textbox-style:focus::placeholder{
+.textbox-style:focus::placeholder {
     color: transparent;
 }
+
 /* 
 .textbox-style:focus{
     outline: none;
@@ -116,14 +121,14 @@ height: 60%;
 
 } */
 
-#email{
+#email {
     background-image: url("../../assets/Mail.png");
     background-size: 30px 20px;
     background-repeat: no-repeat;
     background-position: 99% 50%;
 }
 
-#password{
+#password {
     background-image: url("../../assets/Password.png");
     background-size: 30px 20px;
     background-repeat: no-repeat;
@@ -140,33 +145,47 @@ height: 60%;
     text-decoration: none;
     width: 20em;
     font-size: 16px;
-    
+
     cursor: pointer;
-  }
+}
 
-  #forgot-password{
-      color: #FFC947;
-      text-decoration: none;
-      font-size: x-small;
-      font-weight: bold;
-      text-align: right;
-      
-  }
+.button:disabled,
+.button[disabled] {
+    border: 1px solid #999999;
 
-  .submit-button{
-      flex-direction: column;
+    background-color: #c4c4c4;
+    color: #000;
+    cursor: default;
+}
+
+#forgot-password {
+    color: #FFC947;
+    text-decoration: none;
+    font-size: x-small;
+    font-weight: bold;
     text-align: right;
-  }
-  
-  .ng-valid[required], .ng-valid.required  {
-    border-left: 5px solid #42A948; /* green */
-  }
-  
-  .ng-invalid:not(form)  {
-    border-left: 5px solid #a94442; /* red */
-  }
 
-  .error-message{
-      text-align: center;
-      color: red;
-  }
+}
+
+.submit-button {
+    flex-direction: column;
+    text-align: right;
+}
+
+
+
+.ng-valid[required],
+.ng-valid.required {
+    border-left: 5px solid #42A948;
+    /* green */
+}
+
+.ng-invalid:not(form) {
+    border-left: 5px solid #a94442;
+    /* red */
+}
+
+.error-message {
+    text-align: center;
+    color: red;
+}
