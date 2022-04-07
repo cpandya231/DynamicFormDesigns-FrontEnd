@@ -1,7 +1,9 @@
 <div class="wrapper">
     <div id="login-screen">
 
-        <div class="login-screen-subparent welcome-screen">Welcome</div>
+        <div class="login-screen-subparent welcome-screen">
+            <p>Welcome</p>
+        </div>
         <div class="login-screen-subparent">
             <div id="login-screen-box">
 
@@ -26,12 +28,8 @@
                             <label for="password" class="label-style">Password</label>
                         </div>
                         <input type="password" id="password" #password="ngModel" class="textbox-style" required
-                            [(ngModel)]="loginModel.password" name="password" appPasswordPattern required>
+                            [(ngModel)]="loginModel.password" name="password" required>
 
-                        <div class="error-message" *ngIf="password.touched && password.errors?.['invalidPassword']">
-                            <p>Password should have minimum 8 characters, at least 1 uppercase letter, 1 lowercase
-                                letter and 1 number</p>
-                        </div>
                     </div>
 
                     <div class="submit-button">

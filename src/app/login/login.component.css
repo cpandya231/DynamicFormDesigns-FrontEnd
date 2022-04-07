@@ -37,9 +37,53 @@
     background-color: #0A1931;
 
     font-weight: bold;
-    font-size: xx-large;
+
     color: #fff;
     -moz-border-radius: 10px 10px 0 0;
+
+
+}
+
+.welcome-screen p {
+    font-size: xx-large;
+    overflow: hidden;
+    animation-name: text-animation;
+    border-right: .15em solid #FFC947;
+    /* The typwriter cursor */
+    white-space: nowrap;
+    /* Keeps the content on a single line */
+    margin: 0 auto;
+    /* Gives that scrolling effect as the typing happens */
+    letter-spacing: .10em;
+    /* Adjust as needed */
+    animation: typing 1s steps(100, end),
+        blink-caret 0.70s step-end infinite;
+}
+
+
+
+/* The typing effect */
+@keyframes typing {
+    from {
+        width: 0
+    }
+
+    to {
+        width: 20%
+    }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+
+    from,
+    to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: #FFC947;
+    }
 }
 
 
@@ -191,6 +235,6 @@
     color: red;
     width: 20rem;
     font-size: 0.7rem;
-
+    text-align: center;
 
 }
