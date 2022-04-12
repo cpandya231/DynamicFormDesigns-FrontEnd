@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { UsersComponent } from './users/users.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 const routes: Routes = [
   { path: 'welcome', component: WelcomeComponent },
   { path: '', component: LoginComponent },
+  { path: 'users', component: UsersComponent },
   { path: '**', component: AppComponent }
 ];
 
