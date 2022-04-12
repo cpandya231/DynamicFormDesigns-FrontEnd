@@ -18,7 +18,6 @@ export class WelcomeComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
       let item = params.get("state");
       let decodedJwt = this.getDecodedAccessToken(item);
-      console.log(decodedJwt)
       this.email = decodedJwt.sub;
     })
   }
