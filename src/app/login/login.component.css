@@ -1,0 +1,240 @@
+.wrapper {
+    position: relative;
+}
+
+#background-image {
+    position: absolute;
+    top: -10em;
+    left: -10em;
+    z-index: -999;
+}
+
+#login-screen {
+
+    position: relative;
+    border-color: #c4c4c4;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: thin;
+    height: 90vh;
+    margin: 2em;
+    display: flex;
+    overflow: hidden;
+
+
+
+}
+
+.login-screen-subparent {
+    flex: 0 1 calc(50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.welcome-screen {
+    background-color: #0A1931;
+
+    font-weight: bold;
+
+    color: #fff;
+    -moz-border-radius: 10px 10px 0 0;
+
+
+}
+
+.welcome-screen p {
+    font-size: xx-large;
+    overflow: hidden;
+    animation-name: text-animation;
+    border-right: .15em solid #FFC947;
+    /* The typwriter cursor */
+    white-space: nowrap;
+    /* Keeps the content on a single line */
+    margin: 0 auto;
+    /* Gives that scrolling effect as the typing happens */
+    letter-spacing: .10em;
+    /* Adjust as needed */
+    animation: typing 1s steps(100, end),
+        blink-caret 0.70s step-end infinite;
+}
+
+
+
+/* The typing effect */
+@keyframes typing {
+    from {
+        width: 0
+    }
+
+    to {
+        width: 20%
+    }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+
+    from,
+    to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: #FFC947;
+    }
+}
+
+
+#login-screen-box {
+    display: flex;
+    height: 80%;
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+.login-screen-header {
+    color: #185ADB;
+    text-align: center;
+    position: relative;
+}
+
+.login-screen-header::after {
+    content: '';
+
+    /* this sets the position and size of the pseudo-element */
+    position: absolute;
+    top: 55%;
+    width: 2.5em;
+    height: 0.3em;
+    background-color: #FFC947;
+
+    /* draw behind child elements */
+    z-index: -1;
+}
+
+#login-screen-item-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 60%;
+}
+
+.login-screen-item {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.label-style {
+    color: black;
+
+}
+
+.textbox-style {
+    margin-top: 0.5em;
+    outline: none;
+    /* transition: border .2s ease; */
+    border-style: none;
+    /* width: 100%; */
+    height: 2.5em;
+    border-radius: 5px;
+    background-color: #c4c4c430;
+
+
+}
+
+.textbox-style::placeholder {
+    font-size: x-small;
+    font-weight: lighter;
+
+}
+
+.textbox-style:focus::placeholder {
+    color: transparent;
+}
+
+/* 
+.textbox-style:focus{
+    outline: none;
+    border-color: #185ADB;
+    border-style: solid;
+    color: black;
+    
+
+} */
+
+#email {
+    background-image: url("../../assets/Mail.png");
+    background-size: 30px 20px;
+    background-repeat: no-repeat;
+    background-position: 99% 50%;
+}
+
+#password {
+    background-image: url("../../assets/Password.png");
+    background-size: 30px 20px;
+    background-repeat: no-repeat;
+    background-position: 99% 50%;
+}
+
+.button {
+    background-color: #185ADB;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    width: 20em;
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+.button:disabled,
+.button[disabled] {
+    border: 1px solid #999999;
+
+    background-color: #c4c4c4;
+    color: #000;
+    cursor: default;
+}
+
+#forgot-password {
+    color: #FFC947;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-align: right;
+
+}
+
+.submit-button {
+    flex-direction: column;
+    text-align: right;
+}
+
+
+
+.ng-valid[required],
+.ng-valid.required {
+    border-left: 5px solid #42A948;
+    /* green */
+}
+
+.ng-invalid:not(form) {
+    border-left: 5px solid #a94442;
+    /* red */
+}
+
+.error-message {
+
+    color: red;
+    width: 20rem;
+    font-size: 0.7rem;
+    text-align: center;
+
+}
