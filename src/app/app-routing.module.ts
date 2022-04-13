@@ -8,6 +8,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 
 const routes: Routes = [
   { path: 'welcome', component: WelcomeComponent },
+  { path: 'login', component: LoginComponent },
   { path: '', component: LoginComponent },
   { path: 'users', component: UsersComponent },
   { path: 'roles', component: RolesComponent },

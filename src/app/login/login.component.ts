@@ -13,7 +13,7 @@ import {
 })
 export class LoginComponent implements OnInit {
 
-  loginModel = new LoginModel("", "");
+  loginModel: LoginModel = { username: '', password: '' };
   constructor(private usersService: UsersService, private router: Router) { }
 
   submitted = false;
@@ -26,13 +26,13 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
 
-    console.log(`Inside submit ${JSON.stringify(this.loginModel)}`);
+
     this.usersService.getToken(this.loginModel).subscribe(token => {
-      console.log(`Got response ${JSON.stringify(token)}`);
+
       this.token = JSON.stringify(token);
       this.router.navigate(['/welcome', { state: token["access_token"] },]);
     }, err => {
-      console.log(`Error occured while login`);
+      console.error(`Error occured while login`);
       this.errorOccured = true;
     });
 
