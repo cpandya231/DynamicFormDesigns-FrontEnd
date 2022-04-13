@@ -1,7 +1,8 @@
 export interface NavBarItem {
     name: string,
     url: string,
-    isActive: boolean
+    isActive: boolean,
+    children: NavBarItem[]
 
 
 }

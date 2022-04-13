@@ -27,6 +27,7 @@ import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UsersComponent } from './users/users.component';
+import { RolesComponent } from './roles/roles.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { UsersComponent } from './users/users.component';
     WelcomeComponent,
     PasswordPatternDirective,
     NavbarComponent,
-    UsersComponent
+    UsersComponent,
+    RolesComponent
   ],
   imports: [
     BrowserModule,

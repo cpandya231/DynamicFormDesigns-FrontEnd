@@ -23,17 +23,33 @@ export class NavbarComponent implements OnInit {
         {
           name: "Home",
           url: "welcome",
-          isActive: false
+          isActive: false,
+          children: []
         },
         {
-          name: "Users",
+          name: "User Management",
           url: "users",
-          isActive: false
+          isActive: false,
+          children: [
+            {
+              name: "Users",
+              url: "users",
+              isActive: false,
+              children: []
+            },
+            {
+              name: "Roles",
+              url: "roles",
+              isActive: false,
+              children: []
+            }
+          ]
         },
         {
           name: "Apps",
           url: "welcome",
-          isActive: false
+          isActive: false,
+          children: []
         }
       ];
     }

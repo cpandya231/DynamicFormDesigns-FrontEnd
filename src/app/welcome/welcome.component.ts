@@ -14,18 +14,6 @@ export class WelcomeComponent implements OnInit {
   token: any = "";
   email: any = "";
 
-  navBarItems: NavBarItem[] = [
-    {
-      name: "Home",
-      url: "home",
-      isActive: true
-    },
-    {
-      name: "Users2",
-      url: "home",
-      isActive: false
-    }
-  ];
   ngOnInit(): void {
 
 
