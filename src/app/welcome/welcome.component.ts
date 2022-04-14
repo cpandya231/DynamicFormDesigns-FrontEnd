@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
-import { NavBarItem } from '../navbar/navbar-item';
 
 @Component({
   selector: 'app-welcome',

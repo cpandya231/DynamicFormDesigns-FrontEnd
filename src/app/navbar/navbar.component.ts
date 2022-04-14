@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NavBarItem } from './navbar-item';
+import { INavBarItem } from './navbar-item-model';
 
 @Component({
   selector: 'app-navbar',
@@ -7,54 +7,50 @@ import { NavBarItem } from './navbar-item';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  @Input('activelink') activelink = '';
 
-  @Input() navBarItems!: NavBarItem[];
+
+  @Input('shownavbaritems') shownavbaritems: boolean | undefined;
+  navBarItems!: INavBarItem[];
   constructor() {
-
 
   }
 
-
   ngOnInit(): void {
-    console.log(`Inside navbar activeLink ${this.activelink}`);
-    if (this.navBarItems == null) {
+    console.log(`showNavbarItems in nav ${this.shownavbaritems}`)
+
+    if (this.shownavbaritems) {
       this.navBarItems = [
         {
           name: "Home",
           url: "welcome",
-          isActive: false,
+
           children: []
         },
         {
           name: "User Management",
-          url: "users",
-          isActive: false,
+          url: "usersParent",
+
           children: [
             {
               name: "Users",
               url: "users",
-              isActive: false,
+
               children: []
             },
             {
               name: "Roles",
               url: "roles",
-              isActive: false,
+
               children: []
             }
           ]
         },
-        {
-          name: "Apps",
-          url: "welcome",
-          isActive: false,
-          children: []
-        }
       ];
+    } else {
+      this.navBarItems = []
     }
 
-    this.navBarItems.filter(item => item.url == this.activelink).forEach(item => item.isActive = true);
+
   }
 
 }
