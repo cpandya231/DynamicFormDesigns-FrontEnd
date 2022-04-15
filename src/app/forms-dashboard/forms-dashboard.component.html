@@ -1,16 +1,20 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">#</th>
+            <th scope="col">Form ID</th>
             <th scope="col">Form Name</th>
             <th scope="col">Created By</th>
             <th scope="col">Created On</th>
-            <th scope="col">Edit</th>
+            <th scope="col">Edit</th>s
         </tr>
     </thead>
     <tbody>
-        <tr>
-
+        <tr *ngFor="let form of FormTemplates">
+            <td>{{form.Id}}</td>
+            <td>{{form.Name}}</td>
+            <td>{{form.CreatedBy}}</td>
+            <td>{{form.CreatedOn}}</td>
+            <td><button (click)="EditFormTemplate(form.Id)">Edit</button></td>
         </tr>
     </tbody>
 </table>

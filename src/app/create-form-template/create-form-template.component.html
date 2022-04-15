@@ -3,8 +3,11 @@
         <label for="form_name">Form Name</label>
         <input type="text" id="form_name" [(ngModel)]="FormName">
     </div>
-    <form-builder [form]='form' #formio></form-builder>
+    <form-builder [form]='CurrentForm' #formio></form-builder>
     <div class="save_button_container">
-        <button class="btn save_button" (click)="SaveTemplate()">Save Template</button>
+        <button class="btn save_button" (click)="SaveTemplate()" [disabled]="!FormName.length">Save Template</button>
     </div>
+</div>
+<div>
+    <span class="nav-link" routerLink="/dashboard">Dashboard <span class="sr-only">(current)</span></span>
 </div>

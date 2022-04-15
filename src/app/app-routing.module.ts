@@ -14,6 +14,10 @@ const routes: Routes = [
     component: FormsDashboardComponent
   },
   {
+    path: 'createForm/:id',
+    component: CreateFormTemplateComponent
+  },
+  {
     path: 'createForm',
     component: CreateFormTemplateComponent
   },
