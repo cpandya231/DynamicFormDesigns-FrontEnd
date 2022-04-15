@@ -5,13 +5,14 @@ import jwt_decode from 'jwt-decode';
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.css']
+  styleUrls: ['./welcome.component.scss']
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) { }
   token: any = "";
   email: any = "";
+
   ngOnInit(): void {
 
 
@@ -23,6 +24,10 @@ export class WelcomeComponent implements OnInit {
   }
 
 
+  navigate(url: string): any {
+    this.router.navigate([`/${url}`]);
+
+  }
   getDecodedAccessToken(token: any): any {
     try {
       return jwt_decode(token);
