@@ -5,7 +5,8 @@
             <th scope="col">Form Name</th>
             <th scope="col">Created By</th>
             <th scope="col">Created On</th>
-            <th scope="col">Edit</th>s
+            <th scope="col">Edit</th>
+            <th scope="col">View</th>
         </tr>
     </thead>
     <tbody>
@@ -14,7 +15,8 @@
             <td>{{form.Name}}</td>
             <td>{{form.CreatedBy}}</td>
             <td>{{form.CreatedOn}}</td>
-            <td><button (click)="EditFormTemplate(form.Id)">Edit</button></td>
+            <td><button (click)="EditFormTemplate(form.Id)"><i class="fa-solid fa-pen"></i></button></td>
+            <td><i class="fa-solid fa-eye" (click)="PreviewForm(form.Id)"></i></td>
         </tr>
     </tbody>
 </table>

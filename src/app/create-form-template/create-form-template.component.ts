@@ -5,7 +5,7 @@ import { FormsService } from '../common/services/forms.service';
 @Component({
   selector: 'app-create-form-template',
   templateUrl: './create-form-template.component.html',
-  styleUrls: ['./create-form-template.component.css']
+  styleUrls: ['./create-form-template.component.scss']
 })
 export class CreateFormTemplateComponent implements OnInit {
 

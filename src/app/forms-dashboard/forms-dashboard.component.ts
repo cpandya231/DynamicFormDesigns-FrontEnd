@@ -5,7 +5,6 @@ import { FormsService } from '../common/services/forms.service';
 @Component({
   selector: 'app-forms-dashboard',
   templateUrl: './forms-dashboard.component.html',
-  styleUrls: ['./forms-dashboard.component.css']
 })
 export class FormsDashboardComponent implements OnInit {
 
@@ -21,6 +20,10 @@ export class FormsDashboardComponent implements OnInit {
 
   EditFormTemplate(formId: any) {
     this.router.navigate(['/createForm', {id: formId}]);
+  }
+
+  PreviewForm(formId: any) {
+    
   }
 
 }

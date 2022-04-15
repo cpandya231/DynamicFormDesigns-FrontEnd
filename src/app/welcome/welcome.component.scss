@@ -1,0 +1,38 @@
+.welcome-container {
+    display: flex;
+    height: 90vh;
+}
+
+.app-container {
+
+    display: flex;
+    padding: 2rem;
+    align-content: flex-start;
+    gap: 2rem;
+    flex-wrap: wrap;
+
+}
+
+.app {
+    border: .15em solid;
+    height: 5em;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.app:hover {
+    background-color: #EFEFEF;
+    cursor: pointer;
+    font-weight: bold;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+.app-create {
+    border: dashed #185ADB;
+    color: #185ADB;
+
+
+}

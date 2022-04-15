@@ -1,0 +1,51 @@
+#logo {
+    color: #FFC947;
+    font-weight: bold;
+}
+
+.navbar {
+    background-color: #0A1931;
+    padding: 0rem 0rem 0rem 1rem;
+
+}
+
+.navbar-collapse {
+    margin-left: 4rem;
+}
+
+.nav-link {
+    color: #ffffff70;
+    font-weight: lighter;
+}
+
+
+
+.nav-link-custom:hover {
+    color: #ffffff;
+    font-weight: bold;
+    border-bottom: solid #FFC947;
+
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.3s ease-in-out, border-bottom 0.1s ease-in-out;
+
+}
+
+.active {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.navbar-text {
+    color: #ffffff;
+}
+
+.rounded-circle {
+    height: 3rem;
+}
+
+.dropdown-menu {
+    margin-top: -0.5rem;
+}
+
+.dropdown-toggle {
+    cursor: pointer;
+}
