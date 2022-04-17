@@ -60,13 +60,25 @@
             </thead>
 
             <tbody>
-                <tr>
+                <tr *ngFor="let user of users$ | async; index as i" class="align-middle">
 
-                    <td>John Doe</td>
-                    <td>Owner</td>
-                    <td>16th April 2022</td>
-                    <td>16th April 2022</td>
-                    <td>Active</td>
+                    <td>
+                        <div class="user-profile">
+                            <div>
+
+                                <img src="../../assets/profile-icon.svg" class="rounded-circle" alt="" loading="lazy" />
+                            </div>
+                            <div class="user-name-email">
+                                <div class="user-name"> {{user.name}}</div>
+                                <div class="user-email"> {{user.email}}</div>
+                            </div>
+                        </div>
+
+                    </td>
+                    <td>{{user.roles}}</td>
+                    <td>{{user.signupTime}}</td>
+                    <td>{{user.loginTime}}</td>
+                    <td>{{user.status}}</td>
                     <td>
                         <div class="row">
                             <mat-icon>edit</mat-icon>
@@ -74,45 +86,7 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
-                    <td>John Doe</td>
-                    <td>Owner</td>
-                    <td>16th April 2022</td>
-                    <td>16th April 2022</td>
-                    <td>Active</td>
-                    <td>
-                        <div class="row">
-                            <mat-icon>edit</mat-icon>
-                            <mat-icon [ngStyle]="{'color':'red'}">delete_outline</mat-icon>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>John Doe</td>
-                    <td>Owner</td>
-                    <td>16th April 2022</td>
-                    <td>16th April 2022</td>
-                    <td>Active</td>
-                    <td>
-                        <div class="row">
-                            <mat-icon>edit</mat-icon>
-                            <mat-icon [ngStyle]="{'color':'red'}">delete_outline</mat-icon>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>John Doe</td>
-                    <td>Owner</td>
-                    <td>16th April 2022</td>
-                    <td>16th April 2022</td>
-                    <td>Active</td>
-                    <td>
-                        <div class="row">
-                            <mat-icon>edit</mat-icon>
-                            <mat-icon [ngStyle]="{'color':'red'}">delete_outline</mat-icon>
-                        </div>
-                    </td>
-                </tr>
+
             </tbody>
         </table>
     </div>

@@ -63,3 +63,27 @@
     gap: 1.5rem;
 
 }
+
+.user-profile {
+
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.user-name-email {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: bold;
+}
+
+.user-email {
+    color: #c4c4c4;
+}
+
+.rounded-circle {
+    height: 3rem;
+}
