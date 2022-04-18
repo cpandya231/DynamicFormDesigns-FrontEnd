@@ -25,6 +25,7 @@
     text-align: center;
     text-decoration: none;
     font-size: 1rem;
+    font-weight: bold;
     cursor: pointer;
     height: 2.5em;
 }
@@ -86,4 +87,44 @@
 
 .rounded-circle {
     height: 3rem;
+}
+
+.asc {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.asc::after {
+    font-family: 'Material Icons';
+
+    content: "\e5c5";
+
+
+}
+
+.desc {
+    @extend .asc
+}
+
+.desc::after {
+    @extend .asc, ::after;
+    transform: rotate(180deg);
+
+}
+
+.active {
+    background-color: #65B764;
+    border-radius: 0.5rem;
+    text-align: center;
+    color: #fff;
+    padding: 0.2rem;
+    width: 5rem;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.inactive {
+    @extend .active;
+    background-color: #C4C4C4;
 }

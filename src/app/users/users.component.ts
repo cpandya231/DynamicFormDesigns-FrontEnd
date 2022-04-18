@@ -132,7 +132,7 @@ const USERS: IUserItem[] = [
     roles: "Owner",
     signupTime: "16th April 2022",
     loginTime: "16th April 2022",
-    status: "Active"
+    status: "InActive"
   },
   {
     name: "Raghu",

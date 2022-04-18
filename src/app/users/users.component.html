@@ -43,13 +43,13 @@
                             Signup Time
                         </div>
                     </th>
-                    <th scope="col">
+                    <th scope="col" sortable="loginTime" (sort)="onSort($event)">
                         <div class="row">
                             <mat-icon>schedule</mat-icon>
                             Last Login Time
                         </div>
                     </th>
-                    <th scope="col">
+                    <th scope="col" sortable="status" (sort)="onSort($event)">
                         <div class="row">
                             <mat-icon>sell</mat-icon>
                             Status
@@ -78,9 +78,13 @@
                     <td>{{user.roles}}</td>
                     <td>{{user.signupTime}}</td>
                     <td>{{user.loginTime}}</td>
-                    <td>{{user.status}}</td>
                     <td>
-                        <div class="row">
+                        <div [ngClass]="user.status.toLowerCase()">
+                            {{user.status}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class=" row">
                             <mat-icon>edit</mat-icon>
                             <mat-icon [ngStyle]="{'color':'red'}">delete_outline</mat-icon>
                         </div>
@@ -89,5 +93,6 @@
 
             </tbody>
         </table>
+
     </div>
 </div>
