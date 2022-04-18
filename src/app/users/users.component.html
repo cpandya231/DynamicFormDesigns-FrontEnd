@@ -25,7 +25,7 @@
 
             <thead>
                 <tr>
-                    <th scope="col">
+                    <th scope="col" sortable="name" (sort)="onSort($event)">
                         <div class="row">
                             <mat-icon>person</mat-icon>
                             Users
@@ -37,7 +37,7 @@
                             Roles
                         </div>
                     </th>
-                    <th scope="col">
+                    <th scope="col" sortable="signupTime" (sort)="onSort($event)">
                         <div class="row">
                             <mat-icon>schedule</mat-icon>
                             Signup Time
