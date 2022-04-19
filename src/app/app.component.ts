@@ -14,8 +14,6 @@ export class AppComponent {
 
   navBarItems: INavBarItem[] = [];
 
-
-
   constructor(private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
@@ -38,8 +36,10 @@ export class AppComponent {
             {
               name: "Home",
               url: "welcome",
-
-              children: []
+            },
+            {
+              name: 'Forms',
+              url: 'formsDashboard'
             },
             {
               name: "User Management",
@@ -49,21 +49,16 @@ export class AppComponent {
                 {
                   name: "Users",
                   url: "users",
-
-                  children: []
                 },
                 {
                   name: "Roles",
                   url: "roles",
-
-                  children: []
                 }
               ]
             },
           ];
           this.showNavbar = true;
         }
-
       }
     });
   }

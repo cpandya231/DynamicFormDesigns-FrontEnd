@@ -6,8 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormioModule } from '@formio/angular';
-import { CreateFormTemplateComponent } from './create-form-template/create-form-template.component';
-import { FormsDashboardComponent } from './forms-dashboard/forms-dashboard.component';
+import { CreateFormTemplateComponent } from './forms/create-form-template/create-form-template.component';
+import { FormsDashboardComponent } from './forms/forms-dashboard/forms-dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -31,6 +31,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UsersComponent } from './users/users.component';
 import { RolesComponent } from './roles/roles.component';
+import { PreviewFormComponent } from './forms/preview-form/preview-form.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { RolesComponent } from './roles/roles.component';
     PasswordPatternDirective,
     NavbarComponent,
     UsersComponent,
-    RolesComponent
+    RolesComponent,
+    PreviewFormComponent
   ],
   imports: [
     BrowserModule,

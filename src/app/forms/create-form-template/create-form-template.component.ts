@@ -1,6 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { FormsService } from '../common/services/forms.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormsService } from '../../common/services/forms.service';
 
 @Component({
   selector: 'app-create-form-template',
@@ -16,7 +16,8 @@ export class CreateFormTemplateComponent implements OnInit {
     components: []
   };
   constructor(private formsService: FormsService,
-    private activatedRoute: ActivatedRoute) {}
+    private activatedRoute: ActivatedRoute,
+    private router: Router) {}
 
   ngOnInit() {
     let params = this.activatedRoute.snapshot.paramMap;
@@ -28,8 +29,13 @@ export class CreateFormTemplateComponent implements OnInit {
     }
   }
 
-  SaveTemplate() {
+  SaveTemplate(): void {
     this.formsService.SaveFormTemplate(this.formIO.form, this.FormName);
+    alert('form created successfully');
+    this.router.navigate(['formsDashboard']);
   }
 
+  CancelChanges(): void {
+    this.router.navigate(['formsDashboard']);
+  }
 }
