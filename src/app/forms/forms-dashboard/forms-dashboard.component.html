@@ -1,0 +1,30 @@
+<div class="forms_dashboard">
+    <button class="btn btn-primary" routerLink="/createForm">Create</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Form ID</th>
+                <th scope="col">Form Name</th>
+                <th scope="col">Created By</th>
+                <th scope="col">Created On</th>
+                <th scope="col">Edit</th>
+                <th scope="col">View</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let form of FormTemplates">
+                <td>{{form.Id}}</td>
+                <td>{{form.Name}}</td>
+                <td>{{form.CreatedBy}}</td>
+                <td>{{form.CreatedOn}}</td>
+                <td><img src="../../../assets/Images/pen-to-square-solid.svg" class="svg_icon" (click)="EditFormTemplate(form.Id)" /></td>
+                <td><img src="../../../assets/Images/eye-solid.svg" class="svg_icon" (click)="PreviewForm(form.Id)" /></td>
+            </tr>
+            <tr *ngIf="!FormTemplates.length" class="no_data_message">
+                <td colspan="6">
+                    No Forms Available
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
