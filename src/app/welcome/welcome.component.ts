@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-welcome',
@@ -14,13 +13,7 @@ export class WelcomeComponent implements OnInit {
   email: any = "";
 
   ngOnInit(): void {
-
-
-    this.activatedRoute.paramMap.subscribe(params => {
-      let item = params.get("state");
-      let decodedJwt = this.getDecodedAccessToken(item);
-      this.email = decodedJwt.sub;
-    })
+    console.log(`In Welcome ${localStorage.getItem('access_token')}`)
   }
 
 
@@ -28,11 +21,5 @@ export class WelcomeComponent implements OnInit {
     this.router.navigate([`/${url}`]);
 
   }
-  getDecodedAccessToken(token: any): any {
-    try {
-      return jwt_decode(token);
-    } catch (Error) {
-      return null;
-    }
-  }
+
 }
