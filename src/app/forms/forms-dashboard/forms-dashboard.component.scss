@@ -1,0 +1,15 @@
+.forms_dashboard {
+    padding: 1rem;
+    .no_data_message {
+        height: 5rem;
+        width: 90%;
+        text-align: center;
+        margin-top: 2rem;
+        font-size: 2rem;
+        background-color: gray;
+    }
+    .svg_icon {
+        height: 20px;
+        width: 20px;
+    }
+}

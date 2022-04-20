@@ -5,6 +5,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FormioModule } from '@formio/angular';
+import { CreateFormTemplateComponent } from './forms/create-form-template/create-form-template.component';
+import { FormsDashboardComponent } from './forms/forms-dashboard/forms-dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -29,22 +32,27 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NgbdSortableHeader, UsersComponent } from './users/users.component';
 import { RolesComponent } from './roles/roles.component';
+import { PreviewFormComponent } from './forms/preview-form/preview-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    CreateFormTemplateComponent,
+    FormsDashboardComponent,
     LoginComponent,
     WelcomeComponent,
     PasswordPatternDirective,
     NavbarComponent,
     UsersComponent,
     RolesComponent,
-    NgbdSortableHeader
-
+    NgbdSortableHeader,
+    PreviewFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    FormioModule,
     CommonModule,
     HttpClientModule,
     FormsModule,
