@@ -12,7 +12,7 @@ export type SortColumn = keyof IUserItem | '';
 export type SortDirection = 'asc' | 'desc' | '';
 const rotate: { [key: string]: SortDirection } = { 'asc': 'desc', 'desc': '', '': 'asc' };
 
-const compare = (v1: string | number | any[], v2: string | number | any[]) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
+const compare = (v1: any, v2: any) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
 export interface SortEvent {
   column: SortColumn;

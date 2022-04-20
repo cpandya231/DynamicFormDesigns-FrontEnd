@@ -33,6 +33,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { NgbdSortableHeader, UsersComponent } from './users/users.component';
 import { RolesComponent } from './roles/roles.component';
 import { PreviewFormComponent } from './forms/preview-form/preview-form.component';
+import { CreateUserComponent } from './users/create-user/create-user.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { PreviewFormComponent } from './forms/preview-form/preview-form.componen
     UsersComponent,
     RolesComponent,
     NgbdSortableHeader,
-    PreviewFormComponent
+    PreviewFormComponent,
+    CreateUserComponent
   ],
   imports: [
     BrowserModule,
