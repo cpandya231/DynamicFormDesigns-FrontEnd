@@ -25,7 +25,7 @@
 
             <thead>
                 <tr>
-                    <th scope="col" sortable="name" (sort)="onSort($event)">
+                    <th scope="col" sortable="first_name" (sort)="onSort($event)">
                         <div class="row">
                             <mat-icon>person</mat-icon>
                             Users
@@ -69,26 +69,36 @@
                                 <img src="../../assets/profile-icon.svg" class="rounded-circle" alt="" loading="lazy" />
                             </div>
                             <div class="user-name-email">
-                                <div class="user-name"> {{user.name}}</div>
+                                <div class="user-name"> {{user.first_name}}</div>
                                 <div class="user-email"> {{user.email}}</div>
                             </div>
                         </div>
 
                     </td>
-                    <td>{{user.roles}}</td>
-                    <td>{{user.signupTime}}</td>
-                    <td>{{user.loginTime}}</td>
+                    <td>{{user.roles[0].role}}</td>
+
+                    <td>20th April 2022</td>
+
+                    <td>20th April 2022</td>
                     <td>
-                        <div [ngClass]="user.status.toLowerCase()">
-                            {{user.status}}
+
+                        <div [ngClass]="user.status==undefined ?'active':user.status.toLowerCase()">
+                            {{user.status==undefined ?'Active':user.status}}
                         </div>
+
                     </td>
+
                     <td>
-                        <div class=" row">
+
+                        <div class="row">
                             <mat-icon>edit</mat-icon>
-                            <mat-icon [ngStyle]="{'color':'red'}">delete_outline</mat-icon>
+                            <mat-icon [ngStyle]="{'color':'red'}">
+                                delete_outline</mat-icon>
                         </div>
                     </td>
+
+
+
                 </tr>
 
             </tbody>

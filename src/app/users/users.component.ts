@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 
 import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { UsersService } from '../services/users.service';
 import { IUserItem } from './user-item-model';
 
 
@@ -11,7 +12,7 @@ export type SortColumn = keyof IUserItem | '';
 export type SortDirection = 'asc' | 'desc' | '';
 const rotate: { [key: string]: SortDirection } = { 'asc': 'desc', 'desc': '', '': 'asc' };
 
-const compare = (v1: string | number, v2: string | number) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
+const compare = (v1: string | number | any[], v2: string | number | any[]) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
 export interface SortEvent {
   column: SortColumn;
@@ -47,19 +48,25 @@ export class UsersComponent implements OnInit {
 
 
   users$: Observable<IUserItem[]>;
+  USERS!: IUserItem[];
 
   filter = new FormControl('');
   @ViewChildren(NgbdSortableHeader)
   headers!: QueryList<NgbdSortableHeader>;
 
-  constructor() {
+  constructor(private usersService: UsersService) {
     this.users$ = this.filter.valueChanges.pipe(
       startWith(''),
-      map(text => search(text))
+      map(text => this.search(text))
     );
   }
 
   ngOnInit(): void {
+    this.users$ = this.usersService.getAllUsers();
+    this.users$.subscribe(items => {
+      console.log(`Got items ${JSON.stringify(items)}`)
+      this.USERS = items
+    });
   }
 
 
@@ -73,16 +80,15 @@ export class UsersComponent implements OnInit {
       }
     });
 
-    console.log(`Direction ${direction} column ${column}`);
     // sorting countries
     if (direction === '' || column === '') {
       this.users$ = this.filter.valueChanges.pipe(
         startWith(''),
-        map(text => search(text))
+        map(text => this.search(text))
       );
 
     } else {
-      let sorted = [...USERS].sort((a, b) => {
+      let sorted = [...this.USERS].sort((a, b) => {
         const res = compare(a[column], b[column]);
         return direction === 'asc' ? res : -res;
       });
@@ -90,74 +96,16 @@ export class UsersComponent implements OnInit {
     }
   }
 
-}
+  search(text: string): IUserItem[] {
+    return this.USERS.filter(user => {
+      const term = text.toLowerCase();
+      return user.first_name.toLowerCase().includes(term)
+        || user.email.toLowerCase().includes(term)
 
-
-const USERS: IUserItem[] = [
-  {
-    name: "Partha",
-    email: "p123@gmail.com",
-    roles: "Owner",
-    signupTime: "16th April 2022",
-    loginTime: "16th April 2022",
-    status: "Active"
-  },
-  {
-    name: "Vihit",
-    email: "v123@gmail.com",
-    roles: "Owner",
-    signupTime: "16th April 2022",
-    loginTime: "16th April 2022",
-    status: "Active"
-  },
-  {
-    name: "Heet",
-    email: "h123@gmail.com",
-    roles: "Owner",
-    signupTime: "16th April 2022",
-    loginTime: "16th April 2022",
-    status: "Active"
-  },
-  {
-    name: "Mohit",
-    email: "ghi123@gmail.com",
-    roles: "Owner",
-    signupTime: "16th April 2022",
-    loginTime: "16th April 2022",
-    status: "Active"
-  },
-  {
-    name: "Chintan",
-    email: "def123@gmail.com",
-    roles: "Owner",
-    signupTime: "16th April 2022",
-    loginTime: "16th April 2022",
-    status: "InActive"
-  },
-  {
-    name: "Raghu",
-    email: "rag123@gmail.com",
-    roles: "Owner",
-    signupTime: "16th April 2022",
-    loginTime: "16th April 2022",
-    status: "Active"
-  },
-  {
-    name: "Kevin",
-    email: "ke123@gmail.com",
-    roles: "Owner",
-    signupTime: "16th April 2022",
-    loginTime: "16th April 2022",
-    status: "Active"
+    });
   }
-];
 
-function search(text: string): IUserItem[] {
-  return USERS.filter(user => {
-    const term = text.toLowerCase();
-    return user.name.toLowerCase().includes(term)
-      || user.email.toLowerCase().includes(term)
-
-  });
 }
+
+
 

@@ -43,6 +43,26 @@ export class AuthService {
     handleError(err: any) {
         this.activeProject.error('Error');
     }
+
+    getAccessToken(): any {
+        
+        if (this.isTokenExpired()) {
+            return "expired"
+        }
+        return localStorage.getItem("access_token");
+
+    }
+
+    isTokenExpired() {
+        return moment().isBefore(this.getExpiration());
+    }
+
+
+    getExpiration() {
+        const expiration = localStorage.getItem("expires_at");
+        const expiresAt = JSON.parse(expiration!);
+        return moment(expiresAt);
+    }
 }
 
 

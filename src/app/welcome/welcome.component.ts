@@ -13,7 +13,7 @@ export class WelcomeComponent implements OnInit {
   email: any = "";
 
   ngOnInit(): void {
-    console.log(`In Welcome ${localStorage.getItem('access_token')}`)
+
   }
 
 
