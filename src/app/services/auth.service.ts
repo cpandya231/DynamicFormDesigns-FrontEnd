@@ -6,9 +6,10 @@ import jwt_decode from 'jwt-decode';
 
 import * as moment from "moment";
 import { ReplaySubject } from 'rxjs';
+import { Router } from '@angular/router';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private router: Router) { }
 
 
     public activeProject: ReplaySubject<any> = new ReplaySubject(1);
@@ -45,6 +46,7 @@ export class AuthService {
 
     handleError(err: any) {
         this.activeProject.error('Error');
+        this.router.navigate(['/']);
     }
 
     async refreshToken() {

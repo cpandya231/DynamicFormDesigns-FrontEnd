@@ -58,6 +58,7 @@ export class UsersComponent implements OnInit {
   headers!: QueryList<NgbdSortableHeader>;
 
   constructor(private usersService: UsersService, private modalService: MdbModalService) {
+    console.log(`Constructor ${JSON.stringify(this.filter.valueChanges)}`)
     this.users$ = this.filter.valueChanges.pipe(
       startWith(''),
       map(text => this.search(text))
@@ -113,6 +114,7 @@ export class UsersComponent implements OnInit {
   }
 
   search(text: string): IUserItem[] {
+    console.log(`Searching..`)
     return this.USERS.filter(user => {
       const term = text.toLowerCase();
       return user.first_name.toLowerCase().includes(term)
@@ -126,6 +128,7 @@ export class UsersComponent implements OnInit {
 
 
   }
+
 
 
 }
