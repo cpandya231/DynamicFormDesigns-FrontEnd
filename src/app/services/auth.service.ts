@@ -23,11 +23,11 @@ export class AuthService {
 
     setSession(authResult: any) {
         let decoded_token = this.getDecodedAccessToken(authResult.access_token);
+        console.log(`EXP decoded ${decoded_token.exp}`)
 
-        const expiresAt = moment().add(decoded_token.exp, 'second');
 
         localStorage.setItem('access_token', authResult.access_token);
-        localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
+        localStorage.setItem("expires_at", decoded_token.exp);
         this.activeProject.next('Success');
     }
 
@@ -45,23 +45,32 @@ export class AuthService {
     }
 
     getAccessToken(): any {
-        
+
+        console.log(`Current ${moment()} Expiration: ${this.getExpiration()}`)
         if (this.isTokenExpired()) {
             return "expired"
         }
+
         return localStorage.getItem("access_token");
 
     }
 
     isTokenExpired() {
-        return moment().isBefore(this.getExpiration());
+        return moment().isAfter(this.getExpiration());
     }
 
 
     getExpiration() {
         const expiration = localStorage.getItem("expires_at");
-        const expiresAt = JSON.parse(expiration!);
-        return moment(expiresAt);
+        if (null == expiration) {
+            return "";
+        }
+        return moment.unix(parseInt(expiration));
+    }
+
+    invalidateSession() {
+        localStorage.clear();
+        console.log(JSON.stringify(localStorage));
     }
 }
 

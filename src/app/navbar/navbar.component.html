@@ -6,7 +6,8 @@
         <a class="navbar-brand" href="#" id="logo">Confac.ai</a>
 
         <!-- Toggle button -->
-        <button class="navbar-toggler" type="button" (click)="basicNavbar.toggle()" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" (click)="basicNavbar.toggle()" aria-expanded="false"
+            aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
         </button>
 
@@ -14,12 +15,14 @@
         <!-- Collapsible wrapper -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent" mdbCollapse #basicNavbar="mdbCollapse">
             <div *ngFor="let item of navBarItems">
-                <a *ngIf="!item?.children?.length" class="nav-link nav-link-custom" [routerLinkActive]="['active']" routerLink="../{{item.url}}">
+                <a *ngIf="!item?.children?.length" class="nav-link nav-link-custom" [routerLinkActive]="['active']"
+                    routerLink="../{{item.url}}">
                     {{ item.name }}
 
                 </a>
                 <div *ngIf="item?.children?.length" mdbDropdown class="dropdown">
-                    <a class=" nav-link nav-link-custom  dropdown-toggle" aria-expanded="false" mdbDropdownToggle [routerLinkActive]="['active']" routerLink="../{{item.url}}">
+                    <a class=" nav-link nav-link-custom  dropdown-toggle" aria-expanded="false" mdbDropdownToggle
+                        [routerLinkActive]="['active']" routerLink="../{{item.url}}">
                         {{ item.name }}
                     </a>
                     <ul mdbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -40,7 +43,8 @@
         <ul class="navbar-nav">
             <!-- Avatar -->
             <li mdbDropdown class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle d-flex align-items-center" id="navbarDropdownMenuLink" role="button" mdbDropdownToggle aria-expanded="false">
+                <a class="nav-link dropdown-toggle d-flex align-items-center" id="navbarDropdownMenuLink" role="button"
+                    mdbDropdownToggle aria-expanded="false">
                     <img src="../../assets/profile-icon.svg" class="rounded-circle" alt="" loading="lazy" />
                 </a>
                 <ul mdbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -51,7 +55,7 @@
                         <a class="dropdown-item" href="#">Settings</a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">Logout</a>
+                        <div class="dropdown-item" (click)="invalidateSession()">Logout</div>
                     </li>
                 </ul>
             </li>
