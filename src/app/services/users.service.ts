@@ -4,9 +4,15 @@ import { AuthService } from './auth.service';
 
 import { IUserItem } from '../users/user-item-model';
 import { ServiceUtil } from './utility/ServiceUtil';
+import { Subject } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class UsersService {
-    constructor(private http: HttpClient, private authService: AuthService) { }
+    public userAdded: Subject<boolean>;
+
+    constructor(private http: HttpClient, private authService: AuthService) {
+        this.userAdded = new Subject<boolean>();
+    }
+
 
     httpOptions = {
         headers: new HttpHeaders({

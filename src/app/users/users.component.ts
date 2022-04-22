@@ -65,10 +65,23 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setData();
+    this.initUserAddedSubscription();
+  }
+
+  private setData() {
     this.users$ = this.usersService.getAllUsers();
     this.users$.subscribe(items => {
 
-      this.USERS = items
+      this.USERS = items;
+    });
+  }
+
+  initUserAddedSubscription() {
+    this.usersService.userAdded.subscribe((data: boolean) => {
+      if (data) {
+        this.setData();
+      }
     });
   }
 
