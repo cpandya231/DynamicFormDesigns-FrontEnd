@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormioComponent } from '@formio/angular';
+import { UsersService } from 'src/app/services/users.service';
 import { IUserItem } from '../user-item-model';
 
 @Component({
@@ -8,7 +11,8 @@ import { IUserItem } from '../user-item-model';
 })
 export class CreateUserComponent implements OnInit {
 
-  userModel!: IUserItem;
+  @ViewChild(FormioComponent, { static: false })
+  form!: FormioComponent;
   FormData: any = {
     "title": "Create User",
     "components": [{
@@ -27,7 +31,7 @@ export class CreateUserComponent implements OnInit {
       "inputMask": "",
       "displayMask": "",
       "allowMultipleMasks": false,
-      "customClass": "",
+      "customClass": "textbox-style",
       "tabindex": "",
       "autocomplete": "",
       "hidden": false,
@@ -700,7 +704,7 @@ export class CreateUserComponent implements OnInit {
         "required": false,
         "onlyAvailableItems": false,
         "customMessage": "",
-        "custom": "console.log(`${JSON.stringify(form)}`)",
+        "custom": "",
         "customPrivate": false,
         "json": "",
         "strictDateValidation": false,
@@ -758,12 +762,43 @@ export class CreateUserComponent implements OnInit {
       "id": "ewz3b95"
     }]
   };
-  constructor() { }
+  constructor(private userService: UsersService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   onSubmit() {
+    this.form.formio.emit('submitButton');
+
+  }
+
+  handleSubmit() {
+    console.log(`In handle submit ${JSON.stringify(this.form.formio.submission)}`);
+    let submittedData = this.form.formio.submission.data;
+    let userObj: IUserItem = {
+      first_name: submittedData.firstName,
+      last_name: submittedData.lastName,
+      email: submittedData.email,
+      username: submittedData.username,
+      password: submittedData.password,
+      department: submittedData.department,
+      roles: [{
+        id: 1
+      }]
+    }
+
+    this.userService.createUser(userObj).subscribe({
+      next: this.navigateOnSuccess.bind(this), error: this.handleError.bind(this)
+    })
+  }
+
+  navigateOnSuccess() {
+
+    this.router.navigate(['/usersParent']);
+  }
+
+  handleError(err: any) {
+    console.error(`Error occured while login ${JSON.stringify(err)}`);
 
   }
 

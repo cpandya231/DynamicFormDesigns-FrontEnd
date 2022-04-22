@@ -4,11 +4,11 @@
     </div>
     <div class="form-container">
 
-        <formio [form]='FormData' [viewOnly]='true'></formio>
+        <formio [form]='FormData' #formio (submit)="handleSubmit()"></formio>
 
         <div class="submit-button">
 
-            <button type="submit" class="button">Create User</button>
+            <button type="submit" class="button" (click)="onSubmit()">Create User</button>
         </div>
     </div>
 
