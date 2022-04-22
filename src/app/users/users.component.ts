@@ -5,6 +5,8 @@ import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { UsersService } from '../services/users.service';
 import { IUserItem } from './user-item-model';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { CreateUserComponent } from './create-user/create-user.component';
 
 
 
@@ -46,6 +48,7 @@ export class NgbdSortableHeader {
 })
 export class UsersComponent implements OnInit {
 
+  private modalRef: MdbModalRef<CreateUserComponent> | null = null;
 
   users$: Observable<IUserItem[]>;
   USERS!: IUserItem[];
@@ -54,7 +57,7 @@ export class UsersComponent implements OnInit {
   @ViewChildren(NgbdSortableHeader)
   headers!: QueryList<NgbdSortableHeader>;
 
-  constructor(private usersService: UsersService) {
+  constructor(private usersService: UsersService, private modalService: MdbModalService) {
     this.users$ = this.filter.valueChanges.pipe(
       startWith(''),
       map(text => this.search(text))
@@ -104,6 +107,11 @@ export class UsersComponent implements OnInit {
 
     });
   }
+
+  createUser() {
+    this.modalRef = this.modalService.open(CreateUserComponent);
+  }
+
 
 }
 

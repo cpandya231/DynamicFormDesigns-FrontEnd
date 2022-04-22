@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { LoginModel } from 'src/app/login/login-model';
 import { ServiceUtil } from './utility/ServiceUtil';
 import jwt_decode from 'jwt-decode';
@@ -9,6 +9,7 @@ import { ReplaySubject } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
     constructor(private http: HttpClient) { }
+
 
     public activeProject: ReplaySubject<any> = new ReplaySubject(1);
 
@@ -21,12 +22,14 @@ export class AuthService {
         return this.activeProject;
     }
 
+
     setSession(authResult: any) {
         let decoded_token = this.getDecodedAccessToken(authResult.access_token);
         console.log(`EXP decoded ${decoded_token.exp}`)
 
 
         localStorage.setItem('access_token', authResult.access_token);
+        localStorage.setItem('refresh_token', authResult.refresh_token);
         localStorage.setItem("expires_at", decoded_token.exp);
         this.activeProject.next('Success');
     }
@@ -44,16 +47,33 @@ export class AuthService {
         this.activeProject.error('Error');
     }
 
+    async refreshToken() {
+        console.log("Token has expired, refreshing");
+        let httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
+                "Authorization": `Bearer ${localStorage.getItem('refresh_token')}`
+            })
+        };;
+        this.http.get<any>(`${ServiceUtil.API_ENDPOINT}/token/refresh`, httpOptions)
+            .subscribe({ next: this.setSession.bind(this), error: this.handleError.bind(this) });
+        return this.activeProject;
+    }
+
     getAccessToken(): any {
 
-        console.log(`Current ${moment()} Expiration: ${this.getExpiration()}`)
         if (this.isTokenExpired()) {
-            return "expired"
-        }
+            this.refreshToken();
 
-        return localStorage.getItem("access_token");
+        }
+        return localStorage.getItem('access_token');
 
     }
+
+
 
     isTokenExpired() {
         return moment().isAfter(this.getExpiration());
@@ -65,13 +85,15 @@ export class AuthService {
         if (null == expiration) {
             return "";
         }
-        return moment.unix(parseInt(expiration));
+        return moment.unix(parseInt(expiration)).subtract(1, 'minute');
     }
 
     invalidateSession() {
         localStorage.clear();
         console.log(JSON.stringify(localStorage));
     }
+
+
 }
 
 

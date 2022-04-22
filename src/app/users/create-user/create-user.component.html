@@ -1,15 +1,16 @@
 <div class="app-container">
-    <div class="create-user-form-header">
-        <h2>Sign In</h2>
-    </div>
-    <div class="form-container">
+    <div class="form-container-parent">
+        <div class="create-user-form-header">
+            <h2>Create User</h2>
+        </div>
+        <div class="form-container">
 
-        <formio [form]='FormData' #formio (submit)="handleSubmit()"></formio>
+            <formio [form]='FormData' #formio (submit)="handleSubmit()"></formio>
 
-        <div class="submit-button">
-
-            <button type="submit" class="button" (click)="onSubmit()">Create User</button>
+            <div class="submit-button">
+                <button type="button" class="button-cancel" (click)="close()">Close</button>
+                <button type="submit" class="button" (click)="onSubmit()">Create User</button>
+            </div>
         </div>
     </div>
-
 </div>

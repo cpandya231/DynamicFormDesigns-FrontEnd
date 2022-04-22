@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormioComponent } from '@formio/angular';
 import { UsersService } from 'src/app/services/users.service';
 import { IUserItem } from '../user-item-model';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 
 @Component({
   selector: 'app-create-user',
@@ -762,7 +763,7 @@ export class CreateUserComponent implements OnInit {
       "id": "ewz3b95"
     }]
   };
-  constructor(private userService: UsersService, private router: Router) { }
+  constructor(private userService: UsersService, private router: Router, private modelRef: MdbModalRef<CreateUserComponent>) { }
 
   ngOnInit(): void {
   }
@@ -793,7 +794,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   navigateOnSuccess() {
-
+    this.modelRef.close();
     this.router.navigate(['/usersParent']);
   }
 
@@ -802,4 +803,7 @@ export class CreateUserComponent implements OnInit {
 
   }
 
+  close() {
+    this.modelRef.close();
+  }
 }
