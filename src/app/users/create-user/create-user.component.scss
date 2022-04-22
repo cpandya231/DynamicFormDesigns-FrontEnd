@@ -1,24 +1,14 @@
-// @import "../../login/login.component.scss";
-
-.app-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .form-container-parent {
     padding: 2em;
     display: flex;
     flex-direction: column;
-    height: 80vh;
+
 }
 
 .form-container {
     display: flex;
     flex-direction: column;
-    height: 80%;
-
-    justify-content: space-between;
+    gap: 2rem;
 }
 
 

@@ -110,6 +110,8 @@ export class UsersComponent implements OnInit {
 
   createUser() {
     this.modalRef = this.modalService.open(CreateUserComponent);
+
+
   }
 
 

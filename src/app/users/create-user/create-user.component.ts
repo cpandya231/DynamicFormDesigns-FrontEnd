@@ -18,7 +18,7 @@ export class CreateUserComponent implements OnInit {
     "title": "Create User",
     "components": [{
       "label": "First Name",
-      "labelPosition": "left-right",
+      "labelPosition": "top",
       "labelWidth": "",
       "labelMargin": "10",
       "placeholder": "",
@@ -108,7 +108,7 @@ export class CreateUserComponent implements OnInit {
       "id": "ehvvtgm"
     }, {
       "label": "Last Name",
-      "labelPosition": "left-right",
+      "labelPosition": "top",
       "labelWidth": "",
       "labelMargin": "10",
       "placeholder": "",
@@ -198,7 +198,7 @@ export class CreateUserComponent implements OnInit {
       "id": "e25hyz"
     }, {
       "label": "Email",
-      "labelPosition": "left-right",
+      "labelPosition": "top",
       "labelWidth": "",
       "labelMargin": "10",
       "placeholder": "",
@@ -289,7 +289,7 @@ export class CreateUserComponent implements OnInit {
       "id": "eza9ob"
     }, {
       "label": "Username",
-      "labelPosition": "left-right",
+      "labelPosition": "top",
       "labelWidth": "",
       "labelMargin": "10",
       "placeholder": "",
@@ -380,7 +380,7 @@ export class CreateUserComponent implements OnInit {
       "id": "ey891p"
     }, {
       "label": "Password",
-      "labelPosition": "left-right",
+      "labelPosition": "top",
       "labelWidth": "",
       "labelMargin": "10",
       "placeholder": "",
@@ -468,7 +468,7 @@ export class CreateUserComponent implements OnInit {
       "id": "eiq2vk"
     }, {
       "label": "Confirm Password",
-      "labelPosition": "left-right",
+      "labelPosition": "top",
       "labelWidth": "",
       "labelMargin": "10",
       "placeholder": "",
@@ -556,7 +556,7 @@ export class CreateUserComponent implements OnInit {
       "id": "emrmdwi"
     }, {
       "label": "Department",
-      "labelPosition": "left-right",
+      "labelPosition": "top",
       "labelWidth": "",
       "labelMargin": "10",
       "placeholder": "",
@@ -646,7 +646,7 @@ export class CreateUserComponent implements OnInit {
       "id": "ext18r"
     }, {
       "label": "Roles",
-      "labelPosition": "left-right",
+      "labelPosition": "top",
       "widget": "html5",
       "labelWidth": "",
       "labelMargin": "10",
