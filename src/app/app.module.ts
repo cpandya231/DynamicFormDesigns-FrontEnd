@@ -30,11 +30,11 @@ import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
-import { NgbdSortableHeader, UsersComponent } from './users/users.component';
+import { UsersComponent } from './users/users.component';
 import { RolesComponent } from './roles/roles.component';
 import { PreviewFormComponent } from './forms/preview-form/preview-form.component';
 import { CreateUserComponent } from './users/create-user/create-user.component';
-
+import { NgbdSortableHeader } from '../app/directives/sort-table-column-directive';
 @NgModule({
   declarations: [
     AppComponent,
