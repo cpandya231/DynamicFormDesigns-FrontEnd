@@ -58,7 +58,7 @@ export class UsersComponent implements OnInit {
   headers!: QueryList<NgbdSortableHeader>;
 
   constructor(private usersService: UsersService, private modalService: MdbModalService) {
-    console.log(`Constructor ${JSON.stringify(this.filter.valueChanges)}`)
+
     this.users$ = this.filter.valueChanges.pipe(
       startWith(''),
       map(text => this.search(text))
@@ -73,7 +73,6 @@ export class UsersComponent implements OnInit {
   private setData() {
     this.users$ = this.usersService.getAllUsers();
     this.users$.subscribe(items => {
-
       this.USERS = items;
     });
   }
@@ -82,6 +81,7 @@ export class UsersComponent implements OnInit {
     this.usersService.userAdded.subscribe((data: boolean) => {
       if (data) {
         this.setData();
+
       }
     });
   }
