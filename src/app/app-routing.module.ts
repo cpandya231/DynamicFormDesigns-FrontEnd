@@ -24,9 +24,13 @@ const routes: Routes = [
     path: 'createForm',
     component: CreateFormTemplateComponent
   },
-  { path: 'usersParent', component: UsersComponent },
-  { path: 'usersParent/users', component: UsersComponent },
-  { path: 'usersParent/roles', component: RolesComponent },
+  {
+    path: 'usersParent', children: [
+      { path: 'users', component: UsersComponent },
+      { path: 'roles', component: RolesComponent },
+    ], component: UsersComponent,
+  },
+
   {
     path: 'usersParent/createUser',
     component: CreateUserComponent
