@@ -774,7 +774,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   handleSubmit() {
-    console.log(`In handle submit ${JSON.stringify(this.form.formio.submission)}`);
+
     let submittedData = this.form.formio.submission.data;
     let userObj: IUserItem = {
       first_name: submittedData.firstName,

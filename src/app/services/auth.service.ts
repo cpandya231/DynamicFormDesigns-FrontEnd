@@ -26,7 +26,6 @@ export class AuthService {
 
     setSession(activeProject: any, authResult: any) {
         let decoded_token = this.getDecodedAccessToken(authResult.access_token);
-        console.log(`EXP decoded ${decoded_token.exp}`)
 
 
         localStorage.setItem('access_token', authResult.access_token);
@@ -51,7 +50,7 @@ export class AuthService {
 
     refreshToken(activeProjectRefreshToken: any) {
 
-        console.log("Token has expired, refreshing");
+
         let httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
@@ -93,7 +92,7 @@ export class AuthService {
 
     invalidateSession() {
         localStorage.clear();
-        console.log(JSON.stringify(localStorage));
+
     }
 
 

@@ -50,7 +50,7 @@ export class UsersComponent implements OnInit {
 
   private modalRef: MdbModalRef<CreateUserComponent> | null = null;
 
-  users$: Observable<IUserItem[]>;
+  users$!: Observable<IUserItem[]>;
   USERS!: IUserItem[];
 
   filter = new FormControl('');
@@ -59,10 +59,7 @@ export class UsersComponent implements OnInit {
 
   constructor(private usersService: UsersService, private modalService: MdbModalService) {
 
-    this.users$ = this.filter.valueChanges.pipe(
-      startWith(''),
-      map(text => this.search(text))
-    );
+
   }
 
   ngOnInit(): void {
@@ -74,7 +71,17 @@ export class UsersComponent implements OnInit {
     this.users$ = this.usersService.getAllUsers();
     this.users$.subscribe(items => {
       this.USERS = items;
+
+      this.registerForSearch();
     });
+
+  }
+
+  private registerForSearch() {
+    this.users$ = this.filter.valueChanges.pipe(
+      startWith(''),
+      map(text => this.search(text))
+    );
   }
 
   initUserAddedSubscription() {
@@ -99,10 +106,7 @@ export class UsersComponent implements OnInit {
 
     // sorting countries
     if (direction === '' || column === '') {
-      this.users$ = this.filter.valueChanges.pipe(
-        startWith(''),
-        map(text => this.search(text))
-      );
+      this.registerForSearch();
 
     } else {
       let sorted = [...this.USERS].sort((a, b) => {
@@ -114,7 +118,7 @@ export class UsersComponent implements OnInit {
   }
 
   search(text: string): IUserItem[] {
-    console.log(`Searching..`)
+
     return this.USERS.filter(user => {
       const term = text.toLowerCase();
       return user.first_name.toLowerCase().includes(term)
