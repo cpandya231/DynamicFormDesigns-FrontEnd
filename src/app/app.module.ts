@@ -33,8 +33,10 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { UsersComponent } from './users/users.component';
 import { RolesComponent } from './roles/roles.component';
 import { PreviewFormComponent } from './forms/preview-form/preview-form.component';
+import { UsersInfoComponent } from './users/users-info/users-info.component';
 import { CreateUserComponent } from './users/create-user/create-user.component';
 import { NgbdSortableHeader } from '../app/directives/sort-table-column-directive';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +50,8 @@ import { NgbdSortableHeader } from '../app/directives/sort-table-column-directiv
     RolesComponent,
     NgbdSortableHeader,
     PreviewFormComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    UsersInfoComponent
   ],
   imports: [
     BrowserModule,

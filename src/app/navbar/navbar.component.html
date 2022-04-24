@@ -22,7 +22,7 @@
                 </a>
                 <div *ngIf="item?.children?.length" mdbDropdown class="dropdown">
                     <a class=" nav-link nav-link-custom  dropdown-toggle" aria-expanded="false" mdbDropdownToggle
-                        [routerLinkActive]="['active']" routerLink="../{{item.url}}">
+                        [routerLinkActive]="['active']" [routerLink]="[]">
                         {{ item.name }}
                     </a>
                     <ul mdbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">

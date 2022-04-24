@@ -1,5 +1,5 @@
 import { Directive, Input, Output, EventEmitter } from "@angular/core";
-import { SortColumn, SortDirection, SortEvent } from "../users/users.component";
+import { SortColumn, SortDirection, SortEvent } from "../users/users-info/users-info.component";
 
 @Directive({
     selector: 'th[sortable]',
