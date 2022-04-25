@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginModel } from './login-model';
-import { UsersService } from 'src/app/services/users.service';
+import { AuthService } from 'src/app/services/auth.service';
 import {
   Router, Resolve,
   RouterStateSnapshot,
@@ -14,7 +14,7 @@ import {
 export class LoginComponent implements OnInit {
 
   loginModel: LoginModel = { username: '', password: '' };
-  constructor(private usersService: UsersService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   submitted = false;
   errorOccured = false;
@@ -27,15 +27,20 @@ export class LoginComponent implements OnInit {
   onSubmit() {
 
 
-    this.usersService.getToken(this.loginModel).subscribe(token => {
-
-      this.token = JSON.stringify(token);
-      this.router.navigate(['/welcome', { state: token["access_token"] },]);
-    }, err => {
-      console.error(`Error occured while login`);
-      this.errorOccured = true;
+    this.authService.login(this.loginModel).subscribe({
+      next: this.navigateOnSuccess.bind(this), error: this.handleError.bind(this)
     });
 
+  }
+
+  navigateOnSuccess() {
+
+    this.router.navigate(['/welcome']);
+  }
+
+  handleError(err: any) {
+    console.error(`Error occured while login ${JSON.stringify(err)}`);
+    this.errorOccured = true;
   }
 
 }

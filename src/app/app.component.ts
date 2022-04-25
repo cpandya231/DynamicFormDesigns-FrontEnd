@@ -21,8 +21,7 @@ export class AppComponent {
 
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
-        console.log('App component')
-        console.log((<NavigationEnd>event).url);
+
         let url = (<NavigationEnd>event).url;
         if (url.includes("/welcome")) {
           this.navBarItems = [];

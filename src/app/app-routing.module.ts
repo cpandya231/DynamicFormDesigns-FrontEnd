@@ -5,6 +5,8 @@ import { CreateFormTemplateComponent } from './forms/create-form-template/create
 import { FormsDashboardComponent } from './forms/forms-dashboard/forms-dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { RolesComponent } from './roles/roles.component';
+import { CreateUserComponent } from './users/create-user/create-user.component';
+import { UsersInfoComponent } from './users/users-info/users-info.component';
 import { UsersComponent } from './users/users.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
@@ -23,9 +25,14 @@ const routes: Routes = [
     path: 'createForm',
     component: CreateFormTemplateComponent
   },
-  { path: 'usersParent', component: UsersComponent },
-  { path: 'usersParent/users', component: UsersComponent },
-  { path: 'usersParent/roles', component: RolesComponent },
+  {
+    path: 'usersParent', children: [
+      { path: 'users', component: UsersInfoComponent, },
+      { path: 'roles', component: RolesComponent },
+
+    ],
+  },
+
   { path: '', component: LoginComponent },
   { path: '**', component: AppComponent }
 ];

@@ -1,0 +1,108 @@
+<div class="app-container table-responsive">
+    <div class="filter-create-user">
+
+        <form class="filter-item-form">
+            <div class="mb-3 row">
+
+                <div class="col-xs-3 col-sm-auto">
+                    <input id="table-filtering-search" class="form-control" type="text" [formControl]="filter"
+                        placeholder="Find by name or email">
+                </div>
+
+            </div>
+
+        </form>
+
+        <div class="submit-button">
+
+            <button type="submit" class="button" (click)="createUser()">Create User</button>
+        </div>
+
+
+    </div>
+    <div class="table-container">
+        <table class="table table-hover">
+
+            <thead>
+                <tr>
+                    <th scope="col" sortable="first_name" (sort)="onSort($event)">
+                        <div class="row">
+                            <mat-icon>person</mat-icon>
+                            Users
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div class="row">
+                            <mat-icon>lock</mat-icon>
+                            Roles
+                        </div>
+                    </th>
+                    <th scope="col" sortable="signupTime" (sort)="onSort($event)">
+                        <div class="row">
+                            <mat-icon>schedule</mat-icon>
+                            Signup Time
+                        </div>
+                    </th>
+                    <th scope="col" sortable="loginTime" (sort)="onSort($event)">
+                        <div class="row">
+                            <mat-icon>schedule</mat-icon>
+                            Last Login Time
+                        </div>
+                    </th>
+                    <th scope="col" sortable="status" (sort)="onSort($event)">
+                        <div class="row">
+                            <mat-icon>sell</mat-icon>
+                            Status
+                        </div>
+                    </th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let user of users$ | async; index as i" class="align-middle">
+
+                    <td>
+                        <div class="user-profile">
+                            <div>
+
+                                <img src="../../assets/profile-icon.svg" class="rounded-circle" alt="" loading="lazy" />
+                            </div>
+                            <div class="user-name-email">
+                                <div class="user-name"> {{user.first_name}}</div>
+                                <div class="user-email"> {{user.email}}</div>
+                            </div>
+                        </div>
+
+                    </td>
+                    <td>{{user.roles[0].role}}</td>
+
+                    <td>20th April 2022</td>
+
+                    <td>20th April 2022</td>
+                    <td>
+
+                        <div [ngClass]="user.status==undefined ?'active':user.status.toLowerCase()">
+                            {{user.status==undefined ?'Active':user.status}}
+                        </div>
+
+                    </td>
+
+                    <td>
+
+                        <div class="row">
+                            <mat-icon>edit</mat-icon>
+                            <mat-icon [ngStyle]="{'color':'red'}">
+                                delete_outline</mat-icon>
+                        </div>
+                    </td>
+
+
+
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>

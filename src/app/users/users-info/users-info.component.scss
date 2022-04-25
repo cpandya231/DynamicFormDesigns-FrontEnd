@@ -1,0 +1,130 @@
+.app-container {
+    padding: 2em;
+}
+
+.table th {
+    font-weight: bold;
+
+
+}
+
+
+.submit-button {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.button {
+    background-color: #185ADB;
+    border: none;
+    border-radius: 0.2rem;
+    color: #fff;
+    padding: 0em 2em;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    height: 2.5em;
+}
+
+.filter-create-user {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+.table {
+    margin: 0em;
+}
+
+.table-container {
+    border: 0.01em solid #c4c4c4;
+    border-radius: 0.2rem;
+    margin-top: 2em;
+    overflow: hidden;
+
+}
+
+#table-filtering-search {
+    background-image: url("../../../assets/Search.png");
+    background-size: 1em 1em;
+    background-repeat: no-repeat;
+    background-position: 3% 50%;
+    padding-left: 2em;
+    height: 2.5em;
+}
+
+.row {
+    display: flex;
+
+    gap: 1.5rem;
+
+}
+
+.user-profile {
+
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.user-name-email {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: bold;
+}
+
+.user-email {
+    color: #c4c4c4;
+}
+
+.rounded-circle {
+    height: 3rem;
+}
+
+.asc {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.asc::after {
+    font-family: 'Material Icons';
+
+    content: "\e5c5";
+
+
+}
+
+.desc {
+    @extend .asc
+}
+
+.desc::after {
+    @extend .asc, ::after;
+    transform: rotate(180deg);
+
+}
+
+.active {
+    background-color: #65B764;
+    border-radius: 0.5rem;
+    text-align: center;
+    color: #fff;
+    padding: 0.2rem;
+    width: 5rem;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.inactive {
+    @extend .active;
+    background-color: #C4C4C4;
+}
