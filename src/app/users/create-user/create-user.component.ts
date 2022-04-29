@@ -785,7 +785,8 @@ export class CreateUserComponent implements OnInit {
       department: submittedData.department,
       roles: [{
         id: 1
-      }]
+      }],
+      isActive: true
     }
 
     this.userService.createUser(userObj).subscribe({

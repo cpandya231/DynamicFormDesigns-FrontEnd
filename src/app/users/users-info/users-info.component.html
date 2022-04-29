@@ -49,7 +49,7 @@
                             Last Login Time
                         </div>
                     </th>
-                    <th scope="col" sortable="status" (sort)="onSort($event)">
+                    <th scope="col" sortable="isActive" (sort)="onSort($event)">
                         <div class="row">
                             <mat-icon>sell</mat-icon>
                             Status
@@ -82,8 +82,8 @@
                     <td>20th April 2022</td>
                     <td>
 
-                        <div [ngClass]="user.status==undefined ?'active':user.status.toLowerCase()">
-                            {{user.status==undefined ?'Active':user.status}}
+                        <div [ngClass]="user.isActive==true ?'active':'inactive'">
+                            {{user.isActive ?'Active':'InActive'}}
                         </div>
 
                     </td>

@@ -8,7 +8,7 @@ export interface IUserItem {
     roles: any[],
     signupTime?: string,
     loginTime?: string,
-    status?: string
+    isActive: boolean
 
 
 }
