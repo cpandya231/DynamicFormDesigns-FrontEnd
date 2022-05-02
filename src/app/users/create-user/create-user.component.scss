@@ -1,0 +1,62 @@
+.form-container-parent {
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+
+.submit-button {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+}
+
+.button {
+    background-color: #185ADB;
+    border: none;
+    border-radius: 0.2rem;
+    color: #fff;
+    padding: 0em 2em;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    height: 2.5em;
+
+
+}
+
+.button:hover {
+    box-shadow: 0 5px 10px #c4c4c4
+}
+
+
+.button-cancel {
+    @extend .button;
+    background-color: #fff;
+    border: 0.1em solid #c4c4c4;
+    color: black;
+    font-weight: 500;
+}
+
+.button-cancel:hover {
+    box-shadow: inset 0 0px 5px #c4c4c4
+}
+
+
+
+.form-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
