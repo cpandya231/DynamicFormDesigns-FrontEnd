@@ -1,15 +1,10 @@
 /* @import '~@fortawesome/fontawesome-free/scss/fontawesome.scss'; */
 
 @import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
-$navy: #0A1931;
-$white: #ffffff;
-$blue: #185ADB;
-$yellow: #FFC947;
-$gray: #EFEFEF;
 * {
     font-family: Montserrat, Arial, Helvetica, sans-serif;
 }
 
-.btn .btn-primary {
-    background-color: $navy;
+.formbuilder .btn-primary {
+    background-color: #00ADB5;
 }

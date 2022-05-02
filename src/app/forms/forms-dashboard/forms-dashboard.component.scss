@@ -13,3 +13,9 @@
         width: 20px;
     }
 }
+
+@media (min-width: 576px) {
+    .modal-dialog {
+        max-width: 750px;
+    }
+}

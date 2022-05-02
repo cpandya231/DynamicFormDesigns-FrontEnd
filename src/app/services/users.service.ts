@@ -8,8 +8,6 @@ import { ServiceUtil } from './utility/ServiceUtil';
 export class UsersService {
     constructor(private http: HttpClient) { }
 
-
-
     getToken(loginModel: LoginModel) {
         const httpParams = new HttpParams()
             .set('username', loginModel.username)

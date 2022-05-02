@@ -25,8 +25,6 @@ export class LoginComponent implements OnInit {
 
 
   onSubmit() {
-
-
     this.usersService.getToken(this.loginModel).subscribe(token => {
 
       this.token = JSON.stringify(token);
