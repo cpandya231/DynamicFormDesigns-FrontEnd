@@ -24,6 +24,16 @@ export class UsersService {
 
     }
 
+    getUserByUsername(username: any): Observable<any> {
+
+        return this.authService.getAccessToken().asObservable().pipe(
+            switchMap(token => {
+                let httpOptions = this.getHttpOptions(token);
+                return this.http.get<IUserItem>(`${ServiceUtil.API_ENDPOINT}/users/${username}`, httpOptions);
+            }))
+
+    }
+
 
     private getHttpOptions(token: any) {
         return {

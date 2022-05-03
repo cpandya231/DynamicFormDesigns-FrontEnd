@@ -31,6 +31,7 @@ export class AuthService {
         localStorage.setItem('access_token', authResult.access_token);
         localStorage.setItem('refresh_token', authResult.refresh_token);
         localStorage.setItem("expires_at", decoded_token.exp);
+        localStorage.setItem("username", decoded_token.sub);
         activeProject.next(authResult.access_token);
     }
 

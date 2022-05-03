@@ -938,7 +938,7 @@ export class MasterForms {
             "tooltip": "",
             "customClass": "",
             "tabindex": "",
-            "hidden": false,
+            "hidden": true,
             "hideLabel": false,
             "uniqueOptions": false,
             "autofocus": false,
