@@ -6,8 +6,8 @@ export interface IUserItem {
     password?: string,
     department?: string,
     roles: any[],
-    signupTime?: string,
-    loginTime?: string,
+    createDt?: string,
+    lastLoginDt?: string,
     isActive: boolean
 
 

@@ -7,9 +7,10 @@ import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { UsersService } from '../../services/users.service';
 import { IUserItem } from '../user-item-model';
-import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { MdbModalConfig, MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { CreateUserComponent } from '../create-user/create-user.component';
 import { NgbdSortableHeader } from '../../directives/sort-table-column-directive';
+import { DateUtil } from 'src/app/services/utility/DateUtil';
 
 
 export type SortColumn = keyof IUserItem | '';
@@ -30,6 +31,7 @@ export interface SortEvent {
   styleUrls: ['./users-info.component.scss']
 })
 export class UsersInfoComponent implements OnInit {
+  readonly DATE_FORMAT = DateUtil.DATE_FORMAT;
 
   private modalRef: MdbModalRef<CreateUserComponent> | null = null;
 
@@ -53,6 +55,7 @@ export class UsersInfoComponent implements OnInit {
   private setData() {
     this.users$ = this.usersService.getAllUsers();
     this.users$.subscribe(items => {
+
       this.USERS = items;
 
       this.registerForSearch();
@@ -104,14 +107,16 @@ export class UsersInfoComponent implements OnInit {
 
     return this.USERS.filter(user => {
       const term = text.toLowerCase();
-      return user.first_name.toLowerCase().includes(term)
-        || user.email.toLowerCase().includes(term)
+      return user.first_name.toLowerCase().includes(term);
 
     });
   }
 
   createUser() {
-    this.modalRef = this.modalService.open(CreateUserComponent);
+    let mdbModalConfig: MdbModalConfig = {
+      ignoreBackdropClick: true
+    };
+    this.modalRef = this.modalService.open(CreateUserComponent, mdbModalConfig);
 
 
   }
