@@ -104,11 +104,13 @@ export class RolesComponent implements OnInit {
       this.registerForSearch();
 
     } else {
+
       let sorted = [...this.ROLES].sort((a, b) => {
         const res = compare(a[column], b[column]);
         return direction === 'asc' ? res : -res;
       });
       this.roles$ = of(sorted);
+
     }
   }
 
