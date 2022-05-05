@@ -1,11 +1,10 @@
-FROM node:slim
+FROM node:latest
+WORKDIR /app
+COPY . .
+RUN npm install
+RUN npm install -g angular-cli
+COPY . .
 
-RUN npm install @angular/cli@latest -g
+EXPOSE 4200 49153
 
-RUN mkdir -p /home/boilerplate
-
-WORKDIR /home/boilerplate
-
-EXPOSE 4200
-
-CMD ng serve --port 4200 --host 0.0.0.0 --poll 1
+CMD [ "npm", "start" ]'
