@@ -1,8 +1,12 @@
 <div class="app-container">
+
     <div class="form-container-parent">
+        <mat-icon class="close-icon" (click)="close()">close</mat-icon>
         <div class="create-user-form-header">
             <h1>Create User</h1>
+
         </div>
+
         <div class="form-container" *ngIf="isDataLoaded">
 
             <formio [form]='FormData' #formio (submit)="handleSubmit()"></formio>
@@ -12,5 +16,7 @@
                 <button type="submit" class="button" (click)="onSubmit()">Create User</button>
             </div>
         </div>
+
+
     </div>
 </div>
