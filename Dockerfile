@@ -1,4 +1,5 @@
 FROM node:latest
+RUN apk add g++ make python
 WORKDIR /app
 COPY . .
 RUN npm install
