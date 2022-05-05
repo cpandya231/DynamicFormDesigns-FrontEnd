@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { UsersService } from '../services/users.service';
 import { INavBarItem } from './navbar-item-model';
 
 @Component({
@@ -10,14 +11,20 @@ import { INavBarItem } from './navbar-item-model';
 })
 export class NavbarComponent implements OnInit {
 
+  username: any = "";
 
 
   @Input() navBarItems!: INavBarItem[];
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private userService: UsersService, private router: Router) {
 
   }
 
   ngOnInit(): void {
+
+
+    this.userService.getUserByUsername(localStorage.getItem("username")).subscribe(data => {
+      this.username = data.first_name;
+    })
 
   }
 

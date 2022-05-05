@@ -2,34 +2,25 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
 
-import { IUserItem } from '../users/user-item-model';
+
 import { ServiceUtil } from './utility/ServiceUtil';
 import { map, Observable, Subject, switchMap } from 'rxjs';
+import { IRoleItem } from '../roles/role-item-model';
 @Injectable({ providedIn: 'root' })
-export class UsersService {
-    public userAdded: Subject<boolean>;
+export class PermissionsService {
+    public roleAdded: Subject<boolean>;
 
     constructor(private http: HttpClient, private authService: AuthService) {
-        this.userAdded = new Subject<boolean>();
+        this.roleAdded = new Subject<boolean>();
     }
 
 
-    getAllUsers(): Observable<any> {
+    getAllPermissions(): Observable<any> {
 
         return this.authService.getAccessToken().asObservable().pipe(
             switchMap(token => {
                 let httpOptions = this.getHttpOptions(token);
-                return this.http.get<IUserItem[]>(`${ServiceUtil.API_ENDPOINT}/users/`, httpOptions);
-            }))
-
-    }
-
-    getUserByUsername(username: any): Observable<any> {
-
-        return this.authService.getAccessToken().asObservable().pipe(
-            switchMap(token => {
-                let httpOptions = this.getHttpOptions(token);
-                return this.http.get<IUserItem>(`${ServiceUtil.API_ENDPOINT}/users/${username}`, httpOptions);
+                return this.http.get<IRoleItem[]>(`${ServiceUtil.API_ENDPOINT}/permissions/`, httpOptions);
             }))
 
     }
@@ -47,11 +38,11 @@ export class UsersService {
         };
     }
 
-    createUser(userItem: IUserItem) {
+    creatRole(userItem: IRoleItem) {
 
         return this.authService.getAccessToken().asObservable().pipe(
             switchMap(token => {
-                return this.http.post<any>(`${ServiceUtil.API_ENDPOINT}/users/register`, userItem, this.getHttpOptions(token));
+                return this.http.post<any>(`${ServiceUtil.API_ENDPOINT}/roles/save`, userItem, this.getHttpOptions(token));
             }))
 
 

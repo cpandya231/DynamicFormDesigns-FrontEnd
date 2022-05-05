@@ -1,6 +1,13 @@
 import { Directive, Input, Output, EventEmitter } from "@angular/core";
-import { SortColumn, SortDirection, SortEvent } from "../users/users-info/users-info.component";
+import { IRoleItem } from "../roles/role-item-model";
+import { IUserItem } from "../users/user-item-model";
 
+export type SortColumn = keyof any | '';
+export type SortDirection = 'asc' | 'desc' | '';
+export interface SortEvent {
+    column: SortColumn;
+    direction: SortDirection;
+}
 @Directive({
     selector: 'th[sortable]',
     host: {
@@ -13,7 +20,7 @@ export class NgbdSortableHeader {
 
     @Input() sortable: SortColumn = '';
     @Input() direction: SortDirection = '';
-    @Output() sort = new EventEmitter<SortEvent>();
+    @Output() sort = new EventEmitter<any>();
 
     rotate() {
         this.direction = rotate[this.direction];
