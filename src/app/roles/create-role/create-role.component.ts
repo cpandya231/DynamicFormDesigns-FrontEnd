@@ -54,7 +54,7 @@ export class CreateRoleComponent implements OnInit {
 
     let submittedData = this.form.formio.submission.data;
     let mappedPermissions = [];
-    if (submittedData.permissions != undefined) {
+    if (submittedData.permissions) {
       for (let permissionId of submittedData.permissions) {
         mappedPermissions.push({ id: parseInt(permissionId) })
       }

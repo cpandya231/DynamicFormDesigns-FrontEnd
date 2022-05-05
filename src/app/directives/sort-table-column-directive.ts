@@ -2,19 +2,12 @@ import { Directive, Input, Output, EventEmitter } from "@angular/core";
 import { IRoleItem } from "../roles/role-item-model";
 import { IUserItem } from "../users/user-item-model";
 
-
-
 export type SortColumn = keyof any | '';
 export type SortDirection = 'asc' | 'desc' | '';
-
-
-
-
 export interface SortEvent {
     column: SortColumn;
     direction: SortDirection;
 }
-
 @Directive({
     selector: 'th[sortable]',
     host: {
