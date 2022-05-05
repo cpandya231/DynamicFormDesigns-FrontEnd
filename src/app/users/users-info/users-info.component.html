@@ -37,13 +37,21 @@
                             Roles
                         </div>
                     </th>
-                    <th scope="col" sortable="signupTime" (sort)="onSort($event)">
+                    <th scope="col" sortable="department" (sort)="onSort($event)">
+                        <div class="row">
+                            <mat-icon>
+                                corporate_fare
+                            </mat-icon>
+                            Department
+                        </div>
+                    </th>
+                    <th scope="col" sortable="createDt" (sort)="onSort($event)">
                         <div class="row">
                             <mat-icon>schedule</mat-icon>
                             Signup Time
                         </div>
                     </th>
-                    <th scope="col" sortable="loginTime" (sort)="onSort($event)">
+                    <th scope="col" sortable="lastLoginDt" (sort)="onSort($event)">
                         <div class="row">
                             <mat-icon>schedule</mat-icon>
                             Last Login Time
@@ -76,10 +84,11 @@
 
                     </td>
                     <td>{{user.roles[0].role}}</td>
+                    <td>{{user.department}}</td>
 
-                    <td>20th April 2022</td>
+                    <td>{{user.createDt |date: DATE_FORMAT }}</td>
 
-                    <td>20th April 2022</td>
+                    <td>{{user.lastLoginDt |date: DATE_FORMAT }}</td>
                     <td>
 
                         <div [ngClass]="user.isActive==true ?'active':'inactive'">

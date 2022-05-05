@@ -1,6 +1,72 @@
-<div class="welcome-container">
-    <div class="app-container">
-        <div class="app">Create Role</div>
+<div class="app-container table-responsive">
+    <div class="filter-create-user">
+
+        <form class="filter-item-form">
+            <div class="mb-3 row">
+
+                <div class="col-xs-3 col-sm-auto">
+                    <input id="table-filtering-search" class="form-control" type="text" [formControl]="filter"
+                        placeholder="Find by role name">
+                </div>
+
+            </div>
+
+        </form>
+
+        <div class="submit-button">
+
+            <button type="submit" class="button" (click)="createRole()">Create Role</button>
+        </div>
+
+
+    </div>
+    <div class="table-container">
+        <table class="table table-hover">
+
+            <thead>
+                <tr>
+
+                    <th scope="col" sortable="role" (sort)="onSort($event)">
+                        <div class="row">
+                            <mat-icon>lock</mat-icon>
+                            Roles
+                        </div>
+                    </th>
+
+                    <th scope="col">
+                        <div class="row">
+                            <mat-icon>person</mat-icon>
+                            Description
+                        </div>
+                    </th>
+
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let role of roles$ | async; index as i" class="align-middle">
+
+                    <td>{{role.role}}</td>
+
+
+                    <td>{{role.description}}</td>
+
+                    <td>
+
+                        <div class="row">
+                            <mat-icon>edit</mat-icon>
+                            <mat-icon [ngStyle]="{'color':'red'}">
+                                delete_outline</mat-icon>
+                        </div>
+                    </td>
+
+
+
+                </tr>
+
+            </tbody>
+        </table>
 
     </div>
 </div>
