@@ -42,7 +42,7 @@ export class RoleService {
 
         return this.authService.getAccessToken().asObservable().pipe(
             switchMap(token => {
-                return this.http.post<any>(`${ServiceUtil.API_ENDPOINT}/roles/save`, userItem, this.getHttpOptions(token));
+                return this.http.post<any>(`${ServiceUtil.API_ENDPOINT}/roles/`, userItem, this.getHttpOptions(token));
             }))
 
 
