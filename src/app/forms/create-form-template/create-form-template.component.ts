@@ -16,6 +16,7 @@ export class CreateFormTemplateComponent implements OnInit {
     components: []
   };
   IsFormLoaded = false;
+  formId: number = 0;
   SiteName = 'Moraiya';
   DepartmentName = 'Tablet Facility IX ';
   RoomIDList = [101, 102, 103, 104, 105];
@@ -180,6 +181,7 @@ export class CreateFormTemplateComponent implements OnInit {
         this.FormName = data.name;
         this.CurrentForm.components = JSON.parse(data.template).components;
         this.IsFormLoaded = true;
+        this.formId = data.id;
       })
     } else {
       this.IsFormLoaded = true;
@@ -187,10 +189,10 @@ export class CreateFormTemplateComponent implements OnInit {
   }
 
   SaveTemplate(): void {
-    this.formsService.SaveFormTemplate(this.formIO.form, this.FormName).subscribe(data => {
+    this.formsService.SaveFormTemplate(this.formIO.form, this.FormName, this.formId).subscribe(data => {
       alert('form created successfully');
+      this.router.navigate(['formsDashboard']);
     })
-    this.router.navigate(['formsDashboard']);
   }
 
   CancelChanges(): void {

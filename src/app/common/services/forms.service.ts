@@ -19,17 +19,18 @@ export class FormsService {
     return this.http.get<IGetFormTemplateResponse>(`http://localhost:8080/forms/${formName}/`);
   }
 
-  SaveFormTemplate(formTemplate: any, name: string) {
-    return this.http.post('http://localhost:8080/forms/save', 
-    {
-      name: name,
+  SaveFormTemplate(formTemplate: any, name: string, id: number) {
+    let body = {
+      name,
       template: JSON.stringify({formName: name, components: formTemplate.components})
-    },{
+    }
+    if (id) {
+      body = {...body, ...{id}}
+    }
+    return this.http.post('http://localhost:8080/forms/save', body,{
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
     })
     });
   }
 }
-
-
