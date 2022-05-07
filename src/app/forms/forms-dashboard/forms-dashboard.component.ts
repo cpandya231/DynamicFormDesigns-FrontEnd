@@ -18,19 +18,20 @@ export class FormsDashboardComponent implements OnInit {
     private modalService: MdbModalService) { }
 
   ngOnInit(): void {
-    this.FormTemplates = this.formsService.GetFormTemplates();
+    this.formsService.GetFormTemplates().subscribe(data => {
+      this.FormTemplates = data;
+    })
   }
 
-  EditFormTemplate(formId: any) {
-    this.router.navigate(['/createForm', {id: formId}]);
+  EditFormTemplate(formName: any) {
+    this.router.navigate(['/createForm', {name: formName}]);
   }
 
-  PreviewForm(formId: any) {
+  PreviewForm(formTemplate: any) {
     this.modalRef = this.modalService.open(PreviewFormComponent, {
       data: {
-        formId: formId
+        formTemplate: JSON.parse(formTemplate)
       }
     });
   }
-
 }

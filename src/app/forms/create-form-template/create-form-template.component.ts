@@ -12,10 +12,10 @@ export class CreateFormTemplateComponent implements OnInit {
 
   @ViewChild('formio') formIO: any;
   FormName: string= '';
-  private formId: number = 0;
   CurrentForm: any = {
     components: []
   };
+  IsFormLoaded = false;
   SiteName = 'Moraiya';
   DepartmentName = 'Tablet Facility IX ';
   RoomIDList = [101, 102, 103, 104, 105];
@@ -141,7 +141,7 @@ export class CreateFormTemplateComponent implements OnInit {
 
   ngOnInit() {
     let params = this.activatedRoute.snapshot.paramMap;
-    this.formId = Number(params.get('id'));
+    this.FormName = String(params.get('name') || '');
     let eleObj = {};
     this.EnabledFormElements.forEach(ele => {
       let obj = {
@@ -174,16 +174,22 @@ export class CreateFormTemplateComponent implements OnInit {
     });
     this.FormOptions.editForm = {...eleObj};
 
-    if (this.formId) {
-      let form =  this.formsService.GetFormTemplate(this.formId)
-      this.CurrentForm.components = form.components;
-      this.FormName = form.Name;
+    if (this.FormName.length) {
+      this.formsService.GetFormTemplate(this.FormName).subscribe(data => {
+        console.log(data);
+        this.FormName = data.name;
+        this.CurrentForm.components = JSON.parse(data.template).components;
+        this.IsFormLoaded = true;
+      })
+    } else {
+      this.IsFormLoaded = true;
     }
   }
 
   SaveTemplate(): void {
-    this.formsService.SaveFormTemplate(this.formIO.form, this.FormName);
-    alert('form created successfully');
+    this.formsService.SaveFormTemplate(this.formIO.form, this.FormName).subscribe(data => {
+      alert('form created successfully');
+    })
     this.router.navigate(['formsDashboard']);
   }
 

@@ -35,7 +35,6 @@ export class UsersService {
     }
 
     createUser(userItem: IUserItem) {
-
         return this.authService.getAccessToken().asObservable().pipe(
             switchMap(token => {
                 return this.http.post<any>(`${ServiceUtil.API_ENDPOINT}/users/register`, userItem, this.getHttpOptions(token));

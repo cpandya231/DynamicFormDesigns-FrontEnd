@@ -56,3 +56,11 @@ export interface IColumnModel {
     size: string;
     width: number;
 }
+
+export interface IGetFormTemplateResponse {
+    createDt: string;
+    createdBy: string;
+    id: number;
+    name: string;
+    template: string;
+}

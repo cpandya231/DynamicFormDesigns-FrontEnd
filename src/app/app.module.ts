@@ -9,7 +9,7 @@ import { FormioModule } from '@formio/angular';
 import { CreateFormTemplateComponent } from './forms/create-form-template/create-form-template.component';
 import { FormsDashboardComponent } from './forms/forms-dashboard/forms-dashboard.component';
 import { LoginComponent } from './login/login.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { PasswordPatternDirective } from './directives/password-pattern.directive';
 import { MatIconModule } from '@angular/material/icon'
@@ -36,6 +36,7 @@ import { PreviewFormComponent } from './forms/preview-form/preview-form.componen
 import { UsersInfoComponent } from './users/users-info/users-info.component';
 import { CreateUserComponent } from './users/create-user/create-user.component';
 import { NgbdSortableHeader } from '../app/directives/sort-table-column-directive';
+import { GlobalAppIntercepter } from './common/services/global-app-intercepter.service';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,9 @@ import { NgbdSortableHeader } from '../app/directives/sort-table-column-directiv
     BrowserAnimationsModule,
     MatIconModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: GlobalAppIntercepter, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

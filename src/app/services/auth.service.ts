@@ -11,8 +11,6 @@ import { Router } from '@angular/router';
 export class AuthService {
     constructor(private http: HttpClient, private router: Router) { }
 
-
-
     login(loginModel: LoginModel) {
         let loginActiveProject: ReplaySubject<any> = new ReplaySubject(1);
         const httpParams = new HttpParams()
@@ -23,17 +21,13 @@ export class AuthService {
         return loginActiveProject;
     }
 
-
     setSession(activeProject: any, authResult: any) {
         let decoded_token = this.getDecodedAccessToken(authResult.access_token);
-
-
         localStorage.setItem('access_token', authResult.access_token);
         localStorage.setItem('refresh_token', authResult.refresh_token);
         localStorage.setItem("expires_at", decoded_token.exp);
         activeProject.next(authResult.access_token);
     }
-
 
     getDecodedAccessToken(token: any): any {
         try {
@@ -49,17 +43,11 @@ export class AuthService {
     }
 
     refreshToken(activeProjectRefreshToken: any) {
-
-
         let httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-                'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
-                "Authorization": `Bearer ${localStorage.getItem('refresh_token')}`
             })
-        };;
+        };
         this.http.get<any>(`${ServiceUtil.API_ENDPOINT}/token/refresh`, httpOptions)
             .subscribe({ next: this.setSession.bind(this, activeProjectRefreshToken), error: this.handleError.bind(this, activeProjectRefreshToken) });
         return activeProjectRefreshToken;
@@ -69,18 +57,14 @@ export class AuthService {
         let activeProjectRefreshToken: ReplaySubject<any> = new ReplaySubject(1);
         if (this.isTokenExpired()) {
             return this.refreshToken(activeProjectRefreshToken);
-
         }
         activeProjectRefreshToken.next(localStorage.getItem("access_token"));
         return activeProjectRefreshToken;
     }
 
-
-
     isTokenExpired() {
         return moment().isAfter(this.getExpiration());
     }
-
 
     getExpiration() {
         const expiration = localStorage.getItem("expires_at");
@@ -92,10 +76,7 @@ export class AuthService {
 
     invalidateSession() {
         localStorage.clear();
-
     }
-
-
 }
 
 
