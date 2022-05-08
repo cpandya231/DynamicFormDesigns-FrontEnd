@@ -23,8 +23,9 @@
 
                 </a>
                 <div *ngIf="item?.children?.length" mdbDropdown class="dropdown">
-                    <a class=" nav-link nav-link-custom  dropdown-toggle" aria-expanded="false" mdbDropdownToggle
-                        [routerLinkActive]="['active']" [routerLink]="[]">
+                    <a class=" nav-link nav-link-custom  dropdown-toggle inactiveLink" aria-expanded="false"
+                        mdbDropdownToggle [routerLinkActive]="['active']" [routerLink]="[]"
+                        [routerLinkActiveOptions]="{ exact: true }">
                         {{ item.name }}
                     </a>
                     <ul mdbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -41,7 +42,7 @@
 
         </div>
 
-        <span class="navbar-text">Chintan</span>
+        <span class="navbar-text">{{username}}</span>
         <ul class="navbar-nav">
             <!-- Avatar -->
             <li mdbDropdown class="nav-item dropdown">

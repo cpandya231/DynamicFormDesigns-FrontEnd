@@ -30,6 +30,11 @@
     height: 2.5em;
 }
 
+.button:hover {
+    background-color: #0d3689;
+}
+
+
 .filter-create-user {
     display: flex;
     flex-direction: row;

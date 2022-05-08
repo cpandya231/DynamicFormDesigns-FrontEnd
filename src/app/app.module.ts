@@ -37,6 +37,7 @@ import { UsersInfoComponent } from './users/users-info/users-info.component';
 import { CreateUserComponent } from './users/create-user/create-user.component';
 import { NgbdSortableHeader } from '../app/directives/sort-table-column-directive';
 import { GlobalAppIntercepter } from './common/services/global-app-intercepter.service';
+import { CreateRoleComponent } from './roles/create-role/create-role.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { GlobalAppIntercepter } from './common/services/global-app-intercepter.s
     NgbdSortableHeader,
     PreviewFormComponent,
     CreateUserComponent,
-    UsersInfoComponent
+    UsersInfoComponent,
+    CreateRoleComponent
   ],
   imports: [
     BrowserModule,
