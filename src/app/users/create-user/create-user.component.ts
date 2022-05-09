@@ -60,6 +60,7 @@ export class CreateUserComponent implements OnInit {
       username: submittedData.username,
       password: submittedData.password,
       department: submittedData.department,
+      dateOfBirth: submittedData.dateOfBirth,
       roles: mappedRoles,
       isActive: true
     }

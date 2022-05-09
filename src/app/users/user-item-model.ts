@@ -5,6 +5,7 @@ export interface IUserItem {
     username: string,
     password?: string,
     department?: string,
+    dateOfBirth:string,
     roles: any[],
     createDt?: string,
     lastLoginDt?: string,

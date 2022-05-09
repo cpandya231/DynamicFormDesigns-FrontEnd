@@ -1,4 +1,5 @@
-
+import { formatDate } from "@angular/common";
+import { DateUtil } from './DateUtil';
 export class MasterForms {
 
 
@@ -106,6 +107,65 @@ export class MasterForms {
             "protected": true,
             "inputType": "text",
             "id": "emrmdwi"
+        }, {
+            "label": "Date Of Birth",
+            "labelPosition": "top",
+            "displayInTimezone": "utc",
+            "useLocaleSettings": false,
+            "allowInput": true,
+            "format": DateUtil.DATE_FORMAT_SHORT,
+            "enableDate": true,
+            "datePicker": {
+                "disable": "",
+                "disableFunction": "",
+                "disableWeekends": false,
+                "disableWeekdays": false,
+                "minDate": null,
+                "maxDate": formatDate(new Date(), DateUtil.DATE_FORMAT_SHORT, 'en'),
+                "showWeeks": true,
+                "startingDay": 0,
+                "initDate": "",
+                "minMode": "day",
+                "maxMode": "year",
+                "yearRows": 4,
+                "yearColumns": 5
+            },
+            "enableTime": false,
+
+            "validateOn": "blur",
+            "validate": {
+                "required": true,
+
+            },
+            "enableMinDateInput": false,
+            "enableMaxDateInput": false,
+            "unique": false,
+            "key": "dateOfBirth",
+            "type": "datetime",
+            "timezone": "",
+            "input": true,
+            "widget": {
+                "type": "calendar",
+                "displayInTimezone": "utc",
+                "locale": "en",
+                "useLocaleSettings": false,
+                "allowInput": true,
+                "mode": "single",
+                "enableTime": false,
+                "noCalendar": true,
+                "format": DateUtil.DATE_FORMAT_SHORT,
+                "hourIncrement": 1,
+                "minuteIncrement": 1,
+                "time_24hr": true,
+                "minDate": null,
+                "disabledDates": "",
+                "disableWeekends": false,
+                "disableWeekdays": false,
+                "disableFunction": "",
+                "maxDate": "2022-05-08"
+            },
+            "datepickerMode": "day",
+            "id": "euoano"
         }, {
             "label": "Department",
             "labelPosition": "top",

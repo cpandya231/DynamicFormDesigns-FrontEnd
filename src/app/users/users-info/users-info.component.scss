@@ -133,3 +133,38 @@
     @extend .active;
     background-color: #C4C4C4;
 }
+
+
+
+
+.form-switch .form-check-input {
+    width: 3rem;
+    height: 1.5rem;
+    border-radius: 1rem;
+}
+
+.form-switch .form-check-input:focus:before {
+
+    box-shadow: none;
+
+}
+
+
+.form-switch .form-check-input:after {
+    background-color: #fff;
+    margin-top: 0.1rem;
+    margin-left: 0.2rem;
+}
+
+.form-switch .form-check-input:checked {
+    background-color: #30D158;
+
+}
+
+.form-switch .form-check-input:checked::after {
+    background-color: #fff;
+    margin-top: 0.1rem;
+    margin-left: 1.5rem;
+
+
+}
