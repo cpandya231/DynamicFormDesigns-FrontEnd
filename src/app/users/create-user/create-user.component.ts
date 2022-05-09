@@ -71,7 +71,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   navigateOnSuccess() {
-    this.userService.userAdded.next(true);
+    this.userService.reloadUsers.next(true);
     this.modelRef.close();
     this.router.navigate(['/usersParent/users']);
   }

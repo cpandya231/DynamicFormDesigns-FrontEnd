@@ -38,6 +38,7 @@ import { CreateUserComponent } from './users/create-user/create-user.component';
 import { NgbdSortableHeader } from '../app/directives/sort-table-column-directive';
 import { GlobalAppIntercepter } from './common/services/global-app-intercepter.service';
 import { CreateRoleComponent } from './roles/create-role/create-role.component';
+import { DeleteUserAlertComponent } from './users/users-info/delete-user-alert/delete-user-alert.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,9 @@ import { CreateRoleComponent } from './roles/create-role/create-role.component';
     PreviewFormComponent,
     CreateUserComponent,
     UsersInfoComponent,
-    CreateRoleComponent
+    CreateRoleComponent,
+
+    DeleteUserAlertComponent
   ],
   imports: [
     BrowserModule,

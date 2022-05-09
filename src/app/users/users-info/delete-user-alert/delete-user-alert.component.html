@@ -1,0 +1,12 @@
+<div class="app-container">
+
+
+    <div class="create-user-form-header">
+        <h2>Are you sure you want to {{userObj.isActive?'activate':'deactivate'}} the user?</h2>
+    </div>
+    <div class="submit-button">
+        <button type="button" class="button-cancel" (click)="close()">Cancel</button>
+        <button type="submit" class="button" (click)="handleSubmit()">Ok</button>
+    </div>
+
+</div>

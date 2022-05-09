@@ -95,7 +95,7 @@
 
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"
-                                [checked]="user.isActive" />
+                                [checked]="user.isActive" (change)="toggleUser(user,$event)" />
 
                         </div>
 

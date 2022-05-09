@@ -11,6 +11,7 @@ import { MdbModalConfig, MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit
 import { CreateUserComponent } from '../create-user/create-user.component';
 import { NgbdSortableHeader, SortEvent } from '../../directives/sort-table-column-directive';
 import { DateUtil } from 'src/app/services/utility/DateUtil';
+import { DeleteUserAlertComponent } from './delete-user-alert/delete-user-alert.component';
 
 const compare = (v1: any, v2: any) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
@@ -39,7 +40,7 @@ export class UsersInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.setData();
-    this.initUserAddedSubscription();
+    this.initUserRefreshedSubscription();
   }
 
   private setData() {
@@ -60,8 +61,8 @@ export class UsersInfoComponent implements OnInit {
     );
   }
 
-  initUserAddedSubscription() {
-    this.usersService.userAdded.subscribe((data: boolean) => {
+  initUserRefreshedSubscription() {
+    this.usersService.reloadUsers.subscribe((data: boolean) => {
       if (data) {
         this.setData();
 
@@ -108,6 +109,21 @@ export class UsersInfoComponent implements OnInit {
     };
     this.modalRef = this.modalService.open(CreateUserComponent, mdbModalConfig);
 
+
+  }
+
+  toggleUser(user: IUserItem, event: any) {
+    let userObj: any = {
+      username: user.username,
+      isActive: event.currentTarget.checked
+    }
+
+
+    this.modalRef = this.modalService.open(DeleteUserAlertComponent, {
+      data: {
+        userObj
+      }
+    });
 
   }
 
