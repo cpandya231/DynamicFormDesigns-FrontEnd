@@ -25,8 +25,6 @@ export class LoginComponent implements OnInit {
 
 
   onSubmit() {
-
-
     this.authService.login(this.loginModel).subscribe({
       next: this.navigateOnSuccess.bind(this), error: this.handleError.bind(this)
     });

@@ -13,13 +13,13 @@ export class PreviewFormComponent implements OnInit {
     title: '',
     components: []
   };
+  formTemplate: any;
   constructor(private formsService: FormsService) { }
 
   ngOnInit(): void {
-    if (this.formId) {
-      let form =  this.formsService.GetFormTemplate(this.formId)
-      this.FormData.components = form.components;
-      this.FormData.title = form.Name;
+    if (this.formTemplate) {
+      this.FormData.components = this.formTemplate.components;
+      this.FormData.title = this.formTemplate.formName;
     }
   }
 

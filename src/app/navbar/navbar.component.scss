@@ -5,8 +5,13 @@
 
 .navbar {
     background-color: #0A1931;
-    padding: 0rem 0rem 0rem 1rem;
-
+    padding: 0rem;
+    .logo_image {
+        img {
+            height: 3rem;
+            width: 12rem;
+        }
+    }
 }
 
 .navbar-collapse {
@@ -18,15 +23,11 @@
     font-weight: lighter;
 }
 
-
-
 .nav-link-custom:hover {
     color: #ffffff;
     font-weight: bold;
     border-bottom: solid #FFC947;
-
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.3s ease-in-out, border-bottom 0.1s ease-in-out;
-
 }
 
 .active {

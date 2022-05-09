@@ -1,4 +1,5 @@
 /* @import '~@fortawesome/fontawesome-free/scss/fontawesome.scss'; */
+
 @import '~@fortawesome/fontawesome-free/scss/solid.scss';
 @import '~@fortawesome/fontawesome-free/scss/regular.scss';
 @import '~@fortawesome/fontawesome-free/scss/brands.scss';
@@ -8,11 +9,9 @@ $white: #ffffff;
 $blue: #185ADB;
 $yellow: #FFC947;
 $gray: #EFEFEF;
-
 * {
     font-family: Montserrat, Arial, Helvetica, sans-serif;
 }
-
 
 html,
 body {
@@ -35,17 +34,12 @@ input[type="password"] {
     outline: none;
     transition: border .2s ease;
     border-style: none;
-
     height: 2.5em;
     border-radius: 5px;
     background-color: #c4c4c430;
-
-
-
 }
 
 select {
-
     /* styling */
     background-color: #c4c4c430 !important;
     border: thin solid blue;
@@ -54,44 +48,32 @@ select {
     font: inherit;
     line-height: 1.5em;
     padding: 0.5em 3.5em 0.5em 1em;
-
     /* reset */
-
     margin: 0;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background-image:
-        linear-gradient(45deg, transparent 50%, gray 50%),
-        linear-gradient(135deg, gray 50%, transparent 50%),
-        linear-gradient(to right, #ccc, #ccc);
-    background-position:
-        calc(100% - 20px) calc(1em),
-        calc(100% - 15px) calc(1em),
-        calc(100% - 2.5em) 0.3em;
-    background-size:
-        5px 5px,
-        5px 5px,
-        1px 1.5em;
+    background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%), linear-gradient(to right, #ccc, #ccc);
+    background-position: calc(100% - 20px) calc(1em), calc(100% - 15px) calc(1em), calc(100% - 2.5em) 0.3em;
+    background-size: 5px 5px, 5px 5px, 1px 1.5em;
     background-repeat: no-repeat;
 }
 
 select:focus {
-    background-image:
-        linear-gradient(45deg, green 50%, transparent 50%),
-        linear-gradient(135deg, transparent 50%, green 50%),
-        linear-gradient(to right, #ccc, #ccc);
-    background-position:
-        calc(100% - 15px) 1em,
-        calc(100% - 20px) 1em,
-        calc(100% - 2.5em) 0.3em;
-    background-size:
-        5px 5px,
-        5px 5px,
-        1px 1.5em;
+    background-image: linear-gradient(45deg, green 50%, transparent 50%), linear-gradient(135deg, transparent 50%, green 50%), linear-gradient(to right, #ccc, #ccc);
+    background-position: calc(100% - 15px) 1em, calc(100% - 20px) 1em, calc(100% - 2.5em) 0.3em;
+    background-size: 5px 5px, 5px 5px, 1px 1.5em;
     background-repeat: no-repeat;
     border-color: green;
     outline: 0;
+}
+
+.formbuilder .btn-primary {
+    background-color: #00ADB5;
+}
+
+.modal-dialog {
+    max-width: 1000px;
 }
