@@ -118,22 +118,6 @@
 
 }
 
-.active {
-    background-color: #65B764;
-    border-radius: 0.5rem;
-    text-align: center;
-    color: #fff;
-    padding: 0.2rem;
-    width: 5rem;
-    font-size: 0.7rem;
-    font-weight: bold;
-}
-
-.inactive {
-    @extend .active;
-    background-color: #C4C4C4;
-}
-
 
 
 
