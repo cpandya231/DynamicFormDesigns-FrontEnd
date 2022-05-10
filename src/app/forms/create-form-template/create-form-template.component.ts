@@ -11,7 +11,7 @@ import { FormsService } from '../../common/services/forms.service';
 export class CreateFormTemplateComponent implements OnInit {
 
   @ViewChild('formio') formIO: any;
-  FormName: string= '';
+  FormName: string = '';
   CurrentForm: any = {
     components: []
   };
@@ -22,7 +22,7 @@ export class CreateFormTemplateComponent implements OnInit {
   RoomIDList = [101, 102, 103, 104, 105];
   ActivitiesList = ['Environmental conditional monitoring'];
   EnabledFormElements = ['textfield', 'email', 'textarea', 'phoneNumber', 'number', 'date', 'password', 'checkbox', 'time', 'selectboxes', 'select',
-      'radio',  'file','button', 'table', 'tabs'];
+    'radio', 'file', 'button', 'table', 'tabs'];
   FormOptions: any = {
     builder: {
       basic: {
@@ -40,7 +40,7 @@ export class CreateFormTemplateComponent implements OnInit {
           content: false,
           well: false,
           panel: false,
-          columns: false,
+          columns: true,
           fieldset: false,
         }
       },
@@ -55,28 +55,28 @@ export class CreateFormTemplateComponent implements OnInit {
             title: 'Site',
             key: 'site',
             schema: {
-                label: 'Site',
-                type: 'textfield',
-                key: 'site',
-                input: true,
-                defaultValue: this.SiteName,
-                disabled: true,
-                labelMargin: 5,
-                labelPosition: 'left-left'
+              label: 'Site',
+              type: 'textfield',
+              key: 'site',
+              input: true,
+              defaultValue: this.SiteName,
+              disabled: true,
+              labelMargin: 5,
+              labelPosition: 'left-left'
             }
           },
           department: {
             title: 'Department',
             key: 'department',
             schema: {
-                label: 'Department',
-                type: 'textfield',
-                key: 'department',
-                input: true,
-                defaultValue: this.DepartmentName,
-                disabled: true,
-                labelMargin: 5,
-                labelPosition: 'left-left'
+              label: 'Department',
+              type: 'textfield',
+              key: 'department',
+              input: true,
+              defaultValue: this.DepartmentName,
+              disabled: true,
+              labelMargin: 5,
+              labelPosition: 'left-left'
             }
           },
           currentDate: {
@@ -138,7 +138,7 @@ export class CreateFormTemplateComponent implements OnInit {
   };
   constructor(private formsService: FormsService,
     private activatedRoute: ActivatedRoute,
-    private router: Router) {}
+    private router: Router) { }
 
   ngOnInit() {
     let params = this.activatedRoute.snapshot.paramMap;
@@ -146,13 +146,13 @@ export class CreateFormTemplateComponent implements OnInit {
     let eleObj = {};
     this.EnabledFormElements.forEach(ele => {
       let obj = {
-        [ele]:  [...this.ignoreComponents(['logic', 'layout']),
+        [ele]: [...this.ignoreComponents(['logic', 'layout']),
         {
           key: 'display',
           components: this.ignoreComponents(
-            ['widget.type', 'autocomplete', 'inputMask', 'displayMask', 'allowMultipleMasks', 'tabindex', 'modalEdit', 
-          'hidden', 'hideLabel', 'showWordCount', 'showCharCount', 'mask', 'tableView']
-            )
+            ['widget.type', 'autocomplete', 'inputMask', 'displayMask', 'allowMultipleMasks', 'tabindex', 'modalEdit',
+              'hidden', 'hideLabel', 'showWordCount', 'showCharCount', 'mask', 'tableView']
+          )
         },
         {
           key: 'validation',
@@ -170,10 +170,11 @@ export class CreateFormTemplateComponent implements OnInit {
           key: 'conditional',
           components: this.ignoreComponents(['customConditionalPanel'])
         }
-      ]};
+        ]
+      };
       Object.assign(eleObj, obj);
     });
-    this.FormOptions.editForm = {...eleObj};
+    this.FormOptions.editForm = { ...eleObj };
 
     if (this.FormName.length) {
       this.formsService.GetFormTemplate(this.FormName).subscribe(data => {

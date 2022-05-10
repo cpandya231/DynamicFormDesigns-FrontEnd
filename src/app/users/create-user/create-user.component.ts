@@ -23,7 +23,7 @@ export class CreateUserComponent implements OnInit {
     private roleService: RoleService,
     private departMentService: DepartMentService,
     private router: Router,
-    private modelRef: MdbModalRef<CreateUserComponent>) { }
+  ) { }
 
   ngOnInit(): void {
 
@@ -84,7 +84,7 @@ export class CreateUserComponent implements OnInit {
 
   navigateOnSuccess() {
     this.userService.reloadUsers.next(true);
-    this.modelRef.close();
+
     this.router.navigate(['/usersParent/users']);
   }
 
@@ -94,6 +94,6 @@ export class CreateUserComponent implements OnInit {
   }
 
   close() {
-    this.modelRef.close();
+
   }
 }
