@@ -9,7 +9,7 @@ import { UsersService } from 'src/app/services/users.service';
   selector: 'app-delete-user-alert',
   templateUrl: './delete-user-alert.component.html',
   styleUrls: ['./delete-user-alert.component.scss'],
-  encapsulation: ViewEncapsulation.None
+
 })
 export class DeleteUserAlertComponent implements OnInit {
   userObj: any;

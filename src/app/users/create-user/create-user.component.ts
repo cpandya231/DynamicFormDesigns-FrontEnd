@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { FormioComponent } from '@formio/angular';
 import { UsersService } from 'src/app/services/users.service';
 import { IUserItem } from '../user-item-model';
-import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { MasterForms } from 'src/app/services/utility/master.forms.constants';
 import { RoleService } from 'src/app/services/roles.service';
-import { map } from 'rxjs';
+import { combineLatest, map } from 'rxjs';
+import { DepartMentService } from 'src/app/services/departments.service';
 
 @Component({
   selector: 'app-create-user',
@@ -20,26 +21,37 @@ export class CreateUserComponent implements OnInit {
   FormData = MasterForms.CREATE_USER_FORM_TEMPLATE;
   constructor(private userService: UsersService,
     private roleService: RoleService,
+    private departMentService: DepartMentService,
     private router: Router,
     private modelRef: MdbModalRef<CreateUserComponent>) { }
 
   ngOnInit(): void {
 
-    this.roleService.getAllRoles()
+    let allRoles = this.roleService.getAllRoles()
       .pipe(map(roles => {
         return roles.map((role: { [x: string]: any; }) => {
           return { "label": role["role"], "value": role["id"] };
         });
-      }))
-      .subscribe(items => {
+      }));
 
-        this.FormData['components'].forEach(function (item: any) {
-          if (item['key'] == 'roles') {
-            item.data.values = items;
-          }
+    let allDepartMents = this.departMentService.getAllDepartment()
+      .pipe(map(departments => {
+        return departments.map((department: { [x: string]: any; }) => {
+          return { "label": department["name"], "value": department["id"] };
         });
-        this.isDataLoaded = true;
+      }));
+
+    combineLatest([allRoles, allDepartMents]).subscribe(responses => {
+
+      this.FormData['components'].forEach(function (item: any) {
+        if (item['key'] == 'roles') {
+          item.data.values = responses[0];
+        } else if (item['key'] == 'departments') {
+          item.data.values = responses[1];
+        }
       });
+      this.isDataLoaded = true;
+    });
   }
 
   onSubmit() {
@@ -59,7 +71,7 @@ export class CreateUserComponent implements OnInit {
       email: submittedData.email,
       username: submittedData.username,
       password: submittedData.password,
-      department: submittedData.department,
+      department: { id: submittedData.departments },
       dateOfBirth: submittedData.dateOfBirth,
       roles: mappedRoles,
       isActive: true

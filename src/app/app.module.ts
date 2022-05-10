@@ -39,6 +39,7 @@ import { NgbdSortableHeader } from '../app/directives/sort-table-column-directiv
 import { GlobalAppIntercepter } from './common/services/global-app-intercepter.service';
 import { CreateRoleComponent } from './roles/create-role/create-role.component';
 import { DeleteUserAlertComponent } from './users/users-info/delete-user-alert/delete-user-alert.component';
+import { DepartmentsComponent } from './departments/departments.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { DeleteUserAlertComponent } from './users/users-info/delete-user-alert/d
     UsersInfoComponent,
     CreateRoleComponent,
 
-    DeleteUserAlertComponent
+    DeleteUserAlertComponent,
+      DepartmentsComponent
   ],
   imports: [
     BrowserModule,

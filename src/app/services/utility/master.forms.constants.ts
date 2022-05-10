@@ -167,19 +167,31 @@ export class MasterForms {
             "datepickerMode": "day",
             "id": "euoano"
         }, {
-            "label": "Department",
+            "label": "Departments",
             "labelPosition": "top",
-            "widget": {
-                "type": "input"
+            "widget": "choicesjs",
+            "dataSrc": "values",
+            "data": {
+                "values": [],
+                "resource": "",
+                "json": "",
+                "url": "",
+                "custom": ""
             },
-            "validateOn": "blur",
+            "idPath": "id",
+            "limit": 100,
+            "template": "<span>{{ item.label }}</span>",
+            "clearOnRefresh": false,
+            "searchEnabled": true,
+            "selectThreshold": 0.3,
+            "validateOn": "change",
             "validate": {
                 "required": true,
+
             },
-            "key": "department",
-            "type": "textfield",
+            "key": "departments",
+            "type": "select",
             "input": true,
-            "inputType": "text",
             "id": "ext18r"
         }, {
             "label": "Roles",
