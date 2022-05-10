@@ -1,3 +1,4 @@
+@import '../../variables.scss';
 .form_template_container {
     padding: 10px;
     width: 99%;
@@ -31,3 +32,11 @@
         }
     }
 }
+
+.formbuilder {
+    .builder-sidebar .btn {
+        background-color: $main-teal !important;
+    }
+}
+
+// background-color: #00ADB5;
