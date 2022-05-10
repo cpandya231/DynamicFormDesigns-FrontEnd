@@ -122,7 +122,7 @@ export class UsersInfoComponent implements OnInit {
     this.modalRef = this.modalService.open(DeleteUserAlertComponent, {
       data: {
         userObj
-      }
+      }, ignoreBackdropClick: true
     });
 
   }
