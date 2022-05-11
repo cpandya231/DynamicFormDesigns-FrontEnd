@@ -94,6 +94,6 @@ export class CreateUserComponent implements OnInit {
   }
 
   close() {
-
+    this.router.navigate(['/usersParent/users']);
   }
 }
