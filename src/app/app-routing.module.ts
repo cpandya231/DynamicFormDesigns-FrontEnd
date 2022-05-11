@@ -25,13 +25,27 @@ const routes: Routes = [
     path: 'createForm',
     component: CreateFormTemplateComponent
   },
+
   {
     path: 'usersParent', children: [
-      { path: 'users', component: UsersInfoComponent, },
+      {
+        path: 'users',
+        children: [
+          {
+            path: '', component: UsersInfoComponent,
+          },
+          {
+            path: 'create', component: CreateUserComponent,
+          }]
+      },
+
       { path: 'roles', component: RolesComponent },
 
     ],
   },
+
+
+
 
   { path: '', component: LoginComponent },
   { path: '**', component: AppComponent }

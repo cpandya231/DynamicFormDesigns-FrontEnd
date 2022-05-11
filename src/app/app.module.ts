@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormioModule } from '@formio/angular';
+import { FormioAppConfig, FormioModule } from '@formio/angular';
 import { CreateFormTemplateComponent } from './forms/create-form-template/create-form-template.component';
 import { FormsDashboardComponent } from './forms/forms-dashboard/forms-dashboard.component';
 import { LoginComponent } from './login/login.component';
@@ -38,7 +38,9 @@ import { CreateUserComponent } from './users/create-user/create-user.component';
 import { NgbdSortableHeader } from '../app/directives/sort-table-column-directive';
 import { GlobalAppIntercepter } from './common/services/global-app-intercepter.service';
 import { CreateRoleComponent } from './roles/create-role/create-role.component';
-
+import { DeleteUserAlertComponent } from './users/users-info/delete-user-alert/delete-user-alert.component';
+import { DepartmentsComponent } from './departments/departments.component';
+import { AppConfig } from './formio-app-config';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +56,10 @@ import { CreateRoleComponent } from './roles/create-role/create-role.component';
     PreviewFormComponent,
     CreateUserComponent,
     UsersInfoComponent,
-    CreateRoleComponent
+    CreateRoleComponent,
+
+    DeleteUserAlertComponent,
+    DepartmentsComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +89,8 @@ import { CreateRoleComponent } from './roles/create-role/create-role.component';
     MatIconModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: GlobalAppIntercepter, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: GlobalAppIntercepter, multi: true },
+    { provide: FormioAppConfig, useValue: AppConfig }
   ],
   bootstrap: [AppComponent]
 })

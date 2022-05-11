@@ -40,7 +40,7 @@ export class RolesComponent implements OnInit {
 
   ngOnInit(): void {
     this.setData();
-    this.initUserAddedSubscription();
+    this.initRoleAddedSubscription();
   }
 
   private setData() {
@@ -61,7 +61,7 @@ export class RolesComponent implements OnInit {
     );
   }
 
-  initUserAddedSubscription() {
+  initRoleAddedSubscription() {
     this.roleService.roleAdded.subscribe((data: boolean) => {
       if (data) {
         this.setData();
