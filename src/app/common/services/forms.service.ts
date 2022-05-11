@@ -19,15 +19,25 @@ export class FormsService {
     return this.http.get<IGetFormTemplateResponse>(`${ServiceUtil.API_ENDPOINT}/forms/${formName}/`);
   }
 
-  SaveFormTemplate(formTemplate: any, name: string, id: number) {
+  SaveFormTemplate(formTemplate: any, name: string) {
     let body = {
       name,
       template: JSON.stringify({ formName: name, components: formTemplate.components })
     }
-    if (id) {
-      body = { ...body, ...{ id } }
-    }
     return this.http.post(`${ServiceUtil.API_ENDPOINT}/forms/`, body, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    });
+  }
+
+  UpdateFormTemplate(formTemplate: any, name: string, id: number) {
+    let body = {
+      id,
+      name,
+      template: JSON.stringify({ formName: name, components: formTemplate.components })
+    };
+    return this.http.put(`${ServiceUtil.API_ENDPOINT}/forms/`, body, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       })
