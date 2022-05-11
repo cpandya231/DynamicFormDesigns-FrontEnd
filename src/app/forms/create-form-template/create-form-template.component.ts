@@ -189,10 +189,17 @@ export class CreateFormTemplateComponent implements OnInit {
   }
 
   SaveTemplate(): void {
-    this.formsService.SaveFormTemplate(this.formIO.form, this.FormName, this.formId).subscribe(data => {
-      alert('form created successfully');
-      this.router.navigate(['formsDashboard']);
-    })
+    if (this.formId) {
+      this.formsService.UpdateFormTemplate(this.formIO.form, this.FormName, this.formId).subscribe(data => {
+        alert('form updated successfully');
+        this.router.navigate(['formsDashboard']);
+      })
+    } else {
+      this.formsService.SaveFormTemplate(this.formIO.form, this.FormName).subscribe(data => {
+        alert('form created successfully');
+        this.router.navigate(['formsDashboard']);
+      })
+    }
   }
 
   CancelChanges(): void {
