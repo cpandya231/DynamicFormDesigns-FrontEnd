@@ -41,6 +41,7 @@ import { CreateRoleComponent } from './roles/create-role/create-role.component';
 import { DeleteUserAlertComponent } from './users/users-info/delete-user-alert/delete-user-alert.component';
 import { DepartmentsComponent } from './departments/departments.component';
 import { AppConfig } from './formio-app-config';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,9 +58,9 @@ import { AppConfig } from './formio-app-config';
     CreateUserComponent,
     UsersInfoComponent,
     CreateRoleComponent,
-
     DeleteUserAlertComponent,
-    DepartmentsComponent
+    DepartmentsComponent,
+
   ],
   imports: [
     BrowserModule,

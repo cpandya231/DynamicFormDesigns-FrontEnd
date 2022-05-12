@@ -19,11 +19,14 @@ import { DateUtil } from 'src/app/services/utility/DateUtil';
 export class CreateUserComponent implements OnInit {
   title: string = 'Create'
   isDataLoaded: boolean = false;
-  isDataFromExistingUserLoaded: boolean = false;
+
   @ViewChild(FormioComponent, { static: false })
   form!: FormioComponent;
   username: string = '';
-  user: IUserItem;
+  user!: IUserItem;
+  roles!: any[];
+  departments!: any[];
+
   FormData = MasterForms.CREATE_USER_FORM_TEMPLATE;
   constructor(private userService: UsersService,
     private roleService: RoleService,
@@ -32,80 +35,73 @@ export class CreateUserComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
   ) {
     const navigation: any = this.router.getCurrentNavigation();
-    this.user = navigation.extras.state as IUserItem;
+    if (navigation.extras.state) {
+      this.user = navigation.extras.state.user;
+      this.roles = navigation.extras.state.roles;
+      this.departments = navigation.extras.state.departments;
+    }
+
   }
 
   ngOnInit(): void {
-    console.log(this.form);
+
     let params = this.activatedRoute.snapshot.paramMap;
     this.username = String(params.get('username') || '');
 
     if (this.user) {
       this.title = "Update"
       this.FormData = MasterForms.UPDATE_USER_FORM_TEMPLATE;
+    } else {
+      this.userService.getUserByUsername(this.username).subscribe(item => {
+        console.log(item);
+      })
     }
-    let existingUser = this.user;
 
 
-    let allRoles = this.roleService.getAllRoles()
-      .pipe(map(roles => {
-        return roles.map((role: { [x: string]: any; }) => {
-          return { "label": role["role"], "value": role["id"] };
-        });
-      }));
 
-    let allDepartMents = this.departMentService.getAllDepartment()
-      .pipe(map(departments => {
-        return departments.map((department: { [x: string]: any; }) => {
-          return { "label": department["name"], "value": department["id"] };
-        });
-      }));
+    this.FormData['components'].forEach((item: any) => {
+      if (item['key'] == 'roles') {
+        item.data.values = this.roles;
+      } else if (item['key'] == 'departments') {
+        item.data.values = this.departments;
+      }
 
-    combineLatest([allRoles, allDepartMents]).subscribe(responses => {
+      if (this.user) {
 
-      this.FormData['components'].forEach(function (item: any) {
-        if (item['key'] == 'roles') {
-          item.data.values = responses[0];
+        if (item['key'] == 'name-columns') {
+          item.columns.forEach((nameColumn: any) => {
+            console.log(nameColumn);
+            if (nameColumn['components'][0]['key'] == 'firstName') {
+              nameColumn['components'][0].defaultValue = this.user.first_name;
+              nameColumn['components'][0].disabled = true;
+            } else if (nameColumn['components'][0]['key'] == 'lastName') {
+              nameColumn['components'][0].defaultValue = this.user.last_name;
+              nameColumn['components'][0].disabled = true;
+            }
+          })
+
+        } else if (item['key'] == 'email') {
+          item.defaultValue = this.user.email;
+        } else if (item['key'] == 'username') {
+          item.defaultValue = this.user.username;
+          item.disabled = true;
+
+        } else if (item['key'] == 'dateOfBirth') {
+          item.defaultValue = this.user.dateOfBirth;
         } else if (item['key'] == 'departments') {
-          item.data.values = responses[1];
+          item.defaultValue = this.user.department.id;
+        } else if (item['key'] == 'roles') {
+          item.defaultValue = this.user.roles[0].id;
         }
-
-        if (existingUser) {
-
-          if (item['key'] == 'name-columns') {
-            item.columns.forEach(function (nameColumn: any) {
-              console.log(nameColumn);
-              if (nameColumn['components'][0]['key'] == 'firstName') {
-                nameColumn['components'][0].defaultValue = existingUser.first_name;
-                nameColumn['components'][0].disabled = true;
-              } else if (nameColumn['components'][0]['key'] == 'lastName') {
-                nameColumn['components'][0].defaultValue = existingUser.last_name;
-                nameColumn['components'][0].disabled = true;
-              }
-            })
-
-          } else if (item['key'] == 'email') {
-            item.defaultValue = existingUser.email;
-          } else if (item['key'] == 'username') {
-            item.defaultValue = existingUser.username;
-            item.disabled = true;
-
-          } else if (item['key'] == 'dateOfBirth') {
-            item.defaultValue = existingUser.dateOfBirth;
-          } else if (item['key'] == 'departments') {
-            item.defaultValue = existingUser.department.id;
-          } else if (item['key'] == 'roles') {
-            item.defaultValue = existingUser.roles[0].id;
-          }
-        }
+      }
 
 
 
-      });
-
-
-      this.isDataLoaded = true;
     });
+
+
+    this.isDataLoaded = true;
+
   }
 
 
