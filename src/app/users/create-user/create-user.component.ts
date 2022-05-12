@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormioComponent } from '@formio/angular';
+import { AfterContentChecked, AfterViewChecked, AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Formio, FormioComponent, FormioUtils } from '@formio/angular';
 import { UsersService } from 'src/app/services/users.service';
 import { IUserItem } from '../user-item-model';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
@@ -16,17 +16,27 @@ import { DepartMentService } from 'src/app/services/departments.service';
 })
 export class CreateUserComponent implements OnInit {
   isDataLoaded: boolean = false;
+  isDataFromExistingUserLoaded: boolean = false;
   @ViewChild(FormioComponent, { static: false })
   form!: FormioComponent;
+  username: string = '';
+  user: IUserItem;
   FormData = MasterForms.CREATE_USER_FORM_TEMPLATE;
   constructor(private userService: UsersService,
     private roleService: RoleService,
     private departMentService: DepartMentService,
     private router: Router,
-  ) { }
+    private activatedRoute: ActivatedRoute,
+  ) {
+    const navigation: any = this.router.getCurrentNavigation();
+    this.user = navigation.extras.state as IUserItem;
+  }
 
   ngOnInit(): void {
-
+    console.log(this.form);
+    let params = this.activatedRoute.snapshot.paramMap;
+    this.username = String(params.get('username') || '');
+    let existingUser = this.user;
     let allRoles = this.roleService.getAllRoles()
       .pipe(map(roles => {
         return roles.map((role: { [x: string]: any; }) => {
@@ -49,10 +59,36 @@ export class CreateUserComponent implements OnInit {
         } else if (item['key'] == 'departments') {
           item.data.values = responses[1];
         }
+
+        if (existingUser) {
+          if (item['key'] == 'name-columns') {
+            item.columns.forEach(function (nameColumn: any) {
+              console.log(nameColumn);
+              if (nameColumn['components'][0]['key'] == 'firstName') {
+                nameColumn['components'][0].defaultValue = existingUser.first_name;
+              } else if (nameColumn['components'][0]['key'] == 'lastName') {
+                nameColumn['components'][0].defaultValue = existingUser.last_name;
+              }
+            })
+
+          } else if (item['key'] == 'email') {
+            item.defaultValue = existingUser.email;
+          } else if (item['key'] == 'username') {
+            item.defaultValue = existingUser.username;
+          } else if (item['key'] == 'dateOfBirth') {
+            item.defaultValue = existingUser.dateOfBirth;
+          }
+        }
+
+
+
       });
+
+
       this.isDataLoaded = true;
     });
   }
+
 
   onSubmit() {
     this.form.formio.emit('submitButton');

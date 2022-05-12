@@ -32,11 +32,16 @@ const routes: Routes = [
         path: 'users',
         children: [
           {
-            path: '', component: UsersInfoComponent,
+            path: 'update/:username', component: CreateUserComponent,
           },
           {
             path: 'create', component: CreateUserComponent,
-          }]
+          },
+          {
+            path: '', component: UsersInfoComponent,
+          },
+
+        ]
       },
 
       { path: 'roles', component: RolesComponent },

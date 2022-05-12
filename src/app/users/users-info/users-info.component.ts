@@ -117,6 +117,15 @@ export class UsersInfoComponent implements OnInit {
 
   }
 
+  editUser(user: IUserItem) {
+    // let mdbModalConfig: MdbModalConfig = {
+    //   ignoreBackdropClick: true
+    // };
+    // this.modalRef = this.modalService.open(CreateUserComponent, mdbModalConfig);
+    this.router.navigate(["./update", user.username], { relativeTo: this.route, state: user })
+
+  }
+
   toggleUser(user: IUserItem, event: any) {
     let userObj: any = {
       username: user.username,
