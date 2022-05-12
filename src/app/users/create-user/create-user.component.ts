@@ -8,6 +8,8 @@ import { MasterForms } from 'src/app/services/utility/master.forms.constants';
 import { RoleService } from 'src/app/services/roles.service';
 import { combineLatest, map } from 'rxjs';
 import { DepartMentService } from 'src/app/services/departments.service';
+import { formatDate } from '@angular/common';
+import { DateUtil } from 'src/app/services/utility/DateUtil';
 
 @Component({
   selector: 'app-create-user',
@@ -15,6 +17,7 @@ import { DepartMentService } from 'src/app/services/departments.service';
   styleUrls: ['./create-user.component.scss']
 })
 export class CreateUserComponent implements OnInit {
+  title: string = 'Create'
   isDataLoaded: boolean = false;
   isDataFromExistingUserLoaded: boolean = false;
   @ViewChild(FormioComponent, { static: false })
@@ -36,7 +39,14 @@ export class CreateUserComponent implements OnInit {
     console.log(this.form);
     let params = this.activatedRoute.snapshot.paramMap;
     this.username = String(params.get('username') || '');
+
+    if (this.user) {
+      this.title = "Update"
+      this.FormData = MasterForms.UPDATE_USER_FORM_TEMPLATE;
+    }
     let existingUser = this.user;
+
+
     let allRoles = this.roleService.getAllRoles()
       .pipe(map(roles => {
         return roles.map((role: { [x: string]: any; }) => {
@@ -61,13 +71,16 @@ export class CreateUserComponent implements OnInit {
         }
 
         if (existingUser) {
+
           if (item['key'] == 'name-columns') {
             item.columns.forEach(function (nameColumn: any) {
               console.log(nameColumn);
               if (nameColumn['components'][0]['key'] == 'firstName') {
                 nameColumn['components'][0].defaultValue = existingUser.first_name;
+                nameColumn['components'][0].disabled = true;
               } else if (nameColumn['components'][0]['key'] == 'lastName') {
                 nameColumn['components'][0].defaultValue = existingUser.last_name;
+                nameColumn['components'][0].disabled = true;
               }
             })
 
@@ -75,8 +88,14 @@ export class CreateUserComponent implements OnInit {
             item.defaultValue = existingUser.email;
           } else if (item['key'] == 'username') {
             item.defaultValue = existingUser.username;
+            item.disabled = true;
+
           } else if (item['key'] == 'dateOfBirth') {
             item.defaultValue = existingUser.dateOfBirth;
+          } else if (item['key'] == 'departments') {
+            item.defaultValue = existingUser.department.id;
+          } else if (item['key'] == 'roles') {
+            item.defaultValue = existingUser.roles[0].id;
           }
         }
 
@@ -106,16 +125,25 @@ export class CreateUserComponent implements OnInit {
       last_name: submittedData.lastName,
       email: submittedData.email,
       username: submittedData.username,
-      password: submittedData.password,
+      password: formatDate(submittedData.dateOfBirth, DateUtil.DATE_FORMAT_SHORT, 'en'),
       department: { id: submittedData.departments },
-      dateOfBirth: submittedData.dateOfBirth,
+      dateOfBirth: formatDate(submittedData.dateOfBirth, DateUtil.DATE_FORMAT_SHORT, 'en'),
       roles: mappedRoles,
       isActive: true
     }
 
-    this.userService.createUser(userObj).subscribe({
-      next: this.navigateOnSuccess.bind(this), error: this.handleError.bind(this)
-    })
+    if (this.user) {
+
+      this.userService.updateUser(userObj).subscribe({
+        next: this.navigateOnSuccess.bind(this), error: this.handleError.bind(this)
+      })
+
+    } else {
+      this.userService.createUser(userObj).subscribe({
+        next: this.navigateOnSuccess.bind(this), error: this.handleError.bind(this)
+      })
+    }
+
   }
 
   navigateOnSuccess() {

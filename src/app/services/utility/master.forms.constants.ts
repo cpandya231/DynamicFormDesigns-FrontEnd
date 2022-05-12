@@ -94,66 +94,6 @@ export class MasterForms {
                 "inputType": "text",
                 "id": "ey891p"
             },
-            {
-
-                "columns": [{
-                    "components": [{
-                        "label": "Password",
-                        "labelPosition": "top",
-                        "widget": {
-                            "type": "input"
-                        },
-
-                        "validateOn": "blur",
-                        "validate": {
-                            "required": true,
-                            "pattern": "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$",
-                            "customMessage": "Password should be alphanumeric and atleast 8 char long",
-
-                        },
-                        "key": "password",
-                        "tags": [],
-                        "type": "password",
-                        "input": true,
-                        "protected": true,
-                        "inputType": "text",
-                        "id": "eiq2vk"
-                    }],
-                    "width": 6,
-                    "size": "md",
-                    "currentWidth": 6
-                },
-                {
-                    "components": [{
-                        "label": "Confirm Password",
-                        "labelPosition": "top",
-                        "widget": {
-                            "type": "input"
-                        },
-                        "validateOn": "blur",
-                        "validate": {
-                            "required": true,
-                            "custom": "valid=submission.data.confirmPassword==submission.data.password?true:\"Passwords should match\";",
-
-                        },
-                        "key": "confirmPassword",
-                        "type": "password",
-                        "input": true,
-                        "protected": true,
-                        "inputType": "text",
-                        "id": "emrmdwi"
-                    },],
-                    "width": 6,
-                    "size": "md",
-                    "currentWidth": 6
-                },
-                ],
-                "key": "password-columns",
-                "type": "columns",
-                "labelPosition": "top",
-                "id": "eftxofg"
-            }
-            ,
 
             {
                 "label": "Date Of Birth",
@@ -184,7 +124,7 @@ export class MasterForms {
                 "unique": false,
                 "key": "dateOfBirth",
                 "type": "datetime",
-                "timezone": "",
+                "timezone": "utc",
                 "input": true,
                 "widget": {
                     "type": "calendar",
@@ -265,6 +205,8 @@ export class MasterForms {
                 "id": "ewz3b95"
             }]
     };
+
+    public static UPDATE_USER_FORM_TEMPLATE: any = MasterForms.CREATE_USER_FORM_TEMPLATE;
 
     public static CREATE_ROLE_FORM_TEMPLATE: any = {
         "components": [{
