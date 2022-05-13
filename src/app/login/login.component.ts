@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoginModel } from './login-model';
 import { AuthService } from 'src/app/services/auth.service';
 import {
-  Router, Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
+  Router
 } from '@angular/router';
 @Component({
   selector: 'app-login',

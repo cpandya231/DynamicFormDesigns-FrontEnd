@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormioComponent } from '@formio/angular';
+import { AfterContentChecked, AfterViewChecked, AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Formio, FormioComponent, FormioUtils } from '@formio/angular';
 import { UsersService } from 'src/app/services/users.service';
 import { IUserItem } from '../user-item-model';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
@@ -8,6 +8,8 @@ import { MasterForms } from 'src/app/services/utility/master.forms.constants';
 import { RoleService } from 'src/app/services/roles.service';
 import { combineLatest, map } from 'rxjs';
 import { DepartMentService } from 'src/app/services/departments.service';
+import { formatDate } from '@angular/common';
+import { DateUtil } from 'src/app/services/utility/DateUtil';
 
 @Component({
   selector: 'app-create-user',
@@ -15,42 +17,121 @@ import { DepartMentService } from 'src/app/services/departments.service';
   styleUrls: ['./create-user.component.scss']
 })
 export class CreateUserComponent implements OnInit {
+  title: string = 'Create'
   isDataLoaded: boolean = false;
+
   @ViewChild(FormioComponent, { static: false })
   form!: FormioComponent;
+  username: string = '';
+  user!: IUserItem;
+  roles!: any[];
+  departments!: any[];
+
   FormData = MasterForms.CREATE_USER_FORM_TEMPLATE;
   constructor(private userService: UsersService,
     private roleService: RoleService,
     private departMentService: DepartMentService,
     private router: Router,
-  ) { }
+    private activatedRoute: ActivatedRoute,
+  ) {
+    const navigation: any = this.router.getCurrentNavigation();
+    if (navigation.extras.state) {
+      this.user = navigation.extras.state.user;
+      this.roles = navigation.extras.state.roles;
+      this.departments = navigation.extras.state.departments;
+    }
+
+  }
 
   ngOnInit(): void {
 
-    let allRoles = this.roleService.getAllRoles()
-      .pipe(map(roles => {
-        return roles.map((role: { [x: string]: any; }) => {
-          return { "label": role["role"], "value": role["id"] };
-        });
-      }));
+    let params = this.activatedRoute.snapshot.paramMap;
+    this.username = String(params.get('username') || '');
+    if (this.username) {
+      this.title = "Update"
+      this.FormData = MasterForms.UPDATE_USER_FORM_TEMPLATE;
+    }
 
-    let allDepartMents = this.departMentService.getAllDepartment()
-      .pipe(map(departments => {
-        return departments.map((department: { [x: string]: any; }) => {
-          return { "label": department["name"], "value": department["id"] };
-        });
-      }));
 
-    combineLatest([allRoles, allDepartMents]).subscribe(responses => {
 
-      this.FormData['components'].forEach(function (item: any) {
-        if (item['key'] == 'roles') {
-          item.data.values = responses[0];
-        } else if (item['key'] == 'departments') {
-          item.data.values = responses[1];
-        }
+
+    if (!this.roles || !this.departments || !this.user) {
+      let allRoles = this.roleService.getAllRoles()
+        .pipe(map(roles => {
+          return roles.map((role: { [x: string]: any; }) => {
+            return { "label": role["role"], "value": role["id"] };
+          });
+        }));
+
+      let allDepartMents = this.departMentService.getAllDepartment()
+        .pipe(map(departments => {
+          return departments.map((department: { [x: string]: any; }) => {
+            return { "label": department["name"], "value": department["id"] };
+          });
+        }));
+
+      let user = this.userService.getUserByUsername(this.username);
+      combineLatest([allRoles, allDepartMents, user]).subscribe(items => {
+
+
+        this.roles = items[0];
+        this.departments = items[1];
+        this.user = items[2];
+        this.setData();
       });
+
+    } else {
+      this.setData();
+    }
+
+
+
+
+
+
+
+  }
+
+
+  private setData() {
+    this.FormData['components'].forEach((item: any) => {
+      if (item['key'] == 'roles' && this.roles) {
+        item.data.values = this.roles;
+      } else if (item['key'] == 'departments' && this.departments) {
+        item.data.values = this.departments;
+      }
+
+      if (this.username) {
+
+        if (item['key'] == 'name-columns') {
+          item.columns.forEach((nameColumn: any) => {
+            console.log(nameColumn);
+            if (nameColumn['components'][0]['key'] == 'firstName') {
+              nameColumn['components'][0].defaultValue = this.user.first_name;
+              nameColumn['components'][0].disabled = true;
+            } else if (nameColumn['components'][0]['key'] == 'lastName') {
+              nameColumn['components'][0].defaultValue = this.user.last_name;
+              nameColumn['components'][0].disabled = true;
+            }
+          });
+
+        } else if (item['key'] == 'email') {
+          item.defaultValue = this.user.email;
+        } else if (item['key'] == 'username') {
+          item.defaultValue = this.user.username;
+          item.disabled = true;
+
+        } else if (item['key'] == 'dateOfBirth') {
+          item.defaultValue = this.user.dateOfBirth;
+        } else if (item['key'] == 'departments') {
+          item.defaultValue = this.user.department.id;
+        } else if (item['key'] == 'roles') {
+          item.defaultValue = this.user.roles[0].id;
+        }
+      }
+
       this.isDataLoaded = true;
+
     });
   }
 
@@ -70,16 +151,25 @@ export class CreateUserComponent implements OnInit {
       last_name: submittedData.lastName,
       email: submittedData.email,
       username: submittedData.username,
-      password: submittedData.password,
       department: { id: submittedData.departments },
-      dateOfBirth: submittedData.dateOfBirth,
+      dateOfBirth: formatDate(submittedData.dateOfBirth, DateUtil.DATE_FORMAT_SHORT, 'en'),
       roles: mappedRoles,
       isActive: true
     }
 
-    this.userService.createUser(userObj).subscribe({
-      next: this.navigateOnSuccess.bind(this), error: this.handleError.bind(this)
-    })
+    if (this.user) {
+
+      this.userService.updateUser(userObj).subscribe({
+        next: this.navigateOnSuccess.bind(this), error: this.handleError.bind(this)
+      })
+
+    } else {
+      userObj.password = userObj.dateOfBirth;
+      this.userService.createUser(userObj).subscribe({
+        next: this.navigateOnSuccess.bind(this), error: this.handleError.bind(this)
+      })
+    }
+
   }
 
   navigateOnSuccess() {

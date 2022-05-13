@@ -36,6 +36,10 @@ export class UsersService {
         return this.http.post<any>(`${ServiceUtil.API_ENDPOINT}/users/`, userItem, this.getHttpOptions());
     }
 
+    updateUser(userItem: IUserItem) {
+        return this.http.put<any>(`${ServiceUtil.API_ENDPOINT}/users/`, userItem, this.getHttpOptions());
+    }
+
     toggleUser(userItem: any) {
         return this.http.patch<any>(`${ServiceUtil.API_ENDPOINT}/users/`, userItem, this.getHttpOptions());
     }

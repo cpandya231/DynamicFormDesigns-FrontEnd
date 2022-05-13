@@ -3,7 +3,7 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-import { Observable, of } from 'rxjs';
+import { combineLatest, Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { UsersService } from '../../services/users.service';
 import { IUserItem } from '../user-item-model';
@@ -13,6 +13,10 @@ import { NgbdSortableHeader, SortEvent } from '../../directives/sort-table-colum
 import { DateUtil } from 'src/app/services/utility/DateUtil';
 import { DeleteUserAlertComponent } from './delete-user-alert/delete-user-alert.component';
 import { Router, ActivatedRoute } from '@angular/router';
+import { RoleService } from 'src/app/services/roles.service';
+import { DepartMentService } from 'src/app/services/departments.service';
+import { IRoleItem } from 'src/app/roles/role-item-model';
+import { IDepartmentItem } from 'src/app/departments/department-item-model';
 
 const compare = (v1: any, v2: any) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
@@ -29,13 +33,16 @@ export class UsersInfoComponent implements OnInit {
 
   users$!: Observable<IUserItem[]>;
   USERS!: IUserItem[];
-
+  roles!: any[];
+  departments!: any[];
   filter = new FormControl('');
   @ViewChildren(NgbdSortableHeader)
   headers!: QueryList<NgbdSortableHeader>;
 
   constructor(
     private usersService: UsersService,
+    private roleService: RoleService,
+    private departMentService: DepartMentService,
     private router: Router,
     private route: ActivatedRoute,
     private modalService: MdbModalService) {
@@ -50,10 +57,25 @@ export class UsersInfoComponent implements OnInit {
 
   private setData() {
     this.users$ = this.usersService.getAllUsers();
-    this.users$.subscribe(items => {
+    let allRoles = this.roleService.getAllRoles()
+      .pipe(map(roles => {
+        return roles.map((role: { [x: string]: any; }) => {
+          return { "label": role["role"], "value": role["id"] };
+        });
+      }));
 
-      this.USERS = items;
+    let allDepartMents = this.departMentService.getAllDepartment()
+      .pipe(map(departments => {
+        return departments.map((department: { [x: string]: any; }) => {
+          return { "label": department["name"], "value": department["id"] };
+        });
+      }));
 
+    combineLatest([this.users$, allRoles, allDepartMents]).subscribe(items => {
+
+      this.USERS = items[0];
+      this.roles = items[1];
+      this.departments = items[2];
       this.registerForSearch();
     });
 
@@ -109,11 +131,18 @@ export class UsersInfoComponent implements OnInit {
   }
 
   createUser() {
-    // let mdbModalConfig: MdbModalConfig = {
-    //   ignoreBackdropClick: true
-    // };
-    // this.modalRef = this.modalService.open(CreateUserComponent, mdbModalConfig);
-    this.router.navigate(["./create"], { relativeTo: this.route })
+    this.router.navigate(["./create"], {
+      relativeTo: this.route,
+      state: { roles: this.roles, departments: this.departments }
+    })
+
+  }
+
+  editUser(user: IUserItem) {
+    this.router.navigate(["./update", user.username], {
+      relativeTo: this.route,
+      state: { user: user, roles: this.roles, departments: this.departments }
+    })
 
   }
 
