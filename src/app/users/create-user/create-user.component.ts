@@ -47,26 +47,61 @@ export class CreateUserComponent implements OnInit {
 
     let params = this.activatedRoute.snapshot.paramMap;
     this.username = String(params.get('username') || '');
-
-    if (this.user) {
+    if (this.username) {
       this.title = "Update"
       this.FormData = MasterForms.UPDATE_USER_FORM_TEMPLATE;
-    } else {
-      this.userService.getUserByUsername(this.username).subscribe(item => {
-        console.log(item);
-      })
     }
 
 
 
+
+    if (!this.roles || !this.departments || !this.user) {
+      let allRoles = this.roleService.getAllRoles()
+        .pipe(map(roles => {
+          return roles.map((role: { [x: string]: any; }) => {
+            return { "label": role["role"], "value": role["id"] };
+          });
+        }));
+
+      let allDepartMents = this.departMentService.getAllDepartment()
+        .pipe(map(departments => {
+          return departments.map((department: { [x: string]: any; }) => {
+            return { "label": department["name"], "value": department["id"] };
+          });
+        }));
+
+      let user = this.userService.getUserByUsername(this.username);
+      combineLatest([allRoles, allDepartMents, user]).subscribe(items => {
+
+
+        this.roles = items[0];
+        this.departments = items[1];
+        this.user = items[2];
+        this.setData();
+      });
+
+    } else {
+      this.setData();
+    }
+
+
+
+
+
+
+
+  }
+
+
+  private setData() {
     this.FormData['components'].forEach((item: any) => {
-      if (item['key'] == 'roles') {
+      if (item['key'] == 'roles' && this.roles) {
         item.data.values = this.roles;
-      } else if (item['key'] == 'departments') {
+      } else if (item['key'] == 'departments' && this.departments) {
         item.data.values = this.departments;
       }
 
-      if (this.user) {
+      if (this.username) {
 
         if (item['key'] == 'name-columns') {
           item.columns.forEach((nameColumn: any) => {
@@ -78,7 +113,7 @@ export class CreateUserComponent implements OnInit {
               nameColumn['components'][0].defaultValue = this.user.last_name;
               nameColumn['components'][0].disabled = true;
             }
-          })
+          });
 
         } else if (item['key'] == 'email') {
           item.defaultValue = this.user.email;
@@ -95,15 +130,10 @@ export class CreateUserComponent implements OnInit {
         }
       }
 
-
+      this.isDataLoaded = true;
 
     });
-
-
-    this.isDataLoaded = true;
-
   }
-
 
   onSubmit() {
     this.form.formio.emit('submitButton');
@@ -121,7 +151,6 @@ export class CreateUserComponent implements OnInit {
       last_name: submittedData.lastName,
       email: submittedData.email,
       username: submittedData.username,
-      password: formatDate(submittedData.dateOfBirth, DateUtil.DATE_FORMAT_SHORT, 'en'),
       department: { id: submittedData.departments },
       dateOfBirth: formatDate(submittedData.dateOfBirth, DateUtil.DATE_FORMAT_SHORT, 'en'),
       roles: mappedRoles,
@@ -135,6 +164,7 @@ export class CreateUserComponent implements OnInit {
       })
 
     } else {
+      userObj.password = userObj.dateOfBirth;
       this.userService.createUser(userObj).subscribe({
         next: this.navigateOnSuccess.bind(this), error: this.handleError.bind(this)
       })
