@@ -6,7 +6,7 @@ import { IUserItem } from '../user-item-model';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { MasterForms } from 'src/app/services/utility/master.forms.constants';
 import { RoleService } from 'src/app/services/roles.service';
-import { combineLatest, map } from 'rxjs';
+import { combineLatest, EMPTY, map, of } from 'rxjs';
 import { DepartMentService } from 'src/app/services/departments.service';
 import { formatDate } from '@angular/common';
 import { DateUtil } from 'src/app/services/utility/DateUtil';
@@ -23,7 +23,7 @@ export class CreateUserComponent implements OnInit {
   @ViewChild(FormioComponent, { static: false })
   form!: FormioComponent;
   username: string = '';
-  user!: IUserItem;
+  user!: any;
   roles!: any[];
   departments!: any[];
 
@@ -47,9 +47,11 @@ export class CreateUserComponent implements OnInit {
 
     let params = this.activatedRoute.snapshot.paramMap;
     this.username = String(params.get('username') || '');
+    let userObservable = of({});
     if (this.username) {
       this.title = "Update"
       this.FormData = MasterForms.UPDATE_USER_FORM_TEMPLATE;
+      userObservable = this.userService.getUserByUsername(this.username);
     }
 
 
@@ -70,25 +72,22 @@ export class CreateUserComponent implements OnInit {
           });
         }));
 
-      let user = this.userService.getUserByUsername(this.username);
-      combineLatest([allRoles, allDepartMents, user]).subscribe(items => {
+
+      combineLatest([allRoles, allDepartMents, userObservable]).subscribe(items => {
 
 
         this.roles = items[0];
         this.departments = items[1];
-        this.user = items[2];
+        if ((Object.keys(items[2]).length) > 0) {
+          this.user = items[2];
+        }
+
         this.setData();
       });
 
     } else {
       this.setData();
     }
-
-
-
-
-
-
 
   }
 
