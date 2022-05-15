@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { map } from 'rxjs';
+import { DepartmentService } from '../services/departments.service';
+
 @Component({
   selector: 'app-departments',
   templateUrl: './departments.component.html',
@@ -7,72 +10,61 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DepartmentsComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  constructor(private departmentService: DepartmentService) { }
+  isDataLoaded: boolean = false;
 
   nodes: any = [
     {
       name: 'Sundar Pichai',
-      cssClass: 'ngx-org-ceo',
+
       image: '',
-      title: 'Chief Executive Officer',
+
       childs: [
-        {
-          name: 'Thomas Kurian',
-          cssClass: 'ngx-org-ceo',
-          image: 'assets/node.svg',
-          title: 'CEO, Google Cloud',
-        },
-        {
-          name: 'Susan Wojcicki',
-          cssClass: 'ngx-org-ceo',
-          image: 'assets/node.svg',
-          title: 'CEO, YouTube',
-          childs: [
-            {
-              name: 'Beau Avril',
-              cssClass: 'ngx-org-head',
-              image: 'assets/node.svg',
-              title: 'Global Head of Business Operations',
-              childs: []
-            },
-            {
-              name: 'Tara Walpert Levy',
-              cssClass: 'ngx-org-vp',
-              image: 'assets/node.svg',
-              title: 'VP, Agency and Brand Solutions',
-              childs: []
-            },
-            {
-              name: 'Ariel Bardin',
-              cssClass: 'ngx-org-vp',
-              image: 'assets/node.svg',
-              title: 'VP, Product Management',
-              childs: []
-            }
-          ]
-        },
-        {
-          name: 'Jeff Dean',
-          cssClass: 'ngx-org-head',
-          image: 'assets/node.svg',
-          title: 'Head of Artificial Intelligence',
-          childs: [
-            {
-              name: 'David Feinberg',
-              cssClass: 'ngx-org-ceo',
-              image: 'assets/node.svg',
-              title: 'CEO, Google Health',
-              childs: []
-            }
-          ]
-        }
       ]
     },
   ];
+  ngOnInit(): void {
+
+
+    let allDepartMents = this.departmentService.getAllDepartment()
+      .pipe(map(departmentResponse => {
+        return departmentResponse.map((department: { [x: string]: any; }) => {
+
+
+          return this.buildNodes(departmentResponse, department);
+
+
+        });
+      }));
+    allDepartMents.subscribe(departmentNodes => {
+      this.nodes = departmentNodes;
+      this.isDataLoaded = true;
+    })
+  }
+
+
+  buildNodes(departments: any, root: any): any {
+    if (root["visited"]) {
+      return;
+    }
+    let internalNode: any = { "name": root["name"], "id": root["id"] };
+    let children = [];
+
+    for (let department of departments) {
+
+      if (department["parentId"] == root["id"]) {
+
+        let child = this.buildNodes(departments, department);
+        department["visited"] = true;
+        children.push(child);
+      }
+    }
+    internalNode["childs"] = children;
+    root["visited"] = true;
+    return internalNode;
+  }
+
+
 
 
   test(event: any): void {

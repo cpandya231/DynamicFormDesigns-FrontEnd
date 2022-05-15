@@ -6,7 +6,7 @@ import { ServiceUtil } from './utility/ServiceUtil';
 import { Observable, Subject } from 'rxjs';
 import { IDepartmentItem } from '../departments/department-item-model';
 @Injectable({ providedIn: 'root' })
-export class DepartMentService {
+export class DepartmentService {
     public roleAdded: Subject<boolean>;
 
     constructor(private http: HttpClient) {

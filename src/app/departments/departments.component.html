@@ -1,1 +1,3 @@
-<ngx-org-chart [nodes]="nodes" direction="vertical" (itemClick)="test($event)"></ngx-org-chart>
+<div class="app-container" *ngIf="isDataLoaded">
+    <ngx-org-chart [nodes]="nodes" direction="vertical" (itemClick)="test($event)"></ngx-org-chart>
+</div>

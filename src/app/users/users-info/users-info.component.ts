@@ -7,16 +7,14 @@ import { combineLatest, Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { UsersService } from '../../services/users.service';
 import { IUserItem } from '../user-item-model';
-import { MdbModalConfig, MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { CreateUserComponent } from '../create-user/create-user.component';
 import { NgbdSortableHeader, SortEvent } from '../../directives/sort-table-column-directive';
 import { DateUtil } from 'src/app/services/utility/DateUtil';
 import { DeleteUserAlertComponent } from './delete-user-alert/delete-user-alert.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RoleService } from 'src/app/services/roles.service';
-import { DepartMentService } from 'src/app/services/departments.service';
-import { IRoleItem } from 'src/app/roles/role-item-model';
-import { IDepartmentItem } from 'src/app/departments/department-item-model';
+import { DepartmentService } from 'src/app/services/departments.service';
 
 const compare = (v1: any, v2: any) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
@@ -42,7 +40,7 @@ export class UsersInfoComponent implements OnInit {
   constructor(
     private usersService: UsersService,
     private roleService: RoleService,
-    private departMentService: DepartMentService,
+    private departMentService: DepartmentService,
     private router: Router,
     private route: ActivatedRoute,
     private modalService: MdbModalService) {
