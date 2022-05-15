@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { DepartmentsComponent } from './departments/departments.component';
 import { CreateFormTemplateComponent } from './forms/create-form-template/create-form-template.component';
 import { FormsDashboardComponent } from './forms/forms-dashboard/forms-dashboard.component';
 import { LoginComponent } from './login/login.component';
@@ -47,6 +48,11 @@ const routes: Routes = [
       { path: 'roles', component: RolesComponent },
 
     ],
+  },
+
+  {
+    path: 'departments',
+    component: DepartmentsComponent
   },
 
 

@@ -41,6 +41,7 @@ import { CreateRoleComponent } from './roles/create-role/create-role.component';
 import { DeleteUserAlertComponent } from './users/users-info/delete-user-alert/delete-user-alert.component';
 import { DepartmentsComponent } from './departments/departments.component';
 import { AppConfig } from './formio-app-config';
+import { NgxOrgChartModule } from 'ngx-org-chart';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { AppConfig } from './formio-app-config';
     MdbTooltipModule,
     MdbValidationModule,
     BrowserAnimationsModule,
-    MatIconModule
+    MatIconModule,
+    NgxOrgChartModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: GlobalAppIntercepter, multi: true },
