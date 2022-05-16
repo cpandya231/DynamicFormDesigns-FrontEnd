@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MdbModalConfig, MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 
 import { map } from 'rxjs';
 import { DepartmentService } from '../services/departments.service';
+import { CreateDepartmentComponent } from './create-department/create-department.component';
 
 @Component({
   selector: 'app-departments',
@@ -10,22 +12,20 @@ import { DepartmentService } from '../services/departments.service';
 })
 export class DepartmentsComponent implements OnInit {
 
-  constructor(private departmentService: DepartmentService) { }
+  constructor(private departmentService: DepartmentService, private modalService: MdbModalService) { }
   isDataLoaded: boolean = false;
+  private modalRef: MdbModalRef<CreateDepartmentComponent> | null = null;
+  nodes: any = [];
 
-  nodes: any = [
-    {
-      name: 'Sundar Pichai',
-
-      image: '',
-
-      childs: [
-      ]
-    },
-  ];
   ngOnInit(): void {
 
 
+    this.setData();
+    this.initDeparmentAddedSubscription();
+  }
+
+
+  private setData() {
     let allDepartMents = this.departmentService.getAllDepartment()
       .pipe(map(departmentResponse => {
         return departmentResponse.map((department: { [x: string]: any; }) => {
@@ -39,9 +39,8 @@ export class DepartmentsComponent implements OnInit {
     allDepartMents.subscribe(departmentNodes => {
       this.nodes = departmentNodes;
       this.isDataLoaded = true;
-    })
+    });
   }
-
 
   buildNodes(departments: any, root: any): any {
     if (root["visited"]) {
@@ -64,10 +63,30 @@ export class DepartmentsComponent implements OnInit {
     return internalNode;
   }
 
+  initDeparmentAddedSubscription() {
+    this.departmentService.departmentAdded.subscribe((data: boolean) => {
+      if (data) {
+        this.setData();
+
+      }
+    });
+  }
+
 
 
 
   test(event: any): void {
-    console.log("Something clicked!!")
+    console.log("Something clicked!!");
+    let mdbModalConfig: MdbModalConfig = {
+      backdrop: false,
+      data: {
+        parentId: parseInt(event.id)
+      }
+    };
+    this.modalRef = this.modalService.open(CreateDepartmentComponent, mdbModalConfig);
+
+
   }
+
+
 }

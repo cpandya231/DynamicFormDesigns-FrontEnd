@@ -42,6 +42,7 @@ import { DeleteUserAlertComponent } from './users/users-info/delete-user-alert/d
 import { DepartmentsComponent } from './departments/departments.component';
 import { AppConfig } from './formio-app-config';
 import { NgxOrgChartModule } from 'ngx-org-chart';
+import { CreateDepartmentComponent } from './departments/create-department/create-department.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { NgxOrgChartModule } from 'ngx-org-chart';
     CreateRoleComponent,
     DeleteUserAlertComponent,
     DepartmentsComponent,
+    CreateDepartmentComponent,
 
   ],
   imports: [

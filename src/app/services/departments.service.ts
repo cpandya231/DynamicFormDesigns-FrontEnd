@@ -7,10 +7,9 @@ import { Observable, Subject } from 'rxjs';
 import { IDepartmentItem } from '../departments/department-item-model';
 @Injectable({ providedIn: 'root' })
 export class DepartmentService {
-    public roleAdded: Subject<boolean>;
-
+    public departmentAdded: Subject<boolean>;
     constructor(private http: HttpClient) {
-        this.roleAdded = new Subject<boolean>();
+        this.departmentAdded = new Subject<boolean>();
     }
 
 
@@ -26,6 +25,10 @@ export class DepartmentService {
                 'Content-Type': 'application/json',
             })
         };
+    }
+
+    createDepartment(departmentItem: IDepartmentItem) {
+        return this.http.post<any>(`${ServiceUtil.API_ENDPOINT}/departments/`, departmentItem, this.getHttpOptions());
     }
 
 

@@ -72,7 +72,7 @@ export class RolesComponent implements OnInit {
 
   createRole() {
     let mdbModalConfig: MdbModalConfig = {
-      ignoreBackdropClick: true
+      ignoreBackdropClick: true,
     };
     this.modalRef = this.modalService.open(CreateRoleComponent, mdbModalConfig);
 

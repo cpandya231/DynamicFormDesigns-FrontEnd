@@ -1,5 +1,5 @@
 export interface IDepartmentItem {
-    id: number,
+    id?: number,
     name?: string,
     code?: string,
     parentId?: number,
