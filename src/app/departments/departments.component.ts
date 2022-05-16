@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Renderer2, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MdbModalConfig, MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 
 import { map } from 'rxjs';
@@ -10,16 +10,20 @@ import { CreateDepartmentComponent } from './create-department/create-department
   templateUrl: './departments.component.html',
   styleUrls: ['./departments.component.scss']
 })
-export class DepartmentsComponent implements OnInit {
-
-  constructor(private departmentService: DepartmentService, private modalService: MdbModalService) { }
+export class DepartmentsComponent implements OnInit, AfterViewInit {
+  @ViewChild('inserttarget', { static: false }) public insertTarget: ElementRef;
   isDataLoaded: boolean = false;
   private modalRef: MdbModalRef<CreateDepartmentComponent> | null = null;
   nodes: any = [];
 
+
+  constructor(
+    private departmentService: DepartmentService,
+    private modalService: MdbModalService,
+    private renderer: Renderer2,
+    private el: ElementRef) { }
+
   ngOnInit(): void {
-
-
     this.setData();
     this.initDeparmentAddedSubscription();
   }
@@ -29,11 +33,7 @@ export class DepartmentsComponent implements OnInit {
     let allDepartMents = this.departmentService.getAllDepartment()
       .pipe(map(departmentResponse => {
         return departmentResponse.map((department: { [x: string]: any; }) => {
-
-
           return this.buildNodes(departmentResponse, department);
-
-
         });
       }));
     allDepartMents.subscribe(departmentNodes => {
@@ -67,7 +67,6 @@ export class DepartmentsComponent implements OnInit {
     this.departmentService.departmentAdded.subscribe((data: boolean) => {
       if (data) {
         this.setData();
-
       }
     });
   }
@@ -75,8 +74,8 @@ export class DepartmentsComponent implements OnInit {
 
 
 
-  test(event: any): void {
-    console.log("Something clicked!!");
+  handleSubmit(event: any): void {
+
     let mdbModalConfig: MdbModalConfig = {
       backdrop: false,
       data: {
@@ -86,6 +85,24 @@ export class DepartmentsComponent implements OnInit {
     this.modalRef = this.modalService.open(CreateDepartmentComponent, mdbModalConfig);
 
 
+  }
+
+  public ngAfterViewInit(): void {
+    this.addNewButton(this.el); // Inserted into root
+  }
+
+
+  public addNewButton(insertTarget: ElementRef): void {
+
+    const parentObject = document.getElementsByClassName('ngx-org-box');
+    [...parentObject].forEach((parent, i) => {
+
+      const childElement = document.createElement('div');
+      childElement.className = 'second';
+      childElement.innerHTML = `second ${i}`;
+      parent.appendChild(childElement)
+    });
+    // Insert into "insertTarget"
   }
 
 

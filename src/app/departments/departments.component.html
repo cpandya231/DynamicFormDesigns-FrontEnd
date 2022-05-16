@@ -1,3 +1,4 @@
 <div class="app-container" *ngIf="isDataLoaded">
-    <ngx-org-chart [nodes]="nodes" direction="vertical" (itemClick)="test($event)"></ngx-org-chart>
+    <ngx-org-chart #inserttarget [nodes]="nodes" direction="vertical" (itemClick)="handleSubmit($event)">
+    </ngx-org-chart>
 </div>
