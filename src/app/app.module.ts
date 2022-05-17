@@ -12,7 +12,8 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { PasswordPatternDirective } from './directives/password-pattern.directive';
-import { MatIconModule } from '@angular/material/icon'
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
@@ -91,6 +92,7 @@ import { CreateDepartmentComponent } from './departments/create-department/creat
     MdbValidationModule,
     BrowserAnimationsModule,
     MatIconModule,
+    MatMenuModule,
     NgxOrgChartModule
   ],
   providers: [
