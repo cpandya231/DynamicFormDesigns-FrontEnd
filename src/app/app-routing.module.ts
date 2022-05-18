@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { CreateDepartmentComponent } from './departments/create-department/create-department.component';
 import { DepartmentsComponent } from './departments/departments.component';
 import { PocComponent } from './departments/poc/poc.component';
 import { CreateFormTemplateComponent } from './forms/create-form-template/create-form-template.component';
@@ -53,8 +54,17 @@ const routes: Routes = [
 
   {
     path: 'departments',
-    component: PocComponent
+    component: PocComponent,
+    children: [
+      {
+        path: 'create',
+        component: CreateDepartmentComponent
+      },
+
+
+    ]
   },
+
 
 
 

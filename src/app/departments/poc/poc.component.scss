@@ -2,7 +2,14 @@ app-poc {
 
 
 
+    %icons {
+        font-family: 'Material Icons' !important;
+
+    }
+
     .node-foreign-object-div {
+        @extend %icons;
+        background-color: #fff;
         border: 1px solid grey;
         border-radius: 0.5em;
         display: flex;
@@ -20,39 +27,14 @@ app-poc {
         margin-top: 1em;
     }
 
-    $btn-size: 56px;
 
-    %center {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    %icons {
-        font-family: 'Material Icons' !important;
-        font-feature-settings: 'liga';
-        text-rendering: optimizeLegibility;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
-
-
-    body {
-        background: linear-gradient(135deg, #F93239, #DD2476);
-        height: 100vh;
-        margin: 0;
-        font-family: Roboto;
-    }
 
     .menu {
-
-
-
         border-radius: 5px;
         align-self: flex-end;
         font-size: 2em;
         cursor: pointer;
+
 
         &:before {
 
@@ -63,14 +45,15 @@ app-poc {
     }
 
     ul {
-        // display: inline-block;
-        background: inherit;
+
+        position: absolute;
+        z-index: 999 !important;
         padding: .5em 0;
         margin: 0;
         margin-top: 1em;
         border-radius: 5px;
         box-shadow: 0 2px 8px rgba(#000, .2);
-        position: absolute;
+
         top: 100%;
 
         color: inherit;
@@ -82,25 +65,12 @@ app-poc {
         &.show {
             margin-top: -.2em;
             visibility: visible;
-
         }
 
         &.hide {
-
             visibility: hidden;
-
         }
 
-        &:before {
-            content: '';
-            width: .75em;
-            height: .75em;
-
-            position: absolute;
-            top: -.375em;
-            left: calc(#{$btn-size} / 2 - .375em);
-            transform: rotate(45deg);
-        }
     }
 
     li {
@@ -135,7 +105,7 @@ app-poc {
         }
 
         &:hover {
-            background: rgba(#FFF, .08);
+            background: rgba(#000, .08);
         }
     }
 }
