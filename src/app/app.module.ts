@@ -44,6 +44,7 @@ import { DepartmentsComponent } from './departments/departments.component';
 import { AppConfig } from './formio-app-config';
 import { NgxOrgChartModule } from 'ngx-org-chart';
 import { CreateDepartmentComponent } from './departments/create-department/create-department.component';
+import { PocComponent } from './departments/poc/poc.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { CreateDepartmentComponent } from './departments/create-department/creat
     DeleteUserAlertComponent,
     DepartmentsComponent,
     CreateDepartmentComponent,
+    PocComponent,
 
   ],
   imports: [

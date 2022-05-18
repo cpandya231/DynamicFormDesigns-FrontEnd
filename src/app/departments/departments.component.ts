@@ -234,12 +234,12 @@ export class DepartmentsComponent implements OnInit, AfterViewInit {
         d.y + ")");
 
 
-    node.append("rect")
+    const rect = node.append("rect")
       .attr('class', "rectangle-custom")
       .attr('x', -50)
-      .attr('y', 0)
+      .attr('y', 0);
 
-
+    
 
 
 
