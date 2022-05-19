@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { CreateFormTemplateComponent } from './forms/create-form-template/create-form-template.component';
+import { FormWorkflowComponent } from './forms/form-workflow/form-workflow.component';
 import { FormsDashboardComponent } from './forms/forms-dashboard/forms-dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { RolesComponent } from './roles/roles.component';
@@ -32,7 +33,10 @@ const routes: Routes = [
 
     ],
   },
-
+  {
+    path: 'formWorkflow',
+    component: FormWorkflowComponent
+  },
   { path: '', component: LoginComponent },
   { path: '**', component: AppComponent }
 ];

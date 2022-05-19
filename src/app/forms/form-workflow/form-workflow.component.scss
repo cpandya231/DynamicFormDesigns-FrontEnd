@@ -1,0 +1,24 @@
+.workflow_form {
+    padding: 20px;
+    .form-check {
+        .form-check-input {
+            float: none;
+        }
+    }
+    .col-form-label {
+        margin-top: auto;
+    }
+    .form-switch {
+        padding-left: calc(var(--mdb-gutter-x) * 0.5);
+        .form-check-input {
+            margin-left: 0;
+            margin-top: 0.75rem;
+        }
+    }
+}
+
+.save_button {
+    background-color: #0A1931;
+    color: white;
+    margin-right: 2rem;
+}
