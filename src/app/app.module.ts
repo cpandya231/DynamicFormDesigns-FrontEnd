@@ -42,7 +42,6 @@ import { CreateRoleComponent } from './roles/create-role/create-role.component';
 import { DeleteUserAlertComponent } from './users/users-info/delete-user-alert/delete-user-alert.component';
 import { DepartmentsComponent } from './departments/departments.component';
 import { AppConfig } from './formio-app-config';
-import { NgxOrgChartModule } from 'ngx-org-chart';
 import { CreateDepartmentComponent } from './departments/create-department/create-department.component';
 import { DepartmentDashboardComponent } from './departments/department-dashboard/department-dashboard.component';
 import { EditDepartmentComponent } from './departments/edit-department/edit-department.component';
@@ -99,7 +98,7 @@ import { EditDepartmentComponent } from './departments/edit-department/edit-depa
     BrowserAnimationsModule,
     MatIconModule,
     MatMenuModule,
-    NgxOrgChartModule
+
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: GlobalAppIntercepter, multi: true },

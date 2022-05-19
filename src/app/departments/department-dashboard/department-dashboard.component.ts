@@ -17,6 +17,7 @@ export class DepartmentDashboardComponent implements OnInit {
   @Input() data: any[];
   chart;
 
+
   constructor(
     private departmentService: DepartmentService,
     private router: Router,
@@ -26,6 +27,7 @@ export class DepartmentDashboardComponent implements OnInit {
       this.chart = new OrgChart();
 
     }
+
 
 
 
