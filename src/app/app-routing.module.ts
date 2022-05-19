@@ -1,6 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { CreateDepartmentComponent } from './departments/create-department/create-department.component';
+import { DepartmentDashboardComponent } from './departments/department-dashboard/department-dashboard.component';
+import { DepartmentsComponent } from './departments/departments.component';
+import { EditDepartmentComponent } from './departments/edit-department/edit-department.component';
+
 import { CreateFormTemplateComponent } from './forms/create-form-template/create-form-template.component';
 import { FormsDashboardComponent } from './forms/forms-dashboard/forms-dashboard.component';
 import { LoginComponent } from './login/login.component';
@@ -48,6 +53,26 @@ const routes: Routes = [
 
     ],
   },
+
+  {
+    path: 'departments',
+
+    children: [
+      {
+        path: 'create/:departmentId',
+        component: CreateDepartmentComponent
+      },
+      {
+        path: 'edit/:departmentId',
+        component: EditDepartmentComponent
+      },
+      {
+        path: '', component: DepartmentDashboardComponent,
+      },
+
+    ]
+  },
+
 
 
 

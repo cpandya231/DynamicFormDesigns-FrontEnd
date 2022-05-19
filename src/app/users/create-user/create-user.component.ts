@@ -7,7 +7,7 @@ import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { MasterForms } from 'src/app/services/utility/master.forms.constants';
 import { RoleService } from 'src/app/services/roles.service';
 import { combineLatest, EMPTY, map, of } from 'rxjs';
-import { DepartMentService } from 'src/app/services/departments.service';
+import { DepartmentService } from 'src/app/services/departments.service';
 import { formatDate } from '@angular/common';
 import { DateUtil } from 'src/app/services/utility/DateUtil';
 
@@ -30,7 +30,7 @@ export class CreateUserComponent implements OnInit {
   FormData = MasterForms.CREATE_USER_FORM_TEMPLATE;
   constructor(private userService: UsersService,
     private roleService: RoleService,
-    private departMentService: DepartMentService,
+    private departMentService: DepartmentService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
   ) {

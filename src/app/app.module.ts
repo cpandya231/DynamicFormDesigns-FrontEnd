@@ -12,7 +12,8 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { PasswordPatternDirective } from './directives/password-pattern.directive';
-import { MatIconModule } from '@angular/material/icon'
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
@@ -41,6 +42,10 @@ import { CreateRoleComponent } from './roles/create-role/create-role.component';
 import { DeleteUserAlertComponent } from './users/users-info/delete-user-alert/delete-user-alert.component';
 import { DepartmentsComponent } from './departments/departments.component';
 import { AppConfig } from './formio-app-config';
+import { CreateDepartmentComponent } from './departments/create-department/create-department.component';
+import { DepartmentDashboardComponent } from './departments/department-dashboard/department-dashboard.component';
+import { EditDepartmentComponent } from './departments/edit-department/edit-department.component';
+
 
 @NgModule({
   declarations: [
@@ -60,6 +65,10 @@ import { AppConfig } from './formio-app-config';
     CreateRoleComponent,
     DeleteUserAlertComponent,
     DepartmentsComponent,
+    CreateDepartmentComponent,
+    DepartmentDashboardComponent,
+    EditDepartmentComponent,
+
 
   ],
   imports: [
@@ -87,7 +96,9 @@ import { AppConfig } from './formio-app-config';
     MdbTooltipModule,
     MdbValidationModule,
     BrowserAnimationsModule,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule,
+
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: GlobalAppIntercepter, multi: true },
