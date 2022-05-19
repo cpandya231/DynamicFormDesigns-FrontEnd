@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormioComponent } from '@formio/angular';
+import { map } from 'rxjs';
 import { DepartmentService } from 'src/app/services/departments.service';
 import { MasterForms } from 'src/app/services/utility/master.forms.constants';
 import { IDepartmentItem } from '../department-item-model';
@@ -13,7 +14,8 @@ import { IDepartmentItem } from '../department-item-model';
 export class CreateDepartmentComponent implements OnInit {
   isDataLoaded: boolean = false;
   departmentId: any;
-  departmentObj: IDepartmentItem;
+  departmentObj: any;
+  departments: IDepartmentItem[];
   @ViewChild(FormioComponent, { static: false })
   form!: FormioComponent;
   FormData = MasterForms.CREATE_DEPARTMENT_FORM_TEMPLATE;
@@ -28,11 +30,20 @@ export class CreateDepartmentComponent implements OnInit {
     let params = this.activatedRoute.snapshot.paramMap;
     this.departmentId = String(params.get('departmentId') || '');
     if (this.departmentId) {
-      this.departmentService.getDepartmentByName(this.departmentId).subscribe(department => {
-        this.departmentObj = department;
-        this.setDataInForm();
+      let allDepartMents = this.departmentService.getAllDepartment()
+        .pipe(map(departments => {
+          return departments.map((department: { [x: string]: any; }) => {
+            if (department["name"] == this.departmentId) {
+              this.departmentObj = department;
+            }
 
-      })
+            return { "label": department["name"], "value": department["id"] };
+          });
+        })).subscribe(departments => {
+          this.departments = departments;
+          this.setDataInForm();
+
+        })
 
     }
   }
@@ -40,8 +51,11 @@ export class CreateDepartmentComponent implements OnInit {
   setDataInForm() {
     this.FormData['components'].forEach((item: any) => {
       if (item['key'] == 'parentDepartment') {
-        item.defaultValue = this.departmentObj.name;
-        item.disabled = true;
+        item.data.values = this.departments;
+
+
+        item.defaultValue = this.departmentObj.id;
+
       }
       this.isDataLoaded = true;
     }
@@ -61,7 +75,7 @@ export class CreateDepartmentComponent implements OnInit {
     let departmentObj: IDepartmentItem = {
       name: submittedData.name,
       code: submittedData.code,
-      parentId: this.departmentObj.id
+      parentId: submittedData.parentDepartment
     }
 
     this.departmentService.createDepartment(departmentObj).subscribe({

@@ -481,18 +481,30 @@ export class MasterForms {
         "components": [{
             "label": "Parent Department",
             "labelPosition": "top",
-            "widget": {
-                "type": "input"
+            "widget": "choicesjs",
+            "dataSrc": "values",
+            "data": {
+                "values": [],
+                "resource": "",
+                "json": "",
+                "url": "",
+                "custom": ""
             },
-            "validateOn": "blur",
+            "idPath": "id",
+            "limit": 100,
+            "template": "<span>{{ item.label }}</span>",
+            "clearOnRefresh": false,
+            "searchEnabled": true,
+            "selectThreshold": 0.3,
+            "validateOn": "change",
             "validate": {
                 "required": true,
+
             },
             "key": "parentDepartment",
-            "type": "textfield",
+            "type": "select",
             "input": true,
-            "inputType": "text",
-            "id": "dqizby3"
+            "id": "ext18r"
         }, {
             "label": "Name",
             "labelPosition": "top",
@@ -533,6 +545,33 @@ export class MasterForms {
 
     public static EDIT_DEPARTMENT_FORM_TEMPLATE: any = {
         "components": [{
+            "label": "Parent Department",
+            "labelPosition": "top",
+            "widget": "choicesjs",
+            "dataSrc": "values",
+            "data": {
+                "values": [],
+                "resource": "",
+                "json": "",
+                "url": "",
+                "custom": ""
+            },
+            "idPath": "id",
+            "limit": 100,
+            "template": "<span>{{ item.label }}</span>",
+            "clearOnRefresh": false,
+            "searchEnabled": true,
+            "selectThreshold": 0.3,
+            "validateOn": "change",
+            "validate": {
+                "required": true,
+
+            },
+            "key": "parentDepartment",
+            "type": "select",
+            "input": true,
+            "id": "ext18r"
+        }, , {
             "label": "Name",
             "labelPosition": "top",
             "widget": {
@@ -563,7 +602,7 @@ export class MasterForms {
             "inputType": "text",
             "id": "dyn7p3r"
         }],
-        "Name": "Create Department",
+        "Name": "Update Department",
         "Id": 4,
         "CreatedBy": "Akash",
         "CreatedOn": "5/3/2022"

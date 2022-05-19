@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormioComponent } from '@formio/angular';
+import { map } from 'rxjs';
 import { DepartmentService } from 'src/app/services/departments.service';
 import { MasterForms } from 'src/app/services/utility/master.forms.constants';
 import { IDepartmentItem } from '../department-item-model';
@@ -14,7 +15,8 @@ export class EditDepartmentComponent implements OnInit {
 
   isDataLoaded: boolean = false;
   departmentId: any;
-  departmentObj: IDepartmentItem;
+  departmentObj: any;
+  departments: IDepartmentItem[];
   @ViewChild(FormioComponent, { static: false })
   form!: FormioComponent;
   FormData = MasterForms.EDIT_DEPARTMENT_FORM_TEMPLATE;
@@ -29,11 +31,21 @@ export class EditDepartmentComponent implements OnInit {
     let params = this.activatedRoute.snapshot.paramMap;
     this.departmentId = String(params.get('departmentId') || '');
     if (this.departmentId) {
-      this.departmentService.getDepartmentByName(this.departmentId).subscribe(department => {
-        this.departmentObj = department;
-        this.setDataInForm();
+      let allDepartMents = this.departmentService.getAllDepartment()
+        .pipe(map(departments => {
+          return departments.map((department: { [x: string]: any; }) => {
+            if (department["name"] == this.departmentId) {
+              this.departmentObj = department;
+              return;
+            }
 
-      })
+            return { "label": department["name"], "value": department["id"] };
+          });
+        })).subscribe(departments => {
+          this.departments = departments;
+          this.setDataInForm();
+
+        })
 
     }
   }
@@ -45,6 +57,18 @@ export class EditDepartmentComponent implements OnInit {
 
       } else if (item['key'] == 'code') {
         item.defaultValue = this.departmentObj.code;
+
+      } else if (item['key'] == 'parentDepartment') {
+        item.data.values = this.departments;
+
+        if (this.departmentObj.parentId == 0) {
+          item.hidden = true;
+
+        } else {
+          item.defaultValue = this.departmentObj.parentId;
+          item.hidden = false;
+        }
+
 
       }
       this.isDataLoaded = true;
@@ -66,7 +90,7 @@ export class EditDepartmentComponent implements OnInit {
       name: submittedData.name,
       code: submittedData.code,
       id: this.departmentObj.id,
-      parentId: this.departmentObj.parentId
+      parentId: submittedData.parentDepartment
     }
 
     this.departmentService.editDepartment(departmentObj).subscribe({
