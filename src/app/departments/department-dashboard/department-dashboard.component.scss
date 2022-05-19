@@ -23,14 +23,23 @@ app-department-dashboard {
         font-family: "Material Icons";
         position: relative;
         cursor: default;
+        border-top: 1em solid #00ADB5;
+
     }
 
     .node-card {
         flex-direction: column;
         justify-content: center;
-        align-items: center;
-        margin-top: 1em;
+
         position: relative;
+        width: 100%;
+        text-align: left;
+        padding-left: 1em;
+
+        h6 {
+            font-weight: bold;
+
+        }
     }
 
 

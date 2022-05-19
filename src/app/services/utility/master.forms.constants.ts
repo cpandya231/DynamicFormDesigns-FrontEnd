@@ -479,6 +479,21 @@ export class MasterForms {
 
     public static CREATE_DEPARTMENT_FORM_TEMPLATE: any = {
         "components": [{
+            "label": "Parent Department",
+            "labelPosition": "top",
+            "widget": {
+                "type": "input"
+            },
+            "validateOn": "blur",
+            "validate": {
+                "required": true,
+            },
+            "key": "parentDepartment",
+            "type": "textfield",
+            "input": true,
+            "inputType": "text",
+            "id": "dqizby3"
+        }, {
             "label": "Name",
             "labelPosition": "top",
             "widget": {
@@ -514,6 +529,46 @@ export class MasterForms {
         "CreatedBy": "Akash",
         "CreatedOn": "5/3/2022"
     }
+
+
+    public static EDIT_DEPARTMENT_FORM_TEMPLATE: any = {
+        "components": [{
+            "label": "Name",
+            "labelPosition": "top",
+            "widget": {
+                "type": "input"
+            },
+            "validateOn": "blur",
+            "validate": {
+                "required": true,
+            },
+            "key": "name",
+            "type": "textfield",
+            "input": true,
+            "inputType": "text",
+            "id": "dqizbyl"
+        }, {
+            "label": "Code",
+            "labelPosition": "top",
+            "widget": {
+                "type": "input"
+            },
+            "validateOn": "blur",
+            "validate": {
+                "required": false,
+            },
+            "key": "code",
+            "type": "textfield",
+            "input": true,
+            "inputType": "text",
+            "id": "dyn7p3r"
+        }],
+        "Name": "Create Department",
+        "Id": 4,
+        "CreatedBy": "Akash",
+        "CreatedOn": "5/3/2022"
+    }
+
 
 
 }

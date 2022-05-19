@@ -18,6 +18,12 @@ export class DepartmentService {
         return this.http.get<IDepartmentItem[]>(`${ServiceUtil.API_ENDPOINT}/departments/`, httpOptions);
     }
 
+    getDepartmentByName(name: any): Observable<any> {
+        let httpOptions = this.getHttpOptions();
+        return this.http.get<IDepartmentItem>(`${ServiceUtil.API_ENDPOINT}/departments/${name}/`, httpOptions);
+    }
+
+
 
     private getHttpOptions() {
         return {
@@ -29,6 +35,12 @@ export class DepartmentService {
 
     createDepartment(departmentItem: IDepartmentItem) {
         return this.http.post<any>(`${ServiceUtil.API_ENDPOINT}/departments/`, departmentItem, this.getHttpOptions());
+    }
+
+
+
+    editDepartment(departmentItem: IDepartmentItem) {
+        return this.http.put<any>(`${ServiceUtil.API_ENDPOINT}/departments/`, departmentItem, this.getHttpOptions());
     }
 
 

@@ -1,3 +1,6 @@
+@import '../variables.scss';
+
+
 .wrapper {
     position: relative;
 }
@@ -96,7 +99,7 @@
 }
 
 .login-screen-header {
-    color: #185ADB;
+    color: $main-teal;
     text-align: center;
     position: relative;
 }
@@ -156,15 +159,6 @@
     color: transparent;
 }
 
-/* 
-.textbox-style:focus{
-    outline: none;
-    border-color: #185ADB;
-    border-style: solid;
-    color: black;
-    
-
-} */
 
 #email {
     background-image: url("../../assets/Mail.png");
@@ -181,7 +175,7 @@
 }
 
 .button {
-    background-color: #185ADB;
+    background-color: $main-teal;
     border: none;
     border-radius: 5px;
     color: #fff;
@@ -192,6 +186,10 @@
     font-size: 1rem;
 
     cursor: pointer;
+}
+
+.button:hover {
+    background-color: $main-teal-dark;
 }
 
 .button:disabled,

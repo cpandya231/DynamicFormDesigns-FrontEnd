@@ -39,22 +39,40 @@ export class DepartmentDashboardComponent implements OnInit {
     let departmentId = event.currentTarget.attributes["department-id"]["nodeValue"];
     let eventType = event.currentTarget.attributes["event-type"]["nodeValue"];
     if (eventType == 'add') {
-      this.navigate(departmentId);
+      this.router.navigate(['./create', departmentId], { relativeTo: this.route });
+    } else if (eventType == 'edit') {
+      this.router.navigate(['./edit', departmentId], { relativeTo: this.route });
     }
+
+
+  }
+
+  clickedOutside(event: any) {
+    if (event.target.className.baseVal == "svg-chart-container") {
+      let all = document.getElementsByClassName(`list`);
+      Array.from(all).forEach((el) => {
+
+
+        el.classList.remove('show');
+
+      });
+    }
+
   }
 
 
-  private navigate(departmentId: any) {
-    this.router.navigate(['./create', departmentId], { relativeTo: this.route });
-  }
 
   ngAfterViewInit() {
 
     this.renderer.listen(this.chartContainer.nativeElement, 'click', (evt) => {
-      if (this.chartContainer.nativeElement.querySelectorAll('.list-item-2')) {
-        [...  this.chartContainer.nativeElement.querySelectorAll('.list-item-2')].forEach(element => {
+      if (this.chartContainer.nativeElement.querySelectorAll('.list-items')) {
+        [...  this.chartContainer.nativeElement.querySelectorAll('.list-items')].forEach(element => {
           element.addEventListener('click', this.handleDepartmentEvent.bind(this));
         })
+      }
+
+      if (evt.target.className.baseVal == "svg-chart-container") {
+        this.chartContainer.nativeElement.querySelector('.svg-chart-container').addEventListener('click', this.clickedOutside.bind(this));
       }
 
     });
@@ -81,25 +99,24 @@ export class DepartmentDashboardComponent implements OnInit {
         <div class="menu" #menu>
         <ul class="list list-for-${data.data.id}">
 
-          <li class="list-item-2" department-id='${data.data.id}' event-type="add">
+          <li class="list-items" department-id='${data.data.name}' event-type="add">
             Add 
           </li>
-          <li class="list-item-2" department-id='${data.data.id}' event-type="edit">
+          <li class="list-items" department-id='${data.data.name}' event-type="edit">
               Edit
           </li>
-          <li class="list-item-2" department-id='${data.data.id}' event-type="delete">
-           Delete 
-          </li>
+
     
         </ul>
       </div>
         <div class="node-card">
             <h6>${data.data.name}</h6>
+            <span>code: ${data.data.code}</span>
         </div>
       
         `;
       })
-      .render();
+      .compact(false).render().fit().expandAll();
 
     this.chart.onNodeClick((data: any) => {
 
@@ -107,17 +124,20 @@ export class DepartmentDashboardComponent implements OnInit {
       Array.from(all).forEach((el) => {
         // Do stuff here
         if (el.classList.contains(`list-for-${data}`)) {
-          el.classList.remove('hide')
-          el.classList.toggle('show');
+          el.classList.toggle('hide')
+          el.classList.add('show');
+
         } else {
-          el.classList.remove('show')
-          el.classList.toggle('hide');
+          el.classList.toggle('show')
+          el.classList.add('hide');
+
         }
 
       });
 
 
     });
+
     this.isDataLoaded = true;
 
 

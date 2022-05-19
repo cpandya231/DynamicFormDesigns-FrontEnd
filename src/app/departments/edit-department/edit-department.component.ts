@@ -6,17 +6,18 @@ import { MasterForms } from 'src/app/services/utility/master.forms.constants';
 import { IDepartmentItem } from '../department-item-model';
 
 @Component({
-  selector: 'app-create-department',
-  templateUrl: './create-department.component.html',
-  styleUrls: ['./create-department.component.scss']
+  selector: 'app-edit-department',
+  templateUrl: './edit-department.component.html',
+  styleUrls: ['./edit-department.component.scss']
 })
-export class CreateDepartmentComponent implements OnInit {
+export class EditDepartmentComponent implements OnInit {
+
   isDataLoaded: boolean = false;
   departmentId: any;
   departmentObj: IDepartmentItem;
   @ViewChild(FormioComponent, { static: false })
   form!: FormioComponent;
-  FormData = MasterForms.CREATE_DEPARTMENT_FORM_TEMPLATE;
+  FormData = MasterForms.EDIT_DEPARTMENT_FORM_TEMPLATE;
   constructor(
     private departmentService: DepartmentService,
     private router: Router,
@@ -39,9 +40,12 @@ export class CreateDepartmentComponent implements OnInit {
 
   setDataInForm() {
     this.FormData['components'].forEach((item: any) => {
-      if (item['key'] == 'parentDepartment') {
+      if (item['key'] == 'name') {
         item.defaultValue = this.departmentObj.name;
-        item.disabled = true;
+
+      } else if (item['key'] == 'code') {
+        item.defaultValue = this.departmentObj.code;
+
       }
       this.isDataLoaded = true;
     }
@@ -61,10 +65,11 @@ export class CreateDepartmentComponent implements OnInit {
     let departmentObj: IDepartmentItem = {
       name: submittedData.name,
       code: submittedData.code,
-      parentId: this.departmentObj.id
+      id: this.departmentObj.id,
+      parentId: this.departmentObj.parentId
     }
 
-    this.departmentService.createDepartment(departmentObj).subscribe({
+    this.departmentService.editDepartment(departmentObj).subscribe({
       next: this.navigateOnSuccess.bind(this), error: this.handleError.bind(this)
     })
   }

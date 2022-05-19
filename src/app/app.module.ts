@@ -45,6 +45,7 @@ import { AppConfig } from './formio-app-config';
 import { NgxOrgChartModule } from 'ngx-org-chart';
 import { CreateDepartmentComponent } from './departments/create-department/create-department.component';
 import { DepartmentDashboardComponent } from './departments/department-dashboard/department-dashboard.component';
+import { EditDepartmentComponent } from './departments/edit-department/edit-department.component';
 
 
 @NgModule({
@@ -67,6 +68,7 @@ import { DepartmentDashboardComponent } from './departments/department-dashboard
     DepartmentsComponent,
     CreateDepartmentComponent,
     DepartmentDashboardComponent,
+    EditDepartmentComponent,
 
 
   ],

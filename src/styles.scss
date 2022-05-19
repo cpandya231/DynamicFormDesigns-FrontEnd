@@ -5,6 +5,7 @@
 @import '~@fortawesome/fontawesome-free/scss/brands.scss';
 @import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
 @import '~ngx-org-chart/_theming';
+$primary: #00ADB5;
 $navy: #0A1931;
 $white: #ffffff;
 $blue: #185ADB;
@@ -73,5 +74,5 @@ select:focus {
 }
 
 .formbuilder .btn-primary {
-    background-color: #00ADB5;
+    background-color: $primary;
 }
