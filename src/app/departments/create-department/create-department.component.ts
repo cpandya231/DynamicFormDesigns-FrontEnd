@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormioComponent } from '@formio/angular';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { DepartmentService } from 'src/app/services/departments.service';
@@ -14,7 +14,7 @@ import { DepartmentsComponent } from '../departments.component';
 })
 export class CreateDepartmentComponent implements OnInit {
   isDataLoaded: boolean = false;
-  parentId: any;
+  departmentId: any;
 
   @ViewChild(FormioComponent, { static: false })
   form!: FormioComponent;
@@ -22,11 +22,14 @@ export class CreateDepartmentComponent implements OnInit {
   constructor(
     private departmentService: DepartmentService,
     private router: Router,
-    private modelRef: MdbModalRef<CreateDepartmentComponent>
+    private activatedRoute: ActivatedRoute,
+
   ) { }
 
   ngOnInit(): void {
-    if (this.parentId) {
+    let params = this.activatedRoute.snapshot.paramMap;
+    this.departmentId = String(params.get('departmentId') || '');
+    if (this.departmentId) {
       this.isDataLoaded = true;
     }
   }
@@ -44,7 +47,7 @@ export class CreateDepartmentComponent implements OnInit {
     let departmentObj: IDepartmentItem = {
       name: submittedData.name,
       code: submittedData.code,
-      parentId: this.parentId
+      parentId: this.departmentId
     }
 
     this.departmentService.createDepartment(departmentObj).subscribe({
@@ -54,7 +57,7 @@ export class CreateDepartmentComponent implements OnInit {
 
   navigateOnSuccess() {
     this.departmentService.departmentAdded.next(true);
-    this.modelRef.close();
+
     this.router.navigate(['/departments']);
   }
 
@@ -64,6 +67,6 @@ export class CreateDepartmentComponent implements OnInit {
   }
 
   close() {
-    this.modelRef.close();
+    this.router.navigate(['/departments']);
   }
 }

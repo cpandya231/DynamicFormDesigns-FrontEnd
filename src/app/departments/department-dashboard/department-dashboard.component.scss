@@ -1,9 +1,13 @@
-app-poc {
-
+app-department-dashboard {
 
 
     %icons {
         font-family: 'Material Icons' !important;
+
+    }
+
+    .node {
+        position: relative;
 
     }
 
@@ -15,8 +19,9 @@ app-poc {
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-between;
+
         font-family: "Material Icons";
+        position: relative;
         cursor: default;
     }
 
@@ -25,6 +30,7 @@ app-poc {
         justify-content: center;
         align-items: center;
         margin-top: 1em;
+        position: relative;
     }
 
 
@@ -34,6 +40,7 @@ app-poc {
         align-self: flex-end;
         font-size: 2em;
         cursor: pointer;
+        position: relative;
 
 
         &:before {
@@ -53,7 +60,7 @@ app-poc {
         margin-top: 1em;
         border-radius: 5px;
         box-shadow: 0 2px 8px rgba(#000, .2);
-
+        background-color: #fff;
         top: 100%;
 
         color: inherit;
@@ -89,20 +96,18 @@ app-poc {
         }
 
         &:nth-child(1):before {
-            content: '\E161';
+            content: '\E147';
         }
 
         &:nth-child(2):before {
-            content: '\E879';
+            content: '\E3C9';
         }
 
         &:nth-child(3):before {
             content: '\E92B';
         }
 
-        &:nth-child(4):before {
-            content: '\E80D';
-        }
+
 
         &:hover {
             background: rgba(#000, .08);

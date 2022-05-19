@@ -1,23 +1,27 @@
 
-import { AfterContentChecked, AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
-import * as d3 from 'd3';
+import { Component, ElementRef, Input, OnInit, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OrgChart } from 'd3-org-chart';
 import { map } from 'rxjs';
 import { DepartmentService } from 'src/app/services/departments.service';
 @Component({
-  selector: 'app-poc',
-  templateUrl: './poc.component.html',
-  styleUrls: ['./poc.component.scss'],
+  selector: 'app-department-dashboard',
+  templateUrl: './department-dashboard.component.html',
+  styleUrls: ['./department-dashboard.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class PocComponent implements OnInit, AfterViewInit {
+export class DepartmentDashboardComponent implements OnInit {
   isDataLoaded: boolean = false;
   @ViewChild('chartContainer') chartContainer: ElementRef;
 
   @Input() data: any[];
   chart;
 
-  constructor(private departmentService: DepartmentService, private renderer: Renderer2) {
+  constructor(
+    private departmentService: DepartmentService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private renderer: Renderer2) {
     if (!this.chart) {
       this.chart = new OrgChart();
 
@@ -31,27 +35,30 @@ export class PocComponent implements OnInit, AfterViewInit {
     this.setData();
   }
 
-  openAlert(event: any) {
-    let departmentId = event.currentTarget.attributes["department-id"]["nodeValue"]
-    alert(`hello ${departmentId}`);
+  handleDepartmentEvent(event: any) {
+    let departmentId = event.currentTarget.attributes["department-id"]["nodeValue"];
+    let eventType = event.currentTarget.attributes["event-type"]["nodeValue"];
+    if (eventType == 'add') {
+      this.navigate(departmentId);
+    }
   }
 
+
+  private navigate(departmentId: any) {
+    this.router.navigate(['./create', departmentId], { relativeTo: this.route });
+  }
 
   ngAfterViewInit() {
 
     this.renderer.listen(this.chartContainer.nativeElement, 'click', (evt) => {
       if (this.chartContainer.nativeElement.querySelectorAll('.list-item-2')) {
         [...  this.chartContainer.nativeElement.querySelectorAll('.list-item-2')].forEach(element => {
-          element.addEventListener('click', this.openAlert);
+          element.addEventListener('click', this.handleDepartmentEvent.bind(this));
         })
       }
 
     });
 
-
-    // if (this.chartContainer.nativeElement.querySelector('#list-item-2')) {
-    //   this.chartContainer.nativeElement.querySelector('#list-item-2').addEventListener('click', this.openAlert.bind(this));
-    // }
 
   }
 
@@ -71,23 +78,25 @@ export class PocComponent implements OnInit, AfterViewInit {
       .nodeHeight(d => 120)
       .nodeContent((data: any) => {
         return `
+        <div class="menu" #menu>
+        <ul class="list list-for-${data.data.id}">
+
+          <li class="list-item-2" department-id='${data.data.id}' event-type="add">
+            Add 
+          </li>
+          <li class="list-item-2" department-id='${data.data.id}' event-type="edit">
+              Edit
+          </li>
+          <li class="list-item-2" department-id='${data.data.id}' event-type="delete">
+           Delete 
+          </li>
+    
+        </ul>
+      </div>
         <div class="node-card">
             <h6>${data.data.name}</h6>
         </div>
-        <div class="menu" #menu>
-          <ul class="list list-for-${data.data.id}">
-            <li>
-                Edit
-            </li>
-            <li class="list-item-2" department-id='${data.data.id}'>
-           
-            Add Sub-Department
-            
-             
-             </li>
       
-          </ul>
-        </div>
         `;
       })
       .render();
