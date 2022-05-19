@@ -55,6 +55,10 @@ export class AppComponent {
                 }
               ]
             },
+            {
+              name: 'Departments',
+              url: 'departments'
+            },
           ];
           this.showNavbar = true;
         }

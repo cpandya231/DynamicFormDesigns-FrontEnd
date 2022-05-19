@@ -1,0 +1,16 @@
+@import "../../create-user/create-user.component.scss";
+
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 30vh;
+}
+
+.alert-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}

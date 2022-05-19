@@ -4,11 +4,13 @@
 @import '~@fortawesome/fontawesome-free/scss/regular.scss';
 @import '~@fortawesome/fontawesome-free/scss/brands.scss';
 @import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
+$primary: #00ADB5;
 $navy: #0A1931;
 $white: #ffffff;
 $blue: #185ADB;
 $yellow: #FFC947;
 $gray: #EFEFEF;
+
 * {
     font-family: Montserrat, Arial, Helvetica, sans-serif;
 }
@@ -71,9 +73,5 @@ select:focus {
 }
 
 .formbuilder .btn-primary {
-    background-color: #00ADB5;
-}
-
-.modal-dialog {
-    max-width: 1000px;
+    background-color: $primary;
 }

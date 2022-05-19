@@ -5,14 +5,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormioModule } from '@formio/angular';
+import { FormioAppConfig, FormioModule } from '@formio/angular';
 import { CreateFormTemplateComponent } from './forms/create-form-template/create-form-template.component';
 import { FormsDashboardComponent } from './forms/forms-dashboard/forms-dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { PasswordPatternDirective } from './directives/password-pattern.directive';
-import { MatIconModule } from '@angular/material/icon'
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
@@ -39,6 +40,13 @@ import { NgbdSortableHeader } from '../app/directives/sort-table-column-directiv
 import { GlobalAppIntercepter } from './common/services/global-app-intercepter.service';
 import { CreateRoleComponent } from './roles/create-role/create-role.component';
 import { FormWorkflowComponent } from './forms/form-workflow/form-workflow.component';
+import { DeleteUserAlertComponent } from './users/users-info/delete-user-alert/delete-user-alert.component';
+import { DepartmentsComponent } from './departments/departments.component';
+import { AppConfig } from './formio-app-config';
+import { CreateDepartmentComponent } from './departments/create-department/create-department.component';
+import { DepartmentDashboardComponent } from './departments/department-dashboard/department-dashboard.component';
+import { EditDepartmentComponent } from './departments/edit-department/edit-department.component';
+
 
 @NgModule({
   declarations: [
@@ -56,7 +64,14 @@ import { FormWorkflowComponent } from './forms/form-workflow/form-workflow.compo
     CreateUserComponent,
     UsersInfoComponent,
     CreateRoleComponent,
-    FormWorkflowComponent
+    FormWorkflowComponent,
+    DeleteUserAlertComponent,
+    DepartmentsComponent,
+    CreateDepartmentComponent,
+    DepartmentDashboardComponent,
+    EditDepartmentComponent,
+
+
   ],
   imports: [
     BrowserModule,
@@ -83,10 +98,13 @@ import { FormWorkflowComponent } from './forms/form-workflow/form-workflow.compo
     MdbTooltipModule,
     MdbValidationModule,
     BrowserAnimationsModule,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule,
+
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: GlobalAppIntercepter, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: GlobalAppIntercepter, multi: true },
+    { provide: FormioAppConfig, useValue: AppConfig }
   ],
   bootstrap: [AppComponent]
 })

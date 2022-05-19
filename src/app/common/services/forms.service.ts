@@ -22,12 +22,12 @@ export class FormsService {
   SaveFormTemplate(formTemplate: any, name: string) {
     let body = {
       name,
-      template: JSON.stringify({formName: name, components: formTemplate.components})
+      template: JSON.stringify({ formName: name, components: formTemplate.components })
     }
-    return this.http.post(`${ServiceUtil.API_ENDPOINT}/forms/`, body,{
+    return this.http.post(`${ServiceUtil.API_ENDPOINT}/forms/`, body, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-    })
+      })
     });
   }
 
@@ -35,9 +35,9 @@ export class FormsService {
     let body = {
       id,
       name,
-      template: JSON.stringify({formName: name, components: formTemplate.components})
+      template: JSON.stringify({ formName: name, components: formTemplate.components })
     };
-    return this.http.put(`${ServiceUtil.API_ENDPOINT}/forms/`, body,{
+    return this.http.put(`${ServiceUtil.API_ENDPOINT}/forms/`, body, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       })

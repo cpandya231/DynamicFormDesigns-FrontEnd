@@ -7,10 +7,10 @@ import { ServiceUtil } from './utility/ServiceUtil';
 import { map, Observable, Subject, switchMap } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class UsersService {
-    public userAdded: Subject<boolean>;
+    public reloadUsers: Subject<boolean>;
 
     constructor(private http: HttpClient, private authService: AuthService) {
-        this.userAdded = new Subject<boolean>();
+        this.reloadUsers = new Subject<boolean>();
     }
 
 
@@ -34,6 +34,14 @@ export class UsersService {
 
     createUser(userItem: IUserItem) {
         return this.http.post<any>(`${ServiceUtil.API_ENDPOINT}/users/`, userItem, this.getHttpOptions());
+    }
+
+    updateUser(userItem: IUserItem) {
+        return this.http.put<any>(`${ServiceUtil.API_ENDPOINT}/users/`, userItem, this.getHttpOptions());
+    }
+
+    toggleUser(userItem: any) {
+        return this.http.patch<any>(`${ServiceUtil.API_ENDPOINT}/users/`, userItem, this.getHttpOptions());
     }
 }
 

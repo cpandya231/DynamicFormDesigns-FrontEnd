@@ -40,7 +40,7 @@ export class RolesComponent implements OnInit {
 
   ngOnInit(): void {
     this.setData();
-    this.initUserAddedSubscription();
+    this.initRoleAddedSubscription();
   }
 
   private setData() {
@@ -61,7 +61,7 @@ export class RolesComponent implements OnInit {
     );
   }
 
-  initUserAddedSubscription() {
+  initRoleAddedSubscription() {
     this.roleService.roleAdded.subscribe((data: boolean) => {
       if (data) {
         this.setData();
@@ -72,7 +72,7 @@ export class RolesComponent implements OnInit {
 
   createRole() {
     let mdbModalConfig: MdbModalConfig = {
-      ignoreBackdropClick: true
+      ignoreBackdropClick: true,
     };
     this.modalRef = this.modalService.open(CreateRoleComponent, mdbModalConfig);
 

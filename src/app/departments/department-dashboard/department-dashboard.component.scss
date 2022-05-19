@@ -1,0 +1,125 @@
+app-department-dashboard {
+
+
+    %icons {
+        font-family: 'Material Icons' !important;
+
+    }
+
+    .node {
+        position: relative;
+
+    }
+
+    .node-foreign-object-div {
+        @extend %icons;
+        background-color: #fff;
+        border: 1px solid grey;
+        border-radius: 0.5em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        font-family: "Material Icons";
+        position: relative;
+        cursor: default;
+        border-top: 1em solid #00ADB5;
+
+    }
+
+    .node-card {
+        flex-direction: column;
+        justify-content: center;
+
+        position: relative;
+        width: 100%;
+        text-align: left;
+        padding-left: 1em;
+
+        h6 {
+            font-weight: bold;
+
+        }
+    }
+
+
+
+    .menu {
+        border-radius: 5px;
+        align-self: flex-end;
+        font-size: 2em;
+        cursor: pointer;
+        position: relative;
+
+
+        &:before {
+
+            @extend %icons;
+            content: '\E5D3';
+            font-size: inherit;
+        }
+    }
+
+    ul {
+
+        position: absolute;
+        z-index: 999 !important;
+        padding: .5em 0;
+        margin: 0;
+        margin-top: 1em;
+        border-radius: 5px;
+        box-shadow: 0 2px 8px rgba(#000, .2);
+        background-color: #fff;
+        top: 100%;
+
+        color: inherit;
+        font-size: 1rem;
+        white-space: nowrap;
+        cursor: default;
+        visibility: hidden;
+
+        &.show {
+            margin-top: -.2em;
+            visibility: visible;
+        }
+
+        &.hide {
+            visibility: hidden;
+        }
+
+    }
+
+    li {
+        list-style: none;
+        padding: .5em;
+        padding-left: 2.5em;
+        margin: 0;
+        position: relative;
+        cursor: pointer;
+
+        &:before {
+            @extend %icons;
+            position: absolute;
+            top: calc(5% + 8px);
+            left: 8px;
+        }
+
+        &:nth-child(1):before {
+            content: '\E147';
+        }
+
+        &:nth-child(2):before {
+            content: '\E3C9';
+        }
+
+        &:nth-child(3):before {
+            content: '\E92B';
+        }
+
+
+
+        &:hover {
+            background: rgba(#000, .08);
+        }
+    }
+}

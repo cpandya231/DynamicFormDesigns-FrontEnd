@@ -3,14 +3,18 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-import { Observable, of } from 'rxjs';
+import { combineLatest, Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { UsersService } from '../../services/users.service';
 import { IUserItem } from '../user-item-model';
-import { MdbModalConfig, MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { CreateUserComponent } from '../create-user/create-user.component';
 import { NgbdSortableHeader, SortEvent } from '../../directives/sort-table-column-directive';
 import { DateUtil } from 'src/app/services/utility/DateUtil';
+import { DeleteUserAlertComponent } from './delete-user-alert/delete-user-alert.component';
+import { Router, ActivatedRoute } from '@angular/router';
+import { RoleService } from 'src/app/services/roles.service';
+import { DepartmentService } from 'src/app/services/departments.service';
 
 const compare = (v1: any, v2: any) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
@@ -27,27 +31,49 @@ export class UsersInfoComponent implements OnInit {
 
   users$!: Observable<IUserItem[]>;
   USERS!: IUserItem[];
-
+  roles!: any[];
+  departments!: any[];
   filter = new FormControl('');
   @ViewChildren(NgbdSortableHeader)
   headers!: QueryList<NgbdSortableHeader>;
 
-  constructor(private usersService: UsersService, private modalService: MdbModalService) {
+  constructor(
+    private usersService: UsersService,
+    private roleService: RoleService,
+    private departMentService: DepartmentService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private modalService: MdbModalService) {
 
 
   }
 
   ngOnInit(): void {
     this.setData();
-    this.initUserAddedSubscription();
+    this.initUserRefreshedSubscription();
   }
 
   private setData() {
     this.users$ = this.usersService.getAllUsers();
-    this.users$.subscribe(items => {
+    let allRoles = this.roleService.getAllRoles()
+      .pipe(map(roles => {
+        return roles.map((role: { [x: string]: any; }) => {
+          return { "label": role["role"], "value": role["id"] };
+        });
+      }));
 
-      this.USERS = items;
+    let allDepartMents = this.departMentService.getAllDepartment()
+      .pipe(map(departments => {
+        return departments.map((department: { [x: string]: any; }) => {
+          return { "label": department["name"], "value": department["id"] };
+        });
+      }));
 
+    combineLatest([this.users$, allRoles, allDepartMents]).subscribe(items => {
+
+      this.USERS = items[0];
+      this.roles = items[1];
+      this.departments = items[2];
       this.registerForSearch();
     });
 
@@ -60,8 +86,8 @@ export class UsersInfoComponent implements OnInit {
     );
   }
 
-  initUserAddedSubscription() {
-    this.usersService.userAdded.subscribe((data: boolean) => {
+  initUserRefreshedSubscription() {
+    this.usersService.reloadUsers.subscribe((data: boolean) => {
       if (data) {
         this.setData();
 
@@ -103,11 +129,33 @@ export class UsersInfoComponent implements OnInit {
   }
 
   createUser() {
-    let mdbModalConfig: MdbModalConfig = {
-      ignoreBackdropClick: true
-    };
-    this.modalRef = this.modalService.open(CreateUserComponent, mdbModalConfig);
+    this.router.navigate(["./create"], {
+      relativeTo: this.route,
+      state: { roles: this.roles, departments: this.departments }
+    })
 
+  }
+
+  editUser(user: IUserItem) {
+    this.router.navigate(["./update", user.username], {
+      relativeTo: this.route,
+      state: { user: user, roles: this.roles, departments: this.departments }
+    })
+
+  }
+
+  toggleUser(user: IUserItem, event: any) {
+    let userObj: any = {
+      username: user.username,
+      isActive: event.currentTarget.checked
+    }
+
+
+    this.modalRef = this.modalService.open(DeleteUserAlertComponent, {
+      data: {
+        userObj
+      }, ignoreBackdropClick: true
+    });
 
   }
 
