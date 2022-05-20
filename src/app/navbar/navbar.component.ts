@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit {
   username: any = "";
 
 
-  @Input() navBarItems!: INavBarItem[];
+  @Input() showNavbarItems!: boolean;
   constructor(private authService: AuthService, private userService: UsersService, private router: Router) {
 
   }
