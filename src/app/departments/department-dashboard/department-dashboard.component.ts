@@ -96,6 +96,8 @@ export class DepartmentDashboardComponent implements OnInit {
       .data(this.data)
       .nodeWidth(d => 200)
       .nodeHeight(d => 120)
+      .siblingsMargin(d => 80)
+
       .nodeContent((data: any) => {
         return `
         <div class="menu" #menu>
