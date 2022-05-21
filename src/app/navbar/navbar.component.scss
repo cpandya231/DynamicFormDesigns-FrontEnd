@@ -6,6 +6,7 @@
 .navbar {
     background-color: #0A1931;
     padding: 0rem;
+
     .logo_image {
         img {
             height: 3rem;
@@ -49,4 +50,11 @@
 
 .dropdown-toggle {
     cursor: pointer;
+}
+
+.collapse-wrapper-custom {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
