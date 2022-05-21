@@ -10,9 +10,10 @@ import { INavBarItem } from './navbar/navbar-item-model';
 export class AppComponent {
   title = 'SmartFac';
   showNavbar = true;
+  showNavbarItems = false;
 
 
-  navBarItems: INavBarItem[] = [];
+
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router) { }
 
@@ -24,42 +25,14 @@ export class AppComponent {
 
         let url = (<NavigationEnd>event).url;
         if (url.includes("/welcome")) {
-          this.navBarItems = [];
+          this.showNavbarItems = false;
           this.showNavbar = true;
         } else if (url == "/") {
-
+          this.showNavbarItems = false;
           this.showNavbar = false;
         } else {
 
-          this.navBarItems = [
-            {
-              name: "Home",
-              url: "welcome",
-            },
-            {
-              name: 'Forms',
-              url: 'formsDashboard'
-            },
-            {
-              name: "User Management",
-              url: "usersParent",
-
-              children: [
-                {
-                  name: "Users",
-                  url: "users",
-                },
-                {
-                  name: "Roles",
-                  url: "roles",
-                }
-              ]
-            },
-            {
-              name: 'Departments',
-              url: 'departments'
-            },
-          ];
+          this.showNavbarItems = true;
           this.showNavbar = true;
         }
       }
