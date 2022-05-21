@@ -9,6 +9,7 @@ import { ServiceUtil } from '../../services/utility/ServiceUtil';
 export class FormsService {
 
   tempFormTemplatesStorage: any = [];
+  FormWorkflowStates: any[] = [];
   constructor(private http: HttpClient) { }
 
   GetFormTemplates() {
@@ -42,5 +43,13 @@ export class FormsService {
         'Content-Type': 'application/json',
       })
     });
+  }
+
+  GetFormWorkflowStates() {
+    return this.FormWorkflowStates;
+  }
+
+  SaveFormWorkflowState(state: any) {
+    this.FormWorkflowStates.push(state);
   }
 }

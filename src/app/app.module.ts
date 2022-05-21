@@ -46,6 +46,7 @@ import { AppConfig } from './formio-app-config';
 import { CreateDepartmentComponent } from './departments/create-department/create-department.component';
 import { DepartmentDashboardComponent } from './departments/department-dashboard/department-dashboard.component';
 import { EditDepartmentComponent } from './departments/edit-department/edit-department.component';
+import { OrgChartComponent } from './common/components/org-chart/org-chart.component';
 
 
 @NgModule({
@@ -70,6 +71,7 @@ import { EditDepartmentComponent } from './departments/edit-department/edit-depa
     CreateDepartmentComponent,
     DepartmentDashboardComponent,
     EditDepartmentComponent,
+    OrgChartComponent,
 
 
   ],
