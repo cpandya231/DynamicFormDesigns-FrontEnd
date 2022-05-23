@@ -45,6 +45,9 @@ import { AppConfig } from './formio-app-config';
 import { CreateDepartmentComponent } from './departments/create-department/create-department.component';
 import { DepartmentDashboardComponent } from './departments/department-dashboard/department-dashboard.component';
 import { EditDepartmentComponent } from './departments/edit-department/edit-department.component';
+import { AuditTrailComponent } from './settings/audit-trail/audit-trail.component';
+import { SettingsComponent } from './settings/settings.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -68,6 +71,8 @@ import { EditDepartmentComponent } from './departments/edit-department/edit-depa
     CreateDepartmentComponent,
     DepartmentDashboardComponent,
     EditDepartmentComponent,
+    AuditTrailComponent,
+    SettingsComponent,
 
 
   ],
@@ -98,6 +103,7 @@ import { EditDepartmentComponent } from './departments/edit-department/edit-depa
     BrowserAnimationsModule,
     MatIconModule,
     MatMenuModule,
+    NgxPaginationModule
 
   ],
   providers: [

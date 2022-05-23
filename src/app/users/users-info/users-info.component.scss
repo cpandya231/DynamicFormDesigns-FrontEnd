@@ -4,10 +4,18 @@
     padding: 2em;
 }
 
-.table th {
-    font-weight: bold;
 
 
+.table {
+
+    th {
+        font-weight: bold;
+    }
+
+
+    td {
+        width: 20rem;
+    }
 }
 
 
@@ -67,7 +75,7 @@
 
 .row {
     display: flex;
-
+    flex-wrap: nowrap;
     gap: 1.5rem;
 
 }
