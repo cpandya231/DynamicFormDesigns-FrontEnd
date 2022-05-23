@@ -13,7 +13,7 @@ import { IAuditTrailItem } from './audit-trail-item-model';
 })
 export class AuditTrailComponent implements OnInit {
   readonly DATE_FORMAT = DateUtil.DATE_FORMAT;
-  auditData$!: Observable<IAuditTrailItem[]>;
+  auditData$!: any;
   AUDIT_DATA!: IAuditTrailItem[];
   filter = new FormControl('');
   currentPage = 1;
@@ -44,9 +44,9 @@ export class AuditTrailComponent implements OnInit {
   private setData() {
     this.auditData$ = this.auditTrailService.getAuditTrail(this.getRequestParams());
 
-    this.auditData$.subscribe(response => {
-      this.AUDIT_DATA = response;
-
+    this.auditData$.subscribe((response: { [x: string]: any; }) => {
+      this.AUDIT_DATA = response["auditTrails"];
+      this.count = response["totalPages"] * this.pageSize;
 
     })
   }

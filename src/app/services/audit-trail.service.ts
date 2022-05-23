@@ -17,7 +17,7 @@ export class AuditTrailService {
     getAuditTrail(params: any): Observable<any> {
         let httpOptions = this.getHttpOptions();
 
-        return this.http.get<IAuditTrailItem>(`${ServiceUtil.API_ENDPOINT}/audit/`, {
+        return this.http.get<any>(`${ServiceUtil.API_ENDPOINT}/audit/`, {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
             }),
