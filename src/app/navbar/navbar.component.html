@@ -56,6 +56,24 @@
                 </a>
             </div>
 
+            <div mdbDropdown class="dropdown">
+                <a class=" nav-link nav-link-custom  dropdown-toggle inactiveLink" aria-expanded="false"
+                    mdbDropdownToggle [ngClass]="{'active': rlaAuditTrail.isActive }">
+                    Settings
+                </a>
+                <ul mdbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li>
+                        <a class="dropdown-item" routerLink="../settingsParent/audit-trail"
+                            [routerLinkActive]="['class1']" #rlaAuditTrail="routerLinkActive">
+                            Audit Trail
+                        </a>
+                    </li>
+
+
+                </ul>
+            </div>
+
+
 
         </div>
         <div class="collapse-wrapper-custom">

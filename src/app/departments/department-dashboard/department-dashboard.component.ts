@@ -165,28 +165,6 @@ export class DepartmentDashboardComponent implements OnInit {
     });
   }
 
-  buildNodes(departments: any, root: any): any {
-    if (root["visited"]) {
-      return;
-    }
-    let internalNode: any = { "name": root["name"], "id": root["id"], "parentId": root["parentId"] };
-    let children = [];
-
-    for (let department of departments) {
-
-      if (department["parentId"] == root["id"]) {
-
-        let child = this.buildNodes(departments, department);
-        department["visited"] = true;
-        children.push(child);
-      }
-    }
-    internalNode["childs"] = children;
-    root["visited"] = true;
-    return internalNode;
-  }
-
-
 
 
 
