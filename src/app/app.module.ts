@@ -50,6 +50,9 @@ import { EditDepartmentComponent } from './departments/edit-department/edit-depa
 import { OrgChartComponent } from './common/components/org-chart/org-chart.component';
 import { AddEditWorkflowStateComponent } from './forms/form-workflow/add-edit-workflow-state/add-edit-workflow-state.component';
 import { FormManagementComponent } from './forms/form-management/form-management.component';
+import { AuditTrailComponent } from './settings/audit-trail/audit-trail.component';
+import { SettingsComponent } from './settings/settings.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -77,6 +80,10 @@ import { FormManagementComponent } from './forms/form-management/form-management
     OrgChartComponent,
     AddEditWorkflowStateComponent,
     FormManagementComponent,
+    AuditTrailComponent,
+    SettingsComponent,
+
+
   ],
   imports: [
     BrowserModule,
@@ -105,7 +112,9 @@ import { FormManagementComponent } from './forms/form-management/form-management
     BrowserAnimationsModule,
     MatIconModule,
     MatMenuModule,
-    MatDialogModule
+    MatDialogModule,
+    NgxPaginationModule
+
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: GlobalAppIntercepter, multi: true },

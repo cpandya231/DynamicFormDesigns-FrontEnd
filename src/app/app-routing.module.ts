@@ -12,6 +12,7 @@ import { FormWorkflowComponent } from './forms/form-workflow/form-workflow-dashb
 import { FormsDashboardComponent } from './forms/forms-dashboard/forms-dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { RolesComponent } from './roles/roles.component';
+import { AuditTrailComponent } from './settings/audit-trail/audit-trail.component';
 import { CreateUserComponent } from './users/create-user/create-user.component';
 import { UsersInfoComponent } from './users/users-info/users-info.component';
 import { UsersComponent } from './users/users.component';
@@ -78,6 +79,15 @@ const routes: Routes = [
     ]
   },
 
+  {
+    path: 'settingsParent', children: [
+      {
+        path: 'audit-trail',
+        component: AuditTrailComponent,
+        children: []
+      },
+    ],
+  },
 
   { path: '', component: LoginComponent },
   { path: '**', component: AppComponent }

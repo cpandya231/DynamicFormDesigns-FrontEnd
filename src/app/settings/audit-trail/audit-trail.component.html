@@ -1,0 +1,111 @@
+<div class="app-container table-responsive">
+    <div class="filter-find-user">
+
+        <form class="filter-item-form">
+            <div class="mb-3 row">
+
+                <div class="col-xs-3 col-sm-auto">
+                    <input id="table-filtering-search" class="form-control" type="text" [formControl]="filter"
+                        placeholder="Find by name" (keyup.enter)="searchUser()">
+                </div>
+
+            </div>
+
+
+
+        </form>
+
+    </div>
+    <div class="pagination-controls">
+        <pagination-controls previousLabel="Prev" nextLabel="Next" [responsive]="true" [maxSize]="5"
+            (pageChange)="handlePageChange($event)">
+
+        </pagination-controls>
+    </div>
+    <div class="table-container">
+        <table class="table table-hover">
+
+            <thead>
+                <tr>
+                    <th scope="col">
+                        <div class="row">
+                            <mat-icon>person</mat-icon>
+                            Users
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div class="row">
+                            <mat-icon>info_outline</mat-icon>
+                            Action
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div class="row">
+                            <mat-icon>
+                                info_outline
+                            </mat-icon>
+                            Type
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div class="row">
+                            <mat-icon>
+                                info_outline
+                            </mat-icon>
+                            Current State
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div class="row">
+                            <mat-icon>
+                                info_outline
+                            </mat-icon>
+                            Previous State
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div class="row">
+                            <mat-icon>schedule</mat-icon>
+                            Timestamp
+                        </div>
+                    </th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let auditTrail of AUDIT_DATA | paginate : {
+                    itemsPerPage: pageSize,
+                    currentPage: currentPage,
+                    totalItems: count
+                  }; 
+            let i = index" class="align-middle">
+
+                    <td>
+                        <div class="user-profile">
+                            <div>
+
+                                <img src="../../assets/profile-icon.svg" class="rounded-circle" alt="" loading="lazy" />
+                            </div>
+                            <div class="user-name-email">
+                                <div class="user-name"> {{auditTrail.userName}}</div>
+
+                            </div>
+                        </div>
+
+                    </td>
+
+                    <td>{{auditTrail.action}}</td>
+                    <td>{{auditTrail.type}}</td>
+
+                    <td>{{auditTrail.newState}}</td>
+
+                    <td>{{auditTrail.prevState}}</td>
+                    <td>{{auditTrail.auditDt |date: DATE_FORMAT }}</td>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
