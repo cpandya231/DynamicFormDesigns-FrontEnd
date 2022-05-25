@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormioOptions } from '@formio/angular';
 import { FormsService } from '../../common/services/forms.service';
@@ -11,7 +11,8 @@ import { FormsService } from '../../common/services/forms.service';
 export class CreateFormTemplateComponent implements OnInit {
 
   @ViewChild('formio') formIO: any;
-  FormName: string = '';
+  @Input('formName') FormName: string;
+  @Output() WorkflowIdUpdate = new EventEmitter<number>();
   CurrentForm: any = {
     components: []
   };
@@ -136,13 +137,13 @@ export class CreateFormTemplateComponent implements OnInit {
     editForm: {
     },
   };
+  WorkflowId: number;
   constructor(private formsService: FormsService,
     private activatedRoute: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit() {
-    let params = this.activatedRoute.snapshot.paramMap;
-    this.FormName = String(params.get('name') || '');
+    
     let eleObj = {};
     this.EnabledFormElements.forEach(ele => {
       let obj = {
@@ -192,13 +193,16 @@ export class CreateFormTemplateComponent implements OnInit {
   SaveTemplate(): void {
     if (this.formId) {
       this.formsService.UpdateFormTemplate(this.formIO.form, this.FormName, this.formId).subscribe(data => {
+     
         alert('form updated successfully');
-        this.router.navigate(['formsDashboard']);
+        // this.router.navigate(['formsDashboard']);
       })
     } else {
       this.formsService.SaveFormTemplate(this.formIO.form, this.FormName).subscribe(data => {
+        this.WorkflowId = data.workflow.id;
+        this.WorkflowIdUpdate.emit(this.WorkflowId);
         alert('form created successfully');
-        this.router.navigate(['formsDashboard']);
+        // this.router.navigate(['formsDashboard']);
       })
     }
   }

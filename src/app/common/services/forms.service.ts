@@ -20,36 +20,41 @@ export class FormsService {
     return this.http.get<IGetFormTemplateResponse>(`${ServiceUtil.API_ENDPOINT}/forms/${formName}/`);
   }
 
-  SaveFormTemplate(formTemplate: any, name: string) {
+  SaveFormTemplate(formTemplate: any, name: string): Observable<any> {
     let body = {
       name,
-      template: JSON.stringify({ formName: name, components: formTemplate.components })
+      template: JSON.stringify({ formName: name, components: formTemplate.components }),
+      workflow: {}
     }
-    return this.http.post(`${ServiceUtil.API_ENDPOINT}/forms/`, body, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      })
-    });
+    return this.http.post(`${ServiceUtil.API_ENDPOINT}/forms/`, body, this.getHeaders());
   }
 
-  UpdateFormTemplate(formTemplate: any, name: string, id: number) {
+  UpdateFormTemplate(formTemplate: any, name: string, id: number): Observable<any> {
     let body = {
       id,
       name,
       template: JSON.stringify({ formName: name, components: formTemplate.components })
     };
-    return this.http.put(`${ServiceUtil.API_ENDPOINT}/forms/`, body, {
+    return this.http.put(`${ServiceUtil.API_ENDPOINT}/forms/`, body, this.getHeaders());
+  }
+
+  GetWorkflowStatesTransitions(workflowId: number) {
+    return this.http.get(`${ServiceUtil.API_ENDPOINT}/state_transitions/${workflowId}/`, this.getHeaders());
+  }
+
+  SaveFormWorkflowState(stateData: any) {
+    return this.http.post(`${ServiceUtil.API_ENDPOINT}/states/`, stateData,  this.getHeaders()); 
+  }
+
+  SaveStatesTransitions(transitionsData: any) {
+    return this.http.post(`${ServiceUtil.API_ENDPOINT}/transitions/`, transitionsData, this.getHeaders());
+  }
+
+  protected getHeaders() {
+    return {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       })
-    });
-  }
-
-  GetFormWorkflowStates() {
-    return this.FormWorkflowStates;
-  }
-
-  SaveFormWorkflowState(state: any) {
-    this.FormWorkflowStates.push(state);
+    }
   }
 }

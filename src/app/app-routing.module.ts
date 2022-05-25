@@ -7,7 +7,8 @@ import { DepartmentsComponent } from './departments/departments.component';
 import { EditDepartmentComponent } from './departments/edit-department/edit-department.component';
 
 import { CreateFormTemplateComponent } from './forms/create-form-template/create-form-template.component';
-import { FormWorkflowComponent } from './forms/form-workflow/form-workflow.component';
+import { FormManagementComponent } from './forms/form-management/form-management.component';
+import { FormWorkflowComponent } from './forms/form-workflow/form-workflow-dashboard.component';
 import { FormsDashboardComponent } from './forms/forms-dashboard/forms-dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { RolesComponent } from './roles/roles.component';
@@ -24,14 +25,17 @@ const routes: Routes = [
     component: FormsDashboardComponent
   },
   {
-    path: 'createForm/:name',
-    component: CreateFormTemplateComponent
+    path: 'formManagement/:name/:workflowId',
+    component: FormManagementComponent
   },
   {
-    path: 'createForm',
-    component: CreateFormTemplateComponent
+    path: 'formManagement',
+    component: FormManagementComponent
   },
-
+  {
+    path: 'formWorkflow',
+    component: FormWorkflowComponent,
+  },
   {
     path: 'usersParent', children: [
       {
@@ -54,10 +58,6 @@ const routes: Routes = [
 
     ],
   },
-  {
-    path: 'formWorkflow',
-    component: FormWorkflowComponent
-  },
 
   {
     path: 'departments',
@@ -77,9 +77,6 @@ const routes: Routes = [
 
     ]
   },
-
-
-
 
 
   { path: '', component: LoginComponent },

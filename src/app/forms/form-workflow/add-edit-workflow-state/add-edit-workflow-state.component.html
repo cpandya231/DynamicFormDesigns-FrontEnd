@@ -1,0 +1,105 @@
+<div class="state_form_container">
+    <div class="header_text">
+        Create State
+    </div>
+    <div class="form_container">
+        <form [formGroup]="StateDetailsForm" class="form-inline" (ngSubmit)="SaveState()">
+            <div class="form-group row">
+                <label for="stateName" class="col-2 col-form-label">State Name</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="stateName" formControlName="name">
+                </div>
+
+                <label for="previousStateCompletion" class="col-2 col-form-label">Multi Previous State
+                    Completion</label>
+                <div class="col">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="radioInline1" value="and" formControlName="multiPreviousStateCompletion">
+                        <label class="form-check-label" for="radioInline1">AND</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="radioInline2" value="or" formControlName="multiPreviousStateCompletion">
+                        <label class="form-check-label" for="radioInline2">OR</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <label for="description" class="col-2 col-form-label">Description</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="description" formControlName="description">
+                </div>
+                <label for="roleStateAccess" class="col-2 col-form-label">Role State Access</label>
+                <div class="col">
+                    <select multiple class="form-control" id="roleStateAccess" formControlName="roleStateAccess">
+                        <option value="">Choose Role </option>
+                        <option *ngFor="let role of Roles" [ngValue]="role.id">
+                            {{role.role}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <label for="previousState" class="col-2 col-form-label">Previous State</label>
+                <div class="col">
+                    <select class="form-control" id="previousState" formControlName="previousState">
+                        <option value="">Choose State </option>
+                        <option *ngFor="let state of WorkflowStates" [ngValue]="state.id">
+                            {{state.name}}
+                        </option>
+                    </select>
+                </div>
+                <label for="departmentStateAccess" class="col-2 col-form-label">Department State Access</label>
+                <div class="col">
+                    <select multiple class="form-control" id="departmentStateAccess" formControlName="departmentStateAccess">
+                        <option value="">Choose Department </option>
+                        <option *ngFor="let department of Departments" [ngValue]="department.id">
+                            {{department.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-check form-switch col-6">
+                    <label for="sendBackOption" class="col-4 col-form-label">Send Back Option Available</label>
+                    <input class="form-check-input" type="checkbox" id="sendBackOption" formControlName="sendBackAvailable">
+                </div>
+                <label for="sendBackTo" class="col-2 col-form-label">Send Back To</label>
+                <div class="col">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" value="initiator" id="inititator" formControlName="sendBackTo">
+                        <label class="form-check-label" for="inititator">Initiator</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" value="roleGroup" id="roleGroup" formControlName="sendBackTo">
+                        <label class="form-check-label" for="roleGroup">Role Group</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-check form-switch col-6">
+                    <label for="triggerEmail" class="col-4 col-form-label">Trigger Notification Via Email</label>
+                    <input class="form-check-input" type="checkbox" id="triggerEmail" formControlName="triggerEmail">
+                </div>
+
+                <div class="form-check form-switch col-6">
+                    <label for="eSignRequired" class="col-4 col-form-label">E-Signature Required</label>
+                    <input class="form-check-input" type="checkbox" id="eSignRequired" formControlName="eSignRequired">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-check form-switch col-6">
+                    <label for="triggerSMS" class="col-4 col-form-label">Trigger Notification Via SMS</label>
+                    <input class="form-check-input" type="checkbox" id="triggerSMS" formControlName="triggerSMS">
+                </div>
+            </div>
+            <div class="row btn_container">
+                <div>
+                    <button class="btn save_button" type="submit"> Save State</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

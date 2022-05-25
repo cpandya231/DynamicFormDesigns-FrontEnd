@@ -25,6 +25,7 @@ export class OrgChartComponent implements OnChanges {
   ngAfterViewInit(): void {
     if (!this.chart) {
       this.chart = new OrgChart();
+      this.updateChart();
     }
     this.renderer.listen(this.chartContainer.nativeElement, 'click', (evt) => {
       if (this.chartContainer.nativeElement.querySelectorAll('.list-items')) {
@@ -39,7 +40,7 @@ export class OrgChartComponent implements OnChanges {
   }
 
   updateChart() {
-    if (!this.data) {
+    if (!this.data || !this.data.length) {
       return;
     }
     if (!this.chart) {
@@ -51,7 +52,7 @@ export class OrgChartComponent implements OnChanges {
       .nodeWidth(() => 200)
       .nodeHeight(() => 120)
       .nodeContent((data: any) => {
-        return `
+        let template = `
         <div class="menu" #menu>
         <ul class="list list-for-${data.data.id}">
           <li class="list-items" branch-id='${data.data.name}' event-type="add">
@@ -63,9 +64,12 @@ export class OrgChartComponent implements OnChanges {
         </ul>
       </div>
         <div class="node-card">
-            <h6>${data.data.name}</h6>
-            <span *ngIf="data.data.code">code: ${data.data.code}</span>
-        </div>`;
+            <h6>${data.data.name}</h6>`;
+        if(data?.data?.code) {
+          template += `<span *ngIf='${data.data.code}'>code: ${data.data.code}</span>`
+        }
+        template += `</div>`;
+        return template;
       })
       .compact(false).render().fit().expandAll();
 
@@ -83,26 +87,6 @@ export class OrgChartComponent implements OnChanges {
       });
     });
     this.isDataLoaded = true;
-  }
-
-  
-  buildNodes(branches: any, root: any): any {
-    if (root["visited"]) {
-      return;
-    }
-    let internalNode: any = { "name": root["name"], "id": root["id"], "parentId": root["parentId"] };
-    let children = [];
-
-    for (let branch of branches) {
-      if (branch["parentId"] == root["id"]) {
-        let child = this.buildNodes(branches, branch);
-        branch["visited"] = true;
-        children.push(child);
-      }
-    }
-    internalNode["childs"] = children;
-    root["visited"] = true;
-    return internalNode;
   }
 
   protected clickedOutside(event: any) {
