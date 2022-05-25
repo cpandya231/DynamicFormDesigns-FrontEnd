@@ -30,8 +30,7 @@
                 </div>
                 <label for="roleStateAccess" class="col-2 col-form-label">Role State Access</label>
                 <div class="col">
-                    <select multiple class="form-control" id="roleStateAccess" formControlName="roleStateAccess">
-                        <option value="">Choose Role </option>
+                    <select multiple class="form-select" id="roleStateAccess" formControlName="roleStateAccess">
                         <option *ngFor="let role of Roles" [ngValue]="role.id">
                             {{role.role}}
                         </option>
@@ -42,7 +41,7 @@
             <div class="row">
                 <label for="previousState" class="col-2 col-form-label">Previous State</label>
                 <div class="col">
-                    <select class="form-control" id="previousState" formControlName="previousState">
+                    <select class="form-select" id="previousState" formControlName="previousState">
                         <option value="">Choose State </option>
                         <option *ngFor="let state of WorkflowStates" [ngValue]="state.id">
                             {{state.name}}
@@ -51,8 +50,7 @@
                 </div>
                 <label for="departmentStateAccess" class="col-2 col-form-label">Department State Access</label>
                 <div class="col">
-                    <select multiple class="form-control" id="departmentStateAccess" formControlName="departmentStateAccess">
-                        <option value="">Choose Department </option>
+                    <select multiple class="form-select" id="departmentStateAccess" formControlName="departmentStateAccess">
                         <option *ngFor="let department of Departments" [ngValue]="department.id">
                             {{department.name}}
                         </option>
@@ -97,6 +95,7 @@
             </div>
             <div class="row btn_container">
                 <div>
+                    <button class="btn" (click)="Cancel()">Cancel</button>
                     <button class="btn save_button" type="submit"> Save State</button>
                 </div>
             </div>

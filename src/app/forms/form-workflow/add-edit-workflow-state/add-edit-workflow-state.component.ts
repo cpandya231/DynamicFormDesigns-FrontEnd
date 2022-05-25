@@ -32,11 +32,9 @@ export class AddEditWorkflowStateComponent implements OnInit {
     this.roleService.getAllRoles().subscribe(items => {
       this.Roles = items;
     })
-    // this.formService.SaveFormWorkflowState().subscribe(data => {
     this.formService.GetWorkflowStatesTransitions(Number(this.dialogData.workflowId)).subscribe((data: any) => {
       this.WorkflowStates = data.states
     });
-    // })
     this.StateDetailsForm = this.fb.group ({
       name: [''],
       description: [''],
@@ -71,10 +69,7 @@ export class AddEditWorkflowStateComponent implements OnInit {
         }), 
       }]
     };
-    console.log(stateData);
-    
-    // this.formService.SaveStatesTransitions(stateTransitions).subscribe((data: any) => {
-    // });
+  
     this.formService.SaveFormWorkflowState(stateData).subscribe((data: any) => {
       if (this.StateDetailsForm.value.previousState) {
         const stateTransitions = {
@@ -97,5 +92,9 @@ export class AddEditWorkflowStateComponent implements OnInit {
         this.dialogRef.close(true);
       }
     });
+  }
+
+  Cancel() {
+    this.dialogRef.close(false);
   }
 }
