@@ -1,2 +1,3 @@
-<button class="btn btn-primary" (click)="AddNewState()">New State</button>
-<app-org-chart [data]="WorkflowStates" (listItemEvent)="handleStateEvent($event)"></app-org-chart>
+<button class="btn btn-primary" (click)="AddEditState(null)">New State</button>
+<app-org-chart [data]="StateWorkflowData" (listItemEvent)="handleStateEvent($event)"></app-org-chart>
+<button class="btn btn-primary" (click)="SaveWorkflow()">Save Workflow</button>

@@ -17,44 +17,60 @@ export class AddEditWorkflowStateComponent implements OnInit {
   StateDetailsForm!: FormGroup;
   Roles: any[] = [];
   Departments: IDepartmentItem[] = [];
-  WorkflowStates!: any;
+  WorkflowStates: any = [];
+  tempStateId!: number;
   constructor(private fb: FormBuilder,
     private departmentService: DepartmentService,
     private formService: FormsService,
     private roleService: RoleService,
     public dialogRef: MatDialogRef<AddEditWorkflowStateComponent>,
-    @Inject(MAT_DIALOG_DATA) public dialogData: {workflowId: string}) { }
+    @Inject(MAT_DIALOG_DATA) public dialogData: any) { }
 
   ngOnInit(): void {
+    this.tempStateId = this.dialogData.tempId;
     this.departmentService.getAllDepartment().subscribe(data => {
       this.Departments = data;
     });
     this.roleService.getAllRoles().subscribe(items => {
       this.Roles = items;
     })
-    this.formService.GetWorkflowStatesTransitions(Number(this.dialogData.workflowId)).subscribe((data: any) => {
-      this.WorkflowStates = data.states
-    });
-    this.StateDetailsForm = this.fb.group ({
-      name: [''],
-      description: [''],
-      previousState: [null],
-      multiPreviousStateCompletion: [false],
-      roleStateAccess: [[]],
-      departmentStateAccess: [[]],
-      sendBackAvailable: [false],
-      triggerEmail: [false],
-      triggerSMS: [false],
-      eSignRequired: [false],
-      sendBackTo: ['']
-    });
+    this.WorkflowStates = this.dialogData.states;
+    const stateData = this.dialogData.stateData;
+    if (stateData) {
+      this.StateDetailsForm = this.fb.group ({
+        name: [stateData.name],
+        description: [stateData.description],
+        previousState: [stateData.parentId],
+        multiPreviousStateCompletion: [false],
+        roleStateAccess: [stateData.roles.map((e: any) => e.id)],
+        departmentStateAccess: [stateData.departments.map((e: any) => e.id)],
+        sendBackAvailable: [false],
+        triggerEmail: [false],
+        triggerSMS: [false],
+        eSignRequired: [false],
+        sendBackTo: ['']
+      });
+    } else {
+      this.StateDetailsForm = this.fb.group ({
+        name: [''],
+        description: [''],
+        previousState: [null],
+        multiPreviousStateCompletion: [false],
+        roleStateAccess: [[]],
+        departmentStateAccess: [[]],
+        sendBackAvailable: [false],
+        triggerEmail: [false],
+        triggerSMS: [false],
+        eSignRequired: [false],
+        sendBackTo: ['']
+      });
+    }
   }
 
   SaveState() {
-    console.log(this.StateDetailsForm.value);
     const stateData = {
       workflowId: this.dialogData.workflowId,
-      states: [{
+      state: {
         name: this.StateDetailsForm.value.name,
         description : this.StateDetailsForm.value.description,
         roles : this.StateDetailsForm.value.roleStateAccess.map((roleId: number) => {
@@ -66,32 +82,14 @@ export class AddEditWorkflowStateComponent implements OnInit {
           return {
             id: roleId
           }
-        }), 
-      }]
+        }),
+        id: this.tempStateId,
+        parentId: this.StateDetailsForm.value.previousState,
+        parentName: this.WorkflowStates.find((state: any) => state.id === this.StateDetailsForm.value.previousState)?.name
+      },
+     
     };
-  
-    this.formService.SaveFormWorkflowState(stateData).subscribe((data: any) => {
-      if (this.StateDetailsForm.value.previousState) {
-        const stateTransitions = {
-          workflowId: this.dialogData.workflowId,
-          transitions: [
-            {
-              fromState: {
-                id: data[0].id
-              },
-              toState: {
-                id: this.StateDetailsForm.value.previousState
-              } 
-          }]
-        };
-        this.formService.SaveStatesTransitions(stateTransitions).subscribe((data: any) => {
-          console.log(data);
-          this.dialogRef.close(true);
-        })
-      } else {
-        this.dialogRef.close(true);
-      }
-    });
+    this.dialogRef.close(stateData);
   }
 
   Cancel() {

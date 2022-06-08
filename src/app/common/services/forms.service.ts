@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { IGetWorkflowStateTransitionsModel } from 'src/app/forms/form-workflow/form-workflow.model';
 import { IGetFormTemplateResponse } from 'src/app/forms/form.model';
 import { ServiceUtil } from '../../services/utility/ServiceUtil';
 @Injectable({
@@ -38,16 +39,24 @@ export class FormsService {
     return this.http.put(`${ServiceUtil.API_ENDPOINT}/forms/`, body, this.getHeaders());
   }
 
-  GetWorkflowStatesTransitions(workflowId: number) {
-    return this.http.get(`${ServiceUtil.API_ENDPOINT}/state_transitions/${workflowId}/`, this.getHeaders());
+  GetWorkflowStatesTransitions(workflowId: number): Observable<IGetWorkflowStateTransitionsModel> {
+    return this.http.get<IGetWorkflowStateTransitionsModel>(`${ServiceUtil.API_ENDPOINT}/state_transitions/${workflowId}/`, this.getHeaders());
   }
 
   SaveFormWorkflowState(stateData: any) {
     return this.http.post(`${ServiceUtil.API_ENDPOINT}/states/`, stateData,  this.getHeaders()); 
   }
 
+  UpdateFormWorkflowState(stateData: any) {
+    return this.http.put(`${ServiceUtil.API_ENDPOINT}/states/`, stateData, this.getHeaders());
+  }
+
   SaveStatesTransitions(transitionsData: any) {
     return this.http.post(`${ServiceUtil.API_ENDPOINT}/transitions/`, transitionsData, this.getHeaders());
+  }
+
+  UpdateStatesTransitions(transitionsData: any) {
+    return this.http.put(`${ServiceUtil.API_ENDPOINT}/transitions/`, transitionsData, this.getHeaders());
   }
 
   protected getHeaders() {

@@ -16,7 +16,7 @@
                 <td>{{form.id}}</td>
                 <td>{{form.name}}</td>
                 <td>{{form.createdBy}}</td>
-                <td>{{form.createDt}}</td>
+                <td>{{form.createDt | date: DATE_FORMAT }}</td>
                 <td><img src="../../../assets/Images/pen-to-square-solid.svg" class="svg_icon" (click)="EditFormTemplate(form.name, form.workflow.id)" /></td>
                 <td><img src="../../../assets/Images/eye-solid.svg" class="svg_icon" (click)="PreviewForm(form.template)" /></td>
             </tr>

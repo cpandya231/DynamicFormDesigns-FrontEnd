@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { FormsService } from 'src/app/common/services/forms.service';
 
 @Component({
@@ -14,13 +15,18 @@ export class PreviewFormComponent implements OnInit {
     components: []
   };
   formTemplate: any;
-  constructor(private formsService: FormsService) { }
+  constructor(private formsService: FormsService,
+    public modalRef: MdbModalRef<PreviewFormComponent>) { }
 
   ngOnInit(): void {
     if (this.formTemplate) {
       this.FormData.components = this.formTemplate.components;
       this.FormData.title = this.formTemplate.formName;
     }
+  }
+
+  Close(): void {
+
   }
 
 }

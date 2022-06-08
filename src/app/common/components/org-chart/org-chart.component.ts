@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, Renderer2, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, IterableDiffers, OnChanges, Output, Renderer2, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
 import { OrgChart } from 'd3-org-chart';
 
 @Component({
@@ -13,14 +13,25 @@ export class OrgChartComponent implements OnChanges {
   @Input('data') data: any;
   @Output() listItemEvent = new EventEmitter<any>();
   chart: OrgChart<any>;
+  iterableDiffer: any;
   isDataLoaded = false;
-  constructor(private renderer: Renderer2) { }
+  constructor(private renderer: Renderer2,
+    private iterableDiffers: IterableDiffers) {
+    // this.iterableDiffer = iterableDiffers.find([]).create(null);
+   }
 
  ngOnChanges(simpleChange: SimpleChanges): void {
   if (simpleChange['data'].currentValue?.length) {
     this.updateChart();
   }
  }
+
+//  ngDoCheck() {
+//   const changes = this.iterableDiffer.diff(this.inputArray);
+//   if (changes) {
+//     console.log("Changes detected!");
+//   }
+//  }
 
   ngAfterViewInit(): void {
     if (!this.chart) {
