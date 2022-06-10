@@ -17,6 +17,8 @@ export class FormWorkflowComponent implements OnInit {
   tempTransitions: any = [];
   StateWorkflowData: IWorkflowStateModel[]= [];
   IsStatesTransitionsExist = false;
+  stateNameBeforeEdit = '';
+  private isDialogOpen = false;
   constructor(private formService: FormsService,
     private dialog: MatDialog) { }
   
@@ -39,14 +41,20 @@ export class FormWorkflowComponent implements OnInit {
     if (eventType == 'add') {
       this.AddEditState(null);
     } else if (eventType == 'edit') {
-      const stateData = this.WorkflowStates.find((state: any) => state.name === stateName);
-      this.AddEditState(stateData);
+      const index = this.WorkflowStates.findIndex((state: any) => state.name === stateName);
+      if (index > -1) {
+        const stateData = this.WorkflowStates.splice(index, 1);
+        this.stateNameBeforeEdit = stateData[0].name;
+        this.AddEditState(stateData[0]);
+      }
     }
   }
 
   AddEditState(stateData: any) {
     ++this.tempId;
-    const dialofRef = this.dialog.open(AddEditWorkflowStateComponent, {
+    if (this.isDialogOpen) return;
+    this.isDialogOpen = true;
+    const dialogRef = this.dialog.open(AddEditWorkflowStateComponent, {
       data: {
         workflowId: this.workflowId,
         stateData,
@@ -55,8 +63,18 @@ export class FormWorkflowComponent implements OnInit {
       }
     });
 
-    dialofRef.afterClosed().subscribe((data: any) => {
+    dialogRef.afterClosed().subscribe((data: any) => {
+      this.isDialogOpen = false;
       if (data) {
+        this.StateWorkflowData = [];
+        if (this.stateNameBeforeEdit.length && this.stateNameBeforeEdit !== data.state.name) {
+          this.WorkflowStates.map(existingState => {
+            if (existingState.parentName === this.stateNameBeforeEdit) {
+              existingState.parentName = data.state.name
+            }
+            return existingState;
+          })
+        }
         this.WorkflowStates.push(data.state);
         this.StateWorkflowData = ([] as IWorkflowStateModel[]).concat(this.WorkflowStates);
       }

@@ -5,6 +5,7 @@ import { FormsService } from 'src/app/common/services/forms.service';
 import { IDepartmentItem } from 'src/app/departments/department-item-model';
 import { DepartmentService } from 'src/app/services/departments.service';
 import { RoleService } from 'src/app/services/roles.service';
+import { IWorkflowStateModel } from '../form-workflow.model';
 
 @Component({
   selector: 'app-add-edit-workflow-state',
@@ -19,6 +20,9 @@ export class AddEditWorkflowStateComponent implements OnInit {
   Departments: IDepartmentItem[] = [];
   WorkflowStates: any = [];
   tempStateId!: number;
+  existingStateData!: IWorkflowStateModel;
+  ModalHeaderText = 'Create State';
+  SaveButtonName = 'Save State';
   constructor(private fb: FormBuilder,
     private departmentService: DepartmentService,
     private formService: FormsService,
@@ -35,15 +39,17 @@ export class AddEditWorkflowStateComponent implements OnInit {
       this.Roles = items;
     })
     this.WorkflowStates = this.dialogData.states;
-    const stateData = this.dialogData.stateData;
-    if (stateData) {
+    this.existingStateData = this.dialogData.stateData;
+    if (this.existingStateData) {
+      this.ModalHeaderText = 'Update State';
+      this.SaveButtonName = 'Update State';
       this.StateDetailsForm = this.fb.group ({
-        name: [stateData.name],
-        description: [stateData.description],
-        previousState: [stateData.parentId],
+        name: [this.existingStateData.name],
+        description: [this.existingStateData.description],
+        previousState: [this.existingStateData.parentId],
         multiPreviousStateCompletion: [false],
-        roleStateAccess: [stateData.roles.map((e: any) => e.id)],
-        departmentStateAccess: [stateData.departments.map((e: any) => e.id)],
+        roleStateAccess: [this.existingStateData.roles.map((e: any) => e.id)],
+        departmentStateAccess: [this.existingStateData.departments.map((e: any) => e.id)],
         sendBackAvailable: [false],
         triggerEmail: [false],
         triggerSMS: [false],
@@ -83,7 +89,7 @@ export class AddEditWorkflowStateComponent implements OnInit {
             id: roleId
           }
         }),
-        id: this.tempStateId,
+        id: this.existingStateData?.id || this.tempStateId,
         parentId: this.StateDetailsForm.value.previousState,
         parentName: this.WorkflowStates.find((state: any) => state.id === this.StateDetailsForm.value.previousState)?.name
       },
