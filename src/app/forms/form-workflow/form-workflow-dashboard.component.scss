@@ -1,3 +1,11 @@
+@import '../../variables.scss';
 .btn {
     margin: 20px;
+}
+
+.btn-primary {
+    background-color: $main-teal;
+     :hover {
+        background-color: $main-teal-dark;
+    }
 }

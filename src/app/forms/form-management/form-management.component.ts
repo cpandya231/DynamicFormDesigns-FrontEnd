@@ -41,6 +41,7 @@ export class FormManagementComponent implements OnInit {
     this.WorkflowId = data;
     if (this.WorkflowId) {
       this.IsFormWorkflowIdAvailable = true;
+      this.LoadFormWorkflow();
     }
   }
 }

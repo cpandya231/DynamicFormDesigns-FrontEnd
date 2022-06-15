@@ -4,6 +4,7 @@
 @import '~@fortawesome/fontawesome-free/scss/regular.scss';
 @import '~@fortawesome/fontawesome-free/scss/brands.scss';
 @import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
+@import '../src/app/variables.scss';
 $primary: #00ADB5;
 $navy: #0A1931;
 $white: #ffffff;
@@ -72,5 +73,8 @@ select:focus {
 }
 
 .formbuilder .btn-primary {
-    background-color: $primary;
+    background-color: $main-teal;
+     :hover {
+        background-color: $main-teal-dark;
+    }
 }

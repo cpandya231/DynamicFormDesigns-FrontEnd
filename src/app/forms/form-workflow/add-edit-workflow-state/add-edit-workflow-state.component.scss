@@ -12,6 +12,9 @@
             .col-form-label {
                 color: #545454;
             }
+            .invalid_field {
+                border: 1px solid red;
+            }
         }
         .btn_container {
             flex-direction: row-reverse;

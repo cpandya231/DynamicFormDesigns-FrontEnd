@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormsService } from 'src/app/common/services/forms.service';
 import { IDepartmentItem } from 'src/app/departments/department-item-model';
@@ -22,6 +22,7 @@ export class AddEditWorkflowStateComponent implements OnInit {
   tempStateId!: number;
   existingStateData!: IWorkflowStateModel;
   ModalHeaderText = 'Create State';
+  ShowErrorFields = false;
   SaveButtonName = 'Save State';
   constructor(private fb: FormBuilder,
     private departmentService: DepartmentService,
@@ -58,9 +59,9 @@ export class AddEditWorkflowStateComponent implements OnInit {
       });
     } else {
       this.StateDetailsForm = this.fb.group ({
-        name: [''],
+        name: ['', Validators.required],
         description: [''],
-        previousState: [null],
+        previousState: [this.dialogData.previousStateId],
         multiPreviousStateCompletion: [false],
         roleStateAccess: [[]],
         departmentStateAccess: [[]],
@@ -71,9 +72,17 @@ export class AddEditWorkflowStateComponent implements OnInit {
         sendBackTo: ['']
       });
     }
+    if (this.WorkflowStates.length) {
+      this.StateDetailsForm.controls['previousState'].setValidators([Validators.required])
+    }
   }
 
   SaveState() {
+    if (this.StateDetailsForm.invalid) {
+      this.ShowErrorFields = true;
+      return;
+    }
+    this.ShowErrorFields = false;
     const stateData = {
       workflowId: this.dialogData.workflowId,
       state: {

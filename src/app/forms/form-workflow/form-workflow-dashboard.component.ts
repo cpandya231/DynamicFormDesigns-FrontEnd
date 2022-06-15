@@ -19,6 +19,7 @@ export class FormWorkflowComponent implements OnInit {
   IsStatesTransitionsExist = false;
   stateNameBeforeEdit = '';
   private isDialogOpen = false;
+  IsSaveWorkflowDisabled = true;
   constructor(private formService: FormsService,
     private dialog: MatDialog) { }
   
@@ -38,28 +39,36 @@ export class FormWorkflowComponent implements OnInit {
   handleStateEvent(data: any) {
     let stateName = data["branch-id"]["nodeValue"];
     let eventType = data["event-type"]["nodeValue"];
+    const index = this.WorkflowStates.findIndex((state: any) => state.name === stateName);
     if (eventType == 'add') {
-      this.AddEditState(null);
+      const stateData = this.WorkflowStates[index];
+      this.AddEditState(stateData, 'add');
     } else if (eventType == 'edit') {
-      const index = this.WorkflowStates.findIndex((state: any) => state.name === stateName);
       if (index > -1) {
         const stateData = this.WorkflowStates.splice(index, 1);
         this.stateNameBeforeEdit = stateData[0].name;
-        this.AddEditState(stateData[0]);
+        this.AddEditState(stateData[0], 'edit');
       }
     }
   }
 
-  AddEditState(stateData: any) {
-    ++this.tempId;
+  AddEditState(stateData: any, eventType: string) {
     if (this.isDialogOpen) return;
     this.isDialogOpen = true;
+
+    ++this.tempId;
+    let previousStateId;
+    if ( stateData && eventType == 'add') {
+      previousStateId = stateData.id;
+      stateData = null;
+    }
     const dialogRef = this.dialog.open(AddEditWorkflowStateComponent, {
       data: {
         workflowId: this.workflowId,
         stateData,
         states: this.WorkflowStates,
-        tempId: this.tempId
+        tempId: this.tempId,
+        previousStateId
       }
     });
 
@@ -77,11 +86,13 @@ export class FormWorkflowComponent implements OnInit {
         }
         this.WorkflowStates.push(data.state);
         this.StateWorkflowData = ([] as IWorkflowStateModel[]).concat(this.WorkflowStates);
+        this.IsSaveWorkflowDisabled = false;
       }
     })
   }
 
   SaveWorkflow(): void {
+    this.IsSaveWorkflowDisabled = true;
     const data = {
       workflowId: this.workflowId,
       states: this.WorkflowStates.map((state: any) => {
@@ -127,10 +138,12 @@ export class FormWorkflowComponent implements OnInit {
     }
     if (!updateData) {
       this.formService.SaveStatesTransitions(payload).subscribe((transitionData: any) => {
+        alert('saved successfully.')
         console.log(transitionData);
       })
     } else {
       this.formService.UpdateStatesTransitions(payload).subscribe((trasitionData: any) => {
+        alert('updated successfully.')
         console.log(trasitionData);
       })
     }

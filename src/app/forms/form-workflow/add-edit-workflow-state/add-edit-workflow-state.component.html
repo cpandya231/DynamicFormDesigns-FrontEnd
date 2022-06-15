@@ -41,7 +41,7 @@
             <div class="row">
                 <label for="previousState" class="col-2 col-form-label">Previous State</label>
                 <div class="col">
-                    <select class="form-select" id="previousState" formControlName="previousState">
+                    <select class="form-select" id="previousState" formControlName="previousState" [ngClass]="{'invalid_field': ShowErrorFields && this.StateDetailsForm.controls['previousState'].invalid}">
                         <option value="">Choose State </option>
                         <option *ngFor="let state of WorkflowStates" [ngValue]="state.id">
                             {{state.name}}
