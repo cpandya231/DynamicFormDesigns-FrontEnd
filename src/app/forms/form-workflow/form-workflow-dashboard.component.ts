@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormsService } from 'src/app/common/services/forms.service';
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AddEditWorkflowStateComponent } from './add-edit-workflow-state/add-edit-workflow-state.component';
 import { IGetWorkflowStateTransitionsModel, IWorkflowStateModel } from './form-workflow.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-workflow',
@@ -15,14 +16,15 @@ export class FormWorkflowComponent implements OnInit {
   WorkflowStates: IWorkflowStateModel[] = [];
   tempId: number = 1;
   tempTransitions: any = [];
-  StateWorkflowData: IWorkflowStateModel[]= [];
+  StateWorkflowData: IWorkflowStateModel[] = [];
   IsStatesTransitionsExist = false;
   stateNameBeforeEdit = '';
   private isDialogOpen = false;
   IsSaveWorkflowDisabled = true;
   constructor(private formService: FormsService,
-    private dialog: MatDialog) { }
-  
+    private dialog: MatDialog,
+    private router: Router) { }
+
   ngOnInit(): void {
     if (this.workflowId) {
       this.formService.GetWorkflowStatesTransitions(this.workflowId).subscribe((data: IGetWorkflowStateTransitionsModel) => {
@@ -30,7 +32,7 @@ export class FormWorkflowComponent implements OnInit {
           this.IsStatesTransitionsExist = true;
           this.WorkflowStates = this.transformStateTransitions(data);
           this.StateWorkflowData = ([] as IWorkflowStateModel[]).concat(this.WorkflowStates);
-          this.tempId = data.states.reduce((a, b)=> Math.max(a, b.id), 0);
+          this.tempId = data.states.reduce((a, b) => Math.max(a, b.id), 0);
         }
       });
     }
@@ -58,7 +60,7 @@ export class FormWorkflowComponent implements OnInit {
 
     ++this.tempId;
     let previousStateId;
-    if ( stateData && eventType == 'add') {
+    if (stateData && eventType == 'add') {
       previousStateId = stateData.id;
       stateData = null;
     }
@@ -104,8 +106,8 @@ export class FormWorkflowComponent implements OnInit {
         }
       })
     }
-  
-    if(this.IsStatesTransitionsExist) {
+
+    if (this.IsStatesTransitionsExist) {
       this.formService.UpdateFormWorkflowState(data).subscribe((data: any) => {
         this.saveStateTransitions(data.states, true);
       })
@@ -138,16 +140,17 @@ export class FormWorkflowComponent implements OnInit {
     }
     if (!updateData) {
       this.formService.SaveStatesTransitions(payload).subscribe((transitionData: any) => {
-        alert('saved successfully.')
+        // alert('saved successfully.');
+        this.router.navigate(["/formsDashboard"]);
         console.log(transitionData);
       })
     } else {
       this.formService.UpdateStatesTransitions(payload).subscribe((trasitionData: any) => {
-        alert('updated successfully.')
+        this.router.navigate(["/formsDashboard"]);
         console.log(trasitionData);
       })
     }
-    
+
   }
 
   protected transformStateTransitions(data: any): any {
