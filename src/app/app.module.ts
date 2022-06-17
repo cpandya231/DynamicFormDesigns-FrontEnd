@@ -53,6 +53,8 @@ import { FormManagementComponent } from './forms/form-management/form-management
 import { AuditTrailComponent } from './settings/audit-trail/audit-trail.component';
 import { SettingsComponent } from './settings/settings.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { SystemConfigComponent } from './settings/system-config/system-config.component';
+import { PasswordConfigComponent } from './settings/system-config/password-config/password-config.component';
 
 
 @NgModule({
@@ -82,6 +84,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FormManagementComponent,
     AuditTrailComponent,
     SettingsComponent,
+    SystemConfigComponent,
+    PasswordConfigComponent,
 
 
   ],
