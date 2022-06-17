@@ -5,8 +5,7 @@
             <div class="mb-3 row">
 
                 <div class="col-xs-3 col-sm-auto">
-                    <input id="table-filtering-search" class="form-control" type="text" [formControl]="filter"
-                        placeholder="Find by name">
+                    <input id="table-filtering-search" class="form-control" type="text" [formControl]="filter" placeholder="Find by name">
                 </div>
 
             </div>
@@ -84,7 +83,7 @@
 
                     </td>
                     <td>{{user.roles[0].role}}</td>
-                    <td>{{user.department.name}}</td>
+                    <td>{{user?.department?.name}}</td>
 
                     <td>{{user.createDt |date: DATE_FORMAT }}</td>
 
@@ -94,8 +93,7 @@
 
 
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"
-                                [checked]="user.isActive" (change)="toggleUser(user,$event)" />
+                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" [checked]="user.isActive" (change)="toggleUser(user,$event)" />
 
                         </div>
 

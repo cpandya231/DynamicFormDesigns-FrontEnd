@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormsService } from '../../common/services/forms.service';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { PreviewFormComponent } from '../preview-form/preview-form.component';
+import { DateUtil } from 'src/app/services/utility/DateUtil';
 
 @Component({
   selector: 'app-forms-dashboard',
@@ -13,6 +14,7 @@ export class FormsDashboardComponent implements OnInit {
 
   FormTemplates: any = [];
   private modalRef: MdbModalRef<PreviewFormComponent> | null = null;
+  readonly DATE_FORMAT = DateUtil.DATE_FORMAT;
   constructor(private formsService: FormsService,
     private router: Router,
     private modalService: MdbModalService) { }
@@ -23,12 +25,14 @@ export class FormsDashboardComponent implements OnInit {
     })
   }
 
-  EditFormTemplate(formName: any) {
-    this.router.navigate(['/createForm', {name: formName}]);
+  EditFormTemplate(formName: string, id: number) {
+    this.router.navigate(['/formManagement', {name: formName, workflowId: id}]);
   }
 
   PreviewForm(formTemplate: any) {
     this.modalRef = this.modalService.open(PreviewFormComponent, {
+      modalClass: 'modal-xl',
+      ignoreBackdropClick: true,
       data: {
         formTemplate: JSON.parse(formTemplate)
       }

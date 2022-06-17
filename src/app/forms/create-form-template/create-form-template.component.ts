@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormioOptions } from '@formio/angular';
+import { DateUtil } from 'src/app/services/utility/DateUtil';
 import { FormsService } from '../../common/services/forms.service';
 
 @Component({
@@ -11,7 +12,8 @@ import { FormsService } from '../../common/services/forms.service';
 export class CreateFormTemplateComponent implements OnInit {
 
   @ViewChild('formio') formIO: any;
-  FormName: string = '';
+  @Input('formName') FormName: string;
+  @Output() WorkflowIdUpdate = new EventEmitter<number>();
   CurrentForm: any = {
     components: []
   };
@@ -22,7 +24,7 @@ export class CreateFormTemplateComponent implements OnInit {
   RoomIDList = [101, 102, 103, 104, 105];
   ActivitiesList = ['Environmental conditional monitoring'];
   EnabledFormElements = ['textfield', 'email', 'textarea', 'phoneNumber', 'number', 'date', 'password', 'checkbox', 'time', 'selectboxes', 'select',
-    'radio', 'file', 'button', 'table', 'tabs'];
+    'radio', 'file', 'button', 'table', 'tabs',];
   FormOptions: any = {
     builder: {
       basic: {
@@ -42,10 +44,11 @@ export class CreateFormTemplateComponent implements OnInit {
           panel: false,
           columns: true,
           fieldset: false,
+
         }
       },
       advanced: false,
-      data: false,
+      // data: false,
       premium: false,
       custom: {
         title: 'Pre-Defined Fields',
@@ -136,39 +139,35 @@ export class CreateFormTemplateComponent implements OnInit {
     editForm: {
     },
   };
+  WorkflowId: number;
   constructor(private formsService: FormsService,
     private activatedRoute: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit() {
-    let params = this.activatedRoute.snapshot.paramMap;
-    this.FormName = String(params.get('name') || '');
+    
     let eleObj = {};
     this.EnabledFormElements.forEach(ele => {
       let obj = {
-        [ele]: [...this.ignoreComponents(['logic', 'layout']),
+        [ele]: [...this.ignoreComponents(['logic', 'api']),
         {
           key: 'display',
           components: this.ignoreComponents(
-            ['widget.type', 'autocomplete', 'inputMask', 'displayMask', 'allowMultipleMasks', 'tabindex', 'modalEdit',
-              'hidden', 'hideLabel', 'showWordCount', 'showCharCount', 'mask', 'tableView']
+            ['widget', 'autocomplete', 'inputMask', 'displayMask', 'allowMultipleMasks', 'tabindex', 'modalEdit',
+              'hideLabel', 'showWordCount', 'showCharCount', 'mask', 'tableView', 'description']
           )
         },
         {
           key: 'validation',
           components: this.ignoreComponents(
-            ['validate.minWords', 'validate.maxWords', 'validate.pattern', 'errorLabel', 'custom-validation-js', 'validate.customMessage', 'errors', 'json-validation-json']
+            ['validate.minWords', 'validate.maxWords', 'errorLabel', 'custom-validation-js', 'validate.customMessage', 'errors', 'json-validation-json']
           )
         },
         {
-          key: 'api',
+          key: 'data',
           components: this.ignoreComponents(
-            ['tags', 'properties']
+            ['persistent', 'inputFormat', 'protected', 'dbIndex', 'encrypted', 'redrawOn', 'calculateServer', ]
           )
-        },
-        {
-          key: 'conditional',
-          components: this.ignoreComponents(['customConditionalPanel'])
         }
         ]
       };
@@ -192,13 +191,16 @@ export class CreateFormTemplateComponent implements OnInit {
   SaveTemplate(): void {
     if (this.formId) {
       this.formsService.UpdateFormTemplate(this.formIO.form, this.FormName, this.formId).subscribe(data => {
+     
         alert('form updated successfully');
-        this.router.navigate(['formsDashboard']);
+        // this.router.navigate(['formsDashboard']);
       })
     } else {
       this.formsService.SaveFormTemplate(this.formIO.form, this.FormName).subscribe(data => {
+        this.WorkflowId = data.workflow.id;
+        this.WorkflowIdUpdate.emit(this.WorkflowId);
         alert('form created successfully');
-        this.router.navigate(['formsDashboard']);
+        // this.router.navigate(['formsDashboard']);
       })
     }
   }

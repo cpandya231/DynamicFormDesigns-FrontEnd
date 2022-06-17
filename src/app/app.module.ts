@@ -29,6 +29,7 @@ import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
 import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
+import {MatDialogModule} from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UsersComponent } from './users/users.component';
@@ -39,12 +40,16 @@ import { CreateUserComponent } from './users/create-user/create-user.component';
 import { NgbdSortableHeader } from '../app/directives/sort-table-column-directive';
 import { GlobalAppIntercepter } from './common/services/global-app-intercepter.service';
 import { CreateRoleComponent } from './roles/create-role/create-role.component';
+import { FormWorkflowComponent } from './forms/form-workflow/form-workflow-dashboard.component';
 import { DeleteUserAlertComponent } from './users/users-info/delete-user-alert/delete-user-alert.component';
 import { DepartmentsComponent } from './departments/departments.component';
 import { AppConfig } from './formio-app-config';
 import { CreateDepartmentComponent } from './departments/create-department/create-department.component';
 import { DepartmentDashboardComponent } from './departments/department-dashboard/department-dashboard.component';
 import { EditDepartmentComponent } from './departments/edit-department/edit-department.component';
+import { OrgChartComponent } from './common/components/org-chart/org-chart.component';
+import { AddEditWorkflowStateComponent } from './forms/form-workflow/add-edit-workflow-state/add-edit-workflow-state.component';
+import { FormManagementComponent } from './forms/form-management/form-management.component';
 import { AuditTrailComponent } from './settings/audit-trail/audit-trail.component';
 import { SettingsComponent } from './settings/settings.component';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -66,11 +71,15 @@ import { NgxPaginationModule } from 'ngx-pagination';
     CreateUserComponent,
     UsersInfoComponent,
     CreateRoleComponent,
+    FormWorkflowComponent,
     DeleteUserAlertComponent,
     DepartmentsComponent,
     CreateDepartmentComponent,
     DepartmentDashboardComponent,
     EditDepartmentComponent,
+    OrgChartComponent,
+    AddEditWorkflowStateComponent,
+    FormManagementComponent,
     AuditTrailComponent,
     SettingsComponent,
 
@@ -103,6 +112,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     BrowserAnimationsModule,
     MatIconModule,
     MatMenuModule,
+    MatDialogModule,
     NgxPaginationModule
 
   ],
