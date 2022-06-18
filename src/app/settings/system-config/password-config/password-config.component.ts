@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { SettingsService } from 'src/app/services/settings.service';
+import { ISettingItem } from '../settings-model';
 
 @Component({
   selector: 'app-password-config',
@@ -9,9 +10,10 @@ import { SettingsService } from 'src/app/services/settings.service';
 })
 export class PasswordConfigComponent implements OnInit {
 
+  passwordSettings: ISettingItem[];
 
   passwordForm = new FormGroup({
-    ALPHANUMERIC: new FormControl(true),
+    ALPHANUMERIC: new FormControl(false),
     SPECIAL_CHARS_REQD: new FormControl(true),
     PASSWORD_MIN_LENGTH: new FormControl(8),
     EXPIRY_DAYS: new FormControl(365),
@@ -19,26 +21,51 @@ export class PasswordConfigComponent implements OnInit {
 
 
   });
-  constructor(private settingService: SettingsService) { }
+  constructor(private settingService: SettingsService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.fillForm();
+  }
+
+  private fillForm() {
     this.settingService.getAllSettings().subscribe(response => {
-      let passwordSettings = response.filter(item => item.type == "PASSWORD");
-      let parsed = passwordSettings.map(passwordSetting => { `${passwordSetting.key}: ${passwordSetting.value}` })
-      passwordSettings.forEach(passwordSetting => {
-        if (passwordSetting.key == "MAX_ATTEMPTS") {
-          this.passwordForm.patchValue({
-            MAX_ATTEMPTS: passwordSetting.value
-          })
+      this.passwordSettings = response.filter(item => item.type == "PASSWORD");
+
+      let parsed: any = {};
+
+      this.passwordSettings.forEach(passwordSetting => {
+        if (passwordSetting.value == 'true') {
+          parsed[passwordSetting.key] = true;
+        } else if (passwordSetting.value == 'false') {
+          parsed[passwordSetting.key] = false;
+        } else {
+          parsed[passwordSetting.key] = passwordSetting.value;
         }
 
-      })
-    })
+
+      });
+
+      this.passwordForm = this.formBuilder.group(parsed);
+    });
   }
 
   submitForm() {
     // TODO: Use EventEmitter with form value
-    console.log(this.passwordForm.value);
+    let submittedForm = this.passwordForm.value;
+    for (let submitedItem of Object.keys(submittedForm)) {
+      let passwordSettingToUpdate = this.passwordSettings.filter(ps => ps.key == submitedItem)[0];
+      passwordSettingToUpdate.value = submittedForm[submitedItem];
+      this.settingService.updateSettings(passwordSettingToUpdate).subscribe(response => {
+
+      });
+
+    }
+
+    alert("Password settings updated successfully")
+  }
+
+  revertForm() {
+    this.fillForm();
   }
 
 }

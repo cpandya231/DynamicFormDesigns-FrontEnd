@@ -31,8 +31,8 @@ export class SettingsService {
     }
 
 
-    updateSettings(userItem: ISettingItem) {
-        return this.http.put<any>(`${ServiceUtil.API_ENDPOINT}/settings/`, userItem, this.getHttpOptions());
+    updateSettings(settingItem: ISettingItem) {
+        return this.http.put<any>(`${ServiceUtil.API_ENDPOINT}/settings/`, settingItem, this.getHttpOptions());
     }
 
 
