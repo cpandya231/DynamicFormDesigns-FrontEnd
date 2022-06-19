@@ -11,7 +11,7 @@ import { FormsDashboardComponent } from './forms/forms-dashboard/forms-dashboard
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { PasswordPatternDirective } from './directives/password-pattern.directive';
+
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
@@ -29,7 +29,7 @@ import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
 import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UsersComponent } from './users/users.component';
@@ -57,6 +57,8 @@ import { SystemConfigComponent } from './settings/system-config/system-config.co
 import { PasswordConfigComponent } from './settings/system-config/password-config/password-config.component';
 import { UsernameConfigComponent } from './settings/system-config/username-config/username-config.component';
 import { SessionConfigComponent } from './settings/system-config/session-config/session-config.component';
+import { SmtpConfigComponent } from './settings/system-config/smtp-config/smtp-config.component';
+
 
 
 @NgModule({
@@ -66,7 +68,6 @@ import { SessionConfigComponent } from './settings/system-config/session-config/
     FormsDashboardComponent,
     LoginComponent,
     WelcomeComponent,
-    PasswordPatternDirective,
     NavbarComponent,
     UsersComponent,
     RolesComponent,
@@ -90,6 +91,8 @@ import { SessionConfigComponent } from './settings/system-config/session-config/
     PasswordConfigComponent,
     UsernameConfigComponent,
     SessionConfigComponent,
+    SmtpConfigComponent,
+
 
 
   ],

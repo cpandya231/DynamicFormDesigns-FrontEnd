@@ -11,6 +11,7 @@ export class SystemConfigComponent implements OnInit {
   IsUsernameTabVisible: any = true;
   IsPasswordTabVisible: any = false;
   IsSessionTabVisible: any = false;
+  IsSmtpTabVisible: any = false;
   constructor() {
 
   }
@@ -23,17 +24,27 @@ export class SystemConfigComponent implements OnInit {
     this.IsUsernameTabVisible = true;
     this.IsPasswordTabVisible = false;
     this.IsSessionTabVisible = false;
+    this.IsSmtpTabVisible = false;
   }
   LoadPasswordScreen() {
     this.IsUsernameTabVisible = false;
     this.IsPasswordTabVisible = true;
     this.IsSessionTabVisible = false;
+    this.IsSmtpTabVisible = false;
   }
 
   LoadSessionScreen() {
     this.IsUsernameTabVisible = false;
     this.IsPasswordTabVisible = false;
     this.IsSessionTabVisible = true;
+    this.IsSmtpTabVisible = false;
+  }
+
+  LoadSmtpScreen() {
+    this.IsUsernameTabVisible = false;
+    this.IsPasswordTabVisible = false;
+    this.IsSessionTabVisible = false;
+    this.IsSmtpTabVisible = true;
   }
 
 }
