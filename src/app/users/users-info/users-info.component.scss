@@ -40,10 +40,22 @@
     height: 2.5em;
 }
 
+.button[disabled] {
+    border: 1px solid #999999;
+
+    background-color: #c4c4c4;
+
+    cursor: default;
+}
+
+
 .button:hover {
     background-color: $main-teal-dark;
 }
 
+.button[disabled]:hover {
+    background-color: #c4c4c4;
+}
 
 .filter-create-user {
     display: flex;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/services/settings.service';
 import { ISettingItem } from '../settings-model';
 
@@ -11,13 +11,13 @@ import { ISettingItem } from '../settings-model';
 export class PasswordConfigComponent implements OnInit {
 
   passwordSettings: ISettingItem[];
-
+  submitted = false;
   passwordForm = new FormGroup({
     ALPHANUMERIC: new FormControl(false),
     SPECIAL_CHARS_REQD: new FormControl(true),
-    PASSWORD_MIN_LENGTH: new FormControl(8),
-    EXPIRY_DAYS: new FormControl(365),
-    MAX_ATTEMPTS: new FormControl(3),
+    PASSWORD_MIN_LENGTH: new FormControl(8, Validators.required),
+    EXPIRY_DAYS: new FormControl(365, [Validators.required,]),
+    MAX_ATTEMPTS: new FormControl(3, [Validators.required,]),
 
 
   });
@@ -39,7 +39,7 @@ export class PasswordConfigComponent implements OnInit {
         } else if (passwordSetting.value == 'false') {
           parsed[passwordSetting.key] = false;
         } else {
-          parsed[passwordSetting.key] = passwordSetting.value;
+          parsed[passwordSetting.key] = [passwordSetting.value, Validators.required];
         }
 
 
@@ -50,22 +50,37 @@ export class PasswordConfigComponent implements OnInit {
   }
 
   submitForm() {
-    // TODO: Use EventEmitter with form value
-    let submittedForm = this.passwordForm.value;
-    for (let submitedItem of Object.keys(submittedForm)) {
-      let passwordSettingToUpdate = this.passwordSettings.filter(ps => ps.key == submitedItem)[0];
-      passwordSettingToUpdate.value = submittedForm[submitedItem];
-      this.settingService.updateSettings(passwordSettingToUpdate).subscribe(response => {
+    this.submitted = true;
 
-      });
+    if (this.passwordForm.valid) {
+      let submittedForm = this.passwordForm.value;
+      for (let submitedItem of Object.keys(submittedForm)) {
+        let passwordSettingToUpdate = this.passwordSettings.filter(ps => ps.key == submitedItem)[0];
+        passwordSettingToUpdate.value = submittedForm[submitedItem];
+        this.settingService.updateSettings(passwordSettingToUpdate).subscribe(response => {
 
+        });
+
+      }
+
+      alert("Password settings updated successfully")
+    } else {
+      alert("Something went wrong");
     }
 
-    alert("Password settings updated successfully")
   }
 
   revertForm() {
     this.fillForm();
   }
+
+  get passwordFormControl() {
+    return this.passwordForm.controls;
+  }
+
+  get passwordMinLength() { return this.passwordForm.get('PASSWORD_MIN_LENGTH'); }
+
+  get expiryDays() { return this.passwordForm.get('EXPIRY_DAYS'); }
+  get maxAttempts() { return this.passwordForm.get('MAX_ATTEMPTS'); }
 
 }
