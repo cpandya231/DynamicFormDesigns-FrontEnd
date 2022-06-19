@@ -1,15 +1,15 @@
 <div class="app-container">
 
-    <div id="username-setting">
+    <div class="setting-container">
 
         <h2>Username Config</h2>
         <hr>
 
-        <form [formGroup]="usernameForm" id="usernameForm" (ngSubmit)="submitForm()">
+        <form [formGroup]="usernameForm" class="settingsForm" (ngSubmit)="submitForm()">
 
 
 
-            <div class="password-form-control">
+            <div class="custom-form-control">
                 <div class="label-custom">
                     <label for="password-min-length">Minimum Length </label>
                 </div>
@@ -30,7 +30,7 @@
                 </span>
             </div>
 
-            <div class="password-form-control">
+            <div class="custom-form-control">
                 <div class="label-custom">
                     <label for="expiry-days">Max Length </label>
                 </div>
