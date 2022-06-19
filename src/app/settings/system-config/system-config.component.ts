@@ -8,8 +8,9 @@ import { SettingsService } from 'src/app/services/settings.service';
 })
 export class SystemConfigComponent implements OnInit {
 
-  IsPasswordTabVisible: any = false;
   IsUsernameTabVisible: any = true;
+  IsPasswordTabVisible: any = false;
+  IsSessionTabVisible: any = false;
   constructor() {
 
   }
@@ -18,14 +19,21 @@ export class SystemConfigComponent implements OnInit {
 
   }
 
-  LoadPasswordScreen() {
-    this.IsUsernameTabVisible = false;
-    this.IsPasswordTabVisible = true;
-  }
-
   LoadUsernameScreen() {
     this.IsUsernameTabVisible = true;
     this.IsPasswordTabVisible = false;
+    this.IsSessionTabVisible = false;
+  }
+  LoadPasswordScreen() {
+    this.IsUsernameTabVisible = false;
+    this.IsPasswordTabVisible = true;
+    this.IsSessionTabVisible = false;
+  }
+
+  LoadSessionScreen() {
+    this.IsUsernameTabVisible = false;
+    this.IsPasswordTabVisible = false;
+    this.IsSessionTabVisible = true;
   }
 
 }

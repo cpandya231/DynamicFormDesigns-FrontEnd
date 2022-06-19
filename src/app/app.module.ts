@@ -56,6 +56,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SystemConfigComponent } from './settings/system-config/system-config.component';
 import { PasswordConfigComponent } from './settings/system-config/password-config/password-config.component';
 import { UsernameConfigComponent } from './settings/system-config/username-config/username-config.component';
+import { SessionConfigComponent } from './settings/system-config/session-config/session-config.component';
 
 
 @NgModule({
@@ -88,6 +89,7 @@ import { UsernameConfigComponent } from './settings/system-config/username-confi
     SystemConfigComponent,
     PasswordConfigComponent,
     UsernameConfigComponent,
+    SessionConfigComponent,
 
 
   ],

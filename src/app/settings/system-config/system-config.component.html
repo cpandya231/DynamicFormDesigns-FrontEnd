@@ -7,6 +7,11 @@
         <button class="nav-link" [ngClass]="{'active': IsPasswordTabVisible}" id="password-tab" type="button"
             (click)="LoadPasswordScreen()">Password</button>
     </li>
+
+    <li class="nav-item">
+        <button class="nav-link" [ngClass]="{'active': IsSessionTabVisible}" id="password-tab" type="button"
+            (click)="LoadSessionScreen()">Session</button>
+    </li>
     <li class="nav-item">
         <button class="nav-link" id="template-tab" type="button">SMTP</button>
     </li>
@@ -22,6 +27,12 @@
 
         <app-password-config>
         </app-password-config>
+    </div>
+
+    <div id="session" [hidden]="!IsSessionTabVisible">
+
+        <app-session-config>
+        </app-session-config>
     </div>
 
 </div>
