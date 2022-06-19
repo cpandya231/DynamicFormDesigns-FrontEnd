@@ -38,8 +38,11 @@ export class PasswordConfigComponent implements OnInit {
           parsed[passwordSetting.key] = true;
         } else if (passwordSetting.value == 'false') {
           parsed[passwordSetting.key] = false;
-        } else {
-          parsed[passwordSetting.key] = [passwordSetting.value, Validators.required];
+        } else if (passwordSetting.key == 'PASSWORD_MIN_LENGTH') {
+          parsed[passwordSetting.key] = [passwordSetting.value, [Validators.required, Validators.min(8)]];
+        }
+        else {
+          parsed[passwordSetting.key] = [passwordSetting.value, [Validators.required]];
         }
 
 

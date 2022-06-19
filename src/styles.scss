@@ -11,6 +11,7 @@ $white: #ffffff;
 $blue: #185ADB;
 $yellow: #FFC947;
 $gray: #EFEFEF;
+
 * {
     font-family: Montserrat, Arial, Helvetica, sans-serif;
 }
@@ -30,6 +31,7 @@ body {
 }
 
 input[type="text"],
+input[type="number"],
 input[type="email"],
 input[type="password"] {
     margin-top: 0.5em;
@@ -74,7 +76,8 @@ select:focus {
 
 .formbuilder .btn-primary {
     background-color: $main-teal;
-     :hover {
+
+    :hover {
         background-color: $main-teal-dark;
     }
 }
