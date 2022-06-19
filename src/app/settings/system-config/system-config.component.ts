@@ -8,7 +8,8 @@ import { SettingsService } from 'src/app/services/settings.service';
 })
 export class SystemConfigComponent implements OnInit {
 
-  IsPasswordTabVisible: any = true;
+  IsPasswordTabVisible: any = false;
+  IsUsernameTabVisible: any = true;
   constructor() {
 
   }
@@ -18,7 +19,13 @@ export class SystemConfigComponent implements OnInit {
   }
 
   LoadPasswordScreen() {
+    this.IsUsernameTabVisible = false;
+    this.IsPasswordTabVisible = true;
+  }
 
+  LoadUsernameScreen() {
+    this.IsUsernameTabVisible = true;
+    this.IsPasswordTabVisible = false;
   }
 
 }

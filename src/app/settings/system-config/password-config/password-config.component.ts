@@ -11,7 +11,7 @@ import { ISettingItem } from '../settings-model';
 export class PasswordConfigComponent implements OnInit {
 
   passwordSettings: ISettingItem[];
-  submitted = false;
+
   passwordForm = new FormGroup({
     ALPHANUMERIC: new FormControl(false),
     SPECIAL_CHARS_REQD: new FormControl(true),
@@ -53,7 +53,6 @@ export class PasswordConfigComponent implements OnInit {
   }
 
   submitForm() {
-    this.submitted = true;
 
     if (this.passwordForm.valid) {
       let submittedForm = this.passwordForm.value;

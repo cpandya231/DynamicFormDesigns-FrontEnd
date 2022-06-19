@@ -1,0 +1,8 @@
+@import "../password-config/password-config.component.scss";
+
+#username-setting {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 20vh;
+}
