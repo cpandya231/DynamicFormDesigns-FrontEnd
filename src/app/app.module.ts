@@ -58,6 +58,7 @@ import { PasswordConfigComponent } from './settings/system-config/password-confi
 import { UsernameConfigComponent } from './settings/system-config/username-config/username-config.component';
 import { SessionConfigComponent } from './settings/system-config/session-config/session-config.component';
 import { SmtpConfigComponent } from './settings/system-config/smtp-config/smtp-config.component';
+import { GlobalConfigComponent } from './settings/system-config/global-config/global-config.component';
 
 
 
@@ -92,6 +93,7 @@ import { SmtpConfigComponent } from './settings/system-config/smtp-config/smtp-c
     UsernameConfigComponent,
     SessionConfigComponent,
     SmtpConfigComponent,
+    GlobalConfigComponent,
 
 
 

@@ -16,6 +16,11 @@
         <button class="nav-link" [ngClass]="{'active': IsSmtpTabVisible}" id="smpt-tab" type="button"
             (click)="LoadSmtpScreen()">SMTP</button>
     </li>
+
+    <li class="nav-item">
+        <button class="nav-link" [ngClass]="{'active': IsGlobalTabVisible}" id="global-tab" type="button"
+            (click)="LoadGlobalScreen()">Global</button>
+    </li>
 </ul>
 <div class="tab-content">
     <div id="username" [hidden]="!IsUsernameTabVisible">
@@ -41,5 +46,13 @@
         <app-smtp-config>
         </app-smtp-config>
     </div>
+
+
+    <div id="global" [hidden]="!IsGlobalTabVisible">
+
+        <app-global-config>
+        </app-global-config>
+    </div>
+
 
 </div>

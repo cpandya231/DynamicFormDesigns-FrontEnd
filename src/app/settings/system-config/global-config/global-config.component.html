@@ -1,0 +1,46 @@
+<div class="app-container">
+
+    <div class="setting-container">
+
+        <h2>Global Config</h2>
+        <hr>
+
+        <form [formGroup]="globalForm" class="settingsForm" (ngSubmit)="submitForm()">
+
+
+
+            <div class="custom-form-control">
+                <div class="label-custom">
+                    <label for="date-format">Date Format </label>
+                </div>
+                <div>:</div>
+                <div>
+                    <select id="country" formControlName="DATE_FORMAT">
+                        <option value="">Choose date format</option>
+                        <option *ngFor="let format of dateFormatArray" [ngValue]="format">{{ format }}</option>
+                    </select>
+                </div>
+
+                <span class="text-danger" *ngIf="dateFormat?.hasError('required')
+                     && 
+                     (dateFormat?.dirty || dateFormat?.touched)">
+                    Date Format is required
+                </span>
+
+            </div>
+
+
+
+
+            <div class="submit-button">
+                <button type="submit" class="button" [disabled]="!globalForm.valid">Save</button>
+                <button type="button" class="button-cancel" (click)="revertForm()">Cancel</button>
+            </div>
+
+        </form>
+
+
+    </div>
+
+
+</div>
