@@ -40,7 +40,7 @@ export class UsernameConfigComponent implements OnInit {
           parsed[usernameSetting.key] = false;
         }
         else {
-          parsed[usernameSetting.key] = [usernameSetting.value, [Validators.required, Validators.min(5)]];
+          parsed[usernameSetting.key] = [usernameSetting.value, [Validators.required, Validators.min(1)]];
         }
 
 

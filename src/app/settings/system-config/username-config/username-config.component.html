@@ -1,6 +1,11 @@
 <div class="app-container">
+
     <div id="username-setting">
-        <form [formGroup]="usernameForm" id="passwordForm" (ngSubmit)="submitForm()">
+
+        <h2>Username Config</h2>
+        <hr>
+
+        <form [formGroup]="usernameForm" id="usernameForm" (ngSubmit)="submitForm()">
 
 
 
@@ -21,7 +26,7 @@
                 <span class="text-danger" *ngIf="usernameMinLength?.hasError('min')
                 && 
                 (usernameMinLength?.dirty || usernameMinLength?.touched)">
-                    Username Min Length should not be less than 8
+                    Username Min Length should not be less than 1
                 </span>
             </div>
 
@@ -36,19 +41,24 @@
                 <span class="text-danger" *ngIf="usernameMaxLength?.hasError('required')
                 && 
                 (usernameMaxLength?.dirty || usernameMaxLength?.touched)">
-                    Expiry Days is required
+                    Username Max Length is required
+                </span>
+                <span class="text-danger" *ngIf="usernameMaxLength?.hasError('min')
+           && 
+           (usernameMaxLength?.dirty || usernameMaxLength?.touched)">
+                    Username Max Length should not be less than 1
                 </span>
 
             </div>
 
 
-
+            <div class="submit-button">
+                <button type="submit" class="button" [disabled]="!usernameForm.valid">Save</button>
+                <button type="button" class="button-cancel" (click)="revertForm()">Cancel</button>
+            </div>
 
         </form>
-        <div class="submit-button">
-            <button type="submit" class="button" [disabled]="!usernameForm.valid">Save</button>
-            <button type="button" class="button-cancel" (click)="revertForm()">Cancel</button>
-        </div>
+
 
     </div>
 
