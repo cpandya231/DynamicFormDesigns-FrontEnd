@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SettingsService } from 'src/app/services/settings.service';
+import { ISettingItem } from './settings-model';
 
 @Component({
   selector: 'app-system-config',
@@ -7,17 +8,31 @@ import { SettingsService } from 'src/app/services/settings.service';
   styleUrls: ['./system-config.component.scss']
 })
 export class SystemConfigComponent implements OnInit {
-
+  isDataLoaded: boolean = false;
+  usernameSettings: ISettingItem[];
+  passwordSettings: ISettingItem[];
+  sessionSettings: ISettingItem[];
+  smtpSettings: ISettingItem[];
+  globalSettings: ISettingItem[];
   IsUsernameTabVisible: any = true;
   IsPasswordTabVisible: any = false;
   IsSessionTabVisible: any = false;
   IsSmtpTabVisible: any = false;
   IsGlobalTabVisible: any = false;
-  constructor() {
+  constructor(private settingService: SettingsService,) {
 
   }
 
   ngOnInit(): void {
+
+    this.settingService.getAllSettings().subscribe(response => {
+      this.usernameSettings = response.filter(item => item.type == "USERNAME");
+      this.passwordSettings = response.filter(item => item.type == "PASSWORD");
+      this.sessionSettings = response.filter(item => item.type == "SESSION");
+      this.smtpSettings = response.filter(item => item.type == "SMTP");
+      this.globalSettings = response.filter(item => item.type == "GLOBAL");
+      this.isDataLoaded = true;
+    });
 
   }
 

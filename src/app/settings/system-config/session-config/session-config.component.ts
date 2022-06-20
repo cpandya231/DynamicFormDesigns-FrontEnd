@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/services/settings.service';
 import { ISettingItem } from '../settings-model';
@@ -10,7 +10,8 @@ import { ISettingItem } from '../settings-model';
 })
 export class SessionConfigComponent implements OnInit {
 
-  sessionSettings: ISettingItem[];
+  @Input('sessionSettings') sessionSettings: ISettingItem[];
+
 
   sessionForm = new FormGroup({
     TIMEOUT: new FormControl(10),
@@ -27,26 +28,25 @@ export class SessionConfigComponent implements OnInit {
 
 
   private fillForm() {
-    this.settingService.getAllSettings().subscribe(response => {
-      this.sessionSettings = response.filter(item => item.type == "SESSION");
-
-      let parsed: any = {};
-
-      this.sessionSettings.forEach(sessionSetting => {
-        if (sessionSetting.value == 'true') {
-          parsed[sessionSetting.key] = true;
-        } else if (sessionSetting.value == 'false') {
-          parsed[sessionSetting.key] = false;
-        }
-        else {
-          parsed[sessionSetting.key] = [sessionSetting.value, [Validators.required, Validators.min(10)]];
-        }
 
 
-      });
+    let parsed: any = {};
 
-      this.sessionForm = this.formBuilder.group(parsed);
+    this.sessionSettings.forEach(sessionSetting => {
+      if (sessionSetting.value == 'true') {
+        parsed[sessionSetting.key] = true;
+      } else if (sessionSetting.value == 'false') {
+        parsed[sessionSetting.key] = false;
+      }
+      else {
+        parsed[sessionSetting.key] = [sessionSetting.value, [Validators.required, Validators.min(10)]];
+      }
+
+
     });
+
+    this.sessionForm = this.formBuilder.group(parsed);
+
   }
 
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { passwordMatchingValidatior } from 'src/app/directives/confirm-passowrd.directive';
 import { SettingsService } from 'src/app/services/settings.service';
@@ -11,8 +11,8 @@ import { ISettingItem } from '../settings-model';
 })
 export class SmtpConfigComponent implements OnInit {
 
+  @Input('smtpSettings') smtpSettings: ISettingItem[];
 
-  smtpSettings: ISettingItem[];
 
   smtpForm = new FormGroup({
     SMTP_SERVER_IP: new FormControl(''),
@@ -32,37 +32,36 @@ export class SmtpConfigComponent implements OnInit {
 
 
   private fillForm() {
-    this.settingService.getAllSettings().subscribe(response => {
-      this.smtpSettings = response.filter(item => item.type == "SMTP");
 
-      let parsed: any = {};
 
-      this.smtpSettings.forEach(smtpSetting => {
+    let parsed: any = {};
 
-        switch (smtpSetting.key) {
-          case 'SMTP_SERVER_IP': {
-            parsed[smtpSetting.key] = [smtpSetting.value, [Validators.required, Validators.pattern('((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\.|$)){4}')]];
-            break;
-          }
-          case 'SMTP_SERVER_PORT': {
-            parsed[smtpSetting.key] = [smtpSetting.value, [Validators.required, Validators.min(0)]];
-            break;
-          }
-          case 'FROM_EMAIL': {
-            parsed[smtpSetting.key] = [smtpSetting.value, [Validators.required, Validators.email]];
-            break;
-          }
-          default: {
-            parsed[smtpSetting.key] = [smtpSetting.value, [Validators.required]];
-            break;
-          }
+    this.smtpSettings.forEach(smtpSetting => {
+
+      switch (smtpSetting.key) {
+        case 'SMTP_SERVER_IP': {
+          parsed[smtpSetting.key] = [smtpSetting.value, [Validators.required, Validators.pattern('((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\.|$)){4}')]];
+          break;
         }
+        case 'SMTP_SERVER_PORT': {
+          parsed[smtpSetting.key] = [smtpSetting.value, [Validators.required, Validators.min(0)]];
+          break;
+        }
+        case 'FROM_EMAIL': {
+          parsed[smtpSetting.key] = [smtpSetting.value, [Validators.required, Validators.email]];
+          break;
+        }
+        default: {
+          parsed[smtpSetting.key] = [smtpSetting.value, [Validators.required]];
+          break;
+        }
+      }
 
-      });
-
-
-      this.smtpForm = this.formBuilder.group(parsed, { validators: passwordMatchingValidatior });
     });
+
+
+    this.smtpForm = this.formBuilder.group(parsed, { validators: passwordMatchingValidatior });
+
   }
 
 

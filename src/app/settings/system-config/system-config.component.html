@@ -22,35 +22,35 @@
             (click)="LoadGlobalScreen()">Global</button>
     </li>
 </ul>
-<div class="tab-content">
+<div class="tab-content" *ngIf="isDataLoaded">
     <div id="username" [hidden]="!IsUsernameTabVisible">
 
-        <app-username-config>
+        <app-username-config [usernameSettings]="usernameSettings">
         </app-username-config>
     </div>
 
     <div id="password" [hidden]="!IsPasswordTabVisible">
 
-        <app-password-config>
+        <app-password-config [passwordSettings]="passwordSettings">
         </app-password-config>
     </div>
 
     <div id="session" [hidden]="!IsSessionTabVisible">
 
-        <app-session-config>
+        <app-session-config [sessionSettings]="sessionSettings">
         </app-session-config>
     </div>
 
     <div id="session" [hidden]="!IsSmtpTabVisible">
 
-        <app-smtp-config>
+        <app-smtp-config [smtpSettings]="smtpSettings">
         </app-smtp-config>
     </div>
 
 
     <div id="global" [hidden]="!IsGlobalTabVisible">
 
-        <app-global-config>
+        <app-global-config [globalSettings]="globalSettings">
         </app-global-config>
     </div>
 

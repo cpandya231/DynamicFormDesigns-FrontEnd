@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { SettingsService } from 'src/app/services/settings.service';
@@ -11,7 +11,7 @@ import { ISettingItem } from '../settings-model';
 })
 export class UsernameConfigComponent implements OnInit {
 
-  usernameSettings: ISettingItem[];
+  @Input('usernameSettings') usernameSettings: ISettingItem[];
 
   usernameForm = new FormGroup({
     USERNAME_MIN_LENGTH: new FormControl(10),
@@ -28,26 +28,25 @@ export class UsernameConfigComponent implements OnInit {
 
 
   private fillForm() {
-    this.settingService.getAllSettings().subscribe(response => {
-      this.usernameSettings = response.filter(item => item.type == "USERNAME");
-
-      let parsed: any = {};
-
-      this.usernameSettings.forEach(usernameSetting => {
-        if (usernameSetting.value == 'true') {
-          parsed[usernameSetting.key] = true;
-        } else if (usernameSetting.value == 'false') {
-          parsed[usernameSetting.key] = false;
-        }
-        else {
-          parsed[usernameSetting.key] = [usernameSetting.value, [Validators.required, Validators.min(1)]];
-        }
 
 
-      });
+    let parsed: any = {};
 
-      this.usernameForm = this.formBuilder.group(parsed);
+    this.usernameSettings.forEach(usernameSetting => {
+      if (usernameSetting.value == 'true') {
+        parsed[usernameSetting.key] = true;
+      } else if (usernameSetting.value == 'false') {
+        parsed[usernameSetting.key] = false;
+      }
+      else {
+        parsed[usernameSetting.key] = [usernameSetting.value, [Validators.required, Validators.min(1)]];
+      }
+
+
     });
+
+    this.usernameForm = this.formBuilder.group(parsed);
+
   }
 
 

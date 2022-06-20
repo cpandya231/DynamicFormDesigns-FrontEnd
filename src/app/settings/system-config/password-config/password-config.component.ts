@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { SettingsService } from 'src/app/services/settings.service';
 import { ISettingItem } from '../settings-model';
@@ -10,7 +10,8 @@ import { ISettingItem } from '../settings-model';
 })
 export class PasswordConfigComponent implements OnInit {
 
-  passwordSettings: ISettingItem[];
+  @Input('passwordSettings') passwordSettings: ISettingItem[];
+
 
   passwordForm = new FormGroup({
     ALPHANUMERIC: new FormControl(false),
@@ -28,28 +29,27 @@ export class PasswordConfigComponent implements OnInit {
   }
 
   private fillForm() {
-    this.settingService.getAllSettings().subscribe(response => {
-      this.passwordSettings = response.filter(item => item.type == "PASSWORD");
-
-      let parsed: any = {};
-
-      this.passwordSettings.forEach(passwordSetting => {
-        if (passwordSetting.value == 'true') {
-          parsed[passwordSetting.key] = true;
-        } else if (passwordSetting.value == 'false') {
-          parsed[passwordSetting.key] = false;
-        } else if (passwordSetting.key == 'PASSWORD_MIN_LENGTH') {
-          parsed[passwordSetting.key] = [passwordSetting.value, [Validators.required, Validators.min(8)]];
-        }
-        else {
-          parsed[passwordSetting.key] = [passwordSetting.value, [Validators.required]];
-        }
 
 
-      });
+    let parsed: any = {};
 
-      this.passwordForm = this.formBuilder.group(parsed);
+    this.passwordSettings.forEach(passwordSetting => {
+      if (passwordSetting.value == 'true') {
+        parsed[passwordSetting.key] = true;
+      } else if (passwordSetting.value == 'false') {
+        parsed[passwordSetting.key] = false;
+      } else if (passwordSetting.key == 'PASSWORD_MIN_LENGTH') {
+        parsed[passwordSetting.key] = [passwordSetting.value, [Validators.required, Validators.min(8)]];
+      }
+      else {
+        parsed[passwordSetting.key] = [passwordSetting.value, [Validators.required]];
+      }
+
+
     });
+
+    this.passwordForm = this.formBuilder.group(parsed);
+
   }
 
   submitForm() {

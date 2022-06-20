@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { passwordMatchingValidatior } from 'src/app/directives/confirm-passowrd.directive';
@@ -14,7 +14,10 @@ import { ISettingItem } from '../settings-model';
 })
 export class GlobalConfigComponent implements OnInit {
 
-  globalSettings: ISettingItem[];
+
+  @Input('globalSettings') globalSettings: ISettingItem[];
+
+
   dateFormatArray: string[] = [DateUtil.DATE_FORMAT, DateUtil.DATE_FORMAT_SHORT];
   timeFormatArray: string[] = [DateUtil.TIME_FORMAT, DateUtil.TIME_FORMAT_24_HOURS];
   timestampFormatArray: string[] = [DateUtil.TIME_FORMAT_24_HOURS];
@@ -40,49 +43,43 @@ export class GlobalConfigComponent implements OnInit {
 
 
   private fillForm() {
-    this.settingService.getAllSettings().subscribe(response => {
-
-      this.globalSettings = response.filter(item => item.type == "GLOBAL");
-
-      let parsed: any = {};
-
-      this.globalSettings.forEach(globalSetting => {
 
 
-        switch (globalSetting.key) {
+    let parsed: any = {};
 
-          case 'NO_OF_ACTIVE_USERS': {
-            parsed[globalSetting.key] = [globalSetting.value, [Validators.required, Validators.min(1)]];
-            break;
-          }
-          case 'DATE_FORMAT': {
-            parsed[globalSetting.key] = [globalSetting.value, [Validators.required,]];
-            this.selectedDateFormat = globalSetting.value;
-            break;
-          }
-          case 'TIME_FORMAT': {
-            parsed[globalSetting.key] = [globalSetting.value, [Validators.required,]];
-            this.selectedTimeFormat = globalSetting.value;
-            break;
-          }
-          case 'TIMESTAMP_FORMAT': {
-            parsed[globalSetting.key] = [globalSetting.value, [Validators.required,]];
-            this.selectedTimestampFormat = globalSetting.value;
-            break;
-          }
+    this.globalSettings.forEach(globalSetting => {
 
-          default: {
-            parsed[globalSetting.key] = [globalSetting.value, [Validators.required,]];
-            break;
-          }
+
+      switch (globalSetting.key) {
+
+        case 'NO_OF_ACTIVE_USERS': {
+          parsed[globalSetting.key] = [globalSetting.value, [Validators.required, Validators.min(1)]];
+          break;
+        }
+        case 'DATE_FORMAT': {
+          parsed[globalSetting.key] = [globalSetting.value, [Validators.required,]];
+          this.selectedDateFormat = globalSetting.value;
+          break;
+        }
+        case 'TIME_FORMAT': {
+          parsed[globalSetting.key] = [globalSetting.value, [Validators.required,]];
+          this.selectedTimeFormat = globalSetting.value;
+          break;
+        }
+        case 'TIMESTAMP_FORMAT': {
+          parsed[globalSetting.key] = [globalSetting.value, [Validators.required,]];
+          this.selectedTimestampFormat = globalSetting.value;
+          break;
         }
 
-      });
-      this.globalForm = this.formBuilder.group(parsed);
+        default: {
+          parsed[globalSetting.key] = [globalSetting.value, [Validators.required,]];
+          break;
+        }
+      }
+
     });
-
-
-
+    this.globalForm = this.formBuilder.group(parsed);
 
   }
 
