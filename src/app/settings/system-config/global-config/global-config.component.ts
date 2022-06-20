@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { passwordMatchingValidatior } from 'src/app/directives/confirm-passowrd.directive';
 import { SettingsService } from 'src/app/services/settings.service';
 import { DateUtil } from 'src/app/services/utility/DateUtil';
@@ -8,18 +9,24 @@ import { ISettingItem } from '../settings-model';
 @Component({
   selector: 'app-global-config',
   templateUrl: './global-config.component.html',
-  styleUrls: ['./global-config.component.scss']
+  styleUrls: ['./global-config.component.scss'],
+
 })
 export class GlobalConfigComponent implements OnInit {
 
   globalSettings: ISettingItem[];
   dateFormatArray: string[] = [DateUtil.DATE_FORMAT, DateUtil.DATE_FORMAT_SHORT];
+  timeFormatArray: string[] = [DateUtil.TIME_FORMAT, DateUtil.TIME_FORMAT_24_HOURS];
+  timestampFormatArray: string[] = [DateUtil.TIME_FORMAT_24_HOURS];
   selectedDateFormat: string;
+  selectedTimeFormat: string;
+  selectedTimestampFormat: string;
+
   globalForm = new FormGroup({
     DATE_FORMAT: new FormControl(''),
-    TIME_FORMAT: new FormControl(8080),
+    TIME_FORMAT: new FormControl(''),
     TIMESTAMP_FORMAT: new FormControl(''),
-    NO_OF_ACTIVE_USERS: new FormControl(''),
+    NO_OF_ACTIVE_USERS: new FormControl(10),
     VALIDITY_TILL: new FormControl(''),
     VALIDITY_EXPIRY_MSG: new FormControl(''),
 
@@ -53,6 +60,16 @@ export class GlobalConfigComponent implements OnInit {
             this.selectedDateFormat = globalSetting.value;
             break;
           }
+          case 'TIME_FORMAT': {
+            parsed[globalSetting.key] = [globalSetting.value, [Validators.required,]];
+            this.selectedTimeFormat = globalSetting.value;
+            break;
+          }
+          case 'TIMESTAMP_FORMAT': {
+            parsed[globalSetting.key] = [globalSetting.value, [Validators.required,]];
+            this.selectedTimestampFormat = globalSetting.value;
+            break;
+          }
 
           default: {
             parsed[globalSetting.key] = [globalSetting.value, [Validators.required,]];
@@ -61,11 +78,7 @@ export class GlobalConfigComponent implements OnInit {
         }
 
       });
-
-
       this.globalForm = this.formBuilder.group(parsed);
-
-
     });
 
 
@@ -87,7 +100,7 @@ export class GlobalConfigComponent implements OnInit {
 
       }
 
-      alert("SMTP settings updated successfully")
+      alert("Global settings updated successfully")
     } else {
       alert("Something went wrong");
     }

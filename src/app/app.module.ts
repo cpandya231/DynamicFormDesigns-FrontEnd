@@ -59,8 +59,8 @@ import { UsernameConfigComponent } from './settings/system-config/username-confi
 import { SessionConfigComponent } from './settings/system-config/session-config/session-config.component';
 import { SmtpConfigComponent } from './settings/system-config/smtp-config/smtp-config.component';
 import { GlobalConfigComponent } from './settings/system-config/global-config/global-config.component';
-
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -126,7 +126,10 @@ import { GlobalConfigComponent } from './settings/system-config/global-config/gl
     MatIconModule,
     MatMenuModule,
     MatDialogModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    // MatInputModule
 
   ],
   providers: [
