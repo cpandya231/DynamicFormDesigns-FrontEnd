@@ -87,6 +87,7 @@ export class MasterForms {
                 "validateOn": "blur",
                 "validate": {
                     "required": true,
+
                 },
                 "key": "username",
                 "type": "textfield",
@@ -101,7 +102,7 @@ export class MasterForms {
                 "displayInTimezone": "utc",
                 "useLocaleSettings": false,
                 "allowInput": true,
-                "format": DateUtil.DATE_FORMAT_SHORT,
+
                 "enableDate": true,
                 "datePicker": {
                     "disable": "",
@@ -135,7 +136,7 @@ export class MasterForms {
                     "mode": "single",
                     "enableTime": false,
                     "noCalendar": true,
-                    "format": DateUtil.DATE_FORMAT_SHORT,
+
                     "hourIncrement": 1,
                     "minuteIncrement": 1,
                     "time_24hr": true,

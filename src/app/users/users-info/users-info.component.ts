@@ -15,6 +15,7 @@ import { DeleteUserAlertComponent } from './delete-user-alert/delete-user-alert.
 import { Router, ActivatedRoute } from '@angular/router';
 import { RoleService } from 'src/app/services/roles.service';
 import { DepartmentService } from 'src/app/services/departments.service';
+import { SettingsService } from 'src/app/services/settings.service';
 
 const compare = (v1: any, v2: any) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
@@ -25,7 +26,7 @@ const compare = (v1: any, v2: any) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
   styleUrls: ['./users-info.component.scss']
 })
 export class UsersInfoComponent implements OnInit {
-  readonly DATE_FORMAT = DateUtil.DATE_FORMAT;
+  DATE_FORMAT: string;
 
   private modalRef: MdbModalRef<CreateUserComponent> | null = null;
 
@@ -39,6 +40,7 @@ export class UsersInfoComponent implements OnInit {
 
   constructor(
     private usersService: UsersService,
+    private settingsService: SettingsService,
     private roleService: RoleService,
     private departMentService: DepartmentService,
     private router: Router,
@@ -69,11 +71,14 @@ export class UsersInfoComponent implements OnInit {
         });
       }));
 
-    combineLatest([this.users$, allRoles, allDepartMents]).subscribe(items => {
+    let settingObservable = this.settingsService.getAllSettings();
+
+    combineLatest([this.users$, allRoles, allDepartMents, settingObservable]).subscribe(items => {
 
       this.USERS = items[0];
       this.roles = items[1];
       this.departments = items[2];
+      this.DATE_FORMAT = items[3].filter(setting => (setting.type == "GLOBAL") && (setting.key == "DATE_FORMAT"))[0].value;
       this.registerForSearch();
     });
 
