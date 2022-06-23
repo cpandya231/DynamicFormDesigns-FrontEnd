@@ -23,32 +23,32 @@
     </li>
 </ul>
 <div class="tab-content" *ngIf="isDataLoaded">
-    <div id="username" [hidden]="!IsUsernameTabVisible">
+    <div id="username" *ngIf="IsUsernameTabVisible">
 
         <app-username-config [usernameSettings]="usernameSettings">
         </app-username-config>
     </div>
 
-    <div id="password" [hidden]="!IsPasswordTabVisible">
+    <div id="password" *ngIf="IsPasswordTabVisible">
 
         <app-password-config [passwordSettings]="passwordSettings">
         </app-password-config>
     </div>
 
-    <div id="session" [hidden]="!IsSessionTabVisible">
+    <div id="session" *ngIf="IsSessionTabVisible">
 
         <app-session-config [sessionSettings]="sessionSettings">
         </app-session-config>
     </div>
 
-    <div id="session" [hidden]="!IsSmtpTabVisible">
+    <div id="session" *ngIf="IsSmtpTabVisible">
 
         <app-smtp-config [smtpSettings]="smtpSettings">
         </app-smtp-config>
     </div>
 
 
-    <div id="global" [hidden]="!IsGlobalTabVisible">
+    <div id="global" *ngIf="IsGlobalTabVisible">
 
         <app-global-config [globalSettings]="globalSettings">
         </app-global-config>

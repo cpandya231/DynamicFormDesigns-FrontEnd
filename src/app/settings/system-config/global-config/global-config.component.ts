@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { passwordMatchingValidatior } from 'src/app/directives/confirm-passowrd.directive';
+import { combineLatest } from 'rxjs';
 import { SettingsService } from 'src/app/services/settings.service';
 import { DateUtil } from 'src/app/services/utility/DateUtil';
 import { ISettingItem } from '../settings-model';
@@ -88,19 +87,30 @@ export class GlobalConfigComponent implements OnInit {
 
     if (this.globalForm.valid) {
       let submittedForm = this.globalForm.value;
-      for (let submitedItem of Object.keys(submittedForm)) {
-        let globalSettingToUpdate = this.globalSettings.filter(ps => ps.key == submitedItem)[0];
-        globalSettingToUpdate.value = submittedForm[submitedItem];
-        this.settingService.updateSettings(globalSettingToUpdate).subscribe(response => {
 
-        });
+      let settingsObservables = [];
+      for (let submitedItem of Object.keys(submittedForm)) {
+        let globalSettingToUpdate = this.globalSettings.find(ps => ps.key == submitedItem);
+        if (undefined != globalSettingToUpdate) {
+          globalSettingToUpdate.value = submittedForm[submitedItem];
+          settingsObservables.push(this.settingService.updateSettings(globalSettingToUpdate));
+        }
+
 
       }
+      combineLatest(settingsObservables)
+        .subscribe({
+          next: (v) => alert("Session settings updated successfully"),
+          error: (e) => alert("Something went wrong")
+        });
 
-      alert("Global settings updated successfully")
+
+
     } else {
       alert("Something went wrong");
     }
+
+
 
   }
 

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { combineLatest } from 'rxjs';
 import { SettingsService } from 'src/app/services/settings.service';
 import { ISettingItem } from '../settings-model';
 
@@ -54,21 +55,32 @@ export class SessionConfigComponent implements OnInit {
 
     if (this.sessionForm.valid) {
       let submittedForm = this.sessionForm.value;
-      for (let submitedItem of Object.keys(submittedForm)) {
-        let sessionSettingToUpdate = this.sessionSettings.filter(ps => ps.key == submitedItem)[0];
-        sessionSettingToUpdate.value = submittedForm[submitedItem];
-        this.settingService.updateSettings(sessionSettingToUpdate).subscribe(response => {
 
-        });
+
+      let settingsObservables = [];
+      for (let submitedItem of Object.keys(submittedForm)) {
+        let sessionSettingToUpdate = this.sessionSettings.find(ps => ps.key == submitedItem);
+        if (undefined != sessionSettingToUpdate) {
+          sessionSettingToUpdate.value = submittedForm[submitedItem];
+          settingsObservables.push(this.settingService.updateSettings(sessionSettingToUpdate));
+        }
 
       }
+      combineLatest(settingsObservables)
+        .subscribe({
+          next: (v) => alert("Session settings updated successfully"),
+          error: (e) => alert("Something went wrong")
+        });
 
-      alert("Session settings updated successfully")
+
     } else {
       alert("Something went wrong");
     }
 
   }
+
+
+
 
   revertForm() {
     this.fillForm();

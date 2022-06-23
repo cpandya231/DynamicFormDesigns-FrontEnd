@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { combineLatest } from 'rxjs';
 
 import { SettingsService } from 'src/app/services/settings.service';
 import { ISettingItem } from '../settings-model';
@@ -54,16 +55,23 @@ export class UsernameConfigComponent implements OnInit {
 
     if (this.usernameForm.valid) {
       let submittedForm = this.usernameForm.value;
+      let settingsObservables = [];
       for (let submitedItem of Object.keys(submittedForm)) {
-        let usernameSettingToUpdate = this.usernameSettings.filter(ps => ps.key == submitedItem)[0];
-        usernameSettingToUpdate.value = submittedForm[submitedItem];
-        this.settingService.updateSettings(usernameSettingToUpdate).subscribe(response => {
-
-        });
+        let usernameSettingToUpdate = this.usernameSettings.find(ps => ps.key == submitedItem);
+        if(undefined != usernameSettingToUpdate){
+          usernameSettingToUpdate.value = submittedForm[submitedItem];
+          settingsObservables.push(this.settingService.updateSettings(usernameSettingToUpdate));
+        }
+        
 
       }
 
-      alert("Username settings updated successfully")
+      combineLatest(settingsObservables).subscribe({
+        next: (v) => alert("Users settings updated successfully"),
+        error: (e) => alert("Something went wrong")
+      })
+
+
     } else {
       alert("Something went wrong");
     }

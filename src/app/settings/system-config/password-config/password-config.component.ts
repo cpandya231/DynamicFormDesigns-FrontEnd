@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { combineLatest } from 'rxjs';
 import { SettingsService } from 'src/app/services/settings.service';
 import { ISettingItem } from '../settings-model';
 
@@ -56,16 +57,26 @@ export class PasswordConfigComponent implements OnInit {
 
     if (this.passwordForm.valid) {
       let submittedForm = this.passwordForm.value;
-      for (let submitedItem of Object.keys(submittedForm)) {
-        let passwordSettingToUpdate = this.passwordSettings.filter(ps => ps.key == submitedItem)[0];
-        passwordSettingToUpdate.value = submittedForm[submitedItem];
-        this.settingService.updateSettings(passwordSettingToUpdate).subscribe(response => {
 
-        });
+      let settingsObservables = [];
+      for (let submitedItem of Object.keys(submittedForm)) {
+        let passwordSettingToUpdate = this.passwordSettings.find(ps => ps.key == submitedItem);
+        if (undefined != passwordSettingToUpdate) {
+          passwordSettingToUpdate.value = submittedForm[submitedItem];
+          settingsObservables.push(this.settingService.updateSettings(passwordSettingToUpdate));
+        }
+
 
       }
+      combineLatest(settingsObservables)
+        .subscribe({
+          next: (v) => alert("Session settings updated successfully"),
+          error: (e) => alert("Something went wrong")
+        });
 
-      alert("Password settings updated successfully")
+
+
+
     } else {
       alert("Something went wrong");
     }

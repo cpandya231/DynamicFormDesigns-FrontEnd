@@ -37,42 +37,36 @@ export class SystemConfigComponent implements OnInit {
   }
 
   LoadUsernameScreen() {
+    this.hideAll();
     this.IsUsernameTabVisible = true;
-    this.IsPasswordTabVisible = false;
-    this.IsSessionTabVisible = false;
-    this.IsSmtpTabVisible = false;
-    this.IsGlobalTabVisible = false;
   }
   LoadPasswordScreen() {
-    this.IsUsernameTabVisible = false;
+    this.hideAll();
     this.IsPasswordTabVisible = true;
-    this.IsSessionTabVisible = false;
-    this.IsSmtpTabVisible = false;
-    this.IsGlobalTabVisible = false;
   }
 
   LoadSessionScreen() {
-    this.IsUsernameTabVisible = false;
-    this.IsPasswordTabVisible = false;
+    this.hideAll();
     this.IsSessionTabVisible = true;
-    this.IsSmtpTabVisible = false;
-    this.IsGlobalTabVisible = false;
   }
 
   LoadSmtpScreen() {
-    this.IsUsernameTabVisible = false;
-    this.IsPasswordTabVisible = false;
-    this.IsSessionTabVisible = false;
+    this.hideAll();
     this.IsSmtpTabVisible = true;
-    this.IsGlobalTabVisible = false;
+
   }
 
   LoadGlobalScreen() {
+    this.hideAll();
+    this.IsGlobalTabVisible = true;
+  }
+
+  hideAll() {
     this.IsUsernameTabVisible = false;
     this.IsPasswordTabVisible = false;
     this.IsSessionTabVisible = false;
     this.IsSmtpTabVisible = false;
-    this.IsGlobalTabVisible = true;
+    this.IsGlobalTabVisible = false;
   }
 
 

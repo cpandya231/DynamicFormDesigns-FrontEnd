@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { passwordMatchingValidatior } from 'src/app/directives/confirm-passowrd.directive';
+import { passwordMatchingValidatior } from 'src/app/services/utility/confirm-passowrd.directive';
 import { SettingsService } from 'src/app/services/settings.service';
 import { ISettingItem } from '../settings-model';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-smtp-config',
@@ -69,16 +70,25 @@ export class SmtpConfigComponent implements OnInit {
 
     if (this.smtpForm.valid) {
       let submittedForm = this.smtpForm.value;
-      for (let submitedItem of Object.keys(submittedForm)) {
-        let smtpSettingToUpdate = this.smtpSettings.filter(ps => ps.key == submitedItem)[0];
-        smtpSettingToUpdate.value = submittedForm[submitedItem];
-        this.settingService.updateSettings(smtpSettingToUpdate).subscribe(response => {
 
-        });
+
+      let settingsObservables = [];
+      for (let submitedItem of Object.keys(submittedForm)) {
+        let smtpSettingToUpdate = this.smtpSettings.find(ps => ps.key == submitedItem);
+        if (undefined != smtpSettingToUpdate) {
+          smtpSettingToUpdate.value = submittedForm[submitedItem];
+          settingsObservables.push(this.settingService.updateSettings(smtpSettingToUpdate));
+        }
+
 
       }
 
-      alert("SMTP settings updated successfully")
+      combineLatest(settingsObservables).subscribe({
+        next: (v) => alert("SMTP settings updated successfully"),
+        error: (e) => alert("Something went wrong")
+      })
+
+
     } else {
       alert("Something went wrong");
     }
