@@ -7,6 +7,7 @@ import { DepartmentsComponent } from './departments/departments.component';
 import { EditDepartmentComponent } from './departments/edit-department/edit-department.component';
 
 import { CreateFormTemplateComponent } from './forms/create-form-template/create-form-template.component';
+import { FillFormComponent } from './forms/fill-form/fill-form.component';
 import { FormManagementComponent } from './forms/form-management/form-management.component';
 import { FormWorkflowComponent } from './forms/form-workflow/form-workflow-dashboard.component';
 import { FormsDashboardComponent } from './forms/forms-dashboard/forms-dashboard.component';
@@ -37,6 +38,11 @@ const routes: Routes = [
   {
     path: 'formWorkflow',
     component: FormWorkflowComponent,
+  },
+
+  {
+    path: 'form/:name',
+    component: FillFormComponent
   },
   {
     path: 'usersParent', children: [

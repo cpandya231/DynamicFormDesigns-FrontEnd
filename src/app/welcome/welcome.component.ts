@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-welcome',
@@ -8,7 +9,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router) { }
+  constructor(private activatedRoute: ActivatedRoute,
+    private authSevice: AuthService,
+    private router: Router) { }
   token: any = "";
   email: any = "";
 
@@ -17,9 +20,13 @@ export class WelcomeComponent implements OnInit {
   }
 
 
-  navigate(url: string): any {
-    this.router.navigate([`/${url}`]);
-
+  navigate(): any {
+    let isAdmin = this.authSevice.isAdmin();
+    if (isAdmin) {
+      this.router.navigate(['/usersParent/users']);
+    } else {
+      this.router.navigate(['/formsDashboard']);
+    }
   }
 
 }

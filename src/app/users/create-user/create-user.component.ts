@@ -105,10 +105,10 @@ export class CreateUserComponent implements OnInit {
         item.data.values = this.roles;
       } else if (item['key'] == 'departments' && this.departments) {
         item.data.values = this.departments;
-      } else if (item['key'] == 'username') {
+      } else if (item['key'] == 'username' && this.systemSettings) {
         item.validate.minLength = this.systemSettings.filter(setting => (setting.type == "USERNAME") && (setting.key == "USERNAME_MIN_LENGTH"))[0].value;
         item.validate.maxLength = this.systemSettings.filter(setting => (setting.type == "USERNAME") && (setting.key == "USERNAME_MAX_LENGTH"))[0].value;
-      } else if (item['key'] == 'dateOfBirth') {
+      } else if (item['key'] == 'dateOfBirth' && this.systemSettings) {
         item.format = this.systemSettings.filter(setting => (setting.type == "GLOBAL") && (setting.key == "DATE_FORMAT"))[0].value;
 
       }

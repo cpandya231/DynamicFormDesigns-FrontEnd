@@ -61,6 +61,7 @@ import { SmtpConfigComponent } from './settings/system-config/smtp-config/smtp-c
 import { GlobalConfigComponent } from './settings/system-config/global-config/global-config.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { FillFormComponent } from './forms/fill-form/fill-form.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     SessionConfigComponent,
     SmtpConfigComponent,
     GlobalConfigComponent,
+    FillFormComponent,
 
 
 

@@ -61,7 +61,7 @@ export class CreateRoleComponent implements OnInit {
     }
 
     let roleObj: IRoleItem = {
-      role: submittedData.name,
+      role: "ROLE_" + submittedData.name,
       description: submittedData.description,
       permissions: mappedPermissions
     }

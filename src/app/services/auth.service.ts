@@ -27,6 +27,7 @@ export class AuthService {
         localStorage.setItem('refresh_token', authResult.refresh_token);
         localStorage.setItem("expires_at", decoded_token.exp);
         localStorage.setItem("username", decoded_token.sub);
+        localStorage.setItem("roles", decoded_token.role)
         activeProject.next(authResult.access_token);
     }
 
@@ -77,6 +78,15 @@ export class AuthService {
 
     invalidateSession() {
         localStorage.clear();
+    }
+
+    isAdmin() {
+        let roles = localStorage.getItem("roles");
+        if (undefined != roles && null != roles) {
+            return roles.includes("ADMIN");
+        }
+
+        return false;
     }
 }
 
