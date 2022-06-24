@@ -1,4 +1,3 @@
-import { IDepartmentItem } from "../departments/department-item-model";
 
 export interface IUserItem {
     first_name: string,

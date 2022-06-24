@@ -1,0 +1,143 @@
+<div class="app-container">
+
+    <div class="setting-container">
+
+        <h2>Session Config</h2>
+        <hr>
+
+        <form [formGroup]="smtpForm" class="settingsForm" (ngSubmit)="submitForm()">
+
+
+
+            <div class="custom-form-control">
+                <div class="label-custom">
+                    <label for="smtp-ip">SMTP Server IP </label>
+                </div>
+                <div>:</div>
+                <div>
+                    <input id="smtp-ip" type="text" formControlName="SMTP_SERVER_IP">
+                </div>
+
+                <span class="text-danger" *ngIf="smtpServerIP?.hasError('required')
+                     && 
+                     (smtpServerIP?.dirty || smtpServerIP?.touched)">
+                    SMTP Server IP is required
+                </span>
+                <span class="text-danger" *ngIf="smtpServerIP?.hasError('pattern')
+                && 
+                (smtpServerIP?.dirty || smtpServerIP?.touched)">
+                    SMTP Server IP should match 0.0.0.0 pattern
+                </span>
+            </div>
+
+            <div class="custom-form-control">
+                <div class="label-custom">
+                    <label for="port">Port</label>
+                </div>
+                <div>:</div>
+                <div>
+                    <input id="port" type="number" formControlName="SMTP_SERVER_PORT">
+                </div>
+                <span class="text-danger" *ngIf="smtpServerPort?.hasError('required')
+                && 
+                (smtpServerPort?.dirty || smtpServerPort?.touched)">
+                    SMTP PORT is required
+                </span>
+                <span class="text-danger" *ngIf="smtpServerPort?.hasError('min')
+                && 
+                (smtpServerPort?.dirty || smtpServerPort?.touched)">
+                    SMTP PORT should be greater than or equal 0
+                </span>
+
+            </div>
+
+
+            <div class="custom-form-control">
+                <div class="label-custom">
+                    <label for="email">Email</label>
+                </div>
+                <div>:</div>
+                <div>
+                    <input id="email" type="email" formControlName="FROM_EMAIL">
+                </div>
+                <span class="text-danger" *ngIf="smtpEmail?.hasError('required')
+                && 
+                (smtpEmail?.dirty || smtpEmail?.touched)">
+                    Email is required
+                </span>
+                <span class="text-danger" *ngIf="smtpEmail?.hasError('email')
+                && 
+                (smtpEmail?.dirty || smtpEmail?.touched)">
+                    Invalid email
+                </span>
+
+            </div>
+
+            <div class="custom-form-control">
+                <div class="label-custom">
+                    <label for="username">Username</label>
+                </div>
+                <div>:</div>
+                <div>
+                    <input id="username" type="text" formControlName="USERNAME">
+                </div>
+
+                <span class="text-danger" *ngIf="smtpUsername?.hasError('required')
+                     && 
+                     (smtpUsername?.dirty || smtpUsername?.touched)">
+                    Username is required
+                </span>
+            </div>
+
+            <div class="custom-form-control">
+                <div class="label-custom">
+                    <label for="password">Password</label>
+                </div>
+                <div>:</div>
+                <div>
+                    <input id="password" type="password" formControlName="PASSWORD">
+                </div>
+
+                <span class="text-danger" *ngIf="smtpPassword?.hasError('required')
+                     && 
+                     (smtpPassword?.dirty || smtpPassword?.touched)">
+                    Password is required
+                </span>
+            </div>
+
+            <div class="custom-form-control">
+                <div class="label-custom">
+                    <label for="confirm-password">Confirm Password</label>
+                </div>
+                <div>:</div>
+                <div>
+                    <input id="confirm-password" type="password" formControlName="CONFIRM_PASSWORD">
+                </div>
+
+                <span class="text-danger" *ngIf="smtpConfirmPassword?.hasError('required')
+                     && 
+                     (smtpConfirmPassword?.dirty || smtpConfirmPassword?.touched)">
+                    Confirm Password is required
+                </span>
+
+                <span class="text-danger" *ngIf="smtpForm?.errors?.['notmatched']
+                && 
+                (smtpForm?.dirty || smtpForm?.touched)">
+                    Password and Confirm Password should match
+                </span>
+            </div>
+
+
+
+            <div class="submit-button">
+                <button type="submit" class="button" [disabled]="!smtpForm.valid">Save</button>
+                <button type="button" class="button-cancel" (click)="revertForm()">Cancel</button>
+            </div>
+
+        </form>
+
+
+    </div>
+
+
+</div>

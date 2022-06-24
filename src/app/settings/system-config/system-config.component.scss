@@ -1,0 +1,28 @@
+.tab-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-tabs {
+    justify-content: space-evenly;
+    margin: 0em 20em;
+    border-bottom: 1px solid #EFEFEF;
+
+
+}
+
+.nav-link {
+    &:hover {
+        background-color: #fff;
+        border-bottom: 1px solid #EFEFEF;
+        color: #1266f1;
+
+    }
+}
+
+.nav-link.active {
+    border-bottom: 1px solid #1266f1;
+    color: #1266f1;
+    font-weight: bold;
+}

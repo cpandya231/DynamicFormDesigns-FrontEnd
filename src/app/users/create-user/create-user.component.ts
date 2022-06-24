@@ -6,10 +6,12 @@ import { IUserItem } from '../user-item-model';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { MasterForms } from 'src/app/services/utility/master.forms.constants';
 import { RoleService } from 'src/app/services/roles.service';
-import { combineLatest, EMPTY, map, of } from 'rxjs';
+import { combineLatest, EMPTY, filter, map, of } from 'rxjs';
 import { DepartmentService } from 'src/app/services/departments.service';
 import { formatDate } from '@angular/common';
 import { DateUtil } from 'src/app/services/utility/DateUtil';
+import { SettingsService } from 'src/app/services/settings.service';
+import { ISettingItem } from 'src/app/settings/system-config/settings-model';
 
 @Component({
   selector: 'app-create-user',
@@ -26,11 +28,13 @@ export class CreateUserComponent implements OnInit {
   user!: any;
   roles!: any[];
   departments!: any[];
+  systemSettings!: ISettingItem[];
 
   FormData = MasterForms.CREATE_USER_FORM_TEMPLATE;
   constructor(private userService: UsersService,
     private roleService: RoleService,
     private departMentService: DepartmentService,
+    private settingsService: SettingsService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
   ) {
@@ -72,8 +76,10 @@ export class CreateUserComponent implements OnInit {
           });
         }));
 
+      let usernameSettingsObservable = this.settingsService.getAllSettings();
 
-      combineLatest([allRoles, allDepartMents, userObservable]).subscribe(items => {
+
+      combineLatest([allRoles, allDepartMents, userObservable, usernameSettingsObservable]).subscribe(items => {
 
 
         this.roles = items[0];
@@ -81,6 +87,7 @@ export class CreateUserComponent implements OnInit {
         if ((Object.keys(items[2]).length) > 0) {
           this.user = items[2];
         }
+        this.systemSettings = items[3];
 
         this.setData();
       });
@@ -98,7 +105,14 @@ export class CreateUserComponent implements OnInit {
         item.data.values = this.roles;
       } else if (item['key'] == 'departments' && this.departments) {
         item.data.values = this.departments;
+      } else if (item['key'] == 'username') {
+        item.validate.minLength = this.systemSettings.filter(setting => (setting.type == "USERNAME") && (setting.key == "USERNAME_MIN_LENGTH"))[0].value;
+        item.validate.maxLength = this.systemSettings.filter(setting => (setting.type == "USERNAME") && (setting.key == "USERNAME_MAX_LENGTH"))[0].value;
+      } else if (item['key'] == 'dateOfBirth') {
+        item.format = this.systemSettings.filter(setting => (setting.type == "GLOBAL") && (setting.key == "DATE_FORMAT"))[0].value;
+
       }
+
 
       if (this.username) {
 

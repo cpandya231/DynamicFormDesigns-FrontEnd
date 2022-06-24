@@ -1,0 +1,138 @@
+<div class="app-container">
+
+    <div class="setting-container">
+
+        <h2>Global Config</h2>
+        <hr>
+
+        <form [formGroup]="globalForm" class="settingsForm" (ngSubmit)="submitForm()">
+
+
+
+            <div class="custom-form-control">
+                <div class="label-custom">
+                    <label for="date-format">Date Format </label>
+                </div>
+                <div>:</div>
+                <div>
+                    <select id="date-format" formControlName="DATE_FORMAT">
+                        <option value="">Choose date format</option>
+                        <option *ngFor="let format of dateFormatArray" [ngValue]="format">{{ format }}</option>
+                    </select>
+                </div>
+
+                <span class="text-danger" *ngIf="dateFormat?.hasError('required')
+                     && 
+                     (dateFormat?.dirty || dateFormat?.touched)">
+                    Date Format is required
+                </span>
+
+            </div>
+
+
+            <div class="custom-form-control">
+                <div class="label-custom">
+                    <label for="time-format">Time Format </label>
+                </div>
+                <div>:</div>
+                <div>
+                    <select id="time-format" formControlName="TIME_FORMAT">
+                        <option value="">Choose Time format</option>
+                        <option *ngFor="let format of timeFormatArray" [ngValue]="format">{{ format }}</option>
+                    </select>
+                </div>
+
+                <span class="text-danger" *ngIf="timeFormat?.hasError('required')
+                     && 
+                     (timeFormat?.dirty || timeFormat?.touched)">
+                    Time Format is required
+                </span>
+
+            </div>
+
+            <div class="custom-form-control">
+                <div class="label-custom">
+                    <label for="timestamp-format">Timestamp Format </label>
+                </div>
+                <div>:</div>
+                <div>
+                    <select id="timestamp-format" formControlName="TIMESTAMP_FORMAT">
+                        <option value="">Choose Timestamp format</option>
+                        <option *ngFor="let format of timestampFormatArray" [ngValue]="format">{{ format }}</option>
+                    </select>
+                </div>
+
+                <span class="text-danger" *ngIf="timestampFormat?.hasError('required')
+                     && 
+                     (timestampFormat?.dirty || timestampFormat?.touched)">
+                    Timestamp Format is required
+                </span>
+
+            </div>
+
+            <div class="custom-form-control">
+                <div class="label-custom">
+                    <label for="active-users">Number of Active Users</label>
+                </div>
+                <div>:</div>
+                <div>
+                    <input id="active-users" type="number" formControlName="NO_OF_ACTIVE_USERS">
+                </div>
+                <span class="text-danger" *ngIf="numberOfActiveUsers?.hasError('required')
+                && 
+                (numberOfActiveUsers?.dirty || numberOfActiveUsers?.touched)">
+                    Number of Active Users is required
+                </span>
+                <span class="text-danger" *ngIf="numberOfActiveUsers?.hasError('min')
+                && 
+                (numberOfActiveUsers?.dirty || numberOfActiveUsers?.touched)">
+                    Number of Active Users should be greater than 0
+                </span>
+
+            </div>
+
+            <div class="custom-form-control">
+                <div class="label-custom">
+                    <label for="validity-till">Validaity Till</label>
+                </div>
+                <div>:</div>
+                <div>
+                    <input id="validity-till" type="date" formControlName="VALIDITY_TILL">
+
+                </div>
+                <span class="text-danger" *ngIf="validityTill?.hasError('required')
+                     && 
+                     (validityTill?.dirty || validityTill?.touched)">
+                    Validaity Till Date is required
+                </span>
+            </div>
+
+            <div class="custom-form-control">
+                <div class="label-custom">
+                    <label for="expiry-message">Validaity Expiration Message</label>
+                </div>
+                <div>:</div>
+                <div>
+                    <textarea id="expiry-message" type="textarea" formControlName="VALIDITY_EXPIRY_MSG"></textarea>
+                </div>
+
+                <span class="text-danger" *ngIf="expiryMessage?.hasError('required')
+                     && 
+                     (expiryMessage?.dirty || expiryMessage?.touched)">
+                    Validaity Expiration Message is required
+                </span>
+            </div>
+
+
+            <div class="submit-button">
+                <button type="submit" class="button" [disabled]="!globalForm.valid">Save</button>
+                <button type="button" class="button-cancel" (click)="revertForm()">Cancel</button>
+            </div>
+
+        </form>
+
+
+    </div>
+
+
+</div>

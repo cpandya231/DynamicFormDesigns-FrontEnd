@@ -1,0 +1,66 @@
+<div class="app-container">
+
+    <div class="setting-container">
+
+        <h2>Username Config</h2>
+        <hr>
+
+        <form [formGroup]="usernameForm" class="settingsForm" (ngSubmit)="submitForm()">
+
+
+
+            <div class="custom-form-control">
+                <div class="label-custom">
+                    <label for="password-min-length">Minimum Length </label>
+                </div>
+                <div>:</div>
+                <div>
+                    <input id="password-min-length" type="number" formControlName="USERNAME_MIN_LENGTH">
+                </div>
+
+                <span class="text-danger" *ngIf="usernameMinLength?.hasError('required')
+                     && 
+                     (usernameMinLength?.dirty || usernameMinLength?.touched)">
+                    Username Min Length is required
+                </span>
+                <span class="text-danger" *ngIf="usernameMinLength?.hasError('min')
+                && 
+                (usernameMinLength?.dirty || usernameMinLength?.touched)">
+                    Username Min Length should not be less than 1
+                </span>
+            </div>
+
+            <div class="custom-form-control">
+                <div class="label-custom">
+                    <label for="expiry-days">Max Length </label>
+                </div>
+                <div>:</div>
+                <div>
+                    <input id="expiry-days" type="number" formControlName="USERNAME_MAX_LENGTH">
+                </div>
+                <span class="text-danger" *ngIf="usernameMaxLength?.hasError('required')
+                && 
+                (usernameMaxLength?.dirty || usernameMaxLength?.touched)">
+                    Username Max Length is required
+                </span>
+                <span class="text-danger" *ngIf="usernameMaxLength?.hasError('min')
+           && 
+           (usernameMaxLength?.dirty || usernameMaxLength?.touched)">
+                    Username Max Length should not be less than 1
+                </span>
+
+            </div>
+
+
+            <div class="submit-button">
+                <button type="submit" class="button" [disabled]="!usernameForm.valid">Save</button>
+                <button type="button" class="button-cancel" (click)="revertForm()">Cancel</button>
+            </div>
+
+        </form>
+
+
+    </div>
+
+
+</div>

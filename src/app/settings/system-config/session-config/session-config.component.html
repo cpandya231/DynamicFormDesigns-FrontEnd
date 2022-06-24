@@ -1,0 +1,66 @@
+<div class="app-container">
+
+    <div class="setting-container">
+
+        <h2>Session Config</h2>
+        <hr>
+
+        <form [formGroup]="sessionForm" class="settingsForm" (ngSubmit)="submitForm()">
+
+
+
+            <div class="custom-form-control">
+                <div class="label-custom">
+                    <label for="password-min-length">Session Timeout <small>(in mins)</small> </label>
+                </div>
+                <div>:</div>
+                <div>
+                    <input id="password-min-length" type="number" formControlName="TIMEOUT">
+                </div>
+
+                <span class="text-danger" *ngIf="sessionTimeout?.hasError('required')
+                     && 
+                     (sessionTimeout?.dirty || sessionTimeout?.touched)">
+                    Session Timeout time is required
+                </span>
+                <span class="text-danger" *ngIf="sessionTimeout?.hasError('min')
+                && 
+                (sessionTimeout?.dirty || sessionTimeout?.touched)">
+                    Session Timeout time should not be less than 10 mins
+                </span>
+            </div>
+
+            <div class="custom-form-control">
+                <div class="label-custom">
+                    <label for="expiry-days">Session Timeout Alert Time <small>(in mins)</small> </label>
+                </div>
+                <div>:</div>
+                <div>
+                    <input id="expiry-days" type="number" formControlName="TIMEOUT_ALERT">
+                </div>
+                <span class="text-danger" *ngIf="sessionTimeoutAlert?.hasError('required')
+                && 
+                (sessionTimeoutAlert?.dirty || sessionTimeoutAlert?.touched)">
+                    Session Timeout Alert time is required
+                </span>
+                <span class="text-danger" *ngIf="sessionTimeoutAlert?.hasError('min')
+           && 
+           (sessionTimeoutAlert?.dirty || sessionTimeoutAlert?.touched)">
+                    Session Timeout Alert time should not be less than 10 mins
+                </span>
+
+            </div>
+
+
+            <div class="submit-button">
+                <button type="submit" class="button" [disabled]="!sessionForm.valid">Save</button>
+                <button type="button" class="button-cancel" (click)="revertForm()">Cancel</button>
+            </div>
+
+        </form>
+
+
+    </div>
+
+
+</div>

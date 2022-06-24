@@ -1,0 +1,58 @@
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <button class="nav-link" [ngClass]="{'active': IsUsernameTabVisible}" id="username-tab" type="button"
+            (click)="LoadUsernameScreen()">Username</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" [ngClass]="{'active': IsPasswordTabVisible}" id="password-tab" type="button"
+            (click)="LoadPasswordScreen()">Password</button>
+    </li>
+
+    <li class="nav-item">
+        <button class="nav-link" [ngClass]="{'active': IsSessionTabVisible}" id="session-tab" type="button"
+            (click)="LoadSessionScreen()">Session</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" [ngClass]="{'active': IsSmtpTabVisible}" id="smpt-tab" type="button"
+            (click)="LoadSmtpScreen()">SMTP</button>
+    </li>
+
+    <li class="nav-item">
+        <button class="nav-link" [ngClass]="{'active': IsGlobalTabVisible}" id="global-tab" type="button"
+            (click)="LoadGlobalScreen()">Global</button>
+    </li>
+</ul>
+<div class="tab-content" *ngIf="isDataLoaded">
+    <div id="username" *ngIf="IsUsernameTabVisible">
+
+        <app-username-config [usernameSettings]="usernameSettings">
+        </app-username-config>
+    </div>
+
+    <div id="password" *ngIf="IsPasswordTabVisible">
+
+        <app-password-config [passwordSettings]="passwordSettings">
+        </app-password-config>
+    </div>
+
+    <div id="session" *ngIf="IsSessionTabVisible">
+
+        <app-session-config [sessionSettings]="sessionSettings">
+        </app-session-config>
+    </div>
+
+    <div id="session" *ngIf="IsSmtpTabVisible">
+
+        <app-smtp-config [smtpSettings]="smtpSettings">
+        </app-smtp-config>
+    </div>
+
+
+    <div id="global" *ngIf="IsGlobalTabVisible">
+
+        <app-global-config [globalSettings]="globalSettings">
+        </app-global-config>
+    </div>
+
+
+</div>

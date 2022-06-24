@@ -11,6 +11,7 @@ $white: #ffffff;
 $blue: #185ADB;
 $yellow: #FFC947;
 $gray: #EFEFEF;
+
 * {
     font-family: Montserrat, Arial, Helvetica, sans-serif;
 }
@@ -30,6 +31,7 @@ body {
 }
 
 input[type="text"],
+input[type="number"],
 input[type="email"],
 input[type="password"] {
     margin-top: 0.5em;
@@ -39,12 +41,18 @@ input[type="password"] {
     height: 2.5em;
     border-radius: 5px;
     background-color: #c4c4c430;
+
+    &:focus {
+        border: thin solid blue;
+    }
+
 }
+
 
 select {
     /* styling */
     background-color: #c4c4c430 !important;
-    border: thin solid blue;
+
     border-radius: 4px;
     display: inline-block;
     font: inherit;
@@ -58,23 +66,27 @@ select {
     -webkit-appearance: none;
     -moz-appearance: none;
     background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%), linear-gradient(to right, #ccc, #ccc);
-    background-position: calc(100% - 20px) calc(1em), calc(100% - 15px) calc(1em), calc(100% - 2.5em) 0.3em;
+    background-position: calc(100% - 20px) calc(1em), calc(100% - 17px) calc(1em), calc(100% - 2.5em) 0.3em;
     background-size: 5px 5px, 5px 5px, 1px 1.5em;
     background-repeat: no-repeat;
+
+    &:focus {
+        border: thin solid blue;
+    }
 }
 
-select:focus {
-    background-image: linear-gradient(45deg, green 50%, transparent 50%), linear-gradient(135deg, transparent 50%, green 50%), linear-gradient(to right, #ccc, #ccc);
-    background-position: calc(100% - 15px) 1em, calc(100% - 20px) 1em, calc(100% - 2.5em) 0.3em;
-    background-size: 5px 5px, 5px 5px, 1px 1.5em;
-    background-repeat: no-repeat;
-    border-color: green;
-    outline: 0;
-}
+
+
+
 
 .formbuilder .btn-primary {
     background-color: $main-teal;
-     :hover {
+
+    :hover {
         background-color: $main-teal-dark;
     }
+}
+
+small {
+    font-size: 0.7rem;
 }
