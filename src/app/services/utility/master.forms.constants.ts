@@ -2,6 +2,126 @@ import { formatDate } from "@angular/common";
 import { DateUtil } from './DateUtil';
 export class MasterForms {
 
+    public static SiteName = 'Moraiya';
+    public static DepartmentName = 'Tablet Facility IX ';
+    public static RoomIDList = [101, 102, 103, 104, 105];
+    public static ActivitiesList = ['Environmental conditional monitoring'];
+    public static EnabledFormElements = ['textfield', 'email', 'textarea', 'phoneNumber', 'number', 'date', 'password', 'checkbox', 'time', 'selectboxes', 'select',
+        'radio', 'file', 'button', 'table', 'tabs',];
+    public static FormOptions: any = {
+        builder: {
+            basic: {
+                components: {
+                    email: true,
+                    phoneNumber: true,
+                    datetime: true,
+                    time: true,
+                    file: true
+                }
+            },
+            layout: {
+                components: {
+                    htmlelement: false,
+                    content: false,
+                    well: false,
+                    panel: false,
+                    columns: true,
+                    fieldset: false,
+
+                }
+            },
+            advanced: false,
+            // data: false,
+            premium: false,
+            custom: {
+                title: 'Pre-Defined Fields',
+                weight: 10,
+                components: {
+                    site: {
+                        title: 'Site',
+                        key: 'site',
+                        schema: {
+                            label: 'Site',
+                            type: 'textfield',
+                            key: 'site',
+                            input: true,
+                            defaultValue: this.SiteName,
+                            disabled: true,
+                            labelMargin: 5,
+                            labelPosition: 'left-left'
+                        }
+                    },
+                    department: {
+                        title: 'Department',
+                        key: 'department',
+                        schema: {
+                            label: 'Department',
+                            type: 'textfield',
+                            key: 'department',
+                            input: true,
+                            defaultValue: this.DepartmentName,
+                            disabled: true,
+                            labelMargin: 5,
+                            labelPosition: 'left-left'
+                        }
+                    },
+                    currentDate: {
+                        title: 'Date',
+                        key: 'currentDate',
+                        schema: {
+                            label: 'Date',
+                            type: 'textfield',
+                            key: 'currentDate',
+                            input: true,
+                            disabled: true,
+                            labelMargin: 5,
+                            labelPosition: 'left-left',
+                            customDefaultValue: "value = moment(new Date()).format(\"DD/MM/YYYY\")",
+                        }
+                    },
+                    roomID: {
+                        title: 'Room ID',
+                        key: 'roomId',
+                        schema: {
+                            label: 'Room ID',
+                            input: true,
+                            data: {
+                                json: this.RoomIDList
+                            },
+                            dataSrc: "json",
+                            key: "roomId",
+                            labelMargin: 5,
+                            labelPosition: "left-left",
+                            template: "<span>{{ item.label }}</span>",
+                            type: "select",
+                            widget: "choicesjs"
+                        }
+                    },
+                    activity: {
+                        title: 'Activity',
+                        key: 'activity',
+                        schema: {
+                            label: 'Activity',
+                            input: true,
+                            data: {
+                                json: this.ActivitiesList
+                            },
+                            dataSrc: "json",
+                            key: "roomId",
+                            labelMargin: 5,
+                            labelPosition: "left-left",
+                            template: "<span>{{ item.label }}</span>",
+                            type: "select",
+                            widget: "choicesjs"
+                        }
+                    },
+                }
+            }
+        },
+        noDefaultSubmitButton: true,
+        editForm: {
+        },
+    };
 
     public static CREATE_USER_FORM_TEMPLATE: any = {
         "title": "Create User",
