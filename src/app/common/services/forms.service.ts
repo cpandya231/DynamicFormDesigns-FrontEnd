@@ -44,7 +44,7 @@ export class FormsService {
   }
 
   SaveFormWorkflowState(stateData: any) {
-    return this.http.post(`${ServiceUtil.API_ENDPOINT}/states/`, stateData,  this.getHeaders()); 
+    return this.http.post(`${ServiceUtil.API_ENDPOINT}/states/`, stateData, this.getHeaders());
   }
 
   UpdateFormWorkflowState(stateData: any) {
@@ -58,6 +58,11 @@ export class FormsService {
   UpdateStatesTransitions(transitionsData: any) {
     return this.http.put(`${ServiceUtil.API_ENDPOINT}/transitions/`, transitionsData, this.getHeaders());
   }
+
+  LogEntry(formId: number, entryObj: any) {
+    return this.http.post(`${ServiceUtil.API_ENDPOINT}/entry/${formId}`, entryObj, this.getHeaders());
+  }
+
 
   protected getHeaders() {
     return {
