@@ -34,7 +34,7 @@ export class UserFormsInProgressComponent implements OnInit {
   }
 
   FillForm(formName: string) {
-    this.router.navigate(['../form', formName], { relativeTo: this.route });
+    this.router.navigate(['./form', formName], { relativeTo: this.route });
   }
 
 

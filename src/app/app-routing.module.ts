@@ -47,11 +47,14 @@ const routes: Routes = [
     path: 'userFormsDashboard',
     component: UserFormsDashboardComponent,
     children: [
-      { path: "formsInProgress", component: UserFormsInProgressComponent },
+    { path: "formsInProgress", component: UserFormsInProgressComponent },
       {
         path: 'form/:name',
         component: FillFormComponent
-      }
+      },
+      {
+        path: '', component: UserFormsInProgressComponent,
+      },
     ]
   },
 
