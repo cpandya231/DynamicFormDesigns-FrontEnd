@@ -59,6 +59,7 @@ import { GlobalConfigComponent } from './settings/system-config/global-config/gl
 import { FillFormComponent } from './forms/fill-form/fill-form.component';
 import { MaterialExampleModule } from './material/material.module';
 import { UserFormsDashboardComponent } from './forms/user-forms-dashboard/user-forms-dashboard.component';
+import { UserFormsInProgressComponent } from './forms/user-forms-in-progress/user-forms-in-progress.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -93,6 +94,7 @@ import { UserFormsDashboardComponent } from './forms/user-forms-dashboard/user-f
     GlobalConfigComponent,
     FillFormComponent,
     UserFormsDashboardComponent,
+    UserFormsInProgressComponent,
 
 
 

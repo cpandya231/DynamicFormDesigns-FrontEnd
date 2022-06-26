@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormioComponent } from '@formio/angular';
 import { FormsService } from 'src/app/common/services/forms.service';
 import { MasterForms } from 'src/app/services/utility/master.forms.constants';
@@ -11,7 +11,11 @@ import { MasterForms } from 'src/app/services/utility/master.forms.constants';
 })
 export class FillFormComponent implements OnInit {
   formName: any;
-  constructor(private formService: FormsService, private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private formService: FormsService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+  ) { }
   CurrentForm: any = {
     components: []
   };
@@ -33,7 +37,7 @@ export class FillFormComponent implements OnInit {
       this.workflowId = data.workflow["id"];
 
       this.formId = data.id;
-      this.fromState = "Second";
+      this.fromState = "First";
       this.formService.GetWorkflowStatesTransitions(this.workflowId).subscribe(data => {
         let requiredTransition = data.transitions.find(transition => transition.fromState.name == this.fromState);
         if (null != requiredTransition) {
@@ -65,14 +69,17 @@ export class FillFormComponent implements OnInit {
     }
 
     this.formService.LogEntry(this.formId, logEntryObj).subscribe({
-      next: (data) => alert("Success"),
+      next: (data) => {
+        alert("Success");
+        this.close();
+      },
       error: (err) => console.log(err)
     });
 
   }
 
   close() {
-    console.log("closed");
+    this.router.navigate(['../../formsInProgress'], { relativeTo: this.activatedRoute });
   }
 
 

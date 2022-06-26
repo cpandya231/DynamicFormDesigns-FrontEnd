@@ -12,6 +12,7 @@ import { FormManagementComponent } from './forms/form-management/form-management
 import { FormWorkflowComponent } from './forms/form-workflow/form-workflow-dashboard.component';
 import { FormsDashboardComponent } from './forms/forms-dashboard/forms-dashboard.component';
 import { UserFormsDashboardComponent } from './forms/user-forms-dashboard/user-forms-dashboard.component';
+import { UserFormsInProgressComponent } from './forms/user-forms-in-progress/user-forms-in-progress.component';
 import { LoginComponent } from './login/login.component';
 import { RolesComponent } from './roles/roles.component';
 import { AuditTrailComponent } from './settings/audit-trail/audit-trail.component';
@@ -46,14 +47,15 @@ const routes: Routes = [
     path: 'userFormsDashboard',
     component: UserFormsDashboardComponent,
     children: [
-      { path: "formsInProgress", component: FormsDashboardComponent }
+      { path: "formsInProgress", component: UserFormsInProgressComponent },
+      {
+        path: 'form/:name',
+        component: FillFormComponent
+      }
     ]
   },
 
-  {
-    path: 'form/:name',
-    component: FillFormComponent
-  },
+
   {
     path: 'usersParent', children: [
       {
