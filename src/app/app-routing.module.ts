@@ -26,7 +26,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
     path: 'formsDashboard',
-    component: FormsDashboardComponent
+    component: FormsDashboardComponent,
+
   },
   {
     path: 'formManagement/:name/:workflowId',
@@ -43,7 +44,10 @@ const routes: Routes = [
 
   {
     path: 'userFormsDashboard',
-    component: UserFormsDashboardComponent
+    component: UserFormsDashboardComponent,
+    children: [
+      { path: "formsInProgress", component: FormsDashboardComponent }
+    ]
   },
 
   {
