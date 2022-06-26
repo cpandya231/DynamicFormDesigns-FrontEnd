@@ -23,9 +23,9 @@ export class WelcomeComponent implements OnInit {
   navigate(): any {
     let isAdmin = this.authSevice.isAdmin();
     if (isAdmin) {
-      this.router.navigate(['/usersParent/users']);
-    } else {
       this.router.navigate(['/formsDashboard']);
+    } else {
+      this.router.navigate(['/userFormsDashboard']);
     }
   }
 

@@ -27,11 +27,19 @@
                         <div>
                             <label for="password" class="label-style">Password</label>
                         </div>
-                        <input type="password" id="password" #password="ngModel" class="textbox-style" required
-                            [(ngModel)]="loginModel.password" name="password" required>
+                        <input [type]="showPassword ? 'text' : 'password'" id="password" #password="ngModel"
+                            class="textbox-style" required [(ngModel)]="loginModel.password" name="password" required>
 
                     </div>
+                    <div class="toggle-password-visibility-parent">
 
+                        <input id="toggle-password-visibility" type="checkbox"
+                            (change)="togglePasswordVisibility($event)">
+
+                        <label for="toggle-password-visibility" class="label-style-password-visibility">Show
+                            Password</label>
+
+                    </div>
                     <div class="submit-button">
 
                         <button type="submit" class="button" [disabled]="!loginForm.form.valid">Sign In</button>

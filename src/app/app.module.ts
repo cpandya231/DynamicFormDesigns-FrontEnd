@@ -12,8 +12,6 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { WelcomeComponent } from './welcome/welcome.component';
 
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
@@ -29,7 +27,6 @@ import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
 import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
-import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UsersComponent } from './users/users.component';
@@ -59,10 +56,9 @@ import { UsernameConfigComponent } from './settings/system-config/username-confi
 import { SessionConfigComponent } from './settings/system-config/session-config/session-config.component';
 import { SmtpConfigComponent } from './settings/system-config/smtp-config/smtp-config.component';
 import { GlobalConfigComponent } from './settings/system-config/global-config/global-config.component';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { FillFormComponent } from './forms/fill-form/fill-form.component';
-
+import { MaterialExampleModule } from './material/material.module';
+import { UserFormsDashboardComponent } from './forms/user-forms-dashboard/user-forms-dashboard.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -96,6 +92,7 @@ import { FillFormComponent } from './forms/fill-form/fill-form.component';
     SmtpConfigComponent,
     GlobalConfigComponent,
     FillFormComponent,
+    UserFormsDashboardComponent,
 
 
 
@@ -125,13 +122,8 @@ import { FillFormComponent } from './forms/fill-form/fill-form.component';
     MdbTooltipModule,
     MdbValidationModule,
     BrowserAnimationsModule,
-    MatIconModule,
-    MatMenuModule,
-    MatDialogModule,
     NgxPaginationModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    // MatInputModule
+    MaterialExampleModule
 
   ],
   providers: [

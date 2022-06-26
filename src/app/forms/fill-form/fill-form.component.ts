@@ -33,7 +33,7 @@ export class FillFormComponent implements OnInit {
       this.workflowId = data.workflow["id"];
 
       this.formId = data.id;
-      this.fromState = data.workflow.states[0];
+      this.fromState = "Second";
       this.formService.GetWorkflowStatesTransitions(this.workflowId).subscribe(data => {
         let requiredTransition = data.transitions.find(transition => transition.fromState.name == this.fromState);
         if (null != requiredTransition) {

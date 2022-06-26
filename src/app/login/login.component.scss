@@ -136,6 +136,11 @@
 
 }
 
+
+.label-style-password-visibility {
+    font-size: 0.8rem;
+}
+
 .textbox-style {
     margin-top: 0.5em;
     outline: none;
@@ -235,4 +240,9 @@
     font-size: 0.7rem;
     text-align: center;
 
+}
+
+.toggle-password-visibility-parent {
+    display: flex;
+    gap: 1em
 }

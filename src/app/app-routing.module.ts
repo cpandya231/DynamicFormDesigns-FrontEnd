@@ -11,6 +11,7 @@ import { FillFormComponent } from './forms/fill-form/fill-form.component';
 import { FormManagementComponent } from './forms/form-management/form-management.component';
 import { FormWorkflowComponent } from './forms/form-workflow/form-workflow-dashboard.component';
 import { FormsDashboardComponent } from './forms/forms-dashboard/forms-dashboard.component';
+import { UserFormsDashboardComponent } from './forms/user-forms-dashboard/user-forms-dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { RolesComponent } from './roles/roles.component';
 import { AuditTrailComponent } from './settings/audit-trail/audit-trail.component';
@@ -38,6 +39,11 @@ const routes: Routes = [
   {
     path: 'formWorkflow',
     component: FormWorkflowComponent,
+  },
+
+  {
+    path: 'userFormsDashboard',
+    component: UserFormsDashboardComponent
   },
 
   {
