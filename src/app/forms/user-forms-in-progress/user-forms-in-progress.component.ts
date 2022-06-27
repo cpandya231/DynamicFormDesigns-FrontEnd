@@ -33,8 +33,8 @@ export class UserFormsInProgressComponent implements OnInit {
     })
   }
 
-  FillForm(formName: string) {
-    this.router.navigate(['./form', formName], { relativeTo: this.route });
+  SeeEntries(formId: number, formName: string) {
+    this.router.navigate(['./formsInProgressData', formId, formName], { relativeTo: this.route });
   }
 
 

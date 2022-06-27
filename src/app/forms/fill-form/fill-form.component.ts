@@ -30,7 +30,7 @@ export class FillFormComponent implements OnInit {
 
   ngOnInit(): void {
     let params = this.activatedRoute.snapshot.paramMap;
-    this.formName = String(params.get('name') || '');
+    this.formName = String(params.get('formName') || '');
     this.formService.GetFormTemplate(this.formName).subscribe(data => {
 
       this.CurrentForm.components = JSON.parse(data.template).components;
@@ -79,7 +79,7 @@ export class FillFormComponent implements OnInit {
   }
 
   close() {
-    this.router.navigate(['../../formsInProgress'], { relativeTo: this.activatedRoute });
+    this.router.navigate(['../../formsInProgressData', this.formId, this.formName], { relativeTo: this.activatedRoute });
   }
 
 

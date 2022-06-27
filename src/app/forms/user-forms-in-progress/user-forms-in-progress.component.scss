@@ -1,1 +1,11 @@
 @import "../forms-dashboard/forms-dashboard.component.scss";
+
+.td-link {
+    color: blue;
+
+    &:hover {
+        pointer-events: all;
+        cursor: pointer;
+        text-decoration-line: underline;
+    }
+}

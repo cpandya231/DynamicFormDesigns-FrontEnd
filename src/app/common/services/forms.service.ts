@@ -64,6 +64,11 @@ export class FormsService {
   }
 
 
+  GetLogEntries(formId: number): Observable<any> {
+    return this.http.get(`${ServiceUtil.API_ENDPOINT}/entry/${formId}`, this.getHeaders());
+  }
+
+
   protected getHeaders() {
     return {
       headers: new HttpHeaders({

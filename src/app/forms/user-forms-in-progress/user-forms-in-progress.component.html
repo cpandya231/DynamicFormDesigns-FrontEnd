@@ -7,18 +7,17 @@
                 <th scope="col">Form Name</th>
                 <th scope="col">Created By</th>
                 <th scope="col">Created On</th>
-                <th scope="col">Fill</th>
+
 
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let form of FormTemplates">
                 <td>{{form.id}}</td>
-                <td>{{form.name}}</td>
+                <td (click)="SeeEntries(form.id,form.name)" class="td-link">{{form.name}}</td>
                 <td>{{form.createdBy}}</td>
                 <td>{{form.createDt | date: DATE_FORMAT }}</td>
-                <td><img src="../../../assets/Images/pen-to-square-solid.svg" class="svg_icon"
-                        (click)="FillForm(form.name)" /></td>
+
 
             </tr>
             <tr *ngIf="!FormTemplates.length" class="no_data_message">
