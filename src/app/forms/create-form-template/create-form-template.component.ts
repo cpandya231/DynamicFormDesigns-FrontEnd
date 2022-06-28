@@ -209,6 +209,17 @@ export class CreateFormTemplateComponent implements OnInit {
         this.FormOptions['department'] = data[0].department;
         this.FormOptions['Authorization'] = `Bearer ${token}`;
     });
+
+    setTimeout(() => {
+      this.formIO.formio.events.on('formio.saveComponent', (comp: any) => {
+        let keyValue = '';
+        comp.label.split(" ").forEach((el: any, index: number) => {
+          let add = el.toLowerCase();
+          keyValue += (index === 0 ? add : add[0].toUpperCase() + add.slice(1));
+        });
+        comp.key = keyValue;
+      }
+    )}, 5000)
   }
 
   SaveTemplate(): void {
