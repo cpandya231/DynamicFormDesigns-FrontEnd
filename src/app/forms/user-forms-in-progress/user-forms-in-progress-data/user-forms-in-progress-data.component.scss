@@ -1,1 +1,13 @@
-@import "../../forms-dashboard/forms-dashboard.component.scss"
+@import "../../forms-dashboard/forms-dashboard.component.scss";
+
+
+@import "../../../users/create-user/create-user.component.scss";
+
+.submit-button {
+    justify-content: flex-end;
+    gap: 3em;
+}
+
+.table {
+    margin-top: 1em;
+}
