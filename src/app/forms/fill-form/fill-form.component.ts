@@ -4,7 +4,7 @@ import { FormioComponent } from '@formio/angular';
 import { FormsService } from 'src/app/common/services/forms.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MasterForms } from 'src/app/services/utility/master.forms.constants';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-fill-form',
   templateUrl: './fill-form.component.html',
@@ -12,12 +12,14 @@ import { MasterForms } from 'src/app/services/utility/master.forms.constants';
 })
 export class FillFormComponent implements OnInit {
   formName: any;
+  entryId: any;
   userRoles: any;
   constructor(
     private formService: FormsService,
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private _location: Location
   ) { }
   CurrentForm: any = {
     components: []
@@ -34,6 +36,7 @@ export class FillFormComponent implements OnInit {
   ngOnInit(): void {
     let params = this.activatedRoute.snapshot.paramMap;
     this.formName = String(params.get('formName') || '');
+    this.entryId = Number(params.get('entryId') || '');
     this.userRoles = this.authService.getRoles();
     this.formService.GetFormTemplate(this.formName).subscribe(data => {
 
@@ -67,24 +70,48 @@ export class FillFormComponent implements OnInit {
 
 
     let submittedData = this.form.formio.submission.data;
-    let logEntryObj = {
-      state: this.toState,
-      data: submittedData
 
+    if (this.entryId) {
+      let logEntryObj = {
+        id: this.entryId,
+        state: this.toState,
+        data: submittedData
+
+      }
+      this.formService.UpdateLogEntry(this.formId, logEntryObj).subscribe({
+        next: (data) => {
+          alert("Entry Updated Successfully!!");
+          this.close();
+        },
+        error: (err) => {
+          alert("Error occured while updating entry");
+          console.log(err)
+        }
+      });
+
+    } else {
+      let logEntryObj = {
+        state: this.toState,
+        data: submittedData
+      }
+      this.formService.SaveLogEntry(this.formId, logEntryObj).subscribe({
+        next: (data) => {
+          alert("Entry Created Successfully!!");
+          this.close();
+        },
+        error: (err) => {
+          alert("Error occured while updating entry");
+          console.log(err)
+        }
+      });
     }
 
-    this.formService.LogEntry(this.formId, logEntryObj).subscribe({
-      next: (data) => {
-        alert("Success");
-        this.close();
-      },
-      error: (err) => console.log(err)
-    });
+
 
   }
 
   close() {
-    this.router.navigate(['../../formsInProgressData', this.formId, this.formName], { relativeTo: this.activatedRoute });
+    this._location.back();
   }
 
 

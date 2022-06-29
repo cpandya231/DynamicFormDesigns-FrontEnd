@@ -15,7 +15,7 @@
             <tr *ngFor="let entry of logEntries">
 
                 <td *ngFor="let col of columns">{{entry.data[""+col]}}</td>
-                <td><img src="../../../assets/Images/pen-to-square-solid.svg" class="svg_icon" (click)="FillForm()" />
+                <td><img src="../../../assets/Images/pen-to-square-solid.svg" class="svg_icon" (click)="FillForm(entry.data['id'])" />
                 </td>
 
             </tr>

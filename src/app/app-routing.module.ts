@@ -61,7 +61,13 @@ const routes: Routes = [
       },
 
       {
-        path: 'fillFormData/:formName',
+        path: 'updateLogEntry/:formName/:entryId',
+        component: FillFormComponent
+      },
+
+
+      {
+        path: 'createLogEntry/:formName',
         component: FillFormComponent
       },
 

@@ -59,8 +59,12 @@ export class FormsService {
     return this.http.put(`${ServiceUtil.API_ENDPOINT}/transitions/`, transitionsData, this.getHeaders());
   }
 
-  LogEntry(formId: number, entryObj: any) {
+  SaveLogEntry(formId: number, entryObj: any) {
     return this.http.post(`${ServiceUtil.API_ENDPOINT}/entry/${formId}`, entryObj, this.getHeaders());
+  }
+
+  UpdateLogEntry(formId: number, entryObj: any) {
+    return this.http.put(`${ServiceUtil.API_ENDPOINT}/entry/${formId}`, entryObj, this.getHeaders());
   }
 
 
