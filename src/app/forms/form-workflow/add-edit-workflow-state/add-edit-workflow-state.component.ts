@@ -57,6 +57,9 @@ export class AddEditWorkflowStateComponent implements OnInit {
         eSignRequired: [false],
         sendBackTo: ['']
       });
+      if (this.existingStateData?.parentName?.length) {
+        this.StateDetailsForm.controls['previousState'].setValidators([Validators.required]);
+      }
     } else {
       this.StateDetailsForm = this.fb.group ({
         name: ['', Validators.required],
@@ -71,9 +74,9 @@ export class AddEditWorkflowStateComponent implements OnInit {
         eSignRequired: [false],
         sendBackTo: ['']
       });
-    }
-    if (this.WorkflowStates.length) {
-      this.StateDetailsForm.controls['previousState'].setValidators([Validators.required])
+      if (this.WorkflowStates.length) {
+        this.StateDetailsForm.controls['previousState'].setValidators([Validators.required]);
+      }
     }
   }
 

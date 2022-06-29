@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormioOptions } from '@formio/angular';
-import { DateUtil } from 'src/app/services/utility/DateUtil';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { UsersService } from 'src/app/services/users.service';
 import { FormsService } from '../../common/services/forms.service';
+import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'app-create-form-template',
@@ -141,15 +142,15 @@ export class CreateFormTemplateComponent implements OnInit {
   };
   WorkflowId: number;
   constructor(private formsService: FormsService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router) { }
+    private authService: AuthService,
+    private router: Router,
+    private userService: UsersService) { }
 
   ngOnInit() {
-    
     let eleObj = {};
     this.EnabledFormElements.forEach(ele => {
       let obj = {
-        [ele]: [...this.ignoreComponents(['logic', 'api']),
+        [ele]: [
         {
           key: 'display',
           components: this.ignoreComponents(
@@ -166,8 +167,21 @@ export class CreateFormTemplateComponent implements OnInit {
         {
           key: 'data',
           components: this.ignoreComponents(
-            ['persistent', 'inputFormat', 'protected', 'dbIndex', 'encrypted', 'redrawOn', 'calculateServer', ]
+            ['persistent', 'inputFormat', 'protected', 'dbIndex', 'encrypted', 'redrawOn', 'calculateServer', 'idPath', 'selectThreshold', 'useExactSearch',
+             'dataType', 'searchEnabled', 'calculateValuePanel', 'calculateValue-json', 'allowCalculateOverride', 'customDefaultValue-json']
           )
+        },
+        {
+          key: 'api',
+          components: this.ignoreComponents(
+            ['tags', 'properties']
+          )
+        },
+        {
+          key: 'layout',
+          components: this.ignoreComponents([
+            'overlay'
+          ])
         }
         ]
       };
@@ -186,6 +200,26 @@ export class CreateFormTemplateComponent implements OnInit {
     } else {
       this.IsFormLoaded = true;
     }
+
+    forkJoin([this.userService.getUserByUsername(localStorage.getItem("username")),
+      this.authService.getAccessToken().asObservable()]).subscribe(data => {
+        const token = data[1];
+        this.FormOptions['firstName'] = data[0].first_name;
+        this.FormOptions['lastName'] = data[0].last_name;
+        this.FormOptions['department'] = data[0].department;
+        this.FormOptions['Authorization'] = `Bearer ${token}`;
+    });
+
+    setTimeout(() => {
+      this.formIO.formio.events.on('formio.saveComponent', (comp: any) => {
+        let keyValue = '';
+        comp.label.split(" ").forEach((el: any, index: number) => {
+          let add = el.toLowerCase();
+          keyValue += (index === 0 ? add : add[0].toUpperCase() + add.slice(1));
+        });
+        comp.key = keyValue;
+      }
+    )}, 5000)
   }
 
   SaveTemplate(): void {

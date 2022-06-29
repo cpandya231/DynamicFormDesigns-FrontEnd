@@ -18,7 +18,7 @@ export class FormWorkflowComponent implements OnInit {
   tempTransitions: any = [];
   StateWorkflowData: IWorkflowStateModel[] = [];
   IsStatesTransitionsExist = false;
-  stateNameBeforeEdit = '';
+  stateDataBeforeEdit: IWorkflowStateModel;
   private isDialogOpen = false;
   IsSaveWorkflowDisabled = true;
   constructor(private formService: FormsService,
@@ -48,7 +48,7 @@ export class FormWorkflowComponent implements OnInit {
     } else if (eventType == 'edit') {
       if (index > -1) {
         const stateData = this.WorkflowStates.splice(index, 1);
-        this.stateNameBeforeEdit = stateData[0].name;
+        this.stateDataBeforeEdit = stateData[0];
         this.AddEditState(stateData[0], 'edit');
       }
     }
@@ -78,9 +78,9 @@ export class FormWorkflowComponent implements OnInit {
       this.isDialogOpen = false;
       if (data) {
         this.StateWorkflowData = [];
-        if (this.stateNameBeforeEdit.length && this.stateNameBeforeEdit !== data.state.name) {
+        if (this.stateDataBeforeEdit?.name.length && this.stateDataBeforeEdit?.name !== data.state.name) {
           this.WorkflowStates.map(existingState => {
-            if (existingState.parentName === this.stateNameBeforeEdit) {
+            if (existingState.parentName === this.stateDataBeforeEdit?.name) {
               existingState.parentName = data.state.name
             }
             return existingState;
@@ -89,6 +89,8 @@ export class FormWorkflowComponent implements OnInit {
         this.WorkflowStates.push(data.state);
         this.StateWorkflowData = ([] as IWorkflowStateModel[]).concat(this.WorkflowStates);
         this.IsSaveWorkflowDisabled = false;
+      } else {
+        this.WorkflowStates.push(this.stateDataBeforeEdit);
       }
     })
   }
