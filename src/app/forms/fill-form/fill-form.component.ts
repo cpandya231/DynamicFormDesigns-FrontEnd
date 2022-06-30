@@ -5,6 +5,7 @@ import { FormsService } from 'src/app/common/services/forms.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MasterForms } from 'src/app/services/utility/master.forms.constants';
 import { Location } from '@angular/common';
+import { combineLatest } from 'rxjs';
 @Component({
   selector: 'app-fill-form',
   templateUrl: './fill-form.component.html',
@@ -38,15 +39,19 @@ export class FillFormComponent implements OnInit {
     this.formName = String(params.get('formName') || '');
     this.entryId = Number(params.get('entryId') || '');
     this.userRoles = this.authService.getRoles();
+
+
     this.formService.GetFormTemplate(this.formName).subscribe(data => {
 
       this.CurrentForm.components = JSON.parse(data.template).components;
       this.workflowId = data.workflow["id"];
 
       this.formId = data.id;
-
-      this.formService.GetWorkflowStatesTransitions(this.workflowId).subscribe(data => {
-        let requiredTransition = data.transitions.find(transition => transition.fromState.roles.filter(transtionRole => this.userRoles.includes(transtionRole.role)).length > 0);
+      let transitionsObservable = this.formService.GetWorkflowStatesTransitions(this.workflowId);
+      let entryDataObservable = this.formService.GetSpecificLogEntry(this.formId, this.entryId);
+      combineLatest([transitionsObservable, entryDataObservable]).subscribe(items => {
+        let transitionData = items[0];
+        let requiredTransition = transitionData.transitions.find(transition => transition.fromState.roles.filter(transtionRole => this.userRoles.includes(transtionRole.role)).length > 0);
         if (null != requiredTransition) {
           this.toState = requiredTransition.toState.name;
           this.IsFormLoaded = true;
@@ -54,10 +59,31 @@ export class FillFormComponent implements OnInit {
           alert("No valid transition found");
           this.close();
         }
+
+        let entryData = items[1];
+        if (entryData.length > 0) {
+          let entry = entryData[0].data;
+          this.CurrentForm.components.forEach((table: any) => {
+            table.rows.forEach((rowItem: any) => {
+              rowItem.forEach((rowItemComponent: any) => {
+                rowItemComponent.components.forEach((component: any) => {
+                  let componentValue = entry["" + component.key];
+                  component.defaultValue = componentValue;
+                })
+              })
+            })
+          });
+        } else {
+          alert(`No Valid entry found for entryId ${this.entryId}`);
+        }
+
       })
 
 
+
     })
+
+
   }
 
 
