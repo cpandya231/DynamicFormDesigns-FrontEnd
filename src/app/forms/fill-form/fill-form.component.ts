@@ -74,7 +74,10 @@ export class FillFormComponent implements OnInit {
             })
           });
         } else {
-          alert(`No Valid entry found for entryId ${this.entryId}`);
+          if (this.entryId > 0) {
+            alert(`No Valid entry found for entryId ${this.entryId}`);
+          }
+
         }
 
       })
