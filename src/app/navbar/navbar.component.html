@@ -19,7 +19,7 @@
                 </a>
             </div>
 
-            <div>
+            <div *ngIf="isAdmin">
                 <a class="nav-link nav-link-custom" [routerLinkActive]="['active']" routerLink="formsDashboard">
                     Forms
                 </a>

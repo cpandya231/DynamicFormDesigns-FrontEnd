@@ -13,6 +13,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
   formName: string;
   isDataLoaded: boolean = false;
   columns: string[];
+  selectedChoice: any = 'all';
   constructor(private formsService: FormsService,
     private router: Router,
     private activatedRoute: ActivatedRoute) { }
@@ -22,7 +23,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
     let params = this.activatedRoute.snapshot.paramMap;
     this.formId = Number(params.get('formId') || '');
     this.formName = String(params.get('formName') || '');
-    this.formsService.GetLogEntries(this.formId).subscribe({
+    this.formsService.GetLogEntries(this.formId, false).subscribe({
       next: (data) => {
         if (data.length > 0) {
           this.logEntries = data;
@@ -45,6 +46,24 @@ export class UserFormsInProgressDataComponent implements OnInit {
     this.router.navigate(['../../../createLogEntry', this.formName], { relativeTo: this.activatedRoute });
   }
 
+
+  handleChange() {
+    let filterbyusername = this.selectedChoice == "username";
+
+    this.formsService.GetLogEntries(this.formId, filterbyusername).subscribe({
+      next: (data) => {
+        if (data.length > 0) {
+          this.logEntries = data;
+          this.columns = Object.keys(this.logEntries[0].data);
+          this.isDataLoaded = true;
+        } else {
+          this.logEntries = []
+        }
+
+      },
+      error: (err) => console.log(`Error occured for ${this.formId} error:${err}`)
+    })
+  }
 
 
 }

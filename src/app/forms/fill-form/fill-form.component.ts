@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { MasterForms } from 'src/app/services/utility/master.forms.constants';
 import { Location } from '@angular/common';
 import { combineLatest } from 'rxjs';
+import { IGetWorkflowStateTransitionsModel } from '../form-workflow/form-workflow.model';
 @Component({
   selector: 'app-fill-form',
   templateUrl: './fill-form.component.html',
@@ -51,31 +52,19 @@ export class FillFormComponent implements OnInit {
       let entryDataObservable = this.formService.GetSpecificLogEntry(this.formId, this.entryId);
       combineLatest([transitionsObservable, entryDataObservable]).subscribe(items => {
         let transitionData = items[0];
-        let requiredTransition = transitionData.transitions.find(transition => transition.fromState.roles.filter(transtionRole => this.userRoles.includes(transtionRole.role)).length > 0);
-        if (null != requiredTransition) {
-          this.toState = requiredTransition.toState.name;
-          this.IsFormLoaded = true;
-        } else {
-          alert("No valid transition found");
-          this.close();
-        }
-
         let entryData = items[1];
+
+
         if (entryData.length > 0) {
-          let entry = entryData[0].data;
-          this.CurrentForm.components.forEach((table: any) => {
-            table.rows.forEach((rowItem: any) => {
-              rowItem.forEach((rowItemComponent: any) => {
-                rowItemComponent.components.forEach((component: any) => {
-                  let componentValue = entry["" + component.key];
-                  component.defaultValue = componentValue;
-                })
-              })
-            })
-          });
+          this.processToHandleExistingEntry(entryData, transitionData);
+
+
         } else {
           if (this.entryId > 0) {
             alert(`No Valid entry found for entryId ${this.entryId}`);
+          } else {
+            this.processToHandleNewEntry(transitionData);
+
           }
 
         }
@@ -89,6 +78,41 @@ export class FillFormComponent implements OnInit {
 
   }
 
+
+  private processToHandleNewEntry(transitionData: IGetWorkflowStateTransitionsModel) {
+    let requiredTransition = transitionData.transitions.find(transition => transition.fromState.roles.filter(transtionRole => this.userRoles.includes(transtionRole.role)).length > 0);
+    if (null != requiredTransition) {
+      this.toState = requiredTransition.toState.name;
+      this.IsFormLoaded = true;
+    } else {
+      alert("No valid transition found");
+      this.close();
+    }
+  }
+
+  private processToHandleExistingEntry(entryData: any, transitionData: IGetWorkflowStateTransitionsModel) {
+    let entry = entryData[0].data;
+
+    let requiredTransition = transitionData.transitions.find(transition => transition.fromState.name == entry.state);
+    if (null != requiredTransition) {
+      this.toState = requiredTransition.toState.name;
+      this.IsFormLoaded = true;
+    } else {
+      alert("No valid transition found");
+      this.close();
+    }
+
+    this.CurrentForm.components.forEach((table: any) => {
+      table.rows.forEach((rowItem: any) => {
+        rowItem.forEach((rowItemComponent: any) => {
+          rowItemComponent.components.forEach((component: any) => {
+            let componentValue = entry["" + component.key];
+            component.defaultValue = componentValue;
+          });
+        });
+      });
+    });
+  }
 
   onSubmit() {
     this.form.formio.emit('submitButton');

@@ -68,10 +68,9 @@ export class FormsService {
   }
 
 
-  GetLogEntries(formId: number): Observable<any> {
-    return this.http.get(`${ServiceUtil.API_ENDPOINT}/entry/${formId}`, this.getHeaders());
+  GetLogEntries(formId: number, filterByUsername: boolean): Observable<any> {
+    return this.http.get(`${ServiceUtil.API_ENDPOINT}/entry/${formId}?filterByUsername=${filterByUsername}`, this.getHeaders());
   }
-
   GetSpecificLogEntry(formId: number, entryId: number): Observable<any> {
     return this.http.get(`${ServiceUtil.API_ENDPOINT}/entry/${formId}?entryId=${entryId}`, this.getHeaders());
   }
