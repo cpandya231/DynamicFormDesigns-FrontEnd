@@ -2,6 +2,7 @@
 
 .app-container {
     padding: 2em;
+    margin-top: 4em;
 }
 
 
@@ -15,6 +16,12 @@
 
     td {
         width: 20rem;
+    }
+
+    tr {
+        &:hover {
+            background-color: #EFEFEF;
+        }
     }
 }
 
@@ -61,6 +68,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 
 }
 

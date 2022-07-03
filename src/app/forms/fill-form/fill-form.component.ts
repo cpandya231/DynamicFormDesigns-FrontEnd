@@ -16,6 +16,9 @@ export class FillFormComponent implements OnInit {
   formName: any;
   entryId: any;
   userRoles: any;
+  toState: any;
+  workflowId: any;
+  disableSave: boolean = false;
   constructor(
     private formService: FormsService,
     private authService: AuthService,
@@ -30,10 +33,18 @@ export class FillFormComponent implements OnInit {
   form!: FormioComponent;
   IsFormLoaded = false;
   formId: number = 0;
-  FormOptions = MasterForms.FormOptions;
+  FormOptions = {
+    "hooks": {
+      "beforeSubmit": this.beforeSubmit.bind(this),
 
-  toState: any;
-  workflowId: any;
+    },
+    "alerts": {
+      "submitMessage": "Entry created/updated successfully"
+    }
+
+  };
+
+
 
   ngOnInit(): void {
     let params = this.activatedRoute.snapshot.paramMap;
@@ -70,12 +81,7 @@ export class FillFormComponent implements OnInit {
         }
 
       })
-
-
-
     })
-
-
   }
 
 
@@ -83,11 +89,10 @@ export class FillFormComponent implements OnInit {
     let requiredTransition = transitionData.transitions.find(transition => transition.fromState.roles.filter(transtionRole => this.userRoles.includes(transtionRole.role)).length > 0);
     if (null != requiredTransition) {
       this.toState = requiredTransition.toState.name;
-      this.IsFormLoaded = true;
     } else {
-      alert("No valid transition found");
-      this.close();
+      this.toState = "no_access";
     }
+    this.IsFormLoaded = true;
   }
 
   private processToHandleExistingEntry(entryData: any, transitionData: IGetWorkflowStateTransitionsModel) {
@@ -96,12 +101,12 @@ export class FillFormComponent implements OnInit {
     let requiredTransition = transitionData.transitions.find(transition => transition.fromState.name == entry.state);
     if (null != requiredTransition) {
       this.toState = requiredTransition.toState.name;
-      this.IsFormLoaded = true;
+
     } else {
-      alert("No valid transition found");
-      this.close();
+      this.toState = "no_access";
     }
 
+    this.IsFormLoaded = true;
     this.CurrentForm.components.forEach((table: any) => {
       table.rows.forEach((rowItem: any) => {
         rowItem.forEach((rowItemComponent: any) => {
@@ -117,9 +122,11 @@ export class FillFormComponent implements OnInit {
   onSubmit() {
     this.form.formio.emit('submitButton');
 
+
+
   }
 
-  handleSubmit() {
+  handleSubmit(submission: any, callback: any) {
 
 
     let submittedData = this.form.formio.submission.data;
@@ -133,11 +140,11 @@ export class FillFormComponent implements OnInit {
       }
       this.formService.UpdateLogEntry(this.formId, logEntryObj).subscribe({
         next: (data) => {
-          alert("Entry Updated Successfully!!");
-          this.close();
+          callback(null);
+          this.close(200);
         },
         error: (err) => {
-          alert("Error occured while updating entry");
+          callback("Error occured while updating entry");
           console.log(err)
         }
       });
@@ -149,23 +156,43 @@ export class FillFormComponent implements OnInit {
       }
       this.formService.SaveLogEntry(this.formId, logEntryObj).subscribe({
         next: (data) => {
-          alert("Entry Created Successfully!!");
-          this.close();
+          callback(null)
+          this.close(2000);
+
         },
         error: (err) => {
-          alert("Error occured while updating entry");
+          callback(`You don't have access to update this entry`);
           console.log(err)
         }
       });
+
+
+    }
+  }
+
+
+  close(delay: number) {
+    setTimeout(() => {                           // <<<---using ()=> syntax
+      this._location.back();
+    }, delay);
+
+  }
+
+  beforeSubmit(submission: any, callback: any) {
+
+
+    if (this.toState == "no_access") {
+      this.disableSave = true;
+      callback(`You don't have access to update this entry`);
+
+    } else {
+      this.handleSubmit(submission, callback);
     }
 
-
-
   }
 
-  close() {
-    this._location.back();
-  }
+
+
 
 
 }
