@@ -1,3 +1,5 @@
+import { IGetWorkflowStateTransitionsModel } from "./form-workflow/form-workflow.model";
+
 export interface IFormTemplateModel {
     formName: string;
     createdBy: string;
@@ -40,8 +42,8 @@ export interface IFormComponentModel {
     truncateMultipleSpaces: boolean;
     type: string;
     validate: {
-        required: boolean, 
-        minLength: number, 
+        required: boolean,
+        minLength: number,
         maxLength: number
     };
     validateOn: string;
@@ -63,4 +65,5 @@ export interface IGetFormTemplateResponse {
     id: number;
     name: string;
     template: string;
+    workflow: any;
 }

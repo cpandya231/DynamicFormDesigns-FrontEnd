@@ -1,22 +1,24 @@
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-        <button class="nav-link" [ngClass]="{'active': IsTemplateVisible}" id="template-tab" type="button"
-            (click)="LoadFormTemplate()">Form Template</button>
-    </li>
-    <li class="nav-item">
-        <button class="nav-link" [ngClass]="{'active': IsWorkflowVisible}" id="workflow-tab" type="button"
-            [disabled]="!IsFormWorkflowIdAvailable" title="{{DisabledWorkflowTitle}}" (click)="LoadFormWorkflow()">Form
-            Workflow</button>
-    </li>
-</ul>
-<div class="tab-content">
-    <div id="template" [hidden]="!IsTemplateVisible">
-        <app-create-form-template [formName]="FormName" (WorkflowIdUpdate)="WorkflowIdUpdate($event)">
-        </app-create-form-template>
-    </div>
-    <div id="workflow" [hidden]="!IsWorkflowVisible">
-        <app-form-workflow [workflowId]="WorkflowId"></app-form-workflow>
+<div class="app-container">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <button class="nav-link" [ngClass]="{'active': IsTemplateVisible}" id="template-tab" type="button"
+                (click)="LoadFormTemplate()">Form Template</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [ngClass]="{'active': IsWorkflowVisible}" id="workflow-tab" type="button"
+                [disabled]="!IsFormWorkflowIdAvailable" title="{{DisabledWorkflowTitle}}"
+                (click)="LoadFormWorkflow()">Form
+                Workflow</button>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="template" [hidden]="!IsTemplateVisible">
+            <app-create-form-template [formName]="FormName" (WorkflowIdUpdate)="WorkflowIdUpdate($event)">
+            </app-create-form-template>
+        </div>
+        <div id="workflow" [hidden]="!IsWorkflowVisible">
+            <app-form-workflow [workflowId]="WorkflowId"></app-form-workflow>
+        </div>
     </div>
 </div>
-
 <!--  -->

@@ -44,7 +44,7 @@ export class FormsService {
   }
 
   SaveFormWorkflowState(stateData: any) {
-    return this.http.post(`${ServiceUtil.API_ENDPOINT}/states/`, stateData,  this.getHeaders()); 
+    return this.http.post(`${ServiceUtil.API_ENDPOINT}/states/`, stateData, this.getHeaders());
   }
 
   UpdateFormWorkflowState(stateData: any) {
@@ -57,6 +57,22 @@ export class FormsService {
 
   UpdateStatesTransitions(transitionsData: any) {
     return this.http.put(`${ServiceUtil.API_ENDPOINT}/transitions/`, transitionsData, this.getHeaders());
+  }
+
+  SaveLogEntry(formId: number, entryObj: any) {
+    return this.http.post(`${ServiceUtil.API_ENDPOINT}/entry/${formId}`, entryObj, this.getHeaders());
+  }
+
+  UpdateLogEntry(formId: number, entryObj: any) {
+    return this.http.put(`${ServiceUtil.API_ENDPOINT}/entry/${formId}`, entryObj, this.getHeaders());
+  }
+
+
+  GetLogEntries(formId: number, filterByUsername: boolean): Observable<any> {
+    return this.http.get(`${ServiceUtil.API_ENDPOINT}/entry/${formId}?filterByUsername=${filterByUsername}`, this.getHeaders());
+  }
+  GetSpecificLogEntry(formId: number, entryId: number): Observable<any> {
+    return this.http.get(`${ServiceUtil.API_ENDPOINT}/entry/${formId}?entryId=${entryId}`, this.getHeaders());
   }
 
   protected getHeaders() {

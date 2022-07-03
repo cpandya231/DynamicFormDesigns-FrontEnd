@@ -1,7 +1,7 @@
 export interface IWorkflowStateModel {
     name: string;
     description: string;
-    roles: Record<"id", number>[];
+    roles: any[];
     departments: Record<"id", number>[];
     id: number;
     parentId?: number;

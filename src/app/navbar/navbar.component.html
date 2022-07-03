@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg fixed-top ">
     <!-- Container wrapper -->
     <div class="container-fluid">
         <!-- Navbar brand -->
@@ -19,14 +19,14 @@
                 </a>
             </div>
 
-            <div>
+            <div *ngIf="isAdmin">
                 <a class="nav-link nav-link-custom" [routerLinkActive]="['active']" routerLink="formsDashboard">
                     Forms
                 </a>
             </div>
 
 
-            <div mdbDropdown class="dropdown">
+            <div mdbDropdown class="dropdown" *ngIf="isAdmin">
                 <a class=" nav-link nav-link-custom  dropdown-toggle inactiveLink" aria-expanded="false"
                     mdbDropdownToggle [ngClass]="{'active': rlaUser.isActive || rlaRole.isActive}">
                     Users Management
@@ -49,14 +49,14 @@
             </div>
 
 
-            <div>
+            <div *ngIf="isAdmin">
                 <a class="nav-link nav-link-custom" [routerLinkActive]="['active']" routerLink="departments">
                     Departments
 
                 </a>
             </div>
 
-            <div mdbDropdown class="dropdown">
+            <div mdbDropdown class="dropdown" *ngIf="isAdmin">
                 <a class=" nav-link nav-link-custom  dropdown-toggle inactiveLink" aria-expanded="false"
                     mdbDropdownToggle [ngClass]="{'active': rlaAuditTrail.isActive || rlaSystemConfig.isActive}">
                     Settings

@@ -11,10 +11,9 @@ import { INavBarItem } from './navbar-item-model';
 })
 export class NavbarComponent implements OnInit {
 
-  username: any = "";
-
-
+  @Input() username: any;
   @Input() showNavbarItems!: boolean;
+  @Input() isAdmin!: boolean;
   constructor(private authService: AuthService, private userService: UsersService, private router: Router) {
 
   }
@@ -22,9 +21,6 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
 
 
-    this.userService.getUserByUsername(localStorage.getItem("username")).subscribe(data => {
-      this.username = data.first_name;
-    })
 
   }
 

@@ -1,0 +1,60 @@
+@import "../user-forms-in-progress.component.scss";
+
+.cta-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filter {
+    position: relative;
+
+    .filter-menu {
+        z-index: 999;
+    }
+}
+
+.mat-button {
+    background-color: #fff;
+    font-weight: bold;
+
+    &:hover {
+        background-color: #EFEFEF;
+    }
+
+    &:focus {
+        border: 1px solid #00ADB5;
+    }
+}
+
+
+
+.mat-menu-item {
+    background-color: #fff;
+
+    &:hover {
+        background-color: #EFEFEF;
+    }
+}
+
+.submit-button {
+    justify-content: flex-end;
+    gap: 3em;
+}
+
+.filter-choice {
+    padding: 1em;
+    display: flex;
+    gap: 1em;
+
+    &:hover {
+        background-color: #EFEFEF;
+    }
+}
+
+
+
+.table {
+    margin-top: 1em;
+}

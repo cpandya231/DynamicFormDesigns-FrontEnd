@@ -1,0 +1,17 @@
+mat-sidenav {
+    border-right: 1px solid #c4c4c4;
+    width: 10em
+}
+
+mat-nav-list {
+    a:hover {
+        background-color: #c4c4c4;
+    }
+}
+
+
+.active {
+    background-color: #c4c4c4;
+    color: #fff;
+    font-weight: bold;
+}

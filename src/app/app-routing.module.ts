@@ -7,9 +7,13 @@ import { DepartmentsComponent } from './departments/departments.component';
 import { EditDepartmentComponent } from './departments/edit-department/edit-department.component';
 
 import { CreateFormTemplateComponent } from './forms/create-form-template/create-form-template.component';
+import { FillFormComponent } from './forms/fill-form/fill-form.component';
 import { FormManagementComponent } from './forms/form-management/form-management.component';
 import { FormWorkflowComponent } from './forms/form-workflow/form-workflow-dashboard.component';
 import { FormsDashboardComponent } from './forms/forms-dashboard/forms-dashboard.component';
+import { UserFormsDashboardComponent } from './forms/user-forms-dashboard/user-forms-dashboard.component';
+import { UserFormsInProgressDataComponent } from './forms/user-forms-in-progress/user-forms-in-progress-data/user-forms-in-progress-data.component';
+import { UserFormsInProgressComponent } from './forms/user-forms-in-progress/user-forms-in-progress.component';
 import { LoginComponent } from './login/login.component';
 import { RolesComponent } from './roles/roles.component';
 import { AuditTrailComponent } from './settings/audit-trail/audit-trail.component';
@@ -24,7 +28,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
     path: 'formsDashboard',
-    component: FormsDashboardComponent
+    component: FormsDashboardComponent,
+
   },
   {
     path: 'formManagement/:name/:workflowId',
@@ -38,6 +43,41 @@ const routes: Routes = [
     path: 'formWorkflow',
     component: FormWorkflowComponent,
   },
+
+  {
+    path: 'userFormsDashboard',
+    component: UserFormsDashboardComponent,
+    children: [
+      {
+        path: "formsInProgress",
+        component: UserFormsInProgressComponent,
+
+      },
+
+      {
+        path: 'formsInProgressData/:formId/:formName',
+        component: UserFormsInProgressDataComponent,
+
+      },
+
+      {
+        path: 'updateLogEntry/:formName/:entryId',
+        component: FillFormComponent
+      },
+
+
+      {
+        path: 'createLogEntry/:formName',
+        component: FillFormComponent
+      },
+
+      {
+        path: '', component: UserFormsInProgressComponent,
+      },
+    ]
+  },
+
+
   {
     path: 'usersParent', children: [
       {

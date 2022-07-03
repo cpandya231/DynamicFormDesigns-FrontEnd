@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   errorOccured = false;
   token = {};
+  showPassword = false;
   ngOnInit(): void {
   }
 
@@ -37,6 +38,11 @@ export class LoginComponent implements OnInit {
   handleError(err: any) {
     console.error(`Error occured while login ${JSON.stringify(err)}`);
     this.errorOccured = true;
+  }
+
+  togglePasswordVisibility(e: any) {
+    this.showPassword = e.target.checked;
+
   }
 
 }
