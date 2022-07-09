@@ -13,7 +13,7 @@ import { SettingsService } from 'src/app/services/settings.service';
 })
 export class FormsDashboardComponent implements OnInit {
 
-  FormTemplates: any = [];
+  FormTemplates: any;
   private modalRef: MdbModalRef<PreviewFormComponent> | null = null;
   DATE_FORMAT: string;
   constructor(private formsService: FormsService,

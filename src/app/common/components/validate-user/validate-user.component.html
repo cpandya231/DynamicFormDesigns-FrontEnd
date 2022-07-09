@@ -1,0 +1,10 @@
+<div class="verification_container">
+    <label for="email">E-mail</label>
+    <input type="email" placeholder="@gmail.com" id="email" class="form-control" required [(ngModel)]="LoginModel.username" name="username">
+    <label for="password">Password</label>
+    <input type="password" id="password" class="form-control" required [(ngModel)]="LoginModel.password" name="password" required>
+</div>
+
+<div class="submit-button">
+    <button type="submit" class="button" (click)="ValidateUser()">Validate</button>
+</div>

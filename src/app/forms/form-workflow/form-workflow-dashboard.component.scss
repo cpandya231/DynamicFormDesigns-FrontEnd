@@ -9,3 +9,12 @@
         background-color: $main-teal-dark;
     }
 }
+
+.nodes {
+    .node {
+        rect {
+            width: 120px;
+            height: 40px;
+        }
+    }
+}

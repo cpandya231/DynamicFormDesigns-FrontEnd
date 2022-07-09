@@ -4,6 +4,9 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AddEditWorkflowStateComponent } from './add-edit-workflow-state/add-edit-workflow-state.component';
 import { IGetWorkflowStateTransitionsModel, IWorkflowStateModel } from './form-workflow.model';
 import { Router } from '@angular/router';
+import { Edge, Node, ClusterNode } from '@swimlane/ngx-graph';
+import * as shape from 'd3-shape';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-form-workflow',
@@ -13,17 +16,28 @@ import { Router } from '@angular/router';
 export class FormWorkflowComponent implements OnInit {
 
   @Input('workflowId') workflowId: number;
-  WorkflowStates: IWorkflowStateModel[] = [];
+  WorkflowStates: any[] = [];
   tempId: number = 1;
   tempTransitions: any = [];
-  StateWorkflowData: IWorkflowStateModel[] = [];
+  // StateWorkflowData: IWorkflowStateModel[] = [];
   IsStatesTransitionsExist = false;
   stateDataBeforeEdit: IWorkflowStateModel;
   private isDialogOpen = false;
   IsSaveWorkflowDisabled = true;
+  WorkflowLinks:Edge[] = [];
+  curve: any = shape.curveLinear;
+  draggingEnabled: boolean = true;
+  panningEnabled: boolean = true;
+  zoomEnabled: boolean = false;
+  zoomSpeed: number = 0.2;
+  minZoomLevel: number = 0.5;
+  maxZoomLevel: number = 2.0;
+  panOnZoom: boolean = true;
+  autoCenter = true;
   constructor(private formService: FormsService,
     private dialog: MatDialog,
-    private router: Router) { }
+    private router: Router,
+    private toastrService: ToastrService) { }
 
   ngOnInit(): void {
     if (this.workflowId) {
@@ -31,66 +45,59 @@ export class FormWorkflowComponent implements OnInit {
         if (data.states.length) {
           this.IsStatesTransitionsExist = true;
           this.WorkflowStates = this.transformStateTransitions(data);
-          this.StateWorkflowData = ([] as IWorkflowStateModel[]).concat(this.WorkflowStates);
+          this.WorkflowLinks = [...this.getWorkflowLinks(data.transitions)];
+          // this.StateWorkflowData = ([] as IWorkflowStateModel[]).concat(this.WorkflowStates);
           this.tempId = data.states.reduce((a, b) => Math.max(a, b.id), 0);
         }
       });
     }
   }
-
-  handleStateEvent(data: any) {
-    let stateName = data["branch-id"]["nodeValue"];
-    let eventType = data["event-type"]["nodeValue"];
-    const index = this.WorkflowStates.findIndex((state: any) => state.name === stateName);
-    if (eventType == 'add') {
-      const stateData = this.WorkflowStates[index];
-      this.AddEditState(stateData, 'add');
-    } else if (eventType == 'edit') {
-      if (index > -1) {
-        const stateData = this.WorkflowStates.splice(index, 1);
-        this.stateDataBeforeEdit = stateData[0];
-        this.AddEditState(stateData[0], 'edit');
-      }
-    }
-  }
-
-  AddEditState(stateData: any, eventType: string) {
+  
+  AddState() {
     if (this.isDialogOpen) return;
     this.isDialogOpen = true;
-
     ++this.tempId;
-    let previousStateId;
-    if (stateData && eventType == 'add') {
-      previousStateId = stateData.id;
-      stateData = null;
-    }
+  
     const dialogRef = this.dialog.open(AddEditWorkflowStateComponent, {
       data: {
         workflowId: this.workflowId,
-        stateData,
+        stateData: null,
         states: this.WorkflowStates,
         tempId: this.tempId,
-        previousStateId
       }
     });
 
     dialogRef.afterClosed().subscribe((data: any) => {
       this.isDialogOpen = false;
       if (data) {
-        this.StateWorkflowData = [];
-        if (this.stateDataBeforeEdit?.name.length && this.stateDataBeforeEdit?.name !== data.state.name) {
-          this.WorkflowStates.map(existingState => {
-            if (existingState.parentName === this.stateDataBeforeEdit?.name) {
-              existingState.parentName = data.state.name
-            }
-            return existingState;
-          })
-        }
-        this.WorkflowStates.push(data.state);
-        this.StateWorkflowData = ([] as IWorkflowStateModel[]).concat(this.WorkflowStates);
-        this.IsSaveWorkflowDisabled = false;
+        this.processStateData(data.state);
+      }
+    })
+  }
+
+  EditState(stateData: any) {
+    const beforeEditStateData = stateData;
+    const stateIndex = this.WorkflowStates.findIndex(state => state.id == stateData.id);
+    this.WorkflowStates.splice(stateIndex, 1);
+    const beforeEditLinks = this.WorkflowLinks.filter(link => link.target == stateData.id);
+    this.WorkflowLinks = this.WorkflowLinks.filter(link => link.target !== stateData.id);
+
+    const dialogRef = this.dialog.open(AddEditWorkflowStateComponent, {
+      data: {
+        workflowId: this.workflowId,
+        stateData,
+        states: this.WorkflowStates,
+        tempId: this.tempId,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((data: any) => {
+      this.isDialogOpen = false;
+      if (data) {
+        this.processStateData(data.state);
       } else {
-        this.WorkflowStates.push(this.stateDataBeforeEdit);
+        this.WorkflowStates = [...this.WorkflowStates, beforeEditStateData];
+        this.WorkflowLinks = [...this.WorkflowLinks, ...beforeEditLinks];
       }
     })
   }
@@ -101,7 +108,7 @@ export class FormWorkflowComponent implements OnInit {
       workflowId: this.workflowId,
       states: this.WorkflowStates.map((state: any) => {
         return {
-          name: state.name,
+          name: state.label,
           description: state.description,
           roles: state.roles,
           departments: state.departments,
@@ -122,49 +129,95 @@ export class FormWorkflowComponent implements OnInit {
   }
 
   protected saveStateTransitions(stateData: any, updateData: boolean) {
-    const transitions: any[] = [];
+    let transitions: any[] = [];
+    let getNewIdFromName: any = {};
+    let getNameFromOldId: any = {};
     stateData.forEach((response: any) => {
-      const parentName = this.StateWorkflowData.find((state: any) => state.name === response.name)?.parentName;
-      if (parentName) {
-        transitions.push({
-          fromState: {
-            id: stateData.find((ele: any) => ele.name === parentName).id
-          },
-          toState: {
-            id: response.id
-          }
-        })
-      }
+      getNewIdFromName[response.name] = response.id;
     });
+    this.WorkflowStates.forEach(state => {
+      getNameFromOldId[state.id] = state.label;
+    });
+    transitions = this.WorkflowLinks.map(link => ({
+      fromState: {
+        id: getNewIdFromName[getNameFromOldId[link.source]]
+      },
+      toState: {
+        id: getNewIdFromName[getNameFromOldId[link.target]]
+      }
+    }))
+  
     const payload = {
       workflowId: this.workflowId,
       transitions: transitions
     }
     if (!updateData) {
       this.formService.SaveStatesTransitions(payload).subscribe((transitionData: any) => {
-        // alert('saved successfully.');
-        this.router.navigate(["/formsDashboard"]);
-        console.log(transitionData);
+        this.toastrService.success('Saved Successfully', 'Success')
       })
     } else {
       this.formService.UpdateStatesTransitions(payload).subscribe((trasitionData: any) => {
-        this.router.navigate(["/formsDashboard"]);
-        console.log(trasitionData);
+        this.toastrService.success('Saved Successfully', 'Success')
       })
     }
+  }
 
+  protected processStateData(state: any) {
+    this.IsSaveWorkflowDisabled = false;
+    this.WorkflowStates = [...this.WorkflowStates ,state];
+    if (state?.parentId) {
+      this.WorkflowLinks.push({
+        source: state.parentId,
+        target: state.id
+      })
+    }
+    if (state?.sendBackAvailable) {
+      this.WorkflowLinks.push({
+        target: state.parentId,
+        source: state.id
+      })
+    }
   }
 
   protected transformStateTransitions(data: any): any {
     const transitions = data.transitions;
+    // transitions.forEach((link: any) => {
+    //   if (transitions.find((trans: any) => trans.toState == link.fromState)) {
+        
+    //   }
+    // })
     return data.states.map((state: any) => {
       const parent = transitions.find((trans: any) => trans.toState.id === state.id) || '';
       return {
-        ...state,
+        id: state.id,
+        label: state.name,
+        dimension: {
+          width: 150,
+          height: 50
+        },
+        roles: state.roles,
+        departments: state.departments,
+        description: state.description,
         parentId: parent?.fromState?.id || '',
         parentName: parent?.fromState?.name
       }
     });
+  }
+
+  protected getWorkflowLinks(data: any) {
+    const chars ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    
+    return data.map((link: any, index: number) => {
+      let id = '';
+      for (let i = 0; i < 5; i++) {
+        id += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return {
+        id,
+        source: link.fromState.id,
+        target: link.toState.id
+      }
+    })
   }
 }
 

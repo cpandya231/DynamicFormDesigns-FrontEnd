@@ -61,7 +61,9 @@ import { SmtpConfigComponent } from './settings/system-config/smtp-config/smtp-c
 import { GlobalConfigComponent } from './settings/system-config/global-config/global-config.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import { NgxGraphModule} from '@swimlane/ngx-graph';
+import { ToastrModule } from 'ngx-toastr';
+import { ValidateUserComponent } from './common/components/validate-user/validate-user.component';  
 @NgModule({
   declarations: [
     AppComponent,
@@ -94,9 +96,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     SessionConfigComponent,
     SmtpConfigComponent,
     GlobalConfigComponent,
-
-
-
+    ValidateUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -129,6 +129,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     NgxPaginationModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    NgxGraphModule,
+    ToastrModule.forRoot()
     // MatInputModule
 
   ],

@@ -4,6 +4,7 @@
 @import '~@fortawesome/fontawesome-free/scss/regular.scss';
 @import '~@fortawesome/fontawesome-free/scss/brands.scss';
 @import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
+@import '~ngx-toastr/toastr.css';
 @import '../src/app/variables.scss';
 $primary: #00ADB5;
 $navy: #0A1931;
@@ -11,7 +12,6 @@ $white: #ffffff;
 $blue: #185ADB;
 $yellow: #FFC947;
 $gray: #EFEFEF;
-
 * {
     font-family: Montserrat, Arial, Helvetica, sans-serif;
 }
@@ -41,18 +41,14 @@ input[type="password"] {
     height: 2.5em;
     border-radius: 5px;
     background-color: #c4c4c430;
-
     &:focus {
         border: thin solid blue;
     }
-
 }
-
 
 select {
     /* styling */
     background-color: #c4c4c430 !important;
-
     border-radius: 4px;
     display: inline-block;
     font: inherit;
@@ -69,20 +65,14 @@ select {
     background-position: calc(100% - 20px) calc(1em), calc(100% - 17px) calc(1em), calc(100% - 2.5em) 0.3em;
     background-size: 5px 5px, 5px 5px, 1px 1.5em;
     background-repeat: no-repeat;
-
     &:focus {
         border: thin solid blue;
     }
 }
 
-
-
-
-
 .formbuilder .btn-primary {
     background-color: $main-teal;
-
-    :hover {
+     :hover {
         background-color: $main-teal-dark;
     }
 }

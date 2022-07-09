@@ -20,7 +20,7 @@
                 <td><img src="../../../assets/Images/pen-to-square-solid.svg" class="svg_icon" (click)="EditFormTemplate(form.name, form.workflow.id)" /></td>
                 <td><img src="../../../assets/Images/eye-solid.svg" class="svg_icon" (click)="PreviewForm(form.template)" /></td>
             </tr>
-            <tr *ngIf="!FormTemplates.length" class="no_data_message">
+            <tr *ngIf="FormTemplates && !FormTemplates.length" class="no_data_message">
                 <td colspan="6">
                     No Forms Available
                 </td>

@@ -20,7 +20,7 @@ export class AddEditWorkflowStateComponent implements OnInit {
   Departments: IDepartmentItem[] = [];
   WorkflowStates: any = [];
   tempStateId!: number;
-  existingStateData!: IWorkflowStateModel;
+  existingStateData!: any;
   ModalHeaderText = 'Create State';
   ShowErrorFields = false;
   SaveButtonName = 'Save State';
@@ -45,7 +45,7 @@ export class AddEditWorkflowStateComponent implements OnInit {
       this.ModalHeaderText = 'Update State';
       this.SaveButtonName = 'Update State';
       this.StateDetailsForm = this.fb.group ({
-        name: [this.existingStateData.name],
+        name: [this.existingStateData.label],
         description: [this.existingStateData.description],
         previousState: [this.existingStateData.parentId],
         multiPreviousStateCompletion: [false],
@@ -64,7 +64,7 @@ export class AddEditWorkflowStateComponent implements OnInit {
       this.StateDetailsForm = this.fb.group ({
         name: ['', Validators.required],
         description: [''],
-        previousState: [this.dialogData.previousStateId],
+        previousState: [''],
         multiPreviousStateCompletion: [false],
         roleStateAccess: [[]],
         departmentStateAccess: [[]],
@@ -89,7 +89,7 @@ export class AddEditWorkflowStateComponent implements OnInit {
     const stateData = {
       workflowId: this.dialogData.workflowId,
       state: {
-        name: this.StateDetailsForm.value.name,
+        label: this.StateDetailsForm.value.name,
         description : this.StateDetailsForm.value.description,
         roles : this.StateDetailsForm.value.roleStateAccess.map((roleId: number) => {
           return {
@@ -103,7 +103,12 @@ export class AddEditWorkflowStateComponent implements OnInit {
         }),
         id: this.existingStateData?.id || this.tempStateId,
         parentId: this.StateDetailsForm.value.previousState,
-        parentName: this.WorkflowStates.find((state: any) => state.id === this.StateDetailsForm.value.previousState)?.name
+        parentName: this.WorkflowStates.find((state: any) => state.id === this.StateDetailsForm.value.previousState)?.name,
+        sendBackAvailable: this.StateDetailsForm.value.sendBackAvailable,
+        dimension: {
+          width: 150,
+          height: 50
+        },
       },
      
     };
