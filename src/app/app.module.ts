@@ -56,6 +56,11 @@ import { UsernameConfigComponent } from './settings/system-config/username-confi
 import { SessionConfigComponent } from './settings/system-config/session-config/session-config.component';
 import { SmtpConfigComponent } from './settings/system-config/smtp-config/smtp-config.component';
 import { GlobalConfigComponent } from './settings/system-config/global-config/global-config.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { NgxGraphModule} from '@swimlane/ngx-graph';
+import { ToastrModule } from 'ngx-toastr';
+import { ValidateUserComponent } from './common/components/validate-user/validate-user.component';  
 import { FillFormComponent } from './forms/fill-form/fill-form.component';
 import { MaterialExampleModule } from './material/material.module';
 import { UserFormsDashboardComponent } from './forms/user-forms-dashboard/user-forms-dashboard.component';
@@ -93,13 +98,11 @@ import { UserFormsInProgressDataComponent } from './forms/user-forms-in-progress
     SessionConfigComponent,
     SmtpConfigComponent,
     GlobalConfigComponent,
+    ValidateUserComponent,
     FillFormComponent,
     UserFormsDashboardComponent,
     UserFormsInProgressComponent,
     UserFormsInProgressDataComponent,
-
-
-
   ],
   imports: [
     BrowserModule,
@@ -127,6 +130,10 @@ import { UserFormsInProgressDataComponent } from './forms/user-forms-in-progress
     MdbValidationModule,
     BrowserAnimationsModule,
     NgxPaginationModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    NgxGraphModule,
+    ToastrModule.forRoot(),
     MaterialExampleModule
 
   ],

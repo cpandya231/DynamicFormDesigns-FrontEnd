@@ -21,6 +21,13 @@ export class AuthService {
         return loginActiveProject;
     }
 
+    validateUserCredentials(loginModel: LoginModel) {
+        const httpParams = new HttpParams()
+            .set('username', loginModel.username)
+            .set('password', loginModel.password);
+        return this.http.post<any>(`${ServiceUtil.API_ENDPOINT}/login`, httpParams.toString(), ServiceUtil.HTTPOPTIONS);
+    }
+
     setSession(activeProject: any, authResult: any) {
         let decoded_token = this.getDecodedAccessToken(authResult.access_token);
         localStorage.setItem('access_token', authResult.access_token);

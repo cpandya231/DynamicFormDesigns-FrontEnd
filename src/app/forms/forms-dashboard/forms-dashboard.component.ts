@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class FormsDashboardComponent implements OnInit {
 
-  FormTemplates: any = [];
+  FormTemplates: any;
   isAdmin: boolean = false;
   private modalRef: MdbModalRef<PreviewFormComponent> | null = null;
   DATE_FORMAT: string;
