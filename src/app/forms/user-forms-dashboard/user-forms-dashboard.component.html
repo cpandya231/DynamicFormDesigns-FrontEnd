@@ -1,5 +1,5 @@
 <mat-sidenav-container class="example-container">
-    <mat-sidenav mode="side" [fixedInViewport]="true" fixedTopGap="65" opened>
+    <mat-sidenav class="left-side-nav" mode="side" [fixedInViewport]="true" fixedTopGap="65" opened>
 
         <mat-nav-list>
             <a mat-list-item routerLink="/userFormsDashboard" [routerLinkActive]="['active']"
@@ -10,7 +10,9 @@
 
         </mat-nav-list>
     </mat-sidenav>
+
     <mat-sidenav-content>
         <router-outlet></router-outlet>
     </mat-sidenav-content>
+
 </mat-sidenav-container>

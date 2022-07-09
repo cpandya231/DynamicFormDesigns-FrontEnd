@@ -1,10 +1,18 @@
-<div class="app-container" *ngIf="IsFormLoaded">
-    <div class="submit-button">
-        <button type="submit" class="button" (click)="onSubmit()" [disabled]="disableSave">Save</button>
-        <button type="button" class="button-cancel" (click)="close(0)">Cancel</button>
+<mat-sidenav-container class="app-container" *ngIf="IsFormLoaded">
 
-    </div>
+    <mat-sidenav-content>
+        <div class="submit-button">
+            <button type="submit" *ngIf="!disableSave" class="button" (click)="onSubmit()" [disabled]="disableSave">Send
+                for
+                {{toState}}</button>
+            <button type="button" class="button-cancel" (click)="close(0)">Go Back</button>
 
-    <formio [form]='CurrentForm' #formio [options]='FormOptions'></formio>
+        </div>
 
-</div>
+        <formio [form]='CurrentForm' #formio [options]='FormOptions'></formio>
+    </mat-sidenav-content>
+    <mat-sidenav *ngIf="showComments" class="right-side-nav" opened mode="side" position="end" [fixedInViewport]="true"
+        fixedTopGap="65">
+        <app-comments [formId]="formId" [entryId]="entryId"></app-comments>
+    </mat-sidenav>
+</mat-sidenav-container>

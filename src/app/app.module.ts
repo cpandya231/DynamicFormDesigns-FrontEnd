@@ -61,6 +61,7 @@ import { MaterialExampleModule } from './material/material.module';
 import { UserFormsDashboardComponent } from './forms/user-forms-dashboard/user-forms-dashboard.component';
 import { UserFormsInProgressComponent } from './forms/user-forms-in-progress/user-forms-in-progress.component';
 import { UserFormsInProgressDataComponent } from './forms/user-forms-in-progress/user-forms-in-progress-data/user-forms-in-progress-data.component';
+import { CommentsComponent } from './forms/fill-form/comments/comments.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -97,6 +98,7 @@ import { UserFormsInProgressDataComponent } from './forms/user-forms-in-progress
     UserFormsDashboardComponent,
     UserFormsInProgressComponent,
     UserFormsInProgressDataComponent,
+    CommentsComponent,
 
 
 
