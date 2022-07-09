@@ -181,11 +181,6 @@ export class FormWorkflowComponent implements OnInit {
 
   protected transformStateTransitions(data: any): any {
     const transitions = data.transitions;
-    // transitions.forEach((link: any) => {
-    //   if (transitions.find((trans: any) => trans.toState == link.fromState)) {
-        
-    //   }
-    // })
     return data.states.map((state: any) => {
       const parent = transitions.find((trans: any) => trans.toState.id === state.id) || '';
       return {
@@ -205,7 +200,7 @@ export class FormWorkflowComponent implements OnInit {
   }
 
   protected getWorkflowLinks(data: any) {
-    const chars ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const chars ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     
     return data.map((link: any, index: number) => {
       let id = '';

@@ -15,14 +15,13 @@ export class ValidateUserComponent implements OnInit {
   };
   constructor(private authService: AuthService,
     public dialogRef: MatDialogRef<ValidateUserComponent>,
-    @Inject(MAT_DIALOG_DATA) public dialogData: any,
     private toastrService: ToastrService) { }
 
   ngOnInit(): void {
   }
 
   ValidateUser() {
-    this.authService.login(this.LoginModel).subscribe({
+    this.authService.validateUserCredentials(this.LoginModel).subscribe({
       next: () => this.dialogRef.close(true),
       error: () => {
         this.toastrService.error('verification failed. please enter valid credentials', 'Error');
