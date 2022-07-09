@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 import { FormsService } from '../../common/services/forms.service';
 import {forkJoin} from 'rxjs';
+import { ToastrService } from 'ngx-toastr';   
 
 @Component({
   selector: 'app-create-form-template',
@@ -141,10 +142,12 @@ export class CreateFormTemplateComponent implements OnInit {
     },
   };
   WorkflowId: number;
+  SaveInProgress = false;
   constructor(private formsService: FormsService,
     private authService: AuthService,
     private router: Router,
-    private userService: UsersService) { }
+    private userService: UsersService,
+    private toastrService: ToastrService) { }
 
   ngOnInit() {
     let eleObj = {};
@@ -223,19 +226,19 @@ export class CreateFormTemplateComponent implements OnInit {
   }
 
   SaveTemplate(): void {
+    this.SaveInProgress = true;
     if (this.formId) {
-      this.formsService.UpdateFormTemplate(this.formIO.form, this.FormName, this.formId).subscribe(data => {
-     
-        alert('form updated successfully');
-        // this.router.navigate(['formsDashboard']);
-      })
+      this.formsService.UpdateFormTemplate(this.formIO.form, this.FormName, 123).subscribe(data => {
+        this.SaveInProgress = false;
+        this.toastrService.success('form updated successfully', 'Success');
+      }, () => this.toastrService.error('some error occured!', 'Error'));
     } else {
       this.formsService.SaveFormTemplate(this.formIO.form, this.FormName).subscribe(data => {
         this.WorkflowId = data.workflow.id;
+        this.SaveInProgress = false;
+        this.toastrService.success('form created successfully', 'Success');
         this.WorkflowIdUpdate.emit(this.WorkflowId);
-        alert('form created successfully');
-        // this.router.navigate(['formsDashboard']);
-      })
+      }, () => this.toastrService.error('some error occured!', 'Error'));
     }
   }
 

@@ -28,23 +28,24 @@
                 <div class="col-sm-4">
                     <input type="text" class="form-control" id="description" formControlName="description">
                 </div>
-                <label for="roleStateAccess" class="col-2 col-form-label">Role State Access</label>
+
+                <label for="previousState" class="col-2 col-form-label">Previous State</label>
                 <div class="col">
-                    <select multiple class="form-select" id="roleStateAccess" formControlName="roleStateAccess">
-                        <option *ngFor="let role of Roles" [ngValue]="role.id">
-                            {{role.role}}
+                    <select class="form-select" id="previousState" formControlName="previousState" [ngClass]="{'invalid_field': ShowErrorFields && this.StateDetailsForm.controls['previousState'].invalid}">
+                        <option value="">Choose State </option>
+                        <option *ngFor="let state of WorkflowStates" [ngValue]="state.id">
+                            {{state.label}}
                         </option>
                     </select>
                 </div>
             </div>
 
             <div class="row">
-                <label for="previousState" class="col-2 col-form-label">Previous State</label>
+                <label for="roleStateAccess" class="col-2 col-form-label">Role State Access</label>
                 <div class="col">
-                    <select class="form-select" id="previousState" formControlName="previousState" [ngClass]="{'invalid_field': ShowErrorFields && this.StateDetailsForm.controls['previousState'].invalid}">
-                        <option value="">Choose State </option>
-                        <option *ngFor="let state of WorkflowStates" [ngValue]="state.id">
-                            {{state.name}}
+                    <select multiple class="form-select" id="roleStateAccess" formControlName="roleStateAccess">
+                        <option *ngFor="let role of Roles" [ngValue]="role.id">
+                            {{role.role}}
                         </option>
                     </select>
                 </div>

@@ -7,6 +7,8 @@ import { MasterForms } from 'src/app/services/utility/master.forms.constants';
 import { Location } from '@angular/common';
 import { combineLatest } from 'rxjs';
 import { IGetWorkflowStateTransitionsModel } from '../form-workflow/form-workflow.model';
+import { MatDialog } from '@angular/material/dialog';
+import { ValidateUserComponent } from 'src/app/common/components/validate-user/validate-user.component';
 @Component({
   selector: 'app-fill-form',
   templateUrl: './fill-form.component.html',
@@ -29,7 +31,8 @@ export class FillFormComponent implements OnInit {
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private _location: Location
+    private _location: Location,
+    private dialog: MatDialog
   ) { }
   CurrentForm: any = {
     components: []
@@ -133,15 +136,16 @@ export class FillFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.form.formio.emit('submitButton');
+    const dialogRef = this.dialog.open(ValidateUserComponent);
 
-
-
+    dialogRef.afterClosed().subscribe((data: any) => {
+      if (data) {
+        this.form.formio.emit('submitButton');
+      }
+    })
   }
 
   handleSubmit(submission: any, callback: any) {
-
-
     let submittedData = this.form.formio.submission.data;
 
     if (this.entryId) {
