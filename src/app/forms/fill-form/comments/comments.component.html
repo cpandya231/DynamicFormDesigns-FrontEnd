@@ -1,7 +1,8 @@
-<div>{{comments.length}} comments
+<div>
+    <span class="comments-header">Comments ({{comments.length}})</span>
 
 
-    <form [formGroup]="commentForm" class="settingsForm" (ngSubmit)="submitComment()">
+    <form [formGroup]="commentForm" class="comments-form" (ngSubmit)="submitComment()">
         <textarea placeholder="Leave a comment" class="new-comment" formControlName="comment"></textarea>
 
         <div class="submit-button">

@@ -1,5 +1,15 @@
 @import "../fill-form.component.scss";
 
+
+.comments-header {
+    font-weight: bold;
+
+}
+
+.comments-form {
+    margin-top: 1em;
+}
+
 .comment-card {
     margin-top: 1em;
     display: flex;

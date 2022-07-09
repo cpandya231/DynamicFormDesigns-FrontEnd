@@ -1,6 +1,24 @@
 <mat-sidenav-container class="app-container" *ngIf="IsFormLoaded">
 
+    <mat-sidenav #sidenav *ngIf="showComments" class="right-side-nav" opened mode="side" position="end"
+        [fixedInViewport]="true" fixedTopGap="65" [(opened)]="showComments" (opened)="events.push('open!')"
+        (closed)="events.push('close!')">
+        <app-comments [formId]="formId" [entryId]="entryId"></app-comments>
+    </mat-sidenav>
+
     <mat-sidenav-content>
+
+        <div class="comments-toggle">
+
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="showComments"
+                    [(ngModel)]="showComments" />
+
+
+            </div>
+            <label for="showComments">Comments</label>
+        </div>
+
         <div class="submit-button">
             <button type="submit" *ngIf="!disableSave" class="button" (click)="onSubmit()" [disabled]="disableSave">Send
                 for
@@ -10,9 +28,8 @@
         </div>
 
         <formio [form]='CurrentForm' #formio [options]='FormOptions'></formio>
+
+
     </mat-sidenav-content>
-    <mat-sidenav *ngIf="showComments" class="right-side-nav" opened mode="side" position="end" [fixedInViewport]="true"
-        fixedTopGap="65">
-        <app-comments [formId]="formId" [entryId]="entryId"></app-comments>
-    </mat-sidenav>
+
 </mat-sidenav-container>

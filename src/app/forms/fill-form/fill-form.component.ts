@@ -19,6 +19,9 @@ export class FillFormComponent implements OnInit {
   toState: any;
   workflowId: any;
   showComments: boolean = false;
+  events: string[] = [];
+
+
 
   disableSave: boolean = false;
   constructor(
