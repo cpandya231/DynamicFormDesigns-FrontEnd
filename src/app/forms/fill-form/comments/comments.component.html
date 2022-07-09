@@ -1,0 +1,30 @@
+<div>
+    <span class="comments-header">Comments ({{comments.length}})</span>
+
+
+    <form [formGroup]="commentForm" class="comments-form" (ngSubmit)="submitComment()">
+        <textarea placeholder="Leave a comment" class="new-comment" formControlName="comment"></textarea>
+
+        <div class="submit-button">
+            <button type="submit" class="button" [disabled]="!commentForm.valid">Save</button>
+        </div>
+
+    </form>
+
+
+
+    <div *ngFor="let commentData of comments" class="comment-card">
+        <img src="../../../../assets/profile-icon.svg" class="rounded-circle" alt="" loading="lazy" width="20%" />
+        <div class="comment-data">
+            <div class="comment-created-by">
+                {{commentData['created_by']}}
+            </div>
+            <div class="comment-date">Commented on: {{commentData['log_create_dt']}}</div>
+            <div class="comment">{{commentData['comment']}}</div>
+
+        </div>
+
+
+
+    </div>
+</div>

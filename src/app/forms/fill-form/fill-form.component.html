@@ -1,10 +1,35 @@
-<div class="app-container" *ngIf="IsFormLoaded">
-    <div class="submit-button">
-        <button type="submit" class="button" (click)="onSubmit()" [disabled]="disableSave">Save</button>
-        <button type="button" class="button-cancel" (click)="close(0)">Cancel</button>
+<mat-sidenav-container class="app-container" *ngIf="IsFormLoaded">
 
-    </div>
+    <mat-sidenav #sidenav *ngIf="showComments" class="right-side-nav" opened mode="side" position="end"
+        [fixedInViewport]="true" fixedTopGap="65" [(opened)]="showComments" (opened)="events.push('open!')"
+        (closed)="events.push('close!')">
+        <app-comments [formId]="formId" [entryId]="entryId"></app-comments>
+    </mat-sidenav>
 
-    <formio [form]='CurrentForm' #formio [options]='FormOptions'></formio>
+    <mat-sidenav-content>
 
-</div>
+        <div class="comments-toggle">
+
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="showComments"
+                    [(ngModel)]="showComments" />
+
+
+            </div>
+            <label for="showComments">Comments</label>
+        </div>
+
+        <div class="submit-button">
+            <button type="submit" *ngIf="!disableSave" class="button" (click)="onSubmit()" [disabled]="disableSave">Send
+                for
+                {{toState}}</button>
+            <button type="button" class="button-cancel" (click)="close(0)">Go Back</button>
+
+        </div>
+
+        <formio [form]='CurrentForm' #formio [options]='FormOptions'></formio>
+
+
+    </mat-sidenav-content>
+
+</mat-sidenav-container>

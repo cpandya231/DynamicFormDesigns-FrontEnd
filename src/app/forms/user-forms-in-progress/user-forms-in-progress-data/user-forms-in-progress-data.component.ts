@@ -30,7 +30,8 @@ export class UserFormsInProgressDataComponent implements OnInit {
           this.columns = Object.keys(this.logEntries[0].data);
           this.isDataLoaded = true;
         } else {
-          this.logEntries = []
+          this.logEntries = [];
+          this.isDataLoaded = true;
         }
 
       },
