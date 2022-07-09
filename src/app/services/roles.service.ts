@@ -29,8 +29,8 @@ export class RoleService {
         };
     }
 
-    creatRole(userItem: IRoleItem) {
-        return this.http.post<any>(`${ServiceUtil.API_ENDPOINT}/roles/`, userItem, this.getHttpOptions());
+    creatRole(roleItem: IRoleItem) {
+        return this.http.post<any>(`${ServiceUtil.API_ENDPOINT}/roles/`, roleItem, this.getHttpOptions());
     }
 }
 

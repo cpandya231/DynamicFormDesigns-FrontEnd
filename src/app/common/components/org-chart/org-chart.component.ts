@@ -18,20 +18,20 @@ export class OrgChartComponent implements OnChanges {
   constructor(private renderer: Renderer2,
     private iterableDiffers: IterableDiffers) {
     // this.iterableDiffer = iterableDiffers.find([]).create(null);
-   }
-
- ngOnChanges(simpleChange: SimpleChanges): void {
-  if (simpleChange['data'].currentValue?.length) {
-    this.updateChart();
   }
- }
 
-//  ngDoCheck() {
-//   const changes = this.iterableDiffer.diff(this.inputArray);
-//   if (changes) {
-//     console.log("Changes detected!");
-//   }
-//  }
+  ngOnChanges(simpleChange: SimpleChanges): void {
+    if (simpleChange['data'].currentValue?.length) {
+      this.updateChart();
+    }
+  }
+
+  //  ngDoCheck() {
+  //   const changes = this.iterableDiffer.diff(this.inputArray);
+  //   if (changes) {
+  //     console.log("Changes detected!");
+  //   }
+  //  }
 
   ngAfterViewInit(): void {
     if (!this.chart) {
@@ -62,6 +62,7 @@ export class OrgChartComponent implements OnChanges {
       .data(this.data)
       .nodeWidth(() => 200)
       .nodeHeight(() => 120)
+      .siblingsMargin(() => 60)
       .nodeContent((data: any) => {
         let template = `
         <div class="menu" #menu>
@@ -76,13 +77,14 @@ export class OrgChartComponent implements OnChanges {
       </div>
         <div class="node-card">
             <h6>${data.data.name}</h6>`;
-        if(data?.data?.code) {
+        if (data?.data?.code) {
           template += `<span *ngIf='${data.data.code}'>code: ${data.data.code}</span>`
         }
         template += `</div>`;
         return template;
       })
-      .compact(false).render().fit().expandAll();
+      .compact(false)
+      .render().fit().expandAll();
 
     this.chart.onNodeClick((data: any) => {
       let all = document.getElementsByClassName(`list`);
@@ -110,6 +112,6 @@ export class OrgChartComponent implements OnChanges {
   }
 
   protected handleListItemClick(event: any) {
-      this.listItemEvent.emit(event.currentTarget.attributes);
+    this.listItemEvent.emit(event.currentTarget.attributes);
   }
 }

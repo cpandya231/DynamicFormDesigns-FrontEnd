@@ -12,8 +12,6 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { WelcomeComponent } from './welcome/welcome.component';
 
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
@@ -29,7 +27,6 @@ import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
 import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
-import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UsersComponent } from './users/users.component';
@@ -64,6 +61,11 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { NgxGraphModule} from '@swimlane/ngx-graph';
 import { ToastrModule } from 'ngx-toastr';
 import { ValidateUserComponent } from './common/components/validate-user/validate-user.component';  
+import { FillFormComponent } from './forms/fill-form/fill-form.component';
+import { MaterialExampleModule } from './material/material.module';
+import { UserFormsDashboardComponent } from './forms/user-forms-dashboard/user-forms-dashboard.component';
+import { UserFormsInProgressComponent } from './forms/user-forms-in-progress/user-forms-in-progress.component';
+import { UserFormsInProgressDataComponent } from './forms/user-forms-in-progress/user-forms-in-progress-data/user-forms-in-progress-data.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -97,6 +99,10 @@ import { ValidateUserComponent } from './common/components/validate-user/validat
     SmtpConfigComponent,
     GlobalConfigComponent,
     ValidateUserComponent,
+    FillFormComponent,
+    UserFormsDashboardComponent,
+    UserFormsInProgressComponent,
+    UserFormsInProgressDataComponent,
   ],
   imports: [
     BrowserModule,
@@ -123,15 +129,12 @@ import { ValidateUserComponent } from './common/components/validate-user/validat
     MdbTooltipModule,
     MdbValidationModule,
     BrowserAnimationsModule,
-    MatIconModule,
-    MatMenuModule,
-    MatDialogModule,
     NgxPaginationModule,
     MatDatepickerModule,
     MatNativeDateModule,
     NgxGraphModule,
-    ToastrModule.forRoot()
-    // MatInputModule
+    ToastrModule.forRoot(),
+    MaterialExampleModule
 
   ],
   providers: [

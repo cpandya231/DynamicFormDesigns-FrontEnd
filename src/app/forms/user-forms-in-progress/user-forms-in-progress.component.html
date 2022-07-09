@@ -1,0 +1,30 @@
+<div class="forms_dashboard">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Form ID</th>
+                <th scope="col">Form Name</th>
+                <th scope="col">Created By</th>
+                <th scope="col">Created On</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let form of FormTemplates">
+                <td>{{form.id}}</td>
+                <td (click)="SeeEntries(form.id,form.name)" class="td-link">{{form.name}}</td>
+                <td>{{form.createdBy}}</td>
+                <td>{{form.createDt | date: DATE_FORMAT }}</td>
+
+
+            </tr>
+            <tr *ngIf="!FormTemplates.length" class="no_data_message">
+                <td colspan="6">
+                    No Forms Available
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

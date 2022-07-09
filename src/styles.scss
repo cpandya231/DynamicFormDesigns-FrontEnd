@@ -24,6 +24,7 @@ body {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+
 }
 
 .btn .btn-primary {
@@ -79,4 +80,11 @@ select {
 
 small {
     font-size: 0.7rem;
+}
+
+.mat-menu-panel {
+    background-color: #fff;
+    overflow: inherit;
+    box-shadow: 0 2px 4px -1px #0003, 0 4px 5px #00000024, 0 1px 10px #0000001f, 0 1px 10px #0000001f;
+
 }
