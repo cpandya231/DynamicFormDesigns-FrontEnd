@@ -1,0 +1,15 @@
+.verification_container {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    .title {
+        border-bottom: 1px solid gray;
+        margin-bottom: 1rem;
+    }
+    input {
+        margin-bottom: 10px;
+    }
+    input[type=password] {
+        margin-top: 0;
+    }
+}

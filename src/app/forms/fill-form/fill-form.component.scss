@@ -1,17 +1,13 @@
 @import "../create-form-template/create-form-template.component.scss";
-
 @import "../../users/create-user/create-user.component.scss";
-
 .app-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     height: 80vh;
-
 }
 
 .submit-button {
     align-self: flex-end;
-    gap: 5em;
-
+    gap: 1.5em;
 }
