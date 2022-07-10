@@ -6,6 +6,7 @@ export interface IWorkflowStateModel {
     id: number;
     parentId?: number;
     parentName?: string;
+    sendBackAvailable?: boolean;
 }
 
 export interface IWorkflowTransitionModel {

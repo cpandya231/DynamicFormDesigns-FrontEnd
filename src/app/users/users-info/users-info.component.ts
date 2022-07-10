@@ -27,7 +27,7 @@ const compare = (v1: any, v2: any) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 })
 export class UsersInfoComponent implements OnInit {
   DATE_FORMAT: string;
-
+  isDataLoaded: boolean = false;
   private modalRef: MdbModalRef<CreateUserComponent> | null = null;
 
   users$!: Observable<IUserItem[]>;
@@ -78,7 +78,8 @@ export class UsersInfoComponent implements OnInit {
       this.USERS = items[0];
       this.roles = items[1];
       this.departments = items[2];
-      this.DATE_FORMAT = items[3].filter(setting => (setting.type == "GLOBAL") && (setting.key == "DATE_FORMAT"))[0].value;
+      this.DATE_FORMAT = items[3].filter(setting => (setting.type == "GLOBAL") && (setting.key == "TIMESTAMP_FORMAT"))[0].value;
+      this.isDataLoaded = true;
       this.registerForSearch();
     });
 
