@@ -39,6 +39,7 @@
         <thead>
             <tr>
                 <th scope="col" *ngFor="let col of columns">{{col}}</th>
+                <th colspan="2"></th>
             </tr>
 
         </thead>
@@ -46,7 +47,11 @@
             <tr *ngFor="let entry of logEntries">
 
                 <td *ngFor="let col of columns">{{entry.data[""+col]}}</td>
-                <td><img src="../../../assets/Images/pen-to-square-solid.svg" class="svg_icon" (click)="FillForm(entry.data['id'])" />
+                <td class="icon_column">
+                    <span class="fas fa-edit" (click)="FillForm(entry.data['id'])"></span>
+                </td>
+                <td class="icon_column">
+                    <span class="fas fa-hourglass-half" (click)="ShowProgress()"></span>
                 </td>
 
             </tr>

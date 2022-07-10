@@ -65,5 +65,9 @@ export class UserFormsInProgressDataComponent implements OnInit {
     })
   }
 
+  ShowProgress() {
+    
+  }
+
 
 }
