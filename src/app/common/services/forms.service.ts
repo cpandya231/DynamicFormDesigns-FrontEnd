@@ -75,6 +75,12 @@ export class FormsService {
     return this.http.get(`${ServiceUtil.API_ENDPOINT}/entry/${formId}?entryId=${entryId}`, this.getHeaders());
   }
 
+  SaveLogEntryComment(formId: number, entryId: number, commentObj: any): Observable<any> {
+    return this.http.post(`${ServiceUtil.API_ENDPOINT}/entry/metadata/${formId}/${entryId}`, commentObj, this.getHeaders());
+  }
+  LogEntryMetadata(formId: number, entryId: number): Observable<any> {
+    return this.http.get(`${ServiceUtil.API_ENDPOINT}/entry/metadata/${formId}/${entryId}`, this.getHeaders());
+  }
   protected getHeaders() {
     return {
       headers: new HttpHeaders({

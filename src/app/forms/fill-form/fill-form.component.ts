@@ -20,6 +20,11 @@ export class FillFormComponent implements OnInit {
   userRoles: any;
   toState: any;
   workflowId: any;
+  showComments: boolean = false;
+  events: string[] = [];
+
+
+
   disableSave: boolean = false;
   constructor(
     private formService: FormsService,
@@ -64,6 +69,7 @@ export class FillFormComponent implements OnInit {
       this.formId = data.id;
       let transitionsObservable = this.formService.GetWorkflowStatesTransitions(this.workflowId);
       let entryDataObservable = this.formService.GetSpecificLogEntry(this.formId, this.entryId);
+
       combineLatest([transitionsObservable, entryDataObservable]).subscribe(items => {
         let transitionData = items[0];
         let entryData = items[1];
@@ -71,8 +77,7 @@ export class FillFormComponent implements OnInit {
 
         if (entryData.length > 0) {
           this.processToHandleExistingEntry(entryData, transitionData);
-
-
+          this.showComments = true;
         } else {
           if (this.entryId > 0) {
             alert(`No Valid entry found for entryId ${this.entryId}`);
@@ -80,7 +85,6 @@ export class FillFormComponent implements OnInit {
             this.processToHandleNewEntry(transitionData);
 
           }
-
         }
 
       })
@@ -94,6 +98,7 @@ export class FillFormComponent implements OnInit {
       this.toState = requiredTransition.toState.name;
     } else {
       this.toState = "no_access";
+      this.disableSave = true;
     }
     this.IsFormLoaded = true;
   }
@@ -101,15 +106,18 @@ export class FillFormComponent implements OnInit {
   private processToHandleExistingEntry(entryData: any, transitionData: IGetWorkflowStateTransitionsModel) {
     let entry = entryData[0].data;
 
-    let requiredTransition = transitionData.transitions.find(transition => transition.fromState.name == entry.state);
+    let requiredTransition = transitionData.transitions.
+      find(transition => (transition.fromState.name == entry.state)
+        && transition.toState.roles.filter(transtionRole => this.userRoles.includes(transtionRole.role)).length > 0);
     if (null != requiredTransition) {
       this.toState = requiredTransition.toState.name;
 
     } else {
       this.toState = "no_access";
+      this.disableSave = true;
     }
 
-    this.IsFormLoaded = true;
+
     this.CurrentForm.components.forEach((table: any) => {
       table.rows.forEach((rowItem: any) => {
         rowItem.forEach((rowItemComponent: any) => {
@@ -120,6 +128,11 @@ export class FillFormComponent implements OnInit {
         });
       });
     });
+
+
+
+    this.IsFormLoaded = true;
+
   }
 
   onSubmit() {

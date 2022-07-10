@@ -1,0 +1,47 @@
+@import "../fill-form.component.scss";
+
+
+.comments-header {
+    font-weight: bold;
+
+}
+
+.comments-form {
+    margin-top: 1em;
+}
+
+.comment-card {
+    margin-top: 1em;
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    border-radius: 5px;
+    background-color: #FFC94750;
+    padding: 1em;
+
+    &:hover {
+        background-color: #FFC94780;
+    }
+}
+
+.comment-created-by {
+    font-weight: bold;
+}
+
+.comment-date {
+    font-size: 0.6rem;
+    font-style: italic;
+}
+
+.comment {
+    margin-top: 1em;
+    font-style: italic;
+}
+
+.new-comment {
+    width: 100%;
+}
+
+.rounded-circle {
+    height: 3rem;
+}
