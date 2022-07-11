@@ -1,0 +1,8 @@
+.graph_container {
+    height: calc(100% - 30px);
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}

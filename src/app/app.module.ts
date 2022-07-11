@@ -67,6 +67,7 @@ import { UserFormsDashboardComponent } from './forms/user-forms-dashboard/user-f
 import { UserFormsInProgressComponent } from './forms/user-forms-in-progress/user-forms-in-progress.component';
 import { UserFormsInProgressDataComponent } from './forms/user-forms-in-progress/user-forms-in-progress-data/user-forms-in-progress-data.component';
 import { CommentsComponent } from './forms/fill-form/comments/comments.component';
+import { DisplayWorkflowStatusComponent } from './common/display-workflow-status/display-workflow-status.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -105,6 +106,7 @@ import { CommentsComponent } from './forms/fill-form/comments/comments.component
     UserFormsInProgressComponent,
     UserFormsInProgressDataComponent,
     CommentsComponent,
+    DisplayWorkflowStatusComponent,
 
 
 

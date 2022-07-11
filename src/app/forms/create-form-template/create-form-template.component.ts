@@ -228,7 +228,7 @@ export class CreateFormTemplateComponent implements OnInit {
   SaveTemplate(): void {
     this.SaveInProgress = true;
     if (this.formId) {
-      this.formsService.UpdateFormTemplate(this.formIO.form, this.FormName, 123).subscribe(data => {
+      this.formsService.UpdateFormTemplate(this.formIO.form, this.FormName, this.formId).subscribe(data => {
         this.SaveInProgress = false;
         this.toastrService.success('form updated successfully', 'Success');
       }, () => this.toastrService.error('some error occured!', 'Error'));

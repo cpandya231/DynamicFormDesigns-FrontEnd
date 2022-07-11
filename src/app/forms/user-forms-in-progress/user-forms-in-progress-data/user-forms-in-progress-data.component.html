@@ -51,12 +51,12 @@
                     <span class="fas fa-edit" (click)="FillForm(entry.data['id'])"></span>
                 </td>
                 <td class="icon_column">
-                    <span class="fas fa-hourglass-half" (click)="ShowProgress()"></span>
+                    <span class="fas fa-hourglass-half" (click)="ShowProgress(entry.data['id'])"></span>
                 </td>
 
             </tr>
-            <tr *ngIf="!logEntries.length" class="no_data_message">
-                <td [attr.colspan]="columns.length">
+            <tr *ngIf="!logEntries?.length" class="no_data_message">
+                <td [attr.colspan]="columns?.length">
                     No Entries Available
                 </td>
             </tr>

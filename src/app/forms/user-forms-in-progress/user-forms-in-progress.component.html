@@ -14,13 +14,13 @@
         <tbody>
             <tr *ngFor="let form of FormTemplates">
                 <td>{{form.id}}</td>
-                <td (click)="SeeEntries(form.id,form.name)" class="td-link">{{form.name}}</td>
+                <td (click)="SeeEntries(form.id,form.name, form.workflow.id)" class="td-link">{{form.name}}</td>
                 <td>{{form.createdBy}}</td>
                 <td>{{form.createDt | date: DATE_FORMAT }}</td>
 
 
             </tr>
-            <tr *ngIf="!FormTemplates.length" class="no_data_message">
+            <tr *ngIf="!FormTemplates?.length" class="no_data_message">
                 <td colspan="6">
                     No Forms Available
                 </td>

@@ -1,5 +1,5 @@
 <div>
-    <span class="comments-header">Comments ({{comments.length}})</span>
+    <span class="comments-header">Comments ({{comments?.length}})</span>
 
 
     <form [formGroup]="commentForm" class="comments-form" (ngSubmit)="submitComment()">
@@ -23,8 +23,5 @@
             <div class="comment">{{commentData['comment']}}</div>
 
         </div>
-
-
-
     </div>
 </div>
