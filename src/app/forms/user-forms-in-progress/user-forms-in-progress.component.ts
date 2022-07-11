@@ -33,11 +33,7 @@ export class UserFormsInProgressComponent implements OnInit {
     })
   }
 
-  SeeEntries(formId: number, formName: string, workflowId: number) {
-    this.router.navigate(['./formsInProgressData', formId, formName], { relativeTo: this.route, queryParams: {workflowId: workflowId} });
+  SeeEntries(form: any) {
+    this.router.navigate(['./formsInProgressData', form.id, form.name, form.workflow.id], { relativeTo: this.route });
   }
-
-
-
-
 }

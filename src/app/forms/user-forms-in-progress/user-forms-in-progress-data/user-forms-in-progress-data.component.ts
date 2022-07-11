@@ -3,34 +3,48 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormsService } from 'src/app/common/services/forms.service';
 import { DisplayWorkflowStatusComponent } from 'src/app/common/display-workflow-status/display-workflow-status.component';
 import { MatDialog } from '@angular/material/dialog';
-import { forkJoin} from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
+import { IGetWorkflowStateTransitionsModel } from '../../form-workflow/form-workflow.model';
 @Component({
   selector: 'app-user-forms-in-progress-data',
   templateUrl: './user-forms-in-progress-data.component.html',
   styleUrls: ['./user-forms-in-progress-data.component.scss']
 })
 export class UserFormsInProgressDataComponent implements OnInit {
-
+  userRoles: any;
   logEntries: any[];
   formId: number;
   formName: string;
+  workflowId: number;
   isDataLoaded: boolean = false;
   columns: string[];
   selectedChoice: any = 'all';
-  workflowId: number;
+  enableCreateNewEntry: boolean = false;
   constructor(private formsService: FormsService,
+    private authService: AuthService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
 
+    this.userRoles = this.authService.getRoles();
     let params = this.activatedRoute.snapshot.paramMap;
     const queryParams = this.activatedRoute.snapshot.queryParams;
     this.formId = Number(params.get('formId') || '');
     this.formName = String(params.get('formName') || '');
-    this.workflowId = Number(queryParams['workflowId']);
-    this.formsService.GetLogEntries(this.formId, false).subscribe({
+    this.workflowId = Number(params.get('workflowId') || '');
+    this.getLogEntries(false);
+
+    this.formsService.GetWorkflowStatesTransitions(this.workflowId).subscribe({
+      next: (transitionData: any) => this.canCreateNewEntry(transitionData),
+      error: () => alert("Something went wrong while finding transitions")
+    });
+
+  }
+
+  private getLogEntries(filterbyusername: boolean) {
+    this.formsService.GetLogEntries(this.formId, filterbyusername).subscribe({
       next: (data) => {
         if (data.length > 0) {
           this.logEntries = data;
@@ -43,34 +57,35 @@ export class UserFormsInProgressDataComponent implements OnInit {
 
       },
       error: (err) => console.log(`Error occured for ${this.formId} error:${err}`)
-    })
+    });
+  }
+
+  private canCreateNewEntry(transitionData: IGetWorkflowStateTransitionsModel) {
+    let allToStates = transitionData.transitions.map(transition => transition.toState.id);
+    let firstState = transitionData.states.find(state => !allToStates.includes(state.id) && !state.sendBackAvailable);
+    let rolesForAccess = firstState?.roles.find(stateRole => this.userRoles == stateRole.role);
+    if (rolesForAccess) {
+      this.enableCreateNewEntry = transitionData.transitions.filter(transition => transition.fromState.id == firstState?.id).length > 0;
+    } else {
+      this.enableCreateNewEntry = false
+    }
+
+
   }
 
   FillForm(entryId: number) {
-    this.router.navigate(['../../../updateLogEntry', this.formName, entryId], { relativeTo: this.activatedRoute });
+    this.router.navigate(['../../../../updateLogEntry', this.formName, entryId], { relativeTo: this.activatedRoute });
   }
 
   createNewEntry() {
-    this.router.navigate(['../../../createLogEntry', this.formName], { relativeTo: this.activatedRoute });
+    this.router.navigate(['../../../../createLogEntry', this.formName], { relativeTo: this.activatedRoute });
   }
 
 
   handleChange() {
     let filterbyusername = this.selectedChoice == "username";
 
-    this.formsService.GetLogEntries(this.formId, filterbyusername).subscribe({
-      next: (data) => {
-        if (data.length > 0) {
-          this.logEntries = data;
-          this.columns = Object.keys(this.logEntries[0].data);
-          this.isDataLoaded = true;
-        } else {
-          this.logEntries = []
-        }
-
-      },
-      error: (err) => console.log(`Error occured for ${this.formId} error:${err}`)
-    })
+    this.getLogEntries(filterbyusername);
   }
 
   ShowProgress(entryId: number) {

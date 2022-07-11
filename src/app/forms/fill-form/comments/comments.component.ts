@@ -12,6 +12,7 @@ export class CommentsComponent implements OnInit {
 
   @Input() entryId: any;
   @Input() formId: any;
+  commentsLoaded: boolean = false;
 
   commentForm = new FormGroup({
     comment: new FormControl(''),
@@ -29,6 +30,7 @@ export class CommentsComponent implements OnInit {
     combineLatest([entryMetaDataObservable]).subscribe(items => {
       let entryMetadata = items[0];
       this.comments = entryMetadata.filter((em: { data: { comment: null; }; }) => null != em.data.comment).map((em: { data: any; }) => em.data);
+      this.commentsLoaded = true;
     });
   }
 

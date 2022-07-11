@@ -9,6 +9,7 @@ import { combineLatest } from 'rxjs';
 import { IGetWorkflowStateTransitionsModel } from '../form-workflow/form-workflow.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ValidateUserComponent } from 'src/app/common/components/validate-user/validate-user.component';
+import { transition } from 'd3';
 @Component({
   selector: 'app-fill-form',
   templateUrl: './fill-form.component.html',
@@ -20,6 +21,7 @@ export class FillFormComponent implements OnInit {
   userRoles: any;
   toState: any;
   workflowId: any;
+  toggleCommentsButton: boolean = false;
   showComments: boolean = false;
   events: string[] = [];
 
@@ -30,7 +32,6 @@ export class FillFormComponent implements OnInit {
     private formService: FormsService,
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
     private _location: Location,
     private dialog: MatDialog
   ) { }
@@ -93,14 +94,24 @@ export class FillFormComponent implements OnInit {
 
 
   private processToHandleNewEntry(transitionData: IGetWorkflowStateTransitionsModel) {
-    let requiredTransition = transitionData.transitions.find(transition => transition.fromState.roles.filter(transtionRole => this.userRoles.includes(transtionRole.role)).length > 0);
-    if (null != requiredTransition) {
-      this.toState = requiredTransition.toState.name;
+    let allToStates = transitionData.transitions.map(transition => transition.toState.id);
+    let firstState = transitionData.states.find(state => !allToStates.includes(state.id) && !state.sendBackAvailable);
+    let rolesForAccess = firstState?.roles.find(stateRole => this.userRoles == stateRole.role);
+    if (rolesForAccess) {
+      let requiredTransition = transitionData.transitions.find(transition => transition.fromState.id == firstState?.id);
+      if (requiredTransition) {
+        this.toState = requiredTransition.toState.name;
+      } else {
+        this.toState = "no_access";
+        this.disableSave = true;
+      }
+
     } else {
       this.toState = "no_access";
       this.disableSave = true;
     }
     this.IsFormLoaded = true;
+
   }
 
   private processToHandleExistingEntry(entryData: any, transitionData: IGetWorkflowStateTransitionsModel) {
@@ -108,7 +119,7 @@ export class FillFormComponent implements OnInit {
 
     let requiredTransition = transitionData.transitions.
       find(transition => (transition.fromState.name == entry.state)
-        && transition.toState.roles.filter(transtionRole => this.userRoles.includes(transtionRole.role)).length > 0);
+        && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
     if (null != requiredTransition) {
       this.toState = requiredTransition.toState.name;
 
@@ -132,6 +143,7 @@ export class FillFormComponent implements OnInit {
 
 
     this.IsFormLoaded = true;
+    this.toggleCommentsButton = true;
 
   }
 

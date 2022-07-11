@@ -28,3 +28,9 @@
         margin-top: 0.2em;
     }
 }
+
+.toggle-and-submit-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

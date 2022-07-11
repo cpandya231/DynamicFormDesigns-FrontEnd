@@ -14,7 +14,7 @@
         <tbody>
             <tr *ngFor="let form of FormTemplates">
                 <td>{{form.id}}</td>
-                <td (click)="SeeEntries(form.id,form.name, form.workflow.id)" class="td-link">{{form.name}}</td>
+                <td (click)="SeeEntries(form)" class="td-link">{{form.name}}</td>
                 <td>{{form.createdBy}}</td>
                 <td>{{form.createDt | date: DATE_FORMAT }}</td>
 

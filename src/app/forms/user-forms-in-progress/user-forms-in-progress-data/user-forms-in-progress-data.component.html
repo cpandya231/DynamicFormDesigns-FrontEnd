@@ -28,14 +28,14 @@
 
             </div>
         </div>
-        <div class="submit-button">
+        <div class="submit-button" *ngIf="enableCreateNewEntry">
             <button type="submit" class="button" (click)="createNewEntry()">Create New Entry</button>
 
 
         </div>
     </div>
 
-    <table class="table">
+    <table class="table" *ngIf="isDataLoaded">
         <thead>
             <tr>
                 <th scope="col" *ngFor="let col of columns">{{col}}</th>
