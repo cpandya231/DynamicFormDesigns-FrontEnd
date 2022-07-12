@@ -24,7 +24,6 @@ body {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
-
 }
 
 .btn .btn-primary {
@@ -86,5 +85,17 @@ small {
     background-color: #fff;
     overflow: inherit;
     box-shadow: 0 2px 4px -1px #0003, 0 4px 5px #00000024, 0 1px 10px #0000001f, 0 1px 10px #0000001f;
+}
 
+.display-state-status {
+    .mat-dialog-container {
+        overflow-y: hidden;
+        padding: 0;
+        height: 40vh;
+        width: 60vw;
+        background: linear-gradient(#d1fff9, #fdfceb);
+        h2 {
+            border-bottom: 1px solid #20b5be;
+        }
+    }
 }

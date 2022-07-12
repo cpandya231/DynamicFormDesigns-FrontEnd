@@ -9,7 +9,6 @@ import { combineLatest } from 'rxjs';
 import { IGetWorkflowStateTransitionsModel } from '../form-workflow/form-workflow.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ValidateUserComponent } from 'src/app/common/components/validate-user/validate-user.component';
-import { transition } from 'd3';
 @Component({
   selector: 'app-fill-form',
   templateUrl: './fill-form.component.html',

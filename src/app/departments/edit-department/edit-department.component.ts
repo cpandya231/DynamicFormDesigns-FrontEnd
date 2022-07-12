@@ -34,7 +34,7 @@ export class EditDepartmentComponent implements OnInit {
       let allDepartMents = this.departmentService.getAllDepartment()
         .pipe(map(departments => {
           return departments.map((department: { [x: string]: any; }) => {
-            if (department["name"] == this.departmentId) {
+            if (department["id"] == this.departmentId) {
               this.departmentObj = department;
               return;
             }

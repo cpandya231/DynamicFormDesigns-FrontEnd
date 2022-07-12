@@ -1,15 +1,10 @@
 @import "../create-form-template/create-form-template.component.scss";
-
 @import "../../users/create-user/create-user.component.scss";
-
 .app-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-
-
 }
-
 
 .right-side-nav {
     border-left: 1px solid #c4c4c4;
@@ -22,14 +17,12 @@
     align-self: flex-end;
     justify-content: flex-end;
     gap: 1em;
-
 }
 
 .comments-toggle {
     display: flex;
     align-items: center;
     flex-direction: row;
-
     label {
         font-size: 0.8rem;
         margin-top: 0.2em;

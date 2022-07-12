@@ -44,7 +44,6 @@ import { AppConfig } from './formio-app-config';
 import { CreateDepartmentComponent } from './departments/create-department/create-department.component';
 import { DepartmentDashboardComponent } from './departments/department-dashboard/department-dashboard.component';
 import { EditDepartmentComponent } from './departments/edit-department/edit-department.component';
-import { OrgChartComponent } from './common/components/org-chart/org-chart.component';
 import { AddEditWorkflowStateComponent } from './forms/form-workflow/add-edit-workflow-state/add-edit-workflow-state.component';
 import { FormManagementComponent } from './forms/form-management/form-management.component';
 import { AuditTrailComponent } from './settings/audit-trail/audit-trail.component';
@@ -67,6 +66,7 @@ import { UserFormsDashboardComponent } from './forms/user-forms-dashboard/user-f
 import { UserFormsInProgressComponent } from './forms/user-forms-in-progress/user-forms-in-progress.component';
 import { UserFormsInProgressDataComponent } from './forms/user-forms-in-progress/user-forms-in-progress-data/user-forms-in-progress-data.component';
 import { CommentsComponent } from './forms/fill-form/comments/comments.component';
+import { DisplayWorkflowStatusComponent } from './common/display-workflow-status/display-workflow-status.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -88,7 +88,6 @@ import { CommentsComponent } from './forms/fill-form/comments/comments.component
     CreateDepartmentComponent,
     DepartmentDashboardComponent,
     EditDepartmentComponent,
-    OrgChartComponent,
     AddEditWorkflowStateComponent,
     FormManagementComponent,
     AuditTrailComponent,
@@ -105,6 +104,7 @@ import { CommentsComponent } from './forms/fill-form/comments/comments.component
     UserFormsInProgressComponent,
     UserFormsInProgressDataComponent,
     CommentsComponent,
+    DisplayWorkflowStatusComponent,
 
 
 

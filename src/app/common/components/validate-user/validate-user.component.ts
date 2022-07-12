@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ValidateUserComponent implements OnInit {
   LoginModel: any ={
-    username: '',
+    username: localStorage.getItem('username'),
     password: ''
   };
   constructor(private authService: AuthService,
@@ -21,6 +21,7 @@ export class ValidateUserComponent implements OnInit {
   }
 
   ValidateUser() {
+
     this.authService.validateUserCredentials(this.LoginModel).subscribe({
       next: () => this.dialogRef.close(true),
       error: () => {
