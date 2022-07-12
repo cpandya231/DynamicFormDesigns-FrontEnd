@@ -22,12 +22,13 @@ export class DepartmentDashboardComponent implements OnInit {
   };
   draggingEnabled: boolean = true;
   panningEnabled: boolean = true;
-  zoomEnabled: boolean = false;
+  zoomEnabled: boolean = true;
   zoomSpeed: number = 0.2;
   minZoomLevel: number = 0.5;
   maxZoomLevel: number = 2.0;
   panOnZoom: boolean = true;
   autoCenter = true;
+  autoZoom = true;
   public curve: any = shape.curveStep;
   WorkflowLinks: any;
   WorkflowStates: any;

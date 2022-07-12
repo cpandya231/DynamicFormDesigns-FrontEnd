@@ -1,8 +1,14 @@
 .page {
-    width: 90vw;
-    height: 90vh;
     overflow: hidden;
+    height: calc(100% - 30px);
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
     .add_btn {
-        margin: 6rem 0 0 2rem;
+        position: absolute;
+        top: 100px;
+        left: 20px;
     }
 }

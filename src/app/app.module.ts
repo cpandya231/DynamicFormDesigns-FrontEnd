@@ -44,7 +44,6 @@ import { AppConfig } from './formio-app-config';
 import { CreateDepartmentComponent } from './departments/create-department/create-department.component';
 import { DepartmentDashboardComponent } from './departments/department-dashboard/department-dashboard.component';
 import { EditDepartmentComponent } from './departments/edit-department/edit-department.component';
-import { OrgChartComponent } from './common/components/org-chart/org-chart.component';
 import { AddEditWorkflowStateComponent } from './forms/form-workflow/add-edit-workflow-state/add-edit-workflow-state.component';
 import { FormManagementComponent } from './forms/form-management/form-management.component';
 import { AuditTrailComponent } from './settings/audit-trail/audit-trail.component';
@@ -89,7 +88,6 @@ import { DisplayWorkflowStatusComponent } from './common/display-workflow-status
     CreateDepartmentComponent,
     DepartmentDashboardComponent,
     EditDepartmentComponent,
-    OrgChartComponent,
     AddEditWorkflowStateComponent,
     FormManagementComponent,
     AuditTrailComponent,
