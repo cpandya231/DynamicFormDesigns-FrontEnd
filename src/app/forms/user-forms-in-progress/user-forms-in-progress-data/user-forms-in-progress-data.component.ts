@@ -74,11 +74,11 @@ export class UserFormsInProgressDataComponent implements OnInit {
   }
 
   FillForm(entryId: number) {
-    this.router.navigate(['../../../../updateLogEntry', this.formName, entryId], { relativeTo: this.activatedRoute });
+    this.router.navigate(['../../../../updateLogEntry', this.formName, entryId], { relativeTo: this.activatedRoute, state: {formId: this.formId} });
   }
 
   createNewEntry() {
-    this.router.navigate(['../../../../createLogEntry', this.formName], { relativeTo: this.activatedRoute });
+    this.router.navigate(['../../../../createLogEntry', this.formName], { relativeTo: this.activatedRoute, state: {formId: this.formId} });
   }
 
 

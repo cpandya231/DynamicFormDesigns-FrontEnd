@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormsService } from 'src/app/common/services/forms.service';
 import { IDepartmentItem } from 'src/app/departments/department-item-model';
@@ -24,6 +24,7 @@ export class AddEditWorkflowStateComponent implements OnInit {
   ModalHeaderText = 'Create State';
   ShowErrorFields = false;
   SaveButtonName = 'Save State';
+  FieldsList: any[] = [];
   constructor(private fb: FormBuilder,
     private departmentService: DepartmentService,
     private formService: FormsService,
@@ -31,6 +32,10 @@ export class AddEditWorkflowStateComponent implements OnInit {
     public dialogRef: MatDialogRef<AddEditWorkflowStateComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any) { }
 
+    get fields() : FormArray {
+      return this.StateDetailsForm?.get('fields') as FormArray;
+    }
+    
   ngOnInit(): void {
     this.tempStateId = this.dialogData.tempId;
     this.departmentService.getAllDepartment().subscribe(data => {
@@ -41,7 +46,11 @@ export class AddEditWorkflowStateComponent implements OnInit {
     })
     this.WorkflowStates = this.dialogData.states;
     this.existingStateData = this.dialogData.stateData;
+    this.FieldsList = this.dialogData.fieldsList;
     if (this.existingStateData) {
+      const visibleFields = this.existingStateData.visibleFields.split(',');
+      const disabledFields = this.existingStateData.disabledFields.split(',');
+     
       this.ModalHeaderText = 'Update State';
       this.SaveButtonName = 'Update State';
       this.StateDetailsForm = this.fb.group ({
@@ -51,12 +60,31 @@ export class AddEditWorkflowStateComponent implements OnInit {
         multiPreviousStateCompletion: [false],
         roleStateAccess: [this.existingStateData.roles.map((e: any) => e.id)],
         departmentStateAccess: [this.existingStateData.departments.map((e: any) => e.id)],
-        sendBackAvailable: [false],
+        sendBackAvailable: [this.existingStateData.sendBackAvailable],
         triggerEmail: [false],
         triggerSMS: [false],
         eSignRequired: [false],
-        sendBackTo: ['']
+        sendBackTo: [''],
+        fields: this.fb.array([])
       });
+
+      this.FieldsList.forEach((field: any) => {
+        if (visibleFields.find((ele: string) => ele === field.key)) {
+          field.visible = true;
+        } else {
+          field.visible = false;
+        }
+        if (disabledFields.find((ele: string) => ele === field.key)) {
+          field.disabled = true;
+        } else {
+          field.disabled = false;
+        }
+        this.fields.push(this.fb.group({
+          visible: [field.visible],
+          disabled: [field.disabled]
+        }));
+      })
+
       if (this.existingStateData?.parentName?.length) {
         this.StateDetailsForm.controls['previousState'].setValidators([Validators.required]);
       }
@@ -72,8 +100,15 @@ export class AddEditWorkflowStateComponent implements OnInit {
         triggerEmail: [false],
         triggerSMS: [false],
         eSignRequired: [false],
-        sendBackTo: ['']
+        sendBackTo: [''],
+        fields: this.fb.array([])
       });
+      this.FieldsList.forEach(() => {
+        this.fields.push(this.fb.group({
+          visible: [true],
+          disabled: [false]
+        }));
+      })
       if (this.WorkflowStates.length) {
         this.StateDetailsForm.controls['previousState'].setValidators([Validators.required]);
       }
@@ -86,6 +121,16 @@ export class AddEditWorkflowStateComponent implements OnInit {
       return;
     }
     this.ShowErrorFields = false;
+    let visibleColumns = '';
+    let disabledColumns = '';
+    this.StateDetailsForm.value.fields.forEach((field: any, index: number) => {
+      if (field.visible) {
+        visibleColumns = visibleColumns + this.FieldsList[index].key +',';
+      }
+      if (field.disabled) {
+        disabledColumns + disabledColumns +this.FieldsList[index].key + ',';
+      }
+    })
     const stateData = {
       workflowId: this.dialogData.workflowId,
       state: {
@@ -109,6 +154,8 @@ export class AddEditWorkflowStateComponent implements OnInit {
           width: 150,
           height: 50
         },
+        visibleColumns,
+        disabledColumns
       },
      
     };

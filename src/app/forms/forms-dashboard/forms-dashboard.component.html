@@ -17,10 +17,8 @@
                 <td>{{form.name}}</td>
                 <td>{{form.createdBy}}</td>
                 <td>{{form.createDt | date: DATE_FORMAT }}</td>
-                <td *ngIf="isAdmin"><img src="../../../assets/Images/pen-to-square-solid.svg" class="svg_icon"
-                        (click)="EditFormTemplate(form.name, form.workflow.id)" /></td>
-                <td *ngIf="isAdmin"><img src="../../../assets/Images/eye-solid.svg" class="svg_icon"
-                        (click)="PreviewForm(form.template)" /></td>
+                <td *ngIf="isAdmin"><img src="../../../assets/Images/pen-to-square-solid.svg" class="svg_icon" (click)="EditFormTemplate(form.name, form.id, form.workflow.id)" /></td>
+                <td *ngIf="isAdmin"><img src="../../../assets/Images/eye-solid.svg" class="svg_icon" (click)="PreviewForm(form.template)" /></td>
             </tr>
             <tr *ngIf="FormTemplates && !FormTemplates.length" class="no_data_message">
                 <td colspan="6">

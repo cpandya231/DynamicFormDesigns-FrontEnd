@@ -1,23 +1,36 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { IGetWorkflowStateTransitionsModel } from 'src/app/forms/form-workflow/form-workflow.model';
-import { IGetFormTemplateResponse } from 'src/app/forms/form.model';
+import { IFormTemplateModel, IGetFormTemplateResponse } from 'src/app/forms/form.model';
 import { ServiceUtil } from '../../services/utility/ServiceUtil';
 @Injectable({
   providedIn: 'root'
 })
 export class FormsService {
 
-  tempFormTemplatesStorage: any = [];
-  FormWorkflowStates: any[] = [];
+  formTemplatesStorage: any = {};
   constructor(private http: HttpClient) { }
 
   GetFormTemplates() {
-    return this.http.get(`${ServiceUtil.API_ENDPOINT}/forms/`);
+    if (Object.keys(this.formTemplatesStorage).length) {
+      return of(Object.values(this.formTemplatesStorage));
+    }
+    return this.http.get<IGetFormTemplateResponse[]>(`${ServiceUtil.API_ENDPOINT}/forms/`).pipe(
+      tap((response: IGetFormTemplateResponse[]) => {
+        response.forEach((form: IGetFormTemplateResponse) => {
+          this.formTemplatesStorage[form.id] = form
+        })
+      })
+    );
   }
 
-  GetFormTemplate(formName: any): Observable<IGetFormTemplateResponse> {
+  GetFormTemplate(formName: any, formId: number): Observable<IGetFormTemplateResponse> {
+    const form = this.formTemplatesStorage[formId];
+    if (form) {
+      return of(form);
+    }
     return this.http.get<IGetFormTemplateResponse>(`${ServiceUtil.API_ENDPOINT}/forms/${formName}/`);
   }
 
@@ -27,7 +40,11 @@ export class FormsService {
       template: JSON.stringify({ formName: name, components: formTemplate.components }),
       workflow: {}
     }
-    return this.http.post(`${ServiceUtil.API_ENDPOINT}/forms/`, body, this.getHeaders());
+    return this.http.post<IGetFormTemplateResponse>(`${ServiceUtil.API_ENDPOINT}/forms/`, body, this.getHeaders()).pipe(
+      tap((response: IGetFormTemplateResponse) => {
+        this.formTemplatesStorage[response.id] = response;
+      })
+    );
   }
 
   UpdateFormTemplate(formTemplate: any, name: string, id: number): Observable<any> {
@@ -36,7 +53,9 @@ export class FormsService {
       name,
       template: JSON.stringify({ formName: name, components: formTemplate.components })
     };
-    return this.http.put(`${ServiceUtil.API_ENDPOINT}/forms/`, body, this.getHeaders());
+    return this.http.put<IGetFormTemplateResponse>(`${ServiceUtil.API_ENDPOINT}/forms/`, body, this.getHeaders()).pipe(
+      tap((response: IGetFormTemplateResponse) => this.formTemplatesStorage[response.id] = response)
+    );
   }
 
   GetWorkflowStatesTransitions(workflowId: number): Observable<IGetWorkflowStateTransitionsModel> {

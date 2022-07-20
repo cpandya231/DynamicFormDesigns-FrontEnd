@@ -94,11 +94,23 @@
                     <input class="form-check-input" type="checkbox" id="triggerSMS" formControlName="triggerSMS">
                 </div>
             </div>
-            <div class="row btn_container">
-                <div>
-                    <button class="btn" (click)="Cancel()" type="reset">Cancel</button>
-                    <button class="btn save_button" type="submit"> {{SaveButtonName}}</button>
+            <div class="form_group_label">Form fields access control</div>
+            <div class="row" formArrayName="fields">
+                <div class="row" *ngFor="let field of fields.controls; index as i" [formGroupName]="i">
+                    <div class="col-3">{{FieldsList[i].label}}</div>
+                    <div class="col-2 form-check">
+                        <input type="checkbox" id="visibleCheck" class="form-check-input" formControlName="visible">
+                        <label for="visibleCheck">visible</label>
+                    </div>
+                    <div class="col-2 form-check">
+                        <input type="checkbox" class="form-check-input" id="disableCheck" formControlName="disabled">
+                        <label for="disableCheck">disabled</label>
+                    </div>
                 </div>
+            </div>
+            <div class="row btn_container">
+                <button class="btn" (click)="Cancel()" type="reset">Cancel</button>
+                <button class="btn save_button" type="submit"> {{SaveButtonName}}</button>
             </div>
         </form>
     </div>
