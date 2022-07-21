@@ -1,6 +1,6 @@
 #logo {
     color: #FFC947;
-    font-weight: bold;
+    font-weight: initial;
 }
 
 .navbar {
@@ -26,14 +26,14 @@
 
 .nav-link-custom:hover {
     color: #ffffff;
-    font-weight: bold;
+    font-weight: initial;
     border-bottom: solid #FFC947;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.3s ease-in-out, border-bottom 0.1s ease-in-out;
 }
 
 .active {
     color: #ffffff;
-    font-weight: bold;
+    font-weight: initial;
 }
 
 .navbar-text {

@@ -6,11 +6,12 @@
     flex-direction: column;
     justify-content: space-evenly;
     height: 30vh;
+    margin-top: 0em;
 }
 
 .alert-message {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
+    font-weight: initial;
 }

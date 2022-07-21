@@ -13,13 +13,9 @@
         <div class="toggle-and-submit-buttons">
             <div>
                 <div class="comments-toggle" *ngIf="toggleCommentsButton">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="showComments"
-                            [(ngModel)]="showComments" />
-
-
-                    </div>
-                    <label for="showComments">Comments</label>
+                    <mat-slide-toggle [(ngModel)]="showComments" color="primary">
+                        Comments
+                    </mat-slide-toggle>
                 </div>
 
             </div>
