@@ -37,11 +37,12 @@
 }
 
 .welcome-screen {
-    background-color: #0A1931;
+    background-color: $main-navy;
 
-    font-weight: bold;
+    font-weight: initial;
 
     color: #fff;
+    position: relative;
     -moz-border-radius: 10px 10px 0 0;
 
 
@@ -149,7 +150,7 @@
     /* width: 100%; */
     height: 2.5em;
     border-radius: 5px;
-    background-color: #c4c4c430;
+    border: 1px solid $main-navy-light;
 
 
 }
@@ -210,7 +211,7 @@
     color: #FFC947;
     text-decoration: none;
     font-size: 0.8rem;
-    font-weight: bold;
+    font-weight: initial;
     text-align: right;
 
 }
@@ -245,4 +246,14 @@
 .toggle-password-visibility-parent {
     display: flex;
     gap: 1em
+}
+
+.logo {
+    position: absolute;
+    top: 1em;
+    left: 1em;
+
+    img {
+        width: 70%;
+    }
 }

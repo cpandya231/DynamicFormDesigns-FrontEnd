@@ -1,4 +1,5 @@
 @import "../user-forms-in-progress.component.scss";
+
 .cta-buttons {
     display: flex;
     flex-direction: row;
@@ -8,6 +9,7 @@
 
 .filter {
     position: relative;
+
     .filter-menu {
         z-index: 999;
     }
@@ -15,10 +17,12 @@
 
 .mat-button {
     background-color: #fff;
-    font-weight: bold;
+    font-weight: initial;
+
     &:hover {
         background-color: #EFEFEF;
     }
+
     &:focus {
         border: 1px solid #00ADB5;
     }
@@ -26,6 +30,7 @@
 
 .mat-menu-item {
     background-color: #fff;
+
     &:hover {
         background-color: #EFEFEF;
     }
@@ -40,6 +45,7 @@
     padding: 1em;
     display: flex;
     gap: 1em;
+
     &:hover {
         background-color: #EFEFEF;
     }
@@ -47,10 +53,12 @@
 
 .table {
     margin-top: 1em;
+
     .icon_column {
         width: 6rem;
         padding: 0.5rem 1rem;
         vertical-align: middle;
+
         .fas {
             font-size: 1.25rem;
         }

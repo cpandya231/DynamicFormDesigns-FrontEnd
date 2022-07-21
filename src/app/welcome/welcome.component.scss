@@ -29,7 +29,7 @@
 .app:hover {
     background-color: #EFEFEF;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: initial;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
 

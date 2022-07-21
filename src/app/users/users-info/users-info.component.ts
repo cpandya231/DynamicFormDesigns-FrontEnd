@@ -1,7 +1,7 @@
 
 
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 import { combineLatest, Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -37,6 +37,10 @@ export class UsersInfoComponent implements OnInit {
   filter = new FormControl('');
   @ViewChildren(NgbdSortableHeader)
   headers!: QueryList<NgbdSortableHeader>;
+
+  userToggleForm = new FormGroup({
+    DATE_FORMAT: new FormControl(''),
+  });
 
   constructor(
     private usersService: UsersService,
@@ -150,10 +154,10 @@ export class UsersInfoComponent implements OnInit {
 
   }
 
-  toggleUser(user: IUserItem, event: any) {
+  toggleUser(user: IUserItem,) {
     let userObj: any = {
       username: user.username,
-      isActive: event.currentTarget.checked
+      isActive: !user.isActive
     }
 
 
