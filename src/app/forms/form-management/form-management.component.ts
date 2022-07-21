@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-form-management',
   templateUrl: './form-management.component.html',
@@ -12,36 +12,20 @@ export class FormManagementComponent implements OnInit {
   IsTemplateVisible = true;
   IsFormWorkflowIdAvailable = true;
   params: any;
+  FormId: number;
   WorkflowId: number;
   FormName: string = '';
   DisabledWorkflowTitle = '';
-  constructor(private activatedRoute: ActivatedRoute) { }
+  constructor(private activatedRoute: ActivatedRoute, private location:Location) { }
 
   ngOnInit(): void {
     let params = this.activatedRoute.snapshot.paramMap;
-    this.FormName = String(params.get('name') || '');
-    this.WorkflowId = Number(params.get('workflowId') || '');
+    this.FormName = String(params.get('formName') || '');
+    this.WorkflowId = +(params.get('workflowId') || '');
+    this.FormId = +(params.get('formId') || '');
     if (!this.WorkflowId) {
       this.DisabledWorkflowTitle = 'Need to save form template first!';
       this.IsFormWorkflowIdAvailable = false;
-    }
-  }
-
-  LoadFormWorkflow(): void {
-    this.IsWorkflowVisible = true;
-    this.IsTemplateVisible = false;
-  }
-
-  LoadFormTemplate(): void {
-    this.IsWorkflowVisible = false;
-    this.IsTemplateVisible = true;
-  }
-
-  WorkflowIdUpdate(data: any): void {
-    this.WorkflowId = data;
-    if (this.WorkflowId) {
-      this.IsFormWorkflowIdAvailable = true;
-      this.LoadFormWorkflow();
     }
   }
 }

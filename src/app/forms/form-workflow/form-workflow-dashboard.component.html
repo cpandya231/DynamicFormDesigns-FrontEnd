@@ -2,7 +2,7 @@
 <button class="btn btn-primary" (click)="SaveWorkflow()" [disabled]="IsSaveWorkflowDisabled">Save Workflow</button>
 <div class="page">
     <ngx-graph [links]="WorkflowLinks" [nodes]="WorkflowStates" layout="dagre" [curve]="curve" [draggingEnabled]="draggingEnabled" [panningEnabled]="panningEnabled" [enableZoom]="zoomEnabled" [zoomSpeed]="zoomSpeed" [minZoomLevel]="minZoomLevel" [maxZoomLevel]="maxZoomLevel"
-        [panOnZoom]="panOnZoom" [autoCenter]="autoCenter">
+        [panOnZoom]="panOnZoom" [autoCenter]="autoCenter" [autoZoom]="autoZoom">
         <ng-template #nodeTemplate let-node>
             <svg:g class="node">
                 <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height" fill="#F4F4F4" stroke="#00ADB5" style="stroke-width: 3px" />
