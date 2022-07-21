@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 import { FormsService } from '../../common/services/forms.service';
@@ -14,13 +14,14 @@ import { ToastrService } from 'ngx-toastr';
 export class CreateFormTemplateComponent implements OnInit {
 
   @ViewChild('formio') formIO: any;
-  @Input('formName') FormName: string;
-  @Output() WorkflowIdUpdate = new EventEmitter<number>();
+  FormName: string;
+  formId: number;
+  WorkflowIdUpdate = new EventEmitter<number>();
   CurrentForm: any = {
     components: []
   };
   IsFormLoaded = false;
-  formId: number = 0;
+  
   SiteName = 'Moraiya';
   DepartmentName = 'Tablet Facility IX ';
   RoomIDList = [101, 102, 103, 104, 105];
@@ -147,9 +148,14 @@ export class CreateFormTemplateComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private userService: UsersService,
-    private toastrService: ToastrService) { }
+    private toastrService: ToastrService,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    let params = this.activatedRoute.snapshot.paramMap;
+    this.FormName = String(params.get('formName') || '');
+    this.WorkflowId = +(params.get('workflowId') || '');
+    this.formId = +(params.get('formId') || '');
     let eleObj = {};
     this.EnabledFormElements.forEach(ele => {
       let obj = {
@@ -193,7 +199,7 @@ export class CreateFormTemplateComponent implements OnInit {
     this.FormOptions.editForm = { ...eleObj };
 
     if (this.FormName.length) {
-      this.formsService.GetFormTemplate(this.FormName).subscribe(data => {
+      this.formsService.GetFormTemplate(this.FormName, this.formId).subscribe(data => {
         console.log(data);
         this.FormName = data.name;
         this.CurrentForm.components = JSON.parse(data.template).components;
@@ -235,9 +241,10 @@ export class CreateFormTemplateComponent implements OnInit {
     } else {
       this.formsService.SaveFormTemplate(this.formIO.form, this.FormName).subscribe(data => {
         this.WorkflowId = data.workflow.id;
+        const formId = data.id;
         this.SaveInProgress = false;
         this.toastrService.success('form created successfully', 'Success');
-        this.WorkflowIdUpdate.emit(this.WorkflowId);
+        this.router.navigate(['/formManagement', data.name, formId, this.WorkflowId, 'formWorkflow']);
       }, () => this.toastrService.error('some error occured!', 'Error'));
     }
   }

@@ -34,8 +34,8 @@ export class FormsDashboardComponent implements OnInit {
     })
   }
 
-  EditFormTemplate(formName: string, id: number) {
-    this.router.navigate(['/formManagement', { name: formName, workflowId: id }]);
+  EditFormTemplate(formName: string, formId: number, workflowId: number) {
+    this.router.navigate(['/formManagement', formName, formId, workflowId ]);
   }
 
   FillForm(formName: string) {

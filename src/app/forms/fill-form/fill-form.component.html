@@ -1,5 +1,4 @@
 <mat-sidenav-container class="app-container" *ngIf="IsFormLoaded">
-
     <mat-sidenav #sidenav *ngIf="showComments" class="right-side-nav" opened mode="side" position="end"
         [fixedInViewport]="true" fixedTopGap="65" [(opened)]="showComments" (opened)="events.push('open!')"
         (closed)="events.push('close!')">
@@ -7,9 +6,6 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-
-
-
         <div class="toggle-and-submit-buttons">
             <div>
                 <div class="comments-toggle" *ngIf="toggleCommentsButton">
@@ -17,7 +13,6 @@
                         Comments
                     </mat-slide-toggle>
                 </div>
-
             </div>
             <div class="submit-button">
                 <button type="submit" *ngIf="!disableSave" class="button" (click)="onSubmit()"
@@ -27,10 +22,6 @@
                 <button type="button" class="button-cancel" (click)="close(0)">Go Back</button>
             </div>
         </div>
-
         <formio [form]='CurrentForm' #formio [options]='FormOptions'></formio>
-
-
     </mat-sidenav-content>
-
 </mat-sidenav-container>

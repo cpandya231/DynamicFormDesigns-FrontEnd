@@ -35,12 +35,12 @@ input[type="password"] {
     margin-top: 0.5em;
     outline: none;
     transition: border .2s ease;
-    border-style: none;
     height: 2.5em;
     border-radius: 5px;
 
     border: 1px solid $main-navy-light;
 
+    // background-color: #c4c4c430;   //commenting this as this makes normal field disabled, if you need this make it in respective component style
     &:focus {
         border: thin solid blue;
     }

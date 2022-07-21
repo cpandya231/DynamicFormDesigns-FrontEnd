@@ -1,4 +1,5 @@
 .state_form_container {
+    height: 90vh;
     .header_text {
         color: #0A1931;
         font-weight: 600;
@@ -18,8 +19,10 @@
         }
         .btn_container {
             flex-direction: row-reverse;
-            div {
-                width: 50%;
+            padding: 1rem 0 1rem 0;
+            .btn {
+                width: 7rem;
+                padding: 8px 0px;
             }
             .save_button {
                 margin-left: 10px;
@@ -42,6 +45,10 @@
         }
         .form-select[multiple] {
             margin: 1rem 0;
+        }
+        .form_group_label {
+            border-bottom: 1px solid lightgray;
+            margin-bottom: 10px;
         }
     }
 }

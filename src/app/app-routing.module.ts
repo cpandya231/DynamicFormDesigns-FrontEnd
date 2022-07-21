@@ -32,18 +32,24 @@ const routes: Routes = [
 
   },
   {
-    path: 'formManagement/:name/:workflowId',
-    component: FormManagementComponent
+    path: 'formManagement/:formName/:formId/:workflowId',
+    component: FormManagementComponent,
+    children: [{
+      path: '',
+      component: CreateFormTemplateComponent
+    },{
+      path: 'formWorkflow',
+      component: FormWorkflowComponent,
+    }]
   },
   {
     path: 'formManagement',
-    component: FormManagementComponent
+    component: FormManagementComponent,
+    children: [{
+      path: '',
+      component: CreateFormTemplateComponent
+    }]
   },
-  {
-    path: 'formWorkflow',
-    component: FormWorkflowComponent,
-  },
-
   {
     path: 'userFormsDashboard',
     component: UserFormsDashboardComponent,
