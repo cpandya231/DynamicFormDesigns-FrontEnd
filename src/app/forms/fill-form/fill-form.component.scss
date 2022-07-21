@@ -34,3 +34,11 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+input[type=text],
+input[type=number],
+input[type=email],
+input[type=password] {
+    border-style: solid;
+    background-color: #fff;
+}

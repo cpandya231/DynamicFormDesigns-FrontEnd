@@ -128,7 +128,7 @@ export class AddEditWorkflowStateComponent implements OnInit {
         visibleColumns = visibleColumns + this.FieldsList[index].key +',';
       }
       if (field.disabled) {
-        disabledColumns + disabledColumns +this.FieldsList[index].key + ',';
+        disabledColumns = disabledColumns +this.FieldsList[index].key + ',';
       }
     })
     const stateData = {

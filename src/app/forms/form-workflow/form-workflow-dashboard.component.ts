@@ -37,6 +37,7 @@ export class FormWorkflowComponent implements OnInit {
   maxZoomLevel: number = 2.0;
   panOnZoom: boolean = true;
   autoCenter = true;
+  autoZoom = true;
   fieldsList: any[] = [];
   constructor(private formService: FormsService,
     private dialog: MatDialog,

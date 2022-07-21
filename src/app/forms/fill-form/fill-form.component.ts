@@ -85,6 +85,9 @@ export class FillFormComponent implements OnInit {
     let allToStates = transitionData.transitions.map(transition => transition.toState.id);
     let firstState = transitionData.states.find(state => !allToStates.includes(state.id) && !state.sendBackAvailable);
     let rolesForAccess = firstState?.roles.find(stateRole => this.userRoles == stateRole.role);
+    const disabledColumns = firstState?.disabledColumns.split(',') || [];
+    const visibleColumns = firstState?.visibleColumns.split(',') || [];
+
     if (rolesForAccess) {
       let requiredTransition = transitionData.transitions.find(transition => transition.fromState.id == firstState?.id);
       if (requiredTransition) {
@@ -97,6 +100,20 @@ export class FillFormComponent implements OnInit {
       this.toState = "no_access";
       this.disableSave = true;
     }
+    this.CurrentForm.components.forEach((table: any) => {
+      table.rows.forEach((rowItem: any) => {
+        rowItem.forEach((rowItemComponent: any) => {
+          rowItemComponent.components.forEach((component: any) => {
+            if (disabledColumns.includes(component.key)) {
+              component.disabled = true;
+            }
+            if (!visibleColumns.includes(component.key)) {
+              component.hidden = true;
+            }
+          });
+        });
+      });
+    });
     this.IsFormLoaded = true;
   }
 
@@ -112,12 +129,21 @@ export class FillFormComponent implements OnInit {
       this.disableSave = true;
     }
 
+    const disabledColumns = requiredTransition?.fromState?.disabledColumns.split(',') || [];
+    const visibleColumns = requiredTransition?.fromState?.visibleColumns.split(',') || [];
+
     this.CurrentForm.components.forEach((table: any) => {
       table.rows.forEach((rowItem: any) => {
         rowItem.forEach((rowItemComponent: any) => {
           rowItemComponent.components.forEach((component: any) => {
             let componentValue = entry["" + component.key];
             component.defaultValue = componentValue;
+            if (disabledColumns.includes(component.key)) {
+              component.disabled = true;
+            }
+            if (!visibleColumns.includes(component.key)) {
+              component.hidden = true;
+            }
           });
         });
       });

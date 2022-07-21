@@ -7,6 +7,8 @@ export interface IWorkflowStateModel {
     parentId?: number;
     parentName?: string;
     sendBackAvailable?: boolean;
+    disabledColumns: string;
+    visibleColumns: string;
 }
 
 export interface IWorkflowTransitionModel {
