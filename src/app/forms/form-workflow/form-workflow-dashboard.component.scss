@@ -13,4 +13,24 @@
 .page {
     height: 50vh;
     width: 90vw;
+    margin-left: 10rem;
+    margin-top: 4rem;
+}
+
+.custom-node {
+    background-color: #F4F4F4;
+    border-radius: 5px;
+    border: 3px solid $main-teal;
+    display: flex;
+    flex-direction: column;
+    height: 4em;
+    width: 10em;
+    .edit_icon {
+        position: absolute;
+        right: 0;
+    }
+    .state_label {
+        text-align: center;
+        padding-top: 1rem;
+    }
 }

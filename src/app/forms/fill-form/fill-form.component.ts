@@ -121,7 +121,7 @@ export class FillFormComponent implements OnInit {
   private processToHandleExistingEntry(entryData: any, transitionData: IGetWorkflowStateTransitionsModel) {
     let entry = entryData[0].data;
     let requiredTransition = transitionData.transitions.
-      find(transition => (transition.fromState.name == entry.state)
+      find(transition => (transition.fromState.name == entry.state && !transition.sendBackTransition)
         && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
     if (null != requiredTransition) {
       this.toState = requiredTransition.toState.name;

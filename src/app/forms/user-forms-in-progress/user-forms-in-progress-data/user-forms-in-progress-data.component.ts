@@ -112,7 +112,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
 
   protected transformStateTransitions(data: any, statusData: any, workflowLinks: any): any {
     return data.states.map((state: any) => {
-      const toStateName = (data.transitions.find((link: any) => link.fromState.id === state.id))?.toState.name;
+      const toStateName = (data.transitions.find((link: any) => (link.fromState.id === state.id) && !link.sendBackTransition))?.toState.name;
       const updateDetails = statusData.find((status: any) => status.state === toStateName);
       return {
         id: state.id,

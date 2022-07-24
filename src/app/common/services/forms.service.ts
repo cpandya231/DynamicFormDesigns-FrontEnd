@@ -14,9 +14,6 @@ export class FormsService {
   constructor(private http: HttpClient) { }
 
   GetFormTemplates() {
-    if (Object.keys(this.formTemplatesStorage).length) {
-      return of(Object.values(this.formTemplatesStorage));
-    }
     return this.http.get<IGetFormTemplateResponse[]>(`${ServiceUtil.API_ENDPOINT}/forms/`).pipe(
       tap((response: IGetFormTemplateResponse[]) => {
         response.forEach((form: IGetFormTemplateResponse) => {
