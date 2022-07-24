@@ -48,8 +48,8 @@ export class AddEditWorkflowStateComponent implements OnInit {
     this.existingStateData = this.dialogData.stateData;
     this.FieldsList = this.dialogData.fieldsList;
     if (this.existingStateData) {
-      const visibleFields = this.existingStateData.visibleFields.split(',');
-      const disabledFields = this.existingStateData.disabledFields.split(',');
+      const visibleFields = this.existingStateData.visibleColumns.split(',');
+      const disabledFields = this.existingStateData.disabledColumns.split(',');
      
       this.ModalHeaderText = 'Update State';
       this.SaveButtonName = 'Update State';
