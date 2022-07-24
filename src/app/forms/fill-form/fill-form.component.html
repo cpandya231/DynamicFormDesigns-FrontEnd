@@ -1,5 +1,7 @@
 <mat-sidenav-container class="app-container" *ngIf="IsFormLoaded">
-    <mat-sidenav #sidenav *ngIf="showComments" class="right-side-nav" opened mode="side" position="end" [fixedInViewport]="true" fixedTopGap="65" [(opened)]="showComments" (opened)="events.push('open!')" (closed)="events.push('close!')">
+    <mat-sidenav #sidenav *ngIf="showComments" class="right-side-nav" opened mode="side" position="end"
+        [fixedInViewport]="true" fixedTopGap="65" [(opened)]="showComments" (opened)="events.push('open!')"
+        (closed)="events.push('close!')">
         <app-comments [formId]="formId" [entryId]="entryId"></app-comments>
     </mat-sidenav>
 
@@ -7,14 +9,14 @@
         <div class="toggle-and-submit-buttons">
             <div>
                 <div class="comments-toggle" *ngIf="toggleCommentsButton">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="showComments" [(ngModel)]="showComments" />
-                    </div>
-                    <label for="showComments">Comments</label>
+                    <mat-slide-toggle [(ngModel)]="showComments" color="primary">
+                        Comments
+                    </mat-slide-toggle>
                 </div>
             </div>
             <div class="submit-button">
-                <button type="submit" *ngIf="!disableSave" class="button" (click)="onSubmit()" [disabled]="disableSave">Send
+                <button type="submit" *ngIf="!disableSave" class="button" (click)="onSubmit()"
+                    [disabled]="disableSave">Send
                     for
                     {{toState}}</button>
                 <button type="button" class="button-cancel" (click)="close(0)">Go Back</button>

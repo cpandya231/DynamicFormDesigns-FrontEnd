@@ -32,10 +32,10 @@ export class AddEditWorkflowStateComponent implements OnInit {
     public dialogRef: MatDialogRef<AddEditWorkflowStateComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any) { }
 
-    get fields() : FormArray {
-      return this.StateDetailsForm?.get('fields') as FormArray;
-    }
-    
+  get fields(): FormArray {
+    return this.StateDetailsForm?.get('fields') as FormArray;
+  }
+
   ngOnInit(): void {
     this.tempStateId = this.dialogData.tempId;
     this.departmentService.getAllDepartment().subscribe(data => {
@@ -50,10 +50,9 @@ export class AddEditWorkflowStateComponent implements OnInit {
     if (this.existingStateData) {
       const visibleFields = this.existingStateData.visibleColumns.split(',');
       const disabledFields = this.existingStateData.disabledColumns.split(',');
-     
       this.ModalHeaderText = 'Update State';
       this.SaveButtonName = 'Update State';
-      this.StateDetailsForm = this.fb.group ({
+      this.StateDetailsForm = this.fb.group({
         name: [this.existingStateData.label],
         description: [this.existingStateData.description],
         previousState: [this.existingStateData.parentId],
@@ -89,7 +88,7 @@ export class AddEditWorkflowStateComponent implements OnInit {
         this.StateDetailsForm.controls['previousState'].setValidators([Validators.required]);
       }
     } else {
-      this.StateDetailsForm = this.fb.group ({
+      this.StateDetailsForm = this.fb.group({
         name: ['', Validators.required],
         description: [''],
         previousState: [''],
@@ -125,23 +124,23 @@ export class AddEditWorkflowStateComponent implements OnInit {
     let disabledColumns = '';
     this.StateDetailsForm.value.fields.forEach((field: any, index: number) => {
       if (field.visible) {
-        visibleColumns = visibleColumns + this.FieldsList[index].key +',';
+        visibleColumns = visibleColumns + this.FieldsList[index].key + ',';
       }
       if (field.disabled) {
-        disabledColumns = disabledColumns +this.FieldsList[index].key + ',';
+        disabledColumns = disabledColumns + this.FieldsList[index].key + ',';
       }
     })
     const stateData = {
       workflowId: this.dialogData.workflowId,
       state: {
         label: this.StateDetailsForm.value.name,
-        description : this.StateDetailsForm.value.description,
-        roles : this.StateDetailsForm.value.roleStateAccess.map((roleId: number) => {
+        description: this.StateDetailsForm.value.description,
+        roles: this.StateDetailsForm.value.roleStateAccess.map((roleId: number) => {
           return {
             id: roleId
           }
         }),
-        departments :  this.StateDetailsForm.value.departmentStateAccess.map((roleId: number) => {
+        departments: this.StateDetailsForm.value.departmentStateAccess.map((roleId: number) => {
           return {
             id: roleId
           }
@@ -157,7 +156,7 @@ export class AddEditWorkflowStateComponent implements OnInit {
         visibleColumns,
         disabledColumns
       },
-     
+
     };
     this.dialogRef.close(stateData);
   }

@@ -1,7 +1,7 @@
 @import "../../users/users-info/users-info.component.scss";
 
 .app-container {
-    margin-top: 6em;
+    padding-top: 0em;
 }
 
 .tab-content {
@@ -30,5 +30,5 @@
 .nav-link.active {
     border-bottom: 1px solid #1266f1;
     color: #1266f1;
-    font-weight: bold;
+    font-weight: initial;
 }

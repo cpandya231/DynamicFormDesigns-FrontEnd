@@ -12,9 +12,7 @@ $white: #ffffff;
 $blue: #185ADB;
 $yellow: #FFC947;
 $gray: #EFEFEF;
-* {
-    font-family: Montserrat, Arial, Helvetica, sans-serif;
-}
+
 
 html,
 body {
@@ -23,7 +21,7 @@ body {
 
 body {
     margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+
 }
 
 .btn .btn-primary {
@@ -39,6 +37,24 @@ input[type="password"] {
     transition: border .2s ease;
     height: 2.5em;
     border-radius: 5px;
+
+    border: 1px solid $main-navy-light;
+
+    // background-color: #c4c4c430;   //commenting this as this makes normal field disabled, if you need this make it in respective component style
+    &:focus {
+        border: thin solid blue;
+    }
+}
+
+textarea {
+    margin-top: 0.5em;
+    outline: none;
+    transition: border .2s ease;
+
+    border-radius: 5px;
+
+    border: 1px solid $main-navy-light;
+
     // background-color: #c4c4c430;   //commenting this as this makes normal field disabled, if you need this make it in respective component style
     &:focus {
         border: thin solid blue;
@@ -47,7 +63,7 @@ input[type="password"] {
 
 select {
     /* styling */
-    background-color: #c4c4c430 !important;
+    // background-color: #c4c4c430 !important;
     border-radius: 4px;
     display: inline-block;
     font: inherit;
@@ -64,14 +80,22 @@ select {
     background-position: calc(100% - 20px) calc(1em), calc(100% - 17px) calc(1em), calc(100% - 2.5em) 0.3em;
     background-size: 5px 5px, 5px 5px, 1px 1.5em;
     background-repeat: no-repeat;
+    border: 1px solid $main-navy-light  !important;
+
     &:focus {
-        border: thin solid blue;
+        outline: none;
     }
+
+    &:focus-visible {
+        border: thin solid blue !important;
+    }
+
 }
 
 .formbuilder .btn-primary {
     background-color: $main-teal;
-     :hover {
+
+    :hover {
         background-color: $main-teal-dark;
     }
 }
@@ -93,6 +117,7 @@ small {
         height: 40vh;
         width: 60vw;
         background: linear-gradient(#d1fff9, #fdfceb);
+
         h2 {
             border-bottom: 1px solid #20b5be;
         }
