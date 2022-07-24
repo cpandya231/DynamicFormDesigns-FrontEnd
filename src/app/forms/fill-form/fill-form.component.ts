@@ -107,9 +107,10 @@ export class FillFormComponent implements OnInit {
             if (disabledColumns.includes(component.key)) {
               component.disabled = true;
             }
-            // if (!visibleColumns.includes(component.key)) {
-            //   component.hidden = true;
-            // }
+            if (visibleColumns && !visibleColumns.includes(component.key)) {
+              component.hidden = true;
+            }
+
           });
         });
       });
@@ -141,9 +142,9 @@ export class FillFormComponent implements OnInit {
             if (disabledColumns.includes(component.key)) {
               component.disabled = true;
             }
-            // if (!visibleColumns.includes(component.key)) {
-            //   component.hidden = true;
-            // }
+            if (visibleColumns && !visibleColumns.includes(component.key)) {
+              component.hidden = true;
+            }
           });
         });
       });
