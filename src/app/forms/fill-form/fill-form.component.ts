@@ -47,12 +47,12 @@ export class FillFormComponent implements OnInit {
     private _location: Location,
     private dialog: MatDialog
   ) { }
-  
+
   ngOnInit(): void {
     let params = this.activatedRoute.snapshot.paramMap;
     this.formName = String(params.get('formName') || '');
     this.entryId = Number(params.get('entryId') || '');
-    const state:any = this._location.getState();
+    const state: any = this._location.getState();
     this.formId = state.formId;
     this.userRoles = this.authService.getRoles();
 
@@ -85,8 +85,8 @@ export class FillFormComponent implements OnInit {
     let allToStates = transitionData.transitions.map(transition => transition.toState.id);
     let firstState = transitionData.states.find(state => !allToStates.includes(state.id) && !state.sendBackAvailable);
     let rolesForAccess = firstState?.roles.find(stateRole => this.userRoles == stateRole.role);
-    const disabledColumns = firstState?.disabledColumns.split(',') || [];
-    const visibleColumns = firstState?.visibleColumns.split(',') || [];
+    const disabledColumns = firstState?.disabledColumns?.split(',') || [];
+    const visibleColumns = firstState?.visibleColumns?.split(',') || [];
 
     if (rolesForAccess) {
       let requiredTransition = transitionData.transitions.find(transition => transition.fromState.id == firstState?.id);
@@ -107,9 +107,9 @@ export class FillFormComponent implements OnInit {
             if (disabledColumns.includes(component.key)) {
               component.disabled = true;
             }
-            if (!visibleColumns.includes(component.key)) {
-              component.hidden = true;
-            }
+            // if (!visibleColumns.includes(component.key)) {
+            //   component.hidden = true;
+            // }
           });
         });
       });
@@ -129,8 +129,8 @@ export class FillFormComponent implements OnInit {
       this.disableSave = true;
     }
 
-    const disabledColumns = requiredTransition?.fromState?.disabledColumns.split(',') || [];
-    const visibleColumns = requiredTransition?.fromState?.visibleColumns.split(',') || [];
+    const disabledColumns = requiredTransition?.fromState?.disabledColumns?.split(',') || [];
+    const visibleColumns = requiredTransition?.fromState?.visibleColumns?.split(',') || [];
 
     this.CurrentForm.components.forEach((table: any) => {
       table.rows.forEach((rowItem: any) => {
@@ -141,9 +141,9 @@ export class FillFormComponent implements OnInit {
             if (disabledColumns.includes(component.key)) {
               component.disabled = true;
             }
-            if (!visibleColumns.includes(component.key)) {
-              component.hidden = true;
-            }
+            // if (!visibleColumns.includes(component.key)) {
+            //   component.hidden = true;
+            // }
           });
         });
       });
