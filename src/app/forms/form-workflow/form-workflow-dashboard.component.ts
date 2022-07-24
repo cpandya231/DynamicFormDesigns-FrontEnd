@@ -37,7 +37,7 @@ export class FormWorkflowComponent implements OnInit {
   maxZoomLevel: number = 2.0;
   panOnZoom: boolean = true;
   autoCenter = true;
-  autoZoom = true;
+  autoZoom = true; 
   fieldsList: any[] = [];
   constructor(private formService: FormsService,
     private dialog: MatDialog,
@@ -233,8 +233,8 @@ export class FormWorkflowComponent implements OnInit {
         parentId: parent?.fromState?.id || '',
         parentName: parent?.fromState?.name,
         sendBackAvailable: state.sendBackAvailable,
-        visibleFields: state.visibleColumns,
-        disabledFields: state.disabledColumns
+        visibleColumns: state.visibleColumns,
+        disabledColumns: state.disabledColumns
       }
     });
   }

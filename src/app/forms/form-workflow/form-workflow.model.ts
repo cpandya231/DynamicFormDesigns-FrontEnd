@@ -19,6 +19,7 @@ export interface IWorkflowTransitionModel {
         id: number;
         states: IWorkflowStateModel[]
     };
+    sendBackTransition: boolean;
 }
 
 export interface IGetWorkflowStateTransitionsModel {
