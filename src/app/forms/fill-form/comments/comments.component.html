@@ -2,7 +2,7 @@
     <span class="comments-header">Comments ({{comments.length}})</span>
 
     <form [formGroup]="commentForm" class="comments-form" (ngSubmit)="submitComment()">
-        <textarea placeholder="Leave a comment" class="new-comment" formControlName="comment"></textarea>
+        <textarea placeholder="Leave a comment" class="new-comment" formControlName="comment" required></textarea>
         <div class="submit-button">
             <button type="submit" class="button" [disabled]="!commentForm.valid">Save</button>
         </div>

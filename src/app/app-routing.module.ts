@@ -37,7 +37,7 @@ const routes: Routes = [
     children: [{
       path: '',
       component: CreateFormTemplateComponent
-    },{
+    }, {
       path: 'formWorkflow',
       component: FormWorkflowComponent,
     }]
@@ -54,11 +54,7 @@ const routes: Routes = [
     path: 'userFormsDashboard',
     component: UserFormsDashboardComponent,
     children: [
-      {
-        path: "formsInProgress",
-        component: UserFormsInProgressComponent,
-
-      },
+  
 
       {
         path: 'formsInProgressData/:formId/:formName/:workflowId',
