@@ -19,6 +19,8 @@ export class FillFormComponent implements OnInit {
   entryId: any;
   userRoles: any;
   toState: any;
+  sendBackState: any;
+  isGettingSendBack: boolean = false;
   workflowId: any;
   toggleCommentsButton: boolean = false;
   showComments: boolean = false;
@@ -125,6 +127,11 @@ export class FillFormComponent implements OnInit {
         && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
     if (null != requiredTransition) {
       this.toState = requiredTransition.toState.name;
+      let sendBackTransition = transitionData.transitions.
+        find(transition => (transition.fromState.name == entry.state && transition.sendBackTransition)
+          && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
+      this.sendBackState = sendBackTransition?.toState.name;
+
     } else {
       this.toState = "no_access";
       this.disableSave = true;
@@ -170,13 +177,13 @@ export class FillFormComponent implements OnInit {
     if (this.entryId) {
       let logEntryObj = {
         id: this.entryId,
-        state: this.toState,
+        state: this.isGettingSendBack ? this.sendBackState : this.toState,
         data: submittedData
       }
       this.formService.UpdateLogEntry(this.formId, logEntryObj).subscribe({
         next: (data) => {
           callback(null);
-          this.close(200);
+          this.close(2000);
         },
         error: (err) => {
           callback("Error occured while updating entry");
@@ -201,11 +208,17 @@ export class FillFormComponent implements OnInit {
     }
   }
 
+  sendBack() {
+    this.isGettingSendBack = true;
+    this.onSubmit();
+  }
+
   close(delay: number) {
     setTimeout(() => {                           // <<<---using ()=> syntax
       this._location.back();
     }, delay);
   }
+
 
   beforeSubmit(submission: any, callback: any) {
     if (this.toState == "no_access") {

@@ -1,5 +1,6 @@
 @import "../create-form-template/create-form-template.component.scss";
 @import "../../users/create-user/create-user.component.scss";
+
 .app-container {
     display: flex;
     flex-direction: column;
@@ -23,6 +24,7 @@
     display: flex;
     align-items: center;
     flex-direction: row;
+
     label {
         font-size: 0.8rem;
         margin-top: 0.2em;
