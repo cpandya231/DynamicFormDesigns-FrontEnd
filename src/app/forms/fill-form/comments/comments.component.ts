@@ -39,6 +39,7 @@ export class CommentsComponent implements OnInit {
     this.formService.SaveLogEntryComment(this.formId, this.entryId, submittedForm).subscribe(
       {
         next: (v: any) => {
+          this.commentForm.reset();
           return this.getCommentsForEntry();
         },
         error: (e) => alert("something went wrong")

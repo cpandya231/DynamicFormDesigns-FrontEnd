@@ -19,6 +19,8 @@ export class FillFormComponent implements OnInit {
   entryId: any;
   userRoles: any;
   toState: any;
+  sendBackState: any;
+  isGettingSendBack: boolean = false;
   workflowId: any;
   toggleCommentsButton: boolean = false;
   showComments: boolean = false;
@@ -82,7 +84,7 @@ export class FillFormComponent implements OnInit {
 
 
   private processToHandleNewEntry(transitionData: IGetWorkflowStateTransitionsModel) {
-    let allToStates = transitionData.transitions.map(transition => transition.toState.id);
+    let allToStates = transitionData.transitions.filter(transition => !transition.sendBackTransition).map(transition => transition.toState.id);
     let firstState = transitionData.states.find(state => !allToStates.includes(state.id) && !state.sendBackAvailable);
     let rolesForAccess = firstState?.roles.find(stateRole => this.userRoles == stateRole.role);
     const disabledColumns = firstState?.disabledColumns?.split(',') || [];
@@ -125,13 +127,21 @@ export class FillFormComponent implements OnInit {
         && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
     if (null != requiredTransition) {
       this.toState = requiredTransition.toState.name;
+      let sendBackTransition = transitionData.transitions.
+        find(transition => (transition.fromState.name == entry.state && transition.sendBackTransition)
+          && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
+      this.sendBackState = sendBackTransition?.toState.name;
+
     } else {
       this.toState = "no_access";
       this.disableSave = true;
     }
 
-    const disabledColumns = requiredTransition?.fromState?.disabledColumns?.split(',') || [];
-    const visibleColumns = requiredTransition?.fromState?.visibleColumns?.split(',') || [];
+    let userTransition = transitionData.transitions.
+      find(transition => transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0)
+
+    const disabledColumns = userTransition?.fromState?.disabledColumns?.split(',') || [];
+    const visibleColumns = userTransition?.fromState?.visibleColumns?.split(',') || [];
 
     this.CurrentForm.components.forEach((table: any) => {
       table.rows.forEach((rowItem: any) => {
@@ -139,7 +149,7 @@ export class FillFormComponent implements OnInit {
           rowItemComponent.components.forEach((component: any) => {
             let componentValue = entry["" + component.key];
             component.defaultValue = componentValue;
-            if (disabledColumns.includes(component.key)) {
+            if (disabledColumns.includes(component.key) || this.disableSave) {
               component.disabled = true;
             }
             if (visibleColumns && !visibleColumns.includes(component.key)) {
@@ -167,13 +177,13 @@ export class FillFormComponent implements OnInit {
     if (this.entryId) {
       let logEntryObj = {
         id: this.entryId,
-        state: this.toState,
+        state: this.isGettingSendBack ? this.sendBackState : this.toState,
         data: submittedData
       }
       this.formService.UpdateLogEntry(this.formId, logEntryObj).subscribe({
         next: (data) => {
           callback(null);
-          this.close(200);
+          this.close(2000);
         },
         error: (err) => {
           callback("Error occured while updating entry");
@@ -198,11 +208,17 @@ export class FillFormComponent implements OnInit {
     }
   }
 
+  sendBack() {
+    this.isGettingSendBack = true;
+    this.onSubmit();
+  }
+
   close(delay: number) {
     setTimeout(() => {                           // <<<---using ()=> syntax
       this._location.back();
     }, delay);
   }
+
 
   beforeSubmit(submission: any, callback: any) {
     if (this.toState == "no_access") {

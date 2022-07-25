@@ -37,6 +37,7 @@
 
 .button-cancel {
     @extend .button;
+    border-radius: 0.2rem;
     background-color: #fff;
     border: 0.1em solid #c4c4c4;
     color: black;

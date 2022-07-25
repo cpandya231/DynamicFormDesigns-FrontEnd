@@ -61,7 +61,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
   }
 
   private canCreateNewEntry(transitionData: IGetWorkflowStateTransitionsModel) {
-    let allToStates = transitionData.transitions.map(transition => transition.toState.id);
+    let allToStates = transitionData.transitions.filter(transition=>!transition.sendBackTransition).map(transition => transition.toState.id);
     let firstState = transitionData.states.find(state => !allToStates.includes(state.id) && !state.sendBackAvailable);
     let rolesForAccess = firstState?.roles.find(stateRole => this.userRoles == stateRole.role);
     if (rolesForAccess) {
