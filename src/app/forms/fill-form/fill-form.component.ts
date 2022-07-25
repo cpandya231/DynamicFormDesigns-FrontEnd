@@ -82,7 +82,7 @@ export class FillFormComponent implements OnInit {
 
 
   private processToHandleNewEntry(transitionData: IGetWorkflowStateTransitionsModel) {
-    let allToStates = transitionData.transitions.map(transition => transition.toState.id);
+    let allToStates = transitionData.transitions.filter(transition => !transition.sendBackTransition).map(transition => transition.toState.id);
     let firstState = transitionData.states.find(state => !allToStates.includes(state.id) && !state.sendBackAvailable);
     let rolesForAccess = firstState?.roles.find(stateRole => this.userRoles == stateRole.role);
     const disabledColumns = firstState?.disabledColumns?.split(',') || [];
@@ -130,8 +130,11 @@ export class FillFormComponent implements OnInit {
       this.disableSave = true;
     }
 
-    const disabledColumns = requiredTransition?.fromState?.disabledColumns?.split(',') || [];
-    const visibleColumns = requiredTransition?.fromState?.visibleColumns?.split(',') || [];
+    let userTransition = transitionData.transitions.
+      find(transition => transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0)
+
+    const disabledColumns = userTransition?.fromState?.disabledColumns?.split(',') || [];
+    const visibleColumns = userTransition?.fromState?.visibleColumns?.split(',') || [];
 
     this.CurrentForm.components.forEach((table: any) => {
       table.rows.forEach((rowItem: any) => {
@@ -139,7 +142,7 @@ export class FillFormComponent implements OnInit {
           rowItemComponent.components.forEach((component: any) => {
             let componentValue = entry["" + component.key];
             component.defaultValue = componentValue;
-            if (disabledColumns.includes(component.key)) {
+            if (disabledColumns.includes(component.key) || this.disableSave) {
               component.disabled = true;
             }
             if (visibleColumns && !visibleColumns.includes(component.key)) {
