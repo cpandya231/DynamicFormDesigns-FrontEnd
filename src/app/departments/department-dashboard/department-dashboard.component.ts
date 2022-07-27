@@ -20,7 +20,7 @@ export class DepartmentDashboardComponent implements OnInit {
   public layoutSettings = {
     orientation: 'BT'
   };
-  draggingEnabled: boolean = true;
+  draggingEnabled: boolean = false;
   panningEnabled: boolean = true;
   zoomEnabled: boolean = true;
   zoomSpeed: number = 0.2;
@@ -37,14 +37,14 @@ export class DepartmentDashboardComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog
-    ) {
+  ) {
   }
 
   ngOnInit() {
     this.departmentService.getAllDepartment().subscribe((departments: any) => {
-      const nodes: any[]= [];
+      const nodes: any[] = [];
       const links: any[] = [];
-      const chars ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
       departments.forEach((dept: any) => {
         let linkId = '';
         for (let i = 0; i < 5; i++) {
@@ -67,7 +67,7 @@ export class DepartmentDashboardComponent implements OnInit {
             target: dept.parentId
           })
         }
-        
+
       });
       this.nodes = nodes;
       this.links = links;
@@ -79,6 +79,6 @@ export class DepartmentDashboardComponent implements OnInit {
   }
 
   AddDepartment() {
-      this.router.navigate(['./create', this.nodes[0].id], { relativeTo: this.route });
+    this.router.navigate(['./create', this.nodes[0].id], { relativeTo: this.route });
   }
 }
