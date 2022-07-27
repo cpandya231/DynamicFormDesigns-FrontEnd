@@ -40,8 +40,8 @@ export class LoginComponent implements OnInit {
     this.errorOccured = true;
   }
 
-  togglePasswordVisibility(e: any) {
-    this.showPassword = e.target.checked;
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
 
   }
 

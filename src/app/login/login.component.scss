@@ -124,12 +124,20 @@
     flex-direction: column;
     justify-content: space-evenly;
     height: 60%;
+    position: relative;
 }
 
 .login-screen-item {
     display: flex;
     flex-direction: column;
     position: relative;
+}
+
+.showPasswordIcon {
+    position: absolute;
+    right: 0.2em;
+    bottom: 0.3em;
+
 }
 
 .label-style {
@@ -166,19 +174,8 @@
 }
 
 
-#email {
-    background-image: url("../../assets/Mail.png");
-    background-size: 30px 20px;
-    background-repeat: no-repeat;
-    background-position: 99% 50%;
-}
+#email {}
 
-#password {
-    background-image: url("../../assets/Password.png");
-    background-size: 30px 20px;
-    background-repeat: no-repeat;
-    background-position: 99% 50%;
-}
 
 .button {
     background-color: $main-teal;

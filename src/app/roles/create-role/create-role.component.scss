@@ -1,5 +1,16 @@
 @import "../../users/create-user/create-user.component.scss";
 
+.app-container {
+    margin-top: 0em;
+    padding: 1em;
+}
+
+
+.form-container-parent {
+    border: none;
+
+}
+
 .close-icon {
     align-self: flex-end;
 

@@ -1,51 +1,65 @@
 .state_form_container {
     height: 90vh;
+
     .header_text {
         color: #0A1931;
         font-weight: 600;
         font-size: 20px;
         border-bottom: 1px solid #0A1931;
     }
+
     .form_container {
         padding-top: 15px;
+
         .row {
             align-items: center;
+
             .col-form-label {
                 color: #545454;
             }
+
             .invalid_field {
                 border: 1px solid red;
             }
         }
+
         .btn_container {
             flex-direction: row-reverse;
             padding: 1rem 0 1rem 0;
+
             .btn {
                 width: 7rem;
                 padding: 8px 0px;
             }
+
             .save_button {
                 margin-left: 10px;
             }
         }
+
         .form-check {
             .form-check-input {
                 float: none;
             }
+
             .form-check-label {
                 color: #545454;
             }
         }
+
         .form-switch {
             padding-left: calc(var(--mdb-gutter-x) * 0.5);
+
             .form-check-input {
                 margin-left: 0;
                 margin-top: 0.75rem;
             }
         }
+
         .form-select[multiple] {
             margin: 1rem 0;
         }
+
         .form_group_label {
             border-bottom: 1px solid lightgray;
             margin-bottom: 10px;
@@ -59,9 +73,9 @@
     margin-right: 2rem;
 }
 
-.cdk-overlay-pane {
-    width: 44vw;
-    .mat-dialog-container {
-        background-color: white;
-    }
-}
+// .cdk-overlay-pane {
+//     width: 44vw;
+//     .mat-dialog-container {
+//         background-color: white;
+//     }
+// }

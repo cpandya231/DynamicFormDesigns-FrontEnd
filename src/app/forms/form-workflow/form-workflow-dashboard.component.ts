@@ -16,9 +16,9 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 })
 export class FormWorkflowComponent implements OnInit {
 
-   workflowId: number;
+  workflowId: number;
   formId: number;
-   formName:string;
+  formName: string;
   WorkflowStates: any[] = [];
   tempId: number = 1;
   tempTransitions: any = [];
@@ -27,9 +27,9 @@ export class FormWorkflowComponent implements OnInit {
   stateDataBeforeEdit: IWorkflowStateModel;
   private isDialogOpen = false;
   IsSaveWorkflowDisabled = true;
-  WorkflowLinks:any[] = [];
+  WorkflowLinks: any[] = [];
   curve: any = shape.curveLinear;
-  draggingEnabled: boolean = true;
+  draggingEnabled: boolean = false;
   panningEnabled: boolean = true;
   zoomEnabled: boolean = false;
   zoomSpeed: number = 0.2;
@@ -37,7 +37,7 @@ export class FormWorkflowComponent implements OnInit {
   maxZoomLevel: number = 2.0;
   panOnZoom: boolean = true;
   autoCenter = true;
-  autoZoom = true; 
+  autoZoom = true;
   fieldsList: any[] = [];
   constructor(private formService: FormsService,
     private dialog: MatDialog,
@@ -70,15 +70,15 @@ export class FormWorkflowComponent implements OnInit {
       this.getFormFieldsList();
     }
   }
-  
+
   AddState() {
-    if(this.fieldsList.length === 0) {
+    if (this.fieldsList.length === 0) {
       this.getFormFieldsList();
     }
     if (this.isDialogOpen) return;
     this.isDialogOpen = true;
     ++this.tempId;
-  
+
     const dialogRef = this.dialog.open(AddEditWorkflowStateComponent, {
       data: {
         workflowId: this.workflowId,
@@ -104,7 +104,7 @@ export class FormWorkflowComponent implements OnInit {
     const beforeEditLinks: any[] = [];
     const otherLinks: any[] = [];
     this.WorkflowLinks.forEach(link => {
-      if ((link.target == stateData.id && !link.sendBackTransition) || (link.source == stateData.id && link.sendBackTransition) ) {
+      if ((link.target == stateData.id && !link.sendBackTransition) || (link.source == stateData.id && link.sendBackTransition)) {
         beforeEditLinks.push(link);
         return;
       }
@@ -181,25 +181,32 @@ export class FormWorkflowComponent implements OnInit {
       },
       sendBackTransition: link.sendBackTransition
     }))
-  
+
     const payload = {
       workflowId: this.workflowId,
       transitions: transitions
     }
     if (!updateData) {
       this.formService.SaveStatesTransitions(payload).subscribe((transitionData: any) => {
-        this.toastrService.success('Saved Successfully', 'Success')
+        this.toastrService.success('Saved Successfully', 'Success');
+        this.navigateOnSuccess();
+
       })
     } else {
       this.formService.UpdateStatesTransitions(payload).subscribe((trasitionData: any) => {
-        this.toastrService.success('Saved Successfully', 'Success')
+        this.toastrService.success('Saved Successfully', 'Success');
+        this.navigateOnSuccess();
       })
     }
   }
 
+  private navigateOnSuccess() {
+    setTimeout(() => { this.router.navigate(['/formsDashboard']); }, 2000);
+  }
+
   protected processStateData(state: any) {
     this.IsSaveWorkflowDisabled = false;
-    this.WorkflowStates = [...this.WorkflowStates ,state];
+    this.WorkflowStates = [...this.WorkflowStates, state];
     if (state?.parentId) {
       this.WorkflowLinks.push({
         source: state.parentId,
@@ -240,8 +247,8 @@ export class FormWorkflowComponent implements OnInit {
   }
 
   protected getWorkflowLinks(data: any) {
-    const chars ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
     const stateSendBackData = data.states.map((state: any) => ({
       [state.id]: state.sendBackAvailable
     }));
@@ -270,10 +277,10 @@ export class FormWorkflowComponent implements OnInit {
                 key: field.key,
                 label: field.label
               });
+            })
           })
-        })
-      });
-    })
+        });
+      })
     })
   }
 }
