@@ -5,6 +5,7 @@ import { DisplayWorkflowStatusComponent } from 'src/app/common/display-workflow-
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
 import { IGetWorkflowStateTransitionsModel } from '../../form-workflow/form-workflow.model';
+import { combineLatest } from 'rxjs';
 @Component({
   selector: 'app-user-forms-in-progress-data',
   templateUrl: './user-forms-in-progress-data.component.html',
@@ -20,6 +21,10 @@ export class UserFormsInProgressDataComponent implements OnInit {
   columns: string[];
   selectedChoice: any = 'all';
   enableCreateNewEntry: boolean = false;
+  disabledColumns: string[];
+  visibleColumns: string[];
+  defaultFirstColumns: string[] = ["id", "state",];
+  defaultLastColumns: string[] = ["created_by", "log_create_dt", "updated_by", "log_update_dt"];
   constructor(private formsService: FormsService,
     private authService: AuthService,
     private router: Router,
@@ -34,34 +39,42 @@ export class UserFormsInProgressDataComponent implements OnInit {
     this.formId = Number(params.get('formId') || '');
     this.formName = String(params.get('formName') || '');
     this.workflowId = Number(params.get('workflowId') || '');
-    this.getLogEntries(false);
+    let logEntriesObservable = this.formsService.GetLogEntries(this.formId, false);
+    let transitionsObservable = this.formsService.GetWorkflowStatesTransitions(this.workflowId);
+    combineLatest([logEntriesObservable, transitionsObservable]).subscribe(items => {
+      let entryData = items[0];
+      let transitionData = items[1];
+      this.getLogEntries(entryData, transitionData);
+      this.canCreateNewEntry(transitionData);
+    })
 
-    this.formsService.GetWorkflowStatesTransitions(this.workflowId).subscribe({
-      next: (transitionData: any) => this.canCreateNewEntry(transitionData),
-      error: () => alert("Something went wrong while finding transitions")
-    });
 
   }
 
-  private getLogEntries(filterbyusername: boolean) {
-    this.formsService.GetLogEntries(this.formId, filterbyusername).subscribe({
-      next: (data) => {
-        if (data.length > 0) {
-          this.logEntries = data;
-          this.columns = Object.keys(this.logEntries[0].data);
-          this.isDataLoaded = true;
-        } else {
-          this.logEntries = [];
-          this.isDataLoaded = true;
-        }
+  private getLogEntries(entryData: any, transitionData: IGetWorkflowStateTransitionsModel) {
 
-      },
-      error: (err) => console.log(`Error occured for ${this.formId} error:${err}`)
-    });
+    let userTransition = transitionData.transitions.
+      find(transition => transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0)
+
+    this.disabledColumns = userTransition?.fromState?.disabledColumns?.split(',') || [];
+    this.visibleColumns = userTransition?.fromState?.visibleColumns?.split(',') || [];
+
+    if (entryData.length > 0) {
+      this.logEntries = entryData;
+      this.columns = this.defaultFirstColumns.concat(this.visibleColumns).concat(this.defaultLastColumns)
+      this.isDataLoaded = true;
+    } else {
+      this.logEntries = [];
+      this.isDataLoaded = true;
+    }
+
+
+
+
   }
 
   private canCreateNewEntry(transitionData: IGetWorkflowStateTransitionsModel) {
-    let allToStates = transitionData.transitions.filter(transition=>!transition.sendBackTransition).map(transition => transition.toState.id);
+    let allToStates = transitionData.transitions.filter(transition => !transition.sendBackTransition).map(transition => transition.toState.id);
     let firstState = transitionData.states.find(state => !allToStates.includes(state.id) && !state.sendBackAvailable);
     let rolesForAccess = firstState?.roles.find(stateRole => this.userRoles == stateRole.role);
     if (rolesForAccess) {
@@ -74,23 +87,23 @@ export class UserFormsInProgressDataComponent implements OnInit {
   }
 
   FillForm(entryId: number) {
-    this.router.navigate(['../../../../updateLogEntry', this.formName, entryId], { relativeTo: this.activatedRoute, state: {formId: this.formId} });
+    this.router.navigate(['../../../../updateLogEntry', this.formName, entryId], { relativeTo: this.activatedRoute, state: { formId: this.formId } });
   }
 
   createNewEntry() {
-    this.router.navigate(['../../../../createLogEntry', this.formName], { relativeTo: this.activatedRoute, state: {formId: this.formId} });
+    this.router.navigate(['../../../../createLogEntry', this.formName], { relativeTo: this.activatedRoute, state: { formId: this.formId } });
   }
 
 
   handleChange() {
     let filterbyusername = this.selectedChoice == "username";
 
-    this.getLogEntries(filterbyusername);
+    // this.getLogEntries(filterbyusername);
   }
 
   ShowProgress(entryId: number) {
     let stateStatusData,
-    stateTransitionsData;
+      stateTransitionsData;
     this.formsService.LogEntryMetadata(this.formId, entryId).subscribe((metaData: any) => {
       this.formsService.GetWorkflowStatesTransitions(this.workflowId).subscribe((data: any) => {
         stateStatusData = metaData.map((state: any) => state.data);
@@ -121,15 +134,15 @@ export class UserFormsInProgressDataComponent implements OnInit {
           width: 150,
           height: 50
         },
-        createdBy: updateDetails ? `${updateDetails.created_by} completed at `: toStateName ? 'Pending' : '',
+        createdBy: updateDetails ? `${updateDetails.created_by} completed at ` : toStateName ? 'Pending' : '',
         timeStamp: updateDetails ? `${updateDetails.log_create_dt}` : ''
       }
     });
   }
 
   protected getWorkflowLinks(data: any) {
-    const chars ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
     return data.map((link: any, index: number) => {
       let id = '';
       for (let i = 0; i < 5; i++) {

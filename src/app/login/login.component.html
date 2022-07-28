@@ -33,7 +33,7 @@
                         <input [type]="showPassword ? 'text' : 'password'" id="password" #password="ngModel"
                             class="textbox-style" required [(ngModel)]="loginModel.password" name="password" required>
                         <mat-icon class="showPasswordIcon" (click)="togglePasswordVisibility()">
-                            {{showPassword?'visibility_off':'visibility'}}</mat-icon>
+                            {{showPassword?'visibility':'visibility_off'}}</mat-icon>
 
                     </div>
 
