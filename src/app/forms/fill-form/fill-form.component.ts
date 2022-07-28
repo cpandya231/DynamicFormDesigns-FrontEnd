@@ -26,6 +26,8 @@ export class FillFormComponent implements OnInit {
   showComments: boolean = false;
   events: string[] = [];
   disableSave: boolean = false;
+  disabledColumns: any[];
+  visibleColumns: any[];
   CurrentForm: any = {
     components: []
   };
@@ -64,12 +66,13 @@ export class FillFormComponent implements OnInit {
       this.formId = data.id;
       let transitionsObservable = this.formService.GetWorkflowStatesTransitions(this.workflowId);
       let entryDataObservable = this.formService.GetSpecificLogEntry(this.formId, this.entryId);
-
-      combineLatest([transitionsObservable, entryDataObservable]).subscribe(items => {
+      let entryMetaDataObservable = this.formService.LogEntryMetadata(this.formId, this.entryId);
+      combineLatest([transitionsObservable, entryDataObservable, entryMetaDataObservable]).subscribe(items => {
         let transitionData = items[0];
         let entryData = items[1];
+        let entryMetaData = items[2];
         if (entryData.length > 0) {
-          this.processToHandleExistingEntry(entryData, transitionData);
+          this.processToHandleExistingEntry(entryData, entryMetaData, transitionData);
           this.showComments = true;
         } else {
           if (this.entryId > 0) {
@@ -87,8 +90,8 @@ export class FillFormComponent implements OnInit {
     let allToStates = transitionData.transitions.filter(transition => !transition.sendBackTransition).map(transition => transition.toState.id);
     let firstState = transitionData.states.find(state => !allToStates.includes(state.id) && !state.sendBackAvailable);
     let rolesForAccess = firstState?.roles.find(stateRole => this.userRoles == stateRole.role);
-    const disabledColumns = firstState?.disabledColumns?.split(',') || [];
-    const visibleColumns = firstState?.visibleColumns?.split(',') || [];
+    this.disabledColumns = firstState?.disabledColumns?.split(',') || [];
+    this.visibleColumns = firstState?.visibleColumns?.split(',') || [];
 
     if (rolesForAccess) {
       let requiredTransition = transitionData.transitions.find(transition => transition.fromState.id == firstState?.id);
@@ -106,10 +109,10 @@ export class FillFormComponent implements OnInit {
       table.rows.forEach((rowItem: any) => {
         rowItem.forEach((rowItemComponent: any) => {
           rowItemComponent.components.forEach((component: any) => {
-            if (disabledColumns.includes(component.key)) {
+            if (this.disabledColumns.includes(component.key)) {
               component.disabled = true;
             }
-            if (visibleColumns && !visibleColumns.includes(component.key)) {
+            if (this.visibleColumns && !this.visibleColumns.includes(component.key)) {
               component.hidden = true;
             }
 
@@ -120,8 +123,9 @@ export class FillFormComponent implements OnInit {
     this.IsFormLoaded = true;
   }
 
-  private processToHandleExistingEntry(entryData: any, transitionData: IGetWorkflowStateTransitionsModel) {
+  private processToHandleExistingEntry(entryData: any, entryMetaData: any, transitionData: IGetWorkflowStateTransitionsModel) {
     let entry = entryData[0].data;
+
     let requiredTransition = transitionData.transitions.
       find(transition => (transition.fromState.name == entry.state && !transition.sendBackTransition)
         && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
@@ -140,21 +144,35 @@ export class FillFormComponent implements OnInit {
     let userTransition = transitionData.transitions.
       find(transition => transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0)
 
-    const disabledColumns = userTransition?.fromState?.disabledColumns?.split(',') || [];
-    const visibleColumns = userTransition?.fromState?.visibleColumns?.split(',') || [];
+    this.disabledColumns = userTransition?.fromState?.disabledColumns?.split(',') || [];
+    this.visibleColumns = userTransition?.fromState?.visibleColumns?.split(',') || [];
 
     this.CurrentForm.components.forEach((table: any) => {
       table.rows.forEach((rowItem: any) => {
         rowItem.forEach((rowItemComponent: any) => {
           rowItemComponent.components.forEach((component: any) => {
+
             let componentValue = entry["" + component.key];
             component.defaultValue = componentValue;
-            if (disabledColumns.includes(component.key) || this.disableSave) {
+            if (this.disabledColumns.includes(component.key) || this.disableSave) {
               component.disabled = true;
             }
-            if (visibleColumns && !visibleColumns.includes(component.key)) {
+            if (this.visibleColumns && !this.visibleColumns.includes(component.key)) {
               component.hidden = true;
             }
+            let entryMetadataInfo = entryMetaData.find((em: any) => {
+              return (em.data["" + component.key])
+            }).data;
+
+
+            if (entryMetadataInfo["" + component.key]) {
+              let desc = `Last updated by ${entryMetadataInfo["created_by"]}`;
+              component.description = desc;
+            }
+
+
+
+
           });
         });
       });
@@ -174,6 +192,11 @@ export class FillFormComponent implements OnInit {
 
   handleSubmit(submission: any, callback: any) {
     let submittedData = this.form.formio.submission.data;
+    for (let item in submittedData) {
+      if (this.disabledColumns.includes(item) || !this.visibleColumns.includes(item)) {
+        delete submittedData[`${item}`]
+      }
+    }
     if (this.entryId) {
       let logEntryObj = {
         id: this.entryId,
