@@ -162,16 +162,11 @@ export class FillFormComponent implements OnInit {
             }
             let entryMetadataInfo = entryMetaData.find((em: any) => {
               return (em.data["" + component.key])
-            }).data;
-
-
-            if (entryMetadataInfo["" + component.key]) {
-              let desc = `Last updated by ${entryMetadataInfo["created_by"]}`;
+            });
+            if (entryMetadataInfo) {
+              let desc = `Last updated by <b>${entryMetadataInfo.data["created_by"]} </b>`;
               component.description = desc;
             }
-
-
-
 
           });
         });

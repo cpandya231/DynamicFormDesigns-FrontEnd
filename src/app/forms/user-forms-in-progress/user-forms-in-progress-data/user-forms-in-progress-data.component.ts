@@ -21,8 +21,10 @@ export class UserFormsInProgressDataComponent implements OnInit {
   columns: string[];
   selectedChoice: any = 'all';
   enableCreateNewEntry: boolean = false;
-  disabledColumns: any[];
-  visibleColumns: any[];
+  disabledColumns: string[];
+  visibleColumns: string[];
+  defaultFirstColumns: string[] = ["id", "state",];
+  defaultLastColumns: string[] = ["created_by", "log_create_dt", "updated_by", "log_update_dt"];
   constructor(private formsService: FormsService,
     private authService: AuthService,
     private router: Router,
@@ -59,7 +61,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
 
     if (entryData.length > 0) {
       this.logEntries = entryData;
-      this.columns = Object.keys(this.logEntries[0].data);
+      this.columns = this.defaultFirstColumns.concat(this.visibleColumns).concat(this.defaultLastColumns)
       this.isDataLoaded = true;
     } else {
       this.logEntries = [];
