@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 import { FormsService } from '../../common/services/forms.service';
-import {forkJoin} from 'rxjs';
-import { ToastrService } from 'ngx-toastr';   
+import { forkJoin } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-form-template',
@@ -21,7 +21,8 @@ export class CreateFormTemplateComponent implements OnInit {
     components: []
   };
   IsFormLoaded = false;
-  
+  isMasterForm: boolean = false;
+
   SiteName = 'Moraiya';
   DepartmentName = 'Tablet Facility IX ';
   RoomIDList = [101, 102, 103, 104, 105];
@@ -160,38 +161,38 @@ export class CreateFormTemplateComponent implements OnInit {
     this.EnabledFormElements.forEach(ele => {
       let obj = {
         [ele]: [
-        {
-          key: 'display',
-          components: this.ignoreComponents(
-            ['widget', 'autocomplete', 'inputMask', 'displayMask', 'allowMultipleMasks', 'tabindex', 'modalEdit',
-              'hideLabel', 'showWordCount', 'showCharCount', 'mask', 'tableView', 'description']
-          )
-        },
-        {
-          key: 'validation',
-          components: this.ignoreComponents(
-            ['validate.minWords', 'validate.maxWords', 'errorLabel', 'custom-validation-js', 'validate.customMessage', 'errors', 'json-validation-json']
-          )
-        },
-        {
-          key: 'data',
-          components: this.ignoreComponents(
-            ['persistent', 'inputFormat', 'protected', 'dbIndex', 'encrypted', 'redrawOn', 'calculateServer', 'idPath', 'selectThreshold', 'useExactSearch',
-             'dataType', 'searchEnabled', 'calculateValuePanel', 'calculateValue-json', 'allowCalculateOverride', 'customDefaultValue-json']
-          )
-        },
-        {
-          key: 'api',
-          components: this.ignoreComponents(
-            ['tags', 'properties']
-          )
-        },
-        {
-          key: 'layout',
-          components: this.ignoreComponents([
-            'overlay'
-          ])
-        }
+          {
+            key: 'display',
+            components: this.ignoreComponents(
+              ['widget', 'autocomplete', 'inputMask', 'displayMask', 'allowMultipleMasks', 'tabindex', 'modalEdit',
+                'hideLabel', 'showWordCount', 'showCharCount', 'mask', 'tableView', 'description']
+            )
+          },
+          {
+            key: 'validation',
+            components: this.ignoreComponents(
+              ['validate.minWords', 'validate.maxWords', 'errorLabel', 'custom-validation-js', 'validate.customMessage', 'errors', 'json-validation-json']
+            )
+          },
+          {
+            key: 'data',
+            components: this.ignoreComponents(
+              ['persistent', 'inputFormat', 'protected', 'dbIndex', 'encrypted', 'redrawOn', 'calculateServer', 'idPath', 'selectThreshold', 'useExactSearch',
+                'dataType', 'searchEnabled', 'calculateValuePanel', 'calculateValue-json', 'allowCalculateOverride', 'customDefaultValue-json']
+            )
+          },
+          {
+            key: 'api',
+            components: this.ignoreComponents(
+              ['tags', 'properties']
+            )
+          },
+          {
+            key: 'layout',
+            components: this.ignoreComponents([
+              'overlay'
+            ])
+          }
         ]
       };
       Object.assign(eleObj, obj);
@@ -211,12 +212,12 @@ export class CreateFormTemplateComponent implements OnInit {
     }
 
     forkJoin([this.userService.getUserByUsername(localStorage.getItem("username")),
-      this.authService.getAccessToken().asObservable()]).subscribe(data => {
-        const token = data[1];
-        this.FormOptions['firstName'] = data[0].first_name;
-        this.FormOptions['lastName'] = data[0].last_name;
-        this.FormOptions['department'] = data[0].department;
-        this.FormOptions['Authorization'] = `Bearer ${token}`;
+    this.authService.getAccessToken().asObservable()]).subscribe(data => {
+      const token = data[1];
+      this.FormOptions['firstName'] = data[0].first_name;
+      this.FormOptions['lastName'] = data[0].last_name;
+      this.FormOptions['department'] = data[0].department;
+      this.FormOptions['Authorization'] = `Bearer ${token}`;
     });
 
     setTimeout(() => {
@@ -228,7 +229,8 @@ export class CreateFormTemplateComponent implements OnInit {
         });
         comp.key = keyValue;
       }
-    )}, 5000)
+      )
+    }, 5000)
   }
 
   SaveTemplate(): void {
@@ -237,15 +239,21 @@ export class CreateFormTemplateComponent implements OnInit {
       this.formsService.UpdateFormTemplate(this.formIO.form, this.FormName, this.formId).subscribe(data => {
         this.SaveInProgress = false;
         this.toastrService.success('form updated successfully', 'Success');
-      }, () => this.toastrService.error('some error occured!', 'Error'));
+      }, () => {
+        this.toastrService.error('some error occured!', 'Error');
+        this.SaveInProgress = false;
+      });
     } else {
-      this.formsService.SaveFormTemplate(this.formIO.form, this.FormName).subscribe(data => {
+      this.formsService.SaveFormTemplate(this.formIO.form, this.FormName, this.isMasterForm).subscribe(data => {
         this.WorkflowId = data.workflow.id;
         const formId = data.id;
         this.SaveInProgress = false;
         this.toastrService.success('form created successfully', 'Success');
         this.router.navigate(['/formManagement', data.name, formId, this.WorkflowId, 'formWorkflow']);
-      }, () => this.toastrService.error('some error occured!', 'Error'));
+      }, () => {
+        this.toastrService.error('some error occured!', 'Error');
+        this.SaveInProgress = false;
+      });
     }
   }
 

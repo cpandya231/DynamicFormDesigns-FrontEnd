@@ -5,6 +5,7 @@
             <tr>
                 <th scope="col">Form ID</th>
                 <th scope="col">Form Name</th>
+                <th scope="col">Form Type</th>
                 <th scope="col">Created By</th>
                 <th scope="col">Created On</th>
                 <th *ngIf="isAdmin" scope="col">Edit</th>
@@ -15,13 +16,16 @@
             <tr *ngFor="let form of FormTemplates">
                 <td>{{form.id}}</td>
                 <td>{{form.name}}</td>
+                <td>{{form.type}}</td>
                 <td>{{form.createdBy}}</td>
                 <td>{{form.createDt | date: DATE_FORMAT }}</td>
-                <td *ngIf="isAdmin"><img src="../../../assets/Images/pen-to-square-solid.svg" class="svg_icon" (click)="EditFormTemplate(form.name, form.id, form.workflow.id)" /></td>
-                <td *ngIf="isAdmin"><img src="../../../assets/Images/eye-solid.svg" class="svg_icon" (click)="PreviewForm(form.template)" /></td>
+                <td *ngIf="isAdmin"><img src="../../../assets/Images/pen-to-square-solid.svg" class="svg_icon"
+                        (click)="EditFormTemplate(form.name, form.id, form.workflow.id)" /></td>
+                <td *ngIf="isAdmin"><img src="../../../assets/Images/eye-solid.svg" class="svg_icon"
+                        (click)="PreviewForm(form.template)" /></td>
             </tr>
             <tr *ngIf="FormTemplates && !FormTemplates.length" class="no_data_message">
-                <td colspan="6">
+                <td colspan="7">
                     No Forms Available
                 </td>
             </tr>

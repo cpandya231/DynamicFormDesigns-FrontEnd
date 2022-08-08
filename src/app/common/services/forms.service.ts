@@ -31,9 +31,10 @@ export class FormsService {
     return this.http.get<IGetFormTemplateResponse>(`${ServiceUtil.API_ENDPOINT}/forms/${formName}/`);
   }
 
-  SaveFormTemplate(formTemplate: any, name: string): Observable<any> {
+  SaveFormTemplate(formTemplate: any, name: string, isMasterForm: boolean): Observable<any> {
     let body = {
       name,
+      type: isMasterForm ? 'master' : '',
       template: JSON.stringify({ formName: name, components: formTemplate.components }),
       workflow: {}
     }

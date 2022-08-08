@@ -1,17 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormsService } from 'src/app/common/services/forms.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { SettingsService } from 'src/app/services/settings.service';
-import { PreviewFormComponent } from '../preview-form/preview-form.component';
 
 @Component({
-  selector: 'app-user-forms-in-progress',
-  templateUrl: './user-forms-in-progress.component.html',
-  styleUrls: ['./user-forms-in-progress.component.scss']
+  selector: 'app-master-forms',
+  templateUrl: './master-forms.component.html',
+  styleUrls: ['./master-forms.component.scss']
 })
-export class UserFormsInProgressComponent implements OnInit {
+export class MasterFormsComponent implements OnInit {
 
 
   FormTemplates: any = [];
@@ -29,7 +26,7 @@ export class UserFormsInProgressComponent implements OnInit {
       this.DATE_FORMAT = setting.filter(setting => (setting.type == "GLOBAL") && (setting.key == "DATE_FORMAT"))[0].value;
     })
     this.formsService.GetFormTemplates().subscribe(data => {
-      this.FormTemplates = data.filter(form => !form.type);
+      this.FormTemplates = data.filter(form => form.type == 'master');
     })
   }
 

@@ -66,4 +66,5 @@ export interface IGetFormTemplateResponse {
     name: string;
     template: string;
     workflow: any;
+    type: string;
 }
