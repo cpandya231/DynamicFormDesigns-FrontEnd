@@ -12,13 +12,13 @@ export class DisplayWorkflowStatusComponent implements OnInit {
   WorkflowLinks: any;
   WorkflowStates: any;
   curve: any = shape.curveLinear;
-  draggingEnabled: boolean = true;
-  panningEnabled: boolean = true;
-  zoomEnabled: boolean = true;
+  draggingEnabled: boolean = false;
+  panningEnabled: boolean = false;
+  zoomEnabled: boolean = false;
   zoomSpeed: number = 0.2;
   minZoomLevel: number = 0.2;
   maxZoomLevel: number = 2.0;
-  panOnZoom: boolean = true;
+  panOnZoom: boolean = false;
   autoCenter = true;
   autoZoom = true;
   constructor(public dialogRef: MatDialogRef<DisplayWorkflowStatusComponent>,

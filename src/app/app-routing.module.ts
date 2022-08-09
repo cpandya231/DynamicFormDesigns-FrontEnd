@@ -57,32 +57,58 @@ const routes: Routes = [
     component: UserFormsDashboardComponent,
     children: [
 
-
       {
-        path: 'formsInProgressData/:formId/:formName/:workflowId',
-        component: UserFormsInProgressDataComponent,
+        path: 'userForms',
+        children: [
+          {
+            path: 'formsInProgressData/:formId/:formName/:workflowId',
+            component: UserFormsInProgressDataComponent,
 
-      },
+          },
+          {
+            path: 'updateLogEntry/:formName/:entryId',
+            component: FillFormComponent
+          },
 
-      {
-        path: 'updateLogEntry/:formName/:entryId',
-        component: FillFormComponent
-      },
 
+          {
+            path: 'createLogEntry/:formName',
+            component: FillFormComponent
+          },
+          {
+            path: '',
+            component: UserFormsInProgressComponent,
+          },
 
-      {
-        path: 'createLogEntry/:formName',
-        component: FillFormComponent
+        ]
       },
 
       {
         path: 'masterForms',
-        component: MasterFormsComponent
 
-      },
+        children: [
+          {
+            path: 'formsInProgressData/:formId/:formName/:workflowId',
+            component: UserFormsInProgressDataComponent,
 
-      {
-        path: 'userForms', component: UserFormsInProgressComponent,
+          },
+          {
+            path: 'updateLogEntry/:formName/:entryId',
+            component: FillFormComponent
+          },
+
+
+          {
+            path: 'createLogEntry/:formName',
+            component: FillFormComponent
+          },
+          {
+            path: '',
+            component: MasterFormsComponent
+          },
+
+        ]
+
       },
 
       { path: '', redirectTo: 'userForms', pathMatch: 'full' },
