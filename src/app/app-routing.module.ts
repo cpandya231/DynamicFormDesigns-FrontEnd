@@ -11,11 +11,13 @@ import { FillFormComponent } from './forms/fill-form/fill-form.component';
 import { FormManagementComponent } from './forms/form-management/form-management.component';
 import { FormWorkflowComponent } from './forms/form-workflow/form-workflow-dashboard.component';
 import { FormsDashboardComponent } from './forms/forms-dashboard/forms-dashboard.component';
+import { MasterFormsComponent } from './forms/master-forms/master-forms.component';
 import { UserFormsDashboardComponent } from './forms/user-forms-dashboard/user-forms-dashboard.component';
 import { UserFormsInProgressDataComponent } from './forms/user-forms-in-progress/user-forms-in-progress-data/user-forms-in-progress-data.component';
 import { UserFormsInProgressComponent } from './forms/user-forms-in-progress/user-forms-in-progress.component';
 import { LoginComponent } from './login/login.component';
 import { RolesComponent } from './roles/roles.component';
+import { MasterForms } from './services/utility/master.forms.constants';
 import { AuditTrailComponent } from './settings/audit-trail/audit-trail.component';
 import { SystemConfigComponent } from './settings/system-config/system-config.component';
 import { CreateUserComponent } from './users/create-user/create-user.component';
@@ -54,28 +56,62 @@ const routes: Routes = [
     path: 'userFormsDashboard',
     component: UserFormsDashboardComponent,
     children: [
-  
 
       {
-        path: 'formsInProgressData/:formId/:formName/:workflowId',
-        component: UserFormsInProgressDataComponent,
+        path: 'userForms',
+        children: [
+          {
+            path: 'formsInProgressData/:formId/:formName/:workflowId',
+            component: UserFormsInProgressDataComponent,
 
+          },
+          {
+            path: 'updateLogEntry/:formName/:entryId',
+            component: FillFormComponent
+          },
+
+
+          {
+            path: 'createLogEntry/:formName',
+            component: FillFormComponent
+          },
+          {
+            path: '',
+            component: UserFormsInProgressComponent,
+          },
+
+        ]
       },
 
       {
-        path: 'updateLogEntry/:formName/:entryId',
-        component: FillFormComponent
-      },
+        path: 'masterForms',
+
+        children: [
+          {
+            path: 'formsInProgressData/:formId/:formName/:workflowId',
+            component: UserFormsInProgressDataComponent,
+
+          },
+          {
+            path: 'updateLogEntry/:formName/:entryId',
+            component: FillFormComponent
+          },
 
 
-      {
-        path: 'createLogEntry/:formName',
-        component: FillFormComponent
+          {
+            path: 'createLogEntry/:formName',
+            component: FillFormComponent
+          },
+          {
+            path: '',
+            component: MasterFormsComponent
+          },
+
+        ]
+
       },
 
-      {
-        path: '', component: UserFormsInProgressComponent,
-      },
+      { path: '', redirectTo: 'userForms', pathMatch: 'full' },
     ]
   },
 

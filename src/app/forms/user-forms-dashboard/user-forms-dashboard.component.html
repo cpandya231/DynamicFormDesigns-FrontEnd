@@ -2,11 +2,10 @@
     <mat-sidenav class="left-side-nav" mode="side" [fixedInViewport]="true" fixedTopGap="65" opened>
 
         <mat-nav-list>
-            <a mat-list-item routerLink="/userFormsDashboard" [routerLinkActive]="['active']"
-                ariaCurrentWhenActive="page">Log Entries</a>
+            <a mat-list-item routerLink="/userFormsDashboard/userForms" [routerLinkActive]="['active']">Log Entries</a>
 
-            <a mat-list-item routerLink=".">Masters</a>
-            <a mat-list-item routerLink=".">Alarms</a>
+            <a mat-list-item routerLink="/userFormsDashboard/masterForms" [routerLinkActive]="['active']">Masters</a>
+
 
         </mat-nav-list>
     </mat-sidenav>

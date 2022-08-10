@@ -1,11 +1,20 @@
 <div class="form_template_container">
-    <div class="form_name_input">
-        <label for="form_name">Form Name*</label>
-        <input id="form_name" class="form-control" [(ngModel)]="FormName">
+    <div class="form-options">
+        <div class="form_name_input">
+            <label for="form_name">Form Name*</label>
+            <input id="form_name" class="form-control" [(ngModel)]="FormName">
+
+        </div>
+        <div class="mat-slide-toggle-parent">
+            <mat-slide-toggle *ngIf="!formId" [(ngModel)]="isMasterForm" color="primary">
+                Master Data Form
+            </mat-slide-toggle>
+        </div>
     </div>
     <form-builder *ngIf="IsFormLoaded" [form]='CurrentForm' [options]='FormOptions' #formio></form-builder>
     <div class="buttons_container">
-        <button class="btn save_button" (click)="SaveTemplate()" [disabled]="!FormName.length || SaveInProgress">Save Template</button>
+        <button class="btn save_button" (click)="SaveTemplate()" [disabled]="!FormName.length || SaveInProgress">Save
+            Template</button>
         <button class="btn cancel_button" (click)="CancelChanges()">Cancel</button>
     </div>
 </div>

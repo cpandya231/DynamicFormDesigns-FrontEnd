@@ -15,7 +15,7 @@
     border-bottom-right-radius: 1em;
 
 
-    font-weight: bold;
+    font-weight: bold !important;
 
 
 }
@@ -24,12 +24,23 @@
 
 
     &:hover {
-        @extend .active;
+        background-color: $main-teal-light ;
+        color: $main-teal-dark;
+
+
+        border-top-right-radius: 1em;
+        border-bottom-right-radius: 1em;
         font-weight: normal;
 
     }
 
     &:focus {
-        @extend .active;
+        background-color: $main-teal-light ;
+        color: $main-teal-dark;
+
+
+        border-top-right-radius: 1em;
+        border-bottom-right-radius: 1em;
+        font-weight: normal;
     }
 }
