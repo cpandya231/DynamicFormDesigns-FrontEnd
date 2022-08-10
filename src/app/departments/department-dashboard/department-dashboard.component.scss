@@ -17,23 +17,25 @@
 }
 
 .custom-node {
-    background-color: #fff;
-    border-radius: 5px;
-    border: 1px solid $main-navy;
-    border-top: 5px solid $main-teal;
-
-    display: flex;
-    flex-direction: column;
-    height: 6em;
+    height: 7em;
     width: 10em;
 
-}
+    mat-card {
+        border: 1px solid $main-navy;
+        border-top: 5px solid $main-teal;
+        padding: 0em;
+        padding-bottom: 1em;
 
-.arrow-head {}
+    }
+
+}
 
 .dept-data {
     margin-left: 1em;
+
 }
+
+
 
 .dept-menu {
     display: flex;
