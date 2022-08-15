@@ -199,6 +199,19 @@ export class CreateFormTemplateComponent implements OnInit {
     });
     this.FormOptions.editForm = { ...eleObj };
 
+    this.authService.getAccessToken().asObservable().subscribe(authData => {
+      const token = authData;
+      Object.assign(this.FormOptions, {'Authorization': `Bearer ${token}`})
+    });
+
+    this.userService.getUserByUsername(localStorage.getItem("username")).subscribe(userData => {
+        Object.assign(this.FormOptions, {
+          firstName: userData.first_name,
+          lastName: userData.last_name,
+          department: userData.department,
+        });
+    });
+    
     if (this.FormName.length) {
       this.formsService.GetFormTemplate(this.FormName, this.formId).subscribe(data => {
         console.log(data);
@@ -210,15 +223,6 @@ export class CreateFormTemplateComponent implements OnInit {
     } else {
       this.IsFormLoaded = true;
     }
-
-    forkJoin([this.userService.getUserByUsername(localStorage.getItem("username")),
-    this.authService.getAccessToken().asObservable()]).subscribe(data => {
-      const token = data[1];
-      this.FormOptions['firstName'] = data[0].first_name;
-      this.FormOptions['lastName'] = data[0].last_name;
-      this.FormOptions['department'] = data[0].department;
-      this.FormOptions['Authorization'] = `Bearer ${token}`;
-    });
 
     setTimeout(() => {
       this.formIO.formio.events.on('formio.saveComponent', (comp: any) => {
