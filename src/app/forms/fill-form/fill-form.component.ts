@@ -49,7 +49,8 @@ export class FillFormComponent implements OnInit {
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private _location: Location,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+
   ) { }
 
   ngOnInit(): void {
@@ -67,6 +68,10 @@ export class FillFormComponent implements OnInit {
       let transitionsObservable = this.formService.GetWorkflowStatesTransitions(this.workflowId);
       let entryDataObservable = this.formService.GetSpecificLogEntry(this.formId, this.entryId);
       let entryMetaDataObservable = this.formService.LogEntryMetadata(this.formId, this.entryId);
+      this.authService.getAccessToken().asObservable().subscribe(authData => {
+        const token = authData;
+        Object.assign(this.CurrentForm, { 'Authorization': `Bearer ${token}` })
+      });
       combineLatest([transitionsObservable, entryDataObservable, entryMetaDataObservable]).subscribe(items => {
         let transitionData = items[0];
         let entryData = items[1];
