@@ -35,6 +35,7 @@ export class FillFormComponent implements OnInit {
   form!: FormioComponent;
   IsFormLoaded = false;
   formId: number = 0;
+  sendToEndState = false;
   FormOptions = {
     "hooks": {
       "beforeSubmit": this.beforeSubmit.bind(this),
@@ -136,6 +137,7 @@ export class FillFormComponent implements OnInit {
         && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
     if (null != requiredTransition) {
       this.toState = requiredTransition.toState.name;
+      this.sendToEndState = requiredTransition.toState.isEndState;
       let sendBackTransition = transitionData.transitions.
         find(transition => (transition.fromState.name == entry.state && transition.sendBackTransition)
           && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
@@ -201,6 +203,7 @@ export class FillFormComponent implements OnInit {
       let logEntryObj = {
         id: this.entryId,
         state: this.isGettingSendBack ? this.sendBackState : this.toState,
+        isEndState: this.sendToEndState,
         data: submittedData
       }
       this.formService.UpdateLogEntry(this.formId, logEntryObj).subscribe({
@@ -216,7 +219,8 @@ export class FillFormComponent implements OnInit {
     } else {
       let logEntryObj = {
         state: this.toState,
-        data: submittedData
+        data: submittedData,
+        isEndState: this.sendToEndState
       }
       this.formService.SaveLogEntry(this.formId, logEntryObj).subscribe({
         next: (data) => {

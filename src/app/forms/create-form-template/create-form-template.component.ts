@@ -211,7 +211,7 @@ export class CreateFormTemplateComponent implements OnInit {
           department: userData.department,
         });
     });
-    
+
     if (this.FormName.length) {
       this.formsService.GetFormTemplate(this.FormName, this.formId).subscribe(data => {
         console.log(data);
