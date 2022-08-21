@@ -5,7 +5,6 @@ import { FormsService } from 'src/app/common/services/forms.service';
 import { IDepartmentItem } from 'src/app/departments/department-item-model';
 import { DepartmentService } from 'src/app/services/departments.service';
 import { RoleService } from 'src/app/services/roles.service';
-import { IWorkflowStateModel } from '../form-workflow.model';
 
 @Component({
   selector: 'app-add-edit-workflow-state',
@@ -27,7 +26,6 @@ export class AddEditWorkflowStateComponent implements OnInit {
   FieldsList: any[] = [];
   constructor(private fb: FormBuilder,
     private departmentService: DepartmentService,
-    private formService: FormsService,
     private roleService: RoleService,
     public dialogRef: MatDialogRef<AddEditWorkflowStateComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any) { }
@@ -64,7 +62,8 @@ export class AddEditWorkflowStateComponent implements OnInit {
         triggerSMS: [false],
         eSignRequired: [false],
         sendBackTo: [''],
-        fields: this.fb.array([])
+        fields: this.fb.array([]),
+        isEndState: [this.existingStateData.isEndState]
       });
 
       this.FieldsList.forEach((field: any) => {
@@ -100,7 +99,8 @@ export class AddEditWorkflowStateComponent implements OnInit {
         triggerSMS: [false],
         eSignRequired: [false],
         sendBackTo: [''],
-        fields: this.fb.array([])
+        fields: this.fb.array([]),
+        isEndState: [false]
       });
       this.FieldsList.forEach(() => {
         this.fields.push(this.fb.group({
