@@ -154,7 +154,8 @@ export class AddEditWorkflowStateComponent implements OnInit {
           height: 50
         },
         visibleColumns,
-        disabledColumns
+        disabledColumns,
+        isEndState: this.StateDetailsForm.value.isEndState
       },
 
     };
