@@ -98,6 +98,7 @@ export class FillFormComponent implements OnInit {
       let requiredTransition = transitionData.transitions.find(transition => transition.fromState.id == firstState?.id);
       if (requiredTransition) {
         this.toState = requiredTransition.toState.name;
+        this.sendToEndState = requiredTransition.toState.endState;
       } else {
         this.toState = "no_access";
         this.disableSave = true;
@@ -132,7 +133,7 @@ export class FillFormComponent implements OnInit {
         && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
     if (null != requiredTransition) {
       this.toState = requiredTransition.toState.name;
-      this.sendToEndState = requiredTransition.toState.isEndState;
+      this.sendToEndState = requiredTransition.toState.endState;
       let sendBackTransition = transitionData.transitions.
         find(transition => (transition.fromState.name == entry.state && transition.sendBackTransition)
           && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
@@ -198,7 +199,7 @@ export class FillFormComponent implements OnInit {
       let logEntryObj = {
         id: this.entryId,
         state: this.isGettingSendBack ? this.sendBackState : this.toState,
-        isEndState: this.sendToEndState,
+        endState: this.sendToEndState,
         data: submittedData
       }
       this.formService.UpdateLogEntry(this.formId, logEntryObj).subscribe({
@@ -215,7 +216,7 @@ export class FillFormComponent implements OnInit {
       let logEntryObj = {
         state: this.toState,
         data: submittedData,
-        isEndState: this.sendToEndState
+        endState: this.sendToEndState
       }
       this.formService.SaveLogEntry(this.formId, logEntryObj).subscribe({
         next: (data) => {

@@ -146,7 +146,7 @@ export class FormWorkflowComponent implements OnInit {
           sendBackAvailable: state.sendBackAvailable,
           visibleColumns: state.visibleColumns,
           disabledColumns: state.disabledColumns,
-          isEndState: state.isEndState,
+          endState: state.endState,
         }
       })
     }
@@ -243,7 +243,7 @@ export class FormWorkflowComponent implements OnInit {
         sendBackAvailable: state.sendBackAvailable,
         visibleColumns: state.visibleColumns,
         disabledColumns: state.disabledColumns,
-        isEndState: state.isEndState
+        endState: state.endState
       }
     });
   }
