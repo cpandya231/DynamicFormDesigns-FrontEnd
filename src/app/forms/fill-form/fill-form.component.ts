@@ -44,7 +44,9 @@ export class FillFormComponent implements OnInit {
       "submitMessage": "Entry created/updated successfully"
     }
   };
-
+  IsMasterForm = false;
+  IsEditMasterEnabled = false;
+  transitionData: any;
   constructor(
     private formService: FormsService,
     private authService: AuthService,
@@ -60,6 +62,7 @@ export class FillFormComponent implements OnInit {
     const state: any = this._location.getState();
     this.formId = state.formId;
     this.userRoles = this.authService.getRoles();
+    this.IsMasterForm = state.isMasterForm;
 
     this.formService.GetFormTemplate(this.formName, this.formId).subscribe(data => {
       this.CurrentForm.components = JSON.parse(data.template).components;
@@ -69,17 +72,17 @@ export class FillFormComponent implements OnInit {
       let entryDataObservable = this.formService.GetSpecificLogEntry(this.formId, this.entryId);
       let entryMetaDataObservable = this.formService.LogEntryMetadata(this.formId, this.entryId);
       combineLatest([transitionsObservable, entryDataObservable, entryMetaDataObservable]).subscribe(items => {
-        let transitionData = items[0];
+        this.transitionData = items[0];
         let entryData = items[1];
         let entryMetaData = items[2];
         if (entryData.length > 0) {
-          this.processToHandleExistingEntry(entryData, entryMetaData, transitionData);
+          this.processToHandleExistingEntry(entryData, entryMetaData, this.transitionData);
           this.showComments = true;
         } else {
           if (this.entryId > 0) {
             alert(`No Valid entry found for entryId ${this.entryId}`);
           } else {
-            this.processToHandleNewEntry(transitionData);
+            this.processToHandleNewEntry(this.transitionData);
           }
         }
       })
@@ -122,6 +125,7 @@ export class FillFormComponent implements OnInit {
         });
       });
     });
+    this.onSubmit();
     this.IsFormLoaded = true;
   }
 
@@ -142,6 +146,9 @@ export class FillFormComponent implements OnInit {
     } else {
       this.toState = "no_access";
       this.disableSave = true;
+      if (this.IsMasterForm) {
+        this.IsEditMasterEnabled = true;
+      }
     }
 
     let userTransition = transitionData.transitions.
@@ -157,7 +164,7 @@ export class FillFormComponent implements OnInit {
 
             let componentValue = entry["" + component.key];
             component.defaultValue = componentValue;
-            if (this.disabledColumns.includes(component.key) || this.disableSave) {
+            if (this.disabledColumns.includes(component.key) || (this.disableSave && !this.IsEditMasterEnabled)) {
               component.disabled = true;
             }
             if (this.visibleColumns && !this.visibleColumns.includes(component.key)) {
@@ -234,6 +241,10 @@ export class FillFormComponent implements OnInit {
   sendBack() {
     this.isGettingSendBack = true;
     this.onSubmit();
+  }
+
+  EditMasterData() {
+    this.processToHandleNewEntry(this.transitionData);
   }
 
   close(delay: number) {
