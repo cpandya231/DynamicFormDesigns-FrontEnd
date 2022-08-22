@@ -44,6 +44,7 @@ export class FillFormComponent implements OnInit {
       "submitMessage": "Entry created/updated successfully"
     }
   };
+  editingMasterData = false;
   IsMasterForm = false;
   IsEditMasterEnabled = false;
   transitionData: any;
@@ -125,7 +126,11 @@ export class FillFormComponent implements OnInit {
         });
       });
     });
-    this.onSubmit();
+    if (this.editingMasterData) {
+      this.onSubmit();
+
+    }
+    this.editingMasterData = false;
     this.IsFormLoaded = true;
   }
 
@@ -244,6 +249,7 @@ export class FillFormComponent implements OnInit {
   }
 
   EditMasterData() {
+    this.editingMasterData = true;
     this.processToHandleNewEntry(this.transitionData);
   }
 
