@@ -25,6 +25,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
   visibleColumns: string[];
   defaultFirstColumns: string[] = ["id", "state",];
   defaultLastColumns: string[] = ["created_by", "log_create_dt", "updated_by", "log_update_dt"];
+  isMasterForm = false;
   constructor(private formsService: FormsService,
     private authService: AuthService,
     private router: Router,
@@ -39,6 +40,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
     this.formId = Number(params.get('formId') || '');
     this.formName = String(params.get('formName') || '');
     this.workflowId = Number(params.get('workflowId') || '');
+    this.isMasterForm = params.get('isMasterForm') ? true : false;
     let logEntriesObservable = this.formsService.GetLogEntries(this.formId, false);
     let transitionsObservable = this.formsService.GetWorkflowStatesTransitions(this.workflowId);
     combineLatest([logEntriesObservable, transitionsObservable]).subscribe(items => {
@@ -47,8 +49,6 @@ export class UserFormsInProgressDataComponent implements OnInit {
       this.getLogEntries(entryData, transitionData);
       this.canCreateNewEntry(transitionData);
     })
-
-
   }
 
   private getLogEntries(entryData: any, transitionData: IGetWorkflowStateTransitionsModel) {
@@ -67,10 +67,6 @@ export class UserFormsInProgressDataComponent implements OnInit {
       this.logEntries = [];
       this.isDataLoaded = true;
     }
-
-
-
-
   }
 
   private canCreateNewEntry(transitionData: IGetWorkflowStateTransitionsModel) {
@@ -82,18 +78,15 @@ export class UserFormsInProgressDataComponent implements OnInit {
     } else {
       this.enableCreateNewEntry = false
     }
-
-
   }
 
   FillForm(entryId: number) {
-    this.router.navigate(['../../../../updateLogEntry', this.formName, entryId], { relativeTo: this.activatedRoute, state: { formId: this.formId } });
+    this.router.navigate(['../../../../updateLogEntry', this.formName, entryId], { relativeTo: this.activatedRoute, state: { formId: this.formId, isMasterForm: this.isMasterForm } });
   }
 
   createNewEntry() {
-    this.router.navigate(['../../../../createLogEntry', this.formName], { relativeTo: this.activatedRoute, state: { formId: this.formId } });
+    this.router.navigate(['../../../../createLogEntry', this.formName], { relativeTo: this.activatedRoute, state: { formId: this.formId, isMasterForm: this.isMasterForm } });
   }
-
 
   handleChange() {
     let filterbyusername = this.selectedChoice == "username";

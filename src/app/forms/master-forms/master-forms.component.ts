@@ -31,6 +31,6 @@ export class MasterFormsComponent implements OnInit {
   }
 
   SeeEntries(form: any) {
-    this.router.navigate(['./formsInProgressData', form.id, form.name, form.workflow.id], { relativeTo: this.route });
+    this.router.navigate(['./formsInProgressData', form.id, form.name, form.workflow.id, {isMasterForm: true}], { relativeTo: this.route });
   }
 }

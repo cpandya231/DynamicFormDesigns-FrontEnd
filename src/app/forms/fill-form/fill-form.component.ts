@@ -44,7 +44,10 @@ export class FillFormComponent implements OnInit {
       "submitMessage": "Entry created/updated successfully"
     }
   };
-
+  editingMasterData = false;
+  IsMasterForm = false;
+  IsEditMasterEnabled = false;
+  transitionData: any;
   constructor(
     private formService: FormsService,
     private authService: AuthService,
@@ -61,6 +64,7 @@ export class FillFormComponent implements OnInit {
     const state: any = this._location.getState();
     this.formId = state.formId;
     this.userRoles = this.authService.getRoles();
+    this.IsMasterForm = state.isMasterForm;
 
     this.formService.GetFormTemplate(this.formName, this.formId).subscribe(data => {
       this.CurrentForm.components = JSON.parse(data.template).components;
@@ -74,17 +78,17 @@ export class FillFormComponent implements OnInit {
         Object.assign(this.CurrentForm, { 'Authorization': `Bearer ${token}` })
       });
       combineLatest([transitionsObservable, entryDataObservable, entryMetaDataObservable]).subscribe(items => {
-        let transitionData = items[0];
+        this.transitionData = items[0];
         let entryData = items[1];
         let entryMetaData = items[2];
         if (entryData.length > 0) {
-          this.processToHandleExistingEntry(entryData, entryMetaData, transitionData);
+          this.processToHandleExistingEntry(entryData, entryMetaData, this.transitionData);
           this.showComments = true;
         } else {
           if (this.entryId > 0) {
             alert(`No Valid entry found for entryId ${this.entryId}`);
           } else {
-            this.processToHandleNewEntry(transitionData);
+            this.processToHandleNewEntry(this.transitionData);
           }
         }
       })
@@ -103,6 +107,7 @@ export class FillFormComponent implements OnInit {
       let requiredTransition = transitionData.transitions.find(transition => transition.fromState.id == firstState?.id);
       if (requiredTransition) {
         this.toState = requiredTransition.toState.name;
+        this.sendToEndState = requiredTransition.toState.endState;
       } else {
         this.toState = "no_access";
         this.disableSave = true;
@@ -126,6 +131,11 @@ export class FillFormComponent implements OnInit {
         });
       });
     });
+    if (this.editingMasterData) {
+      this.onSubmit();
+
+    }
+    this.editingMasterData = false;
     this.IsFormLoaded = true;
   }
 
@@ -137,7 +147,7 @@ export class FillFormComponent implements OnInit {
         && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
     if (null != requiredTransition) {
       this.toState = requiredTransition.toState.name;
-      this.sendToEndState = requiredTransition.toState.isEndState;
+      this.sendToEndState = requiredTransition.toState.endState;
       let sendBackTransition = transitionData.transitions.
         find(transition => (transition.fromState.name == entry.state && transition.sendBackTransition)
           && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
@@ -146,6 +156,9 @@ export class FillFormComponent implements OnInit {
     } else {
       this.toState = "no_access";
       this.disableSave = true;
+      if (this.IsMasterForm) {
+        this.IsEditMasterEnabled = true;
+      }
     }
 
     let userTransition = transitionData.transitions.
@@ -161,7 +174,7 @@ export class FillFormComponent implements OnInit {
 
             let componentValue = entry["" + component.key];
             component.defaultValue = componentValue;
-            if (this.disabledColumns.includes(component.key) || this.disableSave) {
+            if (this.disabledColumns.includes(component.key) || (this.disableSave && !this.IsEditMasterEnabled)) {
               component.disabled = true;
             }
             if (this.visibleColumns && !this.visibleColumns.includes(component.key)) {
@@ -203,7 +216,7 @@ export class FillFormComponent implements OnInit {
       let logEntryObj = {
         id: this.entryId,
         state: this.isGettingSendBack ? this.sendBackState : this.toState,
-        isEndState: this.sendToEndState,
+        endState: this.sendToEndState,
         data: submittedData
       }
       this.formService.UpdateLogEntry(this.formId, logEntryObj).subscribe({
@@ -220,7 +233,7 @@ export class FillFormComponent implements OnInit {
       let logEntryObj = {
         state: this.toState,
         data: submittedData,
-        isEndState: this.sendToEndState
+        endState: this.sendToEndState
       }
       this.formService.SaveLogEntry(this.formId, logEntryObj).subscribe({
         next: (data) => {
@@ -238,6 +251,11 @@ export class FillFormComponent implements OnInit {
   sendBack() {
     this.isGettingSendBack = true;
     this.onSubmit();
+  }
+
+  EditMasterData() {
+    this.editingMasterData = true;
+    this.processToHandleNewEntry(this.transitionData);
   }
 
   close(delay: number) {

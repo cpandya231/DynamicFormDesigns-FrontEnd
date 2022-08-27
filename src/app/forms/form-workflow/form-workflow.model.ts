@@ -9,7 +9,7 @@ export interface IWorkflowStateModel {
     sendBackAvailable?: boolean;
     disabledColumns: string;
     visibleColumns: string;
-    isEndState: boolean;
+    endState: boolean;
 }
 
 export interface IWorkflowTransitionModel {
