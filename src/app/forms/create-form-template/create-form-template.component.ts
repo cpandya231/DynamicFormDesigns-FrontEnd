@@ -177,7 +177,7 @@ export class CreateFormTemplateComponent implements OnInit {
           {
             key: 'data',
             components: this.ignoreComponents(
-              ['persistent', 'inputFormat', 'protected', 'dbIndex', 'encrypted', 'redrawOn', 'calculateServer', 'idPath', 'selectThreshold', 'useExactSearch',
+              ['inputFormat', 'protected', 'dbIndex', 'encrypted', 'redrawOn', 'calculateServer', 'idPath', 'selectThreshold', 'useExactSearch',
                 'dataType', 'searchEnabled', 'calculateValuePanel', 'calculateValue-json', 'allowCalculateOverride', 'customDefaultValue-json']
             )
           },
@@ -201,15 +201,15 @@ export class CreateFormTemplateComponent implements OnInit {
 
     this.authService.getAccessToken().asObservable().subscribe(authData => {
       const token = authData;
-      Object.assign(this.FormOptions, {'Authorization': `Bearer ${token}`})
+      Object.assign(this.FormOptions, { 'Authorization': `Bearer ${token}` })
     });
 
     this.userService.getUserByUsername(localStorage.getItem("username")).subscribe(userData => {
-        Object.assign(this.FormOptions, {
-          firstName: userData.first_name,
-          lastName: userData.last_name,
-          department: userData.department,
-        });
+      Object.assign(this.FormOptions, {
+        firstName: userData.first_name,
+        lastName: userData.last_name,
+        department: userData.department,
+      });
     });
 
     if (this.FormName.length) {
@@ -226,6 +226,9 @@ export class CreateFormTemplateComponent implements OnInit {
 
     setTimeout(() => {
       this.formIO.formio.events.on('formio.saveComponent', (comp: any) => {
+        if (comp.persistent == 'client-only' || !comp.persistent) {
+          return;
+        }
         let keyValue = '';
         comp.label.split(" ").forEach((el: any, index: number) => {
           let add = el.toLowerCase();
