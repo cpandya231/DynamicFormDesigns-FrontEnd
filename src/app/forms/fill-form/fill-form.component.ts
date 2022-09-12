@@ -206,45 +206,59 @@ export class FillFormComponent implements OnInit {
 
   handleSubmit(submission: any, callback: any) {
     let submittedData = this.form.formio.submission.data;
-    for (let item in submittedData) {
-      if (this.disabledColumns.includes(item) || !this.visibleColumns.includes(item)) {
-        delete submittedData[`${item}`]
-      }
-    }
-    if (this.entryId) {
-      let logEntryObj = {
-        id: this.entryId,
-        state: this.isGettingSendBack ? this.sendBackState : this.toState,
-        endState: this.sendToEndState,
-        data: submittedData
-      }
-      this.formService.UpdateLogEntry(this.formId, logEntryObj).subscribe({
+    this.formService.PatchEntryState
+      (submittedData["stateValue"], submittedData["masterTable"], submittedData["masterEntryId"])
+      .subscribe({
         next: (data) => {
-          callback(null);
-          this.close(2000);
+          // for (let item in submittedData) {
+          //   if (this.disabledColumns.includes(item) || !this.visibleColumns.includes(item)) {
+          //     delete submittedData[`${item}`]
+          //   }
+          // }
+          if (this.entryId) {
+            let logEntryObj = {
+              id: this.entryId,
+              state: this.isGettingSendBack ? this.sendBackState : this.toState,
+              endState: this.sendToEndState,
+              data: submittedData
+            }
+            this.formService.UpdateLogEntry(this.formId, logEntryObj).subscribe({
+              next: (data) => {
+                callback(null);
+                this.close(2000);
+              },
+              error: (err) => {
+                callback("Error occured while updating entry");
+                console.log(err)
+              }
+            });
+          } else {
+            let logEntryObj = {
+              state: this.toState,
+              data: submittedData,
+              endState: this.sendToEndState
+            }
+            this.formService.SaveLogEntry(this.formId, logEntryObj).subscribe({
+              next: (data) => {
+                callback(null)
+                this.close(2000);
+              },
+              error: (err) => {
+                callback(`You don't have access to update this entry`);
+                console.log(err)
+              }
+            });
+          }
+
+
+
         },
         error: (err) => {
-          callback("Error occured while updating entry");
-          console.log(err)
+          callback(err.error.message);
+          console.log(err.error.message)
         }
-      });
-    } else {
-      let logEntryObj = {
-        state: this.toState,
-        data: submittedData,
-        endState: this.sendToEndState
-      }
-      this.formService.SaveLogEntry(this.formId, logEntryObj).subscribe({
-        next: (data) => {
-          callback(null)
-          this.close(2000);
-        },
-        error: (err) => {
-          callback(`You don't have access to update this entry`);
-          console.log(err)
-        }
-      });
-    }
+      })
+
   }
 
   sendBack() {

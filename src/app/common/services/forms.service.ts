@@ -98,6 +98,10 @@ export class FormsService {
   LogEntryMetadata(formId: number, entryId: number): Observable<any> {
     return this.http.get(`${ServiceUtil.API_ENDPOINT}/entry/metadata/${formId}/${entryId}`, this.getHeaders());
   }
+
+  PatchEntryState(stateValue: string, masterTableName: string, masterTableEntryId: string) {
+    return this.http.patch(`${ServiceUtil.API_ENDPOINT}/master/entry/${masterTableName}?id=${masterTableEntryId}&stateValue=${stateValue}`, this.getHeaders());
+  }
   protected getHeaders() {
     return {
       headers: new HttpHeaders({
