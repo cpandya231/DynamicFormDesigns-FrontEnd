@@ -9,6 +9,7 @@ import { combineLatest } from 'rxjs';
 import { IGetWorkflowStateTransitionsModel } from '../form-workflow/form-workflow.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ValidateUserComponent } from 'src/app/common/components/validate-user/validate-user.component';
+import { UsersService } from 'src/app/services/users.service';
 @Component({
   selector: 'app-fill-form',
   templateUrl: './fill-form.component.html',
@@ -46,7 +47,6 @@ export class FillFormComponent implements OnInit {
   };
   editingMasterData = false;
   IsMasterForm = false;
-  IsEditMasterEnabled = false;
   transitionData: any;
   constructor(
     private formService: FormsService,
@@ -54,7 +54,7 @@ export class FillFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private _location: Location,
     private dialog: MatDialog,
-
+    private userService: UsersService
   ) { }
 
   ngOnInit(): void {
@@ -65,6 +65,12 @@ export class FillFormComponent implements OnInit {
     this.formId = state.formId;
     this.userRoles = this.authService.getRoles();
     this.IsMasterForm = state.isMasterForm;
+
+    this.userService.getUserByUsername(localStorage.getItem("username")).subscribe(userData => {
+      Object.assign(this.CurrentForm, {
+        department: userData.department
+      })
+    });
 
     this.formService.GetFormTemplate(this.formName, this.formId).subscribe(data => {
       this.CurrentForm.components = JSON.parse(data.template).components;
@@ -131,17 +137,12 @@ export class FillFormComponent implements OnInit {
         });
       });
     });
-    if (this.editingMasterData) {
-      this.onSubmit();
-
-    }
-    this.editingMasterData = false;
     this.IsFormLoaded = true;
   }
 
   private processToHandleExistingEntry(entryData: any, entryMetaData: any, transitionData: IGetWorkflowStateTransitionsModel) {
     let entry = entryData[0].data;
-
+    const currentState = transitionData.states.find(state => state.name === entry.state);
     let requiredTransition = transitionData.transitions.
       find(transition => (transition.fromState.name == entry.state && !transition.sendBackTransition)
         && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
@@ -152,13 +153,11 @@ export class FillFormComponent implements OnInit {
         find(transition => (transition.fromState.name == entry.state && transition.sendBackTransition)
           && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
       this.sendBackState = sendBackTransition?.toState.name;
-
+    } else if(currentState?.endState && this.IsMasterForm) {
+      this.processToHandleNewEntry(this.transitionData);
     } else {
       this.toState = "no_access";
       this.disableSave = true;
-      if (this.IsMasterForm) {
-        this.IsEditMasterEnabled = true;
-      }
     }
 
     let userTransition = transitionData.transitions.
@@ -174,7 +173,7 @@ export class FillFormComponent implements OnInit {
 
             let componentValue = entry["" + component.key];
             component.defaultValue = componentValue;
-            if (this.disabledColumns.includes(component.key) || (this.disableSave && !this.IsEditMasterEnabled)) {
+            if (this.disabledColumns.includes(component.key) || (this.disableSave)) {
               component.disabled = true;
             }
             if (this.visibleColumns && !this.visibleColumns.includes(component.key)) {
