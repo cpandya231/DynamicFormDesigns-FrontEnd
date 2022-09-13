@@ -141,6 +141,7 @@ export class FormWorkflowComponent implements OnInit {
         return {
           name: state.label,
           description: state.description,
+          label: state.workflowLabel,
           roles: state.roles,
           departments: state.departments,
           sendBackAvailable: state.sendBackAvailable,
@@ -238,6 +239,7 @@ export class FormWorkflowComponent implements OnInit {
         roles: state.roles,
         departments: state.departments,
         description: state.description,
+        workflowLabel: state.label,
         parentId: parent?.fromState?.id || '',
         parentName: parent?.fromState?.name,
         sendBackAvailable: state.sendBackAvailable,

@@ -75,7 +75,8 @@ export class CreateDepartmentComponent implements OnInit {
     let departmentObj: IDepartmentItem = {
       name: submittedData.name,
       code: submittedData.code,
-      parentId: submittedData.parentDepartment
+      parentId: submittedData.parentDepartment,
+      site: submittedData.site
     }
 
     this.departmentService.createDepartment(departmentObj).subscribe({

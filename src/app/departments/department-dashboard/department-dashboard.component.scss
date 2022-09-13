@@ -1,5 +1,4 @@
 @import "../../variables.scss";
-
 .page {
     overflow: hidden;
     height: calc(100% - 30px);
@@ -8,7 +7,6 @@
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-
     .add_btn {
         position: absolute;
         top: 100px;
@@ -19,39 +17,35 @@
 .custom-node {
     height: 7em;
     width: 10em;
-
     mat-card {
         border: 1px solid $main-navy;
         border-top: 5px solid $main-teal;
         padding: 0em;
-        padding-bottom: 1em;
-
+        min-height: 6rem;
     }
-
 }
 
 .dept-data {
-    margin-left: 1em;
-
+    font-size: 14px;
+    padding: 0 6px;
 }
-
-
 
 .dept-menu {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-
-
+    .dept-label {
+        width: 90%;
+        padding: 0 5px;
+        text-align: center;
+        font-weight: 500;
+    }
     mat-icon {
         &:hover {
             background-color: $main-navy-light;
         }
-
     }
-
 }
 
 .dept-code {
     color: #00000070;
+    font-size: 0.7rem;
 }

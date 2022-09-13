@@ -2,57 +2,41 @@
     <button class="btn btn-primary" (click)="AddDepartment()">Add Department</button>
 </div>
 <div class="page">
-    <ngx-graph [links]="links" [nodes]="nodes" layout="dagre" [curve]="curve" [draggingEnabled]="draggingEnabled"
-        [panningEnabled]="panningEnabled" [enableZoom]="zoomEnabled" [zoomSpeed]="zoomSpeed"
-        [minZoomLevel]="minZoomLevel" [maxZoomLevel]="maxZoomLevel" [panOnZoom]="panOnZoom" [autoCenter]="autoCenter"
-        [autoZoom]="autoZoom" [layoutSettings]="layoutSettings">
+    <ngx-graph [links]="links" [nodes]="nodes" layout="dagre" [curve]="curve" [draggingEnabled]="draggingEnabled" [panningEnabled]="panningEnabled" [enableZoom]="zoomEnabled" [zoomSpeed]="zoomSpeed" [minZoomLevel]="minZoomLevel" [maxZoomLevel]="maxZoomLevel"
+        [panOnZoom]="panOnZoom" [autoCenter]="autoCenter" [autoZoom]="autoZoom" [layoutSettings]="layoutSettings">
 
         <ng-template #nodeTemplate let-node>
             <svg:foreignObject class="custom-node">
                 <mat-card>
                     <div class="dept-menu">
-
+                        <span class="dept-label">{{node.label}}</span>
                         <mat-icon mat-button [matMenuTriggerFor]="menu" class="material-icons-outlined">more_vert
                         </mat-icon>
-
                         <mat-menu #menu="matMenu">
                             <div class="mat-menu">
-
                                 <button mat-menu-item (click)="AddDepartment()">
-
                                     <mat-icon>add_circle_outline
                                     </mat-icon>
                                     Add
-
                                 </button>
                                 <button mat-menu-item (click)="EditDepartment(node.id)">
                                     <mat-icon>edit
                                     </mat-icon>
                                     Edit
-
                                 </button>
-
-
                             </div>
                         </mat-menu>
-
                     </div>
-
                     <div class="dept-data">
-                        <div class="dept-label">{{node.label}}</div>
-                        <small class="dept-code">{{node.codeLabel}}</small>
+                        <div>{{node.codeLabel}}</div>
+                        <div>site: {{node.site}}</div>
                     </div>
                 </mat-card>
-
             </svg:foreignObject>
-
-
-
         </ng-template>
 
         <ng-template #defsTemplate>
-            <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4"
-                orient="90deg">
+            <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="90deg">
                 <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
             </svg:marker>
         </ng-template>

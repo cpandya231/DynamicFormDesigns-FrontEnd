@@ -48,6 +48,7 @@ export class FillFormComponent implements OnInit {
   editingMasterData = false;
   IsMasterForm = false;
   transitionData: any;
+  sendToButtonLabel: string | undefined = '';
   constructor(
     private formService: FormsService,
     private authService: AuthService,
@@ -113,6 +114,7 @@ export class FillFormComponent implements OnInit {
       let requiredTransition = transitionData.transitions.find(transition => transition.fromState.id == firstState?.id);
       if (requiredTransition) {
         this.toState = requiredTransition.toState.name;
+        this.sendToButtonLabel = firstState?.label;
         this.sendToEndState = requiredTransition.toState.endState;
       } else {
         this.toState = "no_access";
@@ -148,6 +150,7 @@ export class FillFormComponent implements OnInit {
         && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
     if (null != requiredTransition) {
       this.toState = requiredTransition.toState.name;
+      this.sendToButtonLabel = currentState?.label;
       this.sendToEndState = requiredTransition.toState.endState;
       let sendBackTransition = transitionData.transitions.
         find(transition => (transition.fromState.name == entry.state && transition.sendBackTransition)

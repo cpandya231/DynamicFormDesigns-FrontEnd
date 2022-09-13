@@ -656,7 +656,23 @@ export class MasterForms {
             "input": true,
             "inputType": "text",
             "id": "dyn7p3r"
-        }],
+        },
+        {
+            "label": "Site",
+            "labelPosition": "top",
+            "widget": {
+                "type": "input"
+            },
+            "validateOn": "blur",
+            "validate": {
+                "required": true,
+            },
+            "key": "site",
+            "type": "textfield",
+            "input": true,
+            "inputType": "text",
+            "id": "dqizbyl"
+        },],
         "Name": "Create Department",
         "Id": 4,
         "CreatedBy": "Akash",
@@ -722,6 +738,22 @@ export class MasterForms {
             "input": true,
             "inputType": "text",
             "id": "dyn7p3r"
+        },
+        {
+            "label": "Site",
+            "labelPosition": "top",
+            "widget": {
+                "type": "input"
+            },
+            "validateOn": "blur",
+            "validate": {
+                "required": false,
+            },
+            "key": "site",
+            "type": "textfield",
+            "input": true,
+            "inputType": "text",
+            "id": "dqizbyl"
         }],
         "Name": "Update Department",
         "Id": 4,

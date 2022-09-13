@@ -54,6 +54,7 @@ export class DepartmentDashboardComponent implements OnInit {
           id: dept.id,
           label: dept.name,
           codeLabel: `code: ${dept.code}`,
+          site: dept.site,
           dimension: {
             width: 150,
             height: 70
