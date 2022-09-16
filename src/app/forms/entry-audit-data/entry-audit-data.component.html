@@ -1,0 +1,16 @@
+<mat-sidenav-container class="app-container" *ngIf="IsFormLoaded">
+
+    <mat-sidenav-content>
+
+        <div class="audit-header">
+            <h4>Audit Report</h4>
+            <h6>Entry Id : {{entryId}}</h6>
+            <h6>Form Name : {{formName}}</h6>
+        </div>
+        <div *ngFor="let form of forms " class="audit-container">
+            <span> Updated by <b>{{form.updatedBy}}</b> on {{form.updatedOn}}</span>
+            <formio [form]='form' #formio [options]='FormOptions'></formio>
+        </div>
+
+    </mat-sidenav-content>
+</mat-sidenav-container>

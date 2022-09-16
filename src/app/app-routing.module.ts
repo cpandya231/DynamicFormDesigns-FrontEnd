@@ -7,6 +7,7 @@ import { DepartmentsComponent } from './departments/departments.component';
 import { EditDepartmentComponent } from './departments/edit-department/edit-department.component';
 
 import { CreateFormTemplateComponent } from './forms/create-form-template/create-form-template.component';
+import { EntryAuditDataComponent } from './forms/entry-audit-data/entry-audit-data.component';
 import { FillFormComponent } from './forms/fill-form/fill-form.component';
 import { FormManagementComponent } from './forms/form-management/form-management.component';
 import { FormWorkflowComponent } from './forms/form-workflow/form-workflow-dashboard.component';
@@ -68,6 +69,10 @@ const routes: Routes = [
           {
             path: 'updateLogEntry/:formName/:entryId',
             component: FillFormComponent
+          },
+          {
+            path: 'auditLogEntry/:formName/:formId/:entryId',
+            component: EntryAuditDataComponent
           },
 
 

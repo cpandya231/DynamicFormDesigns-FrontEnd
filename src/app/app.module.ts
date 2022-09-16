@@ -68,6 +68,7 @@ import { UserFormsInProgressDataComponent } from './forms/user-forms-in-progress
 import { CommentsComponent } from './forms/fill-form/comments/comments.component';
 import { DisplayWorkflowStatusComponent } from './common/display-workflow-status/display-workflow-status.component';
 import { MasterFormsComponent } from './forms/master-forms/master-forms.component';
+import { EntryAuditDataComponent } from './forms/entry-audit-data/entry-audit-data.component';
 
 
 @NgModule({
@@ -109,6 +110,7 @@ import { MasterFormsComponent } from './forms/master-forms/master-forms.componen
     CommentsComponent,
     DisplayWorkflowStatusComponent,
     MasterFormsComponent,
+    EntryAuditDataComponent,
 
 
   ],
