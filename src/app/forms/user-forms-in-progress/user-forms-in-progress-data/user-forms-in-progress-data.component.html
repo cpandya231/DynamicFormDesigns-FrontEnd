@@ -49,13 +49,13 @@
 
                 <td *ngFor="let col of columns" class="{{col}}">{{entry.data[""+col]}}</td>
                 <td class="icon_column">
-                    <span class="fas fa-edit" (click)="FillForm(entry.data['id'])"></span>
+                    <span title="Edit" class="fas fa-edit" (click)="FillForm(entry.data['id'])"></span>
                 </td>
                 <td class="icon_column">
-                    <span class="fas fa-hourglass-half" (click)="ShowProgress(entry.data['id'])"></span>
+                    <span title="Status" class="fas fa-hourglass-half" (click)="ShowProgress(entry.data['id'])"></span>
                 </td>
                 <td class="icon_column">
-                    <span class="fas fa-file-text" (click)="viewAuditReport(entry.data['id'])"></span>
+                    <span title="Report" class="fas fa-file-text" (click)="viewAuditReport(entry.data['id'])"></span>
 
                 </td>
 
