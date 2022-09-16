@@ -3,7 +3,7 @@
 </div>
 <div class="page">
     <ngx-graph [links]="links" [nodes]="nodes" layout="dagre" [curve]="curve" [draggingEnabled]="draggingEnabled" [panningEnabled]="panningEnabled" [enableZoom]="zoomEnabled" [zoomSpeed]="zoomSpeed" [minZoomLevel]="minZoomLevel" [maxZoomLevel]="maxZoomLevel"
-        [panOnZoom]="panOnZoom" [autoCenter]="autoCenter" [autoZoom]="autoZoom" [layoutSettings]="layoutSettings">
+        [panOnZoom]="panOnZoom" [autoZoom]="autoZoom" [layoutSettings]="layoutSettings">
 
         <ng-template #nodeTemplate let-node>
             <svg:foreignObject class="custom-node">

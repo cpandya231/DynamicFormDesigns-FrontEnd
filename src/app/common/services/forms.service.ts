@@ -99,9 +99,19 @@ export class FormsService {
     return this.http.get(`${ServiceUtil.API_ENDPOINT}/entry/metadata/${formId}/${entryId}`, this.getHeaders());
   }
 
-  PatchEntryState(stateValue: string, masterTableName: string, masterTableEntryId: string) {
-    return this.http.patch(`${ServiceUtil.API_ENDPOINT}/master/entry/${masterTableName}?id=${masterTableEntryId}&stateValue=${stateValue}`, this.getHeaders());
+  // PatchEntryState(stateValue: string, masterTableName: string, masterTableEntryId: string) {
+  //   return this.http.patch(`${ServiceUtil.API_ENDPOINT}/master/entry/${masterTableName}?id=${masterTableEntryId}&stateValue=${stateValue}`, this.getHeaders());
+  // }
+
+  updateMasterEntry(apiData: any, formId: number): Observable<any> {
+    return this.http.put(`${ServiceUtil.API_ENDPOINT}${apiData.api}`,{
+      metadata: JSON.stringify ({
+        ...apiData.metaData,
+        formId
+      })
+    }, this.getHeaders());
   }
+
   protected getHeaders() {
     return {
       headers: new HttpHeaders({
