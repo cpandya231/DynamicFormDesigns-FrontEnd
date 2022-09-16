@@ -63,6 +63,7 @@ export class AddEditWorkflowStateComponent implements OnInit {
         eSignRequired: [false],
         sendBackTo: [''],
         fields: this.fb.array([]),
+        workflowLabel: [this.existingStateData.workflowLabel],
         endState: [this.existingStateData.endState]
       });
 
@@ -100,6 +101,7 @@ export class AddEditWorkflowStateComponent implements OnInit {
         eSignRequired: [false],
         sendBackTo: [''],
         fields: this.fb.array([]),
+        workflowLabel: '',
         endState: [false]
       });
       this.FieldsList.forEach(() => {
@@ -155,6 +157,7 @@ export class AddEditWorkflowStateComponent implements OnInit {
         },
         visibleColumns,
         disabledColumns,
+        workflowLabel: this.StateDetailsForm.value.workflowLabel,
         endState: this.StateDetailsForm.value.endState
       },
 

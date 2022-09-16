@@ -38,15 +38,12 @@ export class EditDepartmentComponent implements OnInit {
               this.departmentObj = department;
               return;
             }
-
             return { "label": department["name"], "value": department["id"] };
           });
         })).subscribe(departments => {
           this.departments = departments;
           this.setDataInForm();
-
         })
-
     }
   }
 
@@ -54,22 +51,18 @@ export class EditDepartmentComponent implements OnInit {
     this.FormData['components'].forEach((item: any) => {
       if (item['key'] == 'name') {
         item.defaultValue = this.departmentObj.name;
-
       } else if (item['key'] == 'code') {
         item.defaultValue = this.departmentObj.code;
-
       } else if (item['key'] == 'parentDepartment') {
         item.data.values = this.departments;
-
         if (this.departmentObj.parentId == 0) {
           item.hidden = true;
-
         } else {
           item.defaultValue = this.departmentObj.parentId;
           item.hidden = false;
         }
-
-
+      } else if (item['key'] == 'site') {
+        item.defaultValue = this.departmentObj.site;
       }
       this.isDataLoaded = true;
     }
@@ -90,7 +83,8 @@ export class EditDepartmentComponent implements OnInit {
       name: submittedData.name,
       code: submittedData.code,
       id: this.departmentObj.id,
-      parentId: submittedData.parentDepartment
+      parentId: submittedData.parentDepartment,
+      site: submittedData.site
     }
 
     this.departmentService.editDepartment(departmentObj).subscribe({
@@ -100,13 +94,11 @@ export class EditDepartmentComponent implements OnInit {
 
   navigateOnSuccess() {
     this.departmentService.departmentAdded.next(true);
-
     this.router.navigate(['/departments']);
   }
 
   handleError(err: any) {
     console.error(`Error occured while login ${JSON.stringify(err)}`);
-
   }
 
   close() {

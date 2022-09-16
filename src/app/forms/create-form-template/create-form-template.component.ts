@@ -24,7 +24,7 @@ export class CreateFormTemplateComponent implements OnInit {
   isMasterForm: boolean = false;
 
   SiteName = 'Moraiya';
-  DepartmentName = 'Tablet Facility IX ';
+  DepartmentName = '';
   RoomIDList = [101, 102, 103, 104, 105];
   ActivitiesList = ['Environmental conditional monitoring'];
   EnabledFormElements = ['textfield', 'email', 'textarea', 'phoneNumber', 'number', 'date', 'password', 'checkbox', 'time', 'selectboxes', 'select',
@@ -69,7 +69,6 @@ export class CreateFormTemplateComponent implements OnInit {
               defaultValue: this.SiteName,
               disabled: true,
               labelMargin: 5,
-              labelPosition: 'left-left'
             }
           },
           department: {
@@ -80,10 +79,9 @@ export class CreateFormTemplateComponent implements OnInit {
               type: 'textfield',
               key: 'department',
               input: true,
-              defaultValue: this.DepartmentName,
+              customDefaultValue: "value = form.department.name",
               disabled: true,
               labelMargin: 5,
-              labelPosition: 'left-left'
             }
           },
           currentDate: {
@@ -96,7 +94,6 @@ export class CreateFormTemplateComponent implements OnInit {
               input: true,
               disabled: true,
               labelMargin: 5,
-              labelPosition: 'left-left',
               customDefaultValue: "value = moment(new Date()).format(\"DD/MM/YYYY\")",
             }
           },
@@ -112,7 +109,6 @@ export class CreateFormTemplateComponent implements OnInit {
               dataSrc: "json",
               key: "roomId",
               labelMargin: 5,
-              labelPosition: "left-left",
               template: "<span>{{ item.label }}</span>",
               type: "select",
               widget: "choicesjs"
@@ -130,7 +126,6 @@ export class CreateFormTemplateComponent implements OnInit {
               dataSrc: "json",
               key: "roomId",
               labelMargin: 5,
-              labelPosition: "left-left",
               template: "<span>{{ item.label }}</span>",
               type: "select",
               widget: "choicesjs"
@@ -171,14 +166,14 @@ export class CreateFormTemplateComponent implements OnInit {
           {
             key: 'validation',
             components: this.ignoreComponents(
-              ['validate.minWords', 'validate.maxWords', 'errorLabel', 'custom-validation-js', 'validate.customMessage', 'errors', 'json-validation-json']
+              ['validate.minWords', 'validate.maxWords', 'json-validation-json']
             )
           },
           {
             key: 'data',
             components: this.ignoreComponents(
-              ['inputFormat', 'protected', 'dbIndex', 'encrypted', 'redrawOn', 'calculateServer', 'idPath', 'selectThreshold', 'useExactSearch',
-                'dataType', 'searchEnabled', 'calculateValuePanel', 'calculateValue-json', 'allowCalculateOverride', 'customDefaultValue-json']
+              [ 'inputFormat', 'protected', 'dbIndex', 'encrypted', 'calculateServer', 'idPath', 'selectThreshold', 'useExactSearch',
+                'searchEnabled', 'calculateValue-json', 'allowCalculateOverride', 'customDefaultValue-json']
             )
           },
           {
@@ -201,15 +196,14 @@ export class CreateFormTemplateComponent implements OnInit {
 
     this.authService.getAccessToken().asObservable().subscribe(authData => {
       const token = authData;
-      Object.assign(this.FormOptions, { 'Authorization': `Bearer ${token}` })
+      Object.assign(this.CurrentForm, {'Authorization': `Bearer ${token}`})
     });
 
     this.userService.getUserByUsername(localStorage.getItem("username")).subscribe(userData => {
-      Object.assign(this.FormOptions, {
-        firstName: userData.first_name,
-        lastName: userData.last_name,
-        department: userData.department,
-      });
+        Object.assign(this.CurrentForm, {
+          department: userData.department
+        });
+        
     });
 
     if (this.FormName.length) {

@@ -3,5 +3,5 @@ export interface IDepartmentItem {
     name?: string,
     code?: string,
     parentId?: number,
-
+    site: string
 }

@@ -13,13 +13,10 @@
                 </div>
             </div>
             <div class="submit-button">
-                <button type="submit" *ngIf="!disableSave" class="button" (click)="onSubmit()" [disabled]="disableSave">Send
-                    for
-                    {{toState}}</button>
+                <button type="submit" *ngIf="!disableSave" class="button" (click)="onSubmit()" [disabled]="disableSave">{{sendToButtonLabel}}</button>
                 <button type="button" class="button-cancel" (click)="sendBack()" *ngIf="undefined!=sendBackState">Send
                     Back to
                     {{sendBackState}}</button>
-                <button type="button" class="button" (click)="EditMasterData()" *ngIf="IsEditMasterEnabled">Edit Master Data</button>
             </div>
         </div>
         <formio [form]='CurrentForm' #formio [options]='FormOptions'></formio>

@@ -10,6 +10,7 @@ export interface IWorkflowStateModel {
     disabledColumns: string;
     visibleColumns: string;
     endState: boolean;
+    label: string;
 }
 
 export interface IWorkflowTransitionModel {

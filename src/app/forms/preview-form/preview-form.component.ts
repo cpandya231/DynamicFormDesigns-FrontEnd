@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { FormsService } from 'src/app/common/services/forms.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-preview-form',
@@ -18,7 +19,8 @@ export class PreviewFormComponent implements OnInit {
   FormOptions: any = {};
   formTemplate: any;
   constructor(private authService: AuthService,
-    public modalRef: MdbModalRef<PreviewFormComponent>) { }
+    public modalRef: MdbModalRef<PreviewFormComponent>,
+    private userService: UsersService) { }
 
   ngOnInit(): void {
     if (this.formTemplate) {
@@ -28,7 +30,13 @@ export class PreviewFormComponent implements OnInit {
         const token = authData;
         Object.assign(this.FormData, { 'Authorization': `Bearer ${token}` })
       });
+      this.userService.getUserByUsername(localStorage.getItem("username")).subscribe(userData => {
+        Object.assign(this.FormData, {
+          department: userData.department
+        })
+      });
     }
+
   }
 
   Close(): void {
