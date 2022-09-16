@@ -10,15 +10,18 @@
                     <div class="mat-menu">
 
                         <div class="filter-choice">
-                            <input type="radio" id="filter-by-all" (change)="handleChange()" [value]="'all'" [(ngModel)]="selectedChoice">
+                            <input type="radio" id="filter-by-all" (change)="handleChange()" [value]="'all'"
+                                [(ngModel)]="selectedChoice">
                             <label for="filter-by-all" class="label-filter-checkbox">All</label>
                         </div>
                         <div class="filter-choice">
-                            <input type="radio" id="filter-by-username" (change)="handleChange()" [value]="'username'" [(ngModel)]="selectedChoice">
+                            <input type="radio" id="filter-by-username" (change)="handleChange()" [value]="'username'"
+                                [(ngModel)]="selectedChoice">
                             <label for="filter-by-username" class="label-filter-checkbox">Submitted by me</label>
                         </div>
                         <div class="filter-choice">
-                            <input type="radio" id="filter-by-department" (change)="handleChange()" [value]="'department'" [(ngModel)]="selectedChoice">
+                            <input type="radio" id="filter-by-department" (change)="handleChange()"
+                                [value]="'department'" [(ngModel)]="selectedChoice">
                             <label for=" filter-by-department" class="label-filter-checkbox">Department</label>
                         </div>
 
@@ -51,6 +54,11 @@
                 <td class="icon_column">
                     <span class="fas fa-hourglass-half" (click)="ShowProgress(entry.data['id'])"></span>
                 </td>
+                <td class="icon_column">
+                    <span class="fas fa-file-text" (click)="viewAuditReport(entry.data['id'])"></span>
+
+                </td>
+
 
             </tr>
             <tr *ngIf="!logEntries?.length" class="no_data_message">

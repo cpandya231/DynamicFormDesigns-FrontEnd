@@ -94,6 +94,9 @@ export class UserFormsInProgressDataComponent implements OnInit {
     // this.getLogEntries(filterbyusername);
   }
 
+  viewAuditReport(entryId: number) {
+    this.router.navigate(['../../../../auditLogEntry', this.formName, this.formId, entryId], { relativeTo: this.activatedRoute });
+  }
   ShowProgress(entryId: number) {
     let stateStatusData,
       stateTransitionsData;
