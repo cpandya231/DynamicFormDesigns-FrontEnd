@@ -52,7 +52,7 @@ export class CreateFormTemplateComponent implements OnInit {
         }
       },
       advanced: false,
-      // data: false,
+      existingResourceFields: false,
       premium: false,
       custom: {
         title: 'Pre-Defined Fields',
@@ -160,7 +160,7 @@ export class CreateFormTemplateComponent implements OnInit {
             key: 'display',
             components: this.ignoreComponents(
               ['widget', 'autocomplete', 'inputMask', 'displayMask', 'allowMultipleMasks', 'tabindex', 'modalEdit',
-                'hideLabel', 'showWordCount', 'showCharCount', 'mask', 'tableView', 'description']
+                'hideLabel', 'showWordCount', 'showCharCount', 'mask', 'description']
             )
           },
           {

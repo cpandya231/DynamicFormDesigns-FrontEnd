@@ -5,7 +5,7 @@ import { FormsService } from 'src/app/common/services/forms.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MasterForms } from 'src/app/services/utility/master.forms.constants';
 import { Location } from '@angular/common';
-import { combineLatest } from 'rxjs';
+import { combineLatest, forkJoin, Observable } from 'rxjs';
 import { IGetWorkflowStateTransitionsModel } from '../form-workflow/form-workflow.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ValidateUserComponent } from 'src/app/common/components/validate-user/validate-user.component';
@@ -163,11 +163,11 @@ export class FillFormComponent implements OnInit {
       this.disableSave = true;
     }
 
-    let userTransition = transitionData.transitions.
-      find(transition => transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0)
+    // let userTransition = transitionData.transitions.
+    //   find(transition => transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0)
 
-    this.disabledColumns = userTransition?.fromState?.disabledColumns?.split(',') || [];
-    this.visibleColumns = userTransition?.fromState?.visibleColumns?.split(',') || [];
+    this.disabledColumns = requiredTransition?.fromState?.disabledColumns?.split(',') || [];
+    this.visibleColumns = requiredTransition?.fromState?.visibleColumns?.split(',') || [];
 
     this.CurrentForm.components.forEach((table: any) => {
       table.rows.forEach((rowItem: any) => {
@@ -209,60 +209,38 @@ export class FillFormComponent implements OnInit {
 
   handleSubmit(submission: any, callback: any) {
     let submittedData = this.form.formio.submission.data;
-    this.formService.PatchEntryState
-      (submittedData["stateValue"], submittedData["masterTable"], submittedData["masterEntryId"])
+    if(submittedData.apiList !== undefined && Object.values(submittedData.apiList).length) {
+      let observableList: Observable<string>[] = [];
+      let metaData = {};
+      (Object.values(submittedData.apiList)).forEach((apiData: any) => {
+        if (apiData.api) {
+          observableList.push(this.formService.updateMasterEntry(apiData, this.formId));
+        }
+      });
+
+      // && !components.fixEquipmentOperation.disabled
+      combineLatest(observableList)
       .subscribe({
         next: (data) => {
+          submittedData.apiList = '';
           // for (let item in submittedData) {
           //   if (this.disabledColumns.includes(item) || !this.visibleColumns.includes(item)) {
           //     delete submittedData[`${item}`]
           //   }
           // }
-          if (this.entryId) {
-            let logEntryObj = {
-              id: this.entryId,
-              state: this.isGettingSendBack ? this.sendBackState : this.toState,
-              endState: this.sendToEndState,
-              data: submittedData
-            }
-            this.formService.UpdateLogEntry(this.formId, logEntryObj).subscribe({
-              next: (data) => {
-                callback(null);
-                this.close(2000);
-              },
-              error: (err) => {
-                callback("Error occured while updating entry");
-                console.log(err)
-              }
-            });
-          } else {
-            let logEntryObj = {
-              state: this.toState,
-              data: submittedData,
-              endState: this.sendToEndState
-            }
-            this.formService.SaveLogEntry(this.formId, logEntryObj).subscribe({
-              next: (data) => {
-                callback(null)
-                this.close(2000);
-              },
-              error: (err) => {
-                callback(`You don't have access to update this entry`);
-                console.log(err)
-              }
-            });
-          }
-
-
-
+          this.tempFunction(submittedData, callback);
         },
         error: (err) => {
           callback(err.error.message);
           console.log(err.error.message)
         }
       })
+    } else {
+      submittedData.apiList = '';
+      this.tempFunction(submittedData, callback);
+    }
 
-  }
+  } 
 
   sendBack() {
     this.isGettingSendBack = true;
@@ -287,6 +265,43 @@ export class FillFormComponent implements OnInit {
       callback(`You don't have access to update this entry`);
     } else {
       this.handleSubmit(submission, callback);
+    }
+  }
+
+  tempFunction(submittedData: any, callback: any) {
+    if (this.entryId) {
+      let logEntryObj = {
+        id: this.entryId,
+        state: this.isGettingSendBack ? this.sendBackState : this.toState,
+        endState: this.sendToEndState,
+        data: submittedData
+      }
+      this.formService.UpdateLogEntry(this.formId, logEntryObj).subscribe({
+        next: (data) => {
+          callback(null);
+          this.close(2000);
+        },
+        error: (err) => {
+          callback("Error occured while updating entry");
+          console.log(err)
+        }
+      });
+    } else {
+      let logEntryObj = {
+        state: this.toState,
+        data: submittedData,
+        endState: this.sendToEndState
+      }
+      this.formService.SaveLogEntry(this.formId, logEntryObj).subscribe({
+        next: (data) => {
+          callback(null)
+          this.close(2000);
+        },
+        error: (err) => {
+          callback(`You don't have access to update this entry`);
+          console.log(err)
+        }
+      });
     }
   }
 }

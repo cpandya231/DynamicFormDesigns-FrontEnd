@@ -1,6 +1,34 @@
 @import "../../users/users-info/users-info.component.scss";
-
 .pagination-controls {
     display: flex;
     justify-content: flex-end;
+}
+
+.audit_table {
+    thead {
+        background: #6c6c6c;
+        color: white;
+    }
+    tbody {
+        font-weight: normal;
+        tr:nth-child(even) {
+            background: #dddddd;
+        }
+    }
+    tr {
+        &:hover {
+            background-color: transparent;
+        }
+        td {
+            padding: 0.5rem 1rem;
+        }
+    }
+    .user-profile {
+        img {
+            height: 2rem;
+        }
+        .user-name {
+            padding-top: 5px;
+        }
+    }
 }

@@ -29,7 +29,7 @@ export class DepartmentDashboardComponent implements OnInit {
   panOnZoom: boolean = true;
   autoCenter = true;
   autoZoom = true;
-  public curve: any = shape.curveStep;
+  curve: any = shape.curveMonotoneY;
   WorkflowLinks: any;
   WorkflowStates: any;
   constructor(

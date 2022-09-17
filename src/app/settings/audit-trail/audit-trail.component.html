@@ -3,26 +3,18 @@
 
         <form class="filter-item-form">
             <div class="mb-3 row">
-
                 <div class="col-xs-3 col-sm-auto">
-                    <input id="table-filtering-search" class="form-control" type="text" [formControl]="filter"
-                        placeholder="Find by name" (keyup.enter)="searchUser()">
+                    <input id="table-filtering-search" class="form-control" type="text" [formControl]="filter" placeholder="Find by name" (keyup.enter)="searchUser()">
                 </div>
-
             </div>
-
-
-
         </form>
-
     </div>
     <div class="pagination-controls">
-        <pagination-controls previousLabel="Prev" nextLabel="Next" [responsive]="true" [maxSize]="5"
-            (pageChange)="handlePageChange($event)">
+        <pagination-controls previousLabel="Prev" nextLabel="Next" [responsive]="true" [maxSize]="5" (pageChange)="handlePageChange($event)">
 
         </pagination-controls>
     </div>
-    <div class="table-container">
+    <div class="audit_table table-container">
         <table class="table table-hover">
 
             <thead>

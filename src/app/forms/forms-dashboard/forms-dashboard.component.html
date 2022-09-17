@@ -1,28 +1,26 @@
 <div class="forms_dashboard">
-    <button *ngIf="isAdmin" class="btn btn-primary" routerLink="/formManagement/">Create</button>
+    <button *ngIf="isAdmin" class="btn btn-primary" routerLink="/formManagement/">Create Template</button>
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Form ID</th>
-                <th scope="col">Form Name</th>
-                <th scope="col">Form Type</th>
-                <th scope="col">Created By</th>
-                <th scope="col">Created On</th>
-                <th *ngIf="isAdmin" scope="col">Edit</th>
-                <th *ngIf="isAdmin" scope="col">View</th>
+                <th class="form_id">Form ID</th>
+                <th>Form Name</th>
+                <th>Form Type</th>
+                <th>Created By</th>
+                <th>Created On</th>
+                <th *ngIf="isAdmin">Edit</th>
+                <th *ngIf="isAdmin">View</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let form of FormTemplates">
-                <td>{{form.id}}</td>
-                <td>{{form.name}}</td>
-                <td>{{form.type}}</td>
-                <td>{{form.createdBy}}</td>
-                <td>{{form.createDt | date: DATE_FORMAT }}</td>
-                <td *ngIf="isAdmin"><img src="../../../assets/Images/pen-to-square-solid.svg" class="svg_icon"
-                        (click)="EditFormTemplate(form.name, form.id, form.workflow.id)" /></td>
-                <td *ngIf="isAdmin"><img src="../../../assets/Images/eye-solid.svg" class="svg_icon"
-                        (click)="PreviewForm(form.template)" /></td>
+                <td class="form_id">{{form.id}}</td>
+                <td class="form_name">{{form.name}}</td>
+                <td class="form_type">{{form.type}}</td>
+                <td class="form_createdBy">{{form.createdBy}}</td>
+                <td class="form_createDt">{{form.createDt | date: DATE_FORMAT }}</td>
+                <td class="form_edit" *ngIf="isAdmin"><img src="../../../assets/Images/pen-to-square-solid.svg" class="svg_icon" (click)="EditFormTemplate(form.name, form.id, form.workflow.id)" /></td>
+                <td class="form_preview" *ngIf="isAdmin"><img src="../../../assets/Images/eye-solid.svg" class="svg_icon" (click)="PreviewForm(form.template)" /></td>
             </tr>
             <tr *ngIf="FormTemplates && !FormTemplates.length" class="no_data_message">
                 <td colspan="7">
