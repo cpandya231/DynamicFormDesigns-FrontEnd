@@ -92,7 +92,8 @@ export class EntryAuditDataComponent implements OnInit {
     var img = new Image()
     img.src = 'assets/Images/digit4.png'
 
-    doc.addImage(img, 'png', 14, 0, 70, 20);
+    doc.addImage(img, 'png', 10, 0, 70, 20);
+    doc.text(`Audit record for ${this.formName} - ${this.formName}-${this.entryId} `, 100, 12)
     var finalY = (doc as any).lastAutoTable.finalY || 30;
     doc.text(`Form Name  : ${this.formName}`, 14, finalY);
 
