@@ -88,7 +88,13 @@ export class EntryAuditDataComponent implements OnInit {
 
   exportToPDF() {
     const doc = new jsPDF();
-    var finalY = (doc as any).lastAutoTable.finalY || 10
+
+    var img = new Image()
+    img.src = 'assets/Images/digit4.png'
+
+    doc.addImage(img, 'png', 14, 0, 70, 20);
+    var finalY = (doc as any).lastAutoTable.finalY || 30;
+    doc.text(`Form Name  : ${this.formName}`, 14, finalY);
 
     this.exportData.forEach((element: any) => {
       doc.text(`Target State : ${element["state"]}`, 14, finalY + 15)
