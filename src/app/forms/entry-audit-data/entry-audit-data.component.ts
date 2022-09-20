@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormsService } from 'src/app/common/services/forms.service';
+import { jsPDF } from "jspdf";
+import autoTable from 'jspdf-autotable';
 @Component({
   selector: 'app-entry-audit-data',
   templateUrl: './entry-audit-data.component.html',
@@ -11,7 +13,8 @@ export class EntryAuditDataComponent implements OnInit {
   formName: any;
   entryId: any;
   formId: number = 0;
-  forms: any = []
+  forms: any = [];
+  exportData: any = [];
   CurrentForm: any = {
     components: []
   };
@@ -22,6 +25,7 @@ export class EntryAuditDataComponent implements OnInit {
     }
   };
   IsFormLoaded = false;
+
   constructor(
     private formService: FormsService,
     private activatedRoute: ActivatedRoute,
@@ -62,6 +66,12 @@ export class EntryAuditDataComponent implements OnInit {
 
             });
             this.forms.push(newForm);
+            let exportSection = [];
+            let elementData = element["data"];
+            for (let item in elementData) {
+              exportSection.push([item, elementData[item]]);
+            }
+            this.exportData.push({ state: elementData["state"], data: exportSection });
           });
 
           this.IsFormLoaded = true;
@@ -76,4 +86,22 @@ export class EntryAuditDataComponent implements OnInit {
     });
   }
 
+  exportToPDF() {
+    const doc = new jsPDF();
+    var finalY = (doc as any).lastAutoTable.finalY || 10
+
+    this.exportData.forEach((element: any) => {
+      doc.text(`Target State : ${element["state"]}`, 14, finalY + 15)
+      autoTable(doc, {
+        head: [['Reference', 'New Value']],
+        body: element["data"],
+        startY: finalY + 20,
+      });
+      finalY = (doc as any).lastAutoTable.finalY
+    });
+
+
+
+    doc.save('tableToPdf.pdf');
+  }
 }
