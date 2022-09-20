@@ -10,6 +10,8 @@ import { IGetWorkflowStateTransitionsModel } from '../form-workflow/form-workflo
 import { MatDialog } from '@angular/material/dialog';
 import { ValidateUserComponent } from 'src/app/common/components/validate-user/validate-user.component';
 import { UsersService } from 'src/app/services/users.service';
+import { jsPDF } from "jspdf";
+import autoTable from 'jspdf-autotable';
 @Component({
   selector: 'app-fill-form',
   templateUrl: './fill-form.component.html',
@@ -29,6 +31,7 @@ export class FillFormComponent implements OnInit {
   disableSave: boolean = false;
   disabledColumns: any[];
   visibleColumns: any[];
+  exportData: any = [];
   CurrentForm: any = {
     components: []
   };
@@ -156,15 +159,12 @@ export class FillFormComponent implements OnInit {
         find(transition => (transition.fromState.name == entry.state && transition.sendBackTransition)
           && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
       this.sendBackState = sendBackTransition?.toState.name;
-    } else if(currentState?.endState && this.IsMasterForm) {
+    } else if (currentState?.endState && this.IsMasterForm) {
       this.processToHandleNewEntry(this.transitionData);
     } else {
       this.toState = "no_access";
       this.disableSave = true;
     }
-
-    // let userTransition = transitionData.transitions.
-    //   find(transition => transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0)
 
     this.disabledColumns = requiredTransition?.fromState?.disabledColumns?.split(',') || [];
     this.visibleColumns = requiredTransition?.fromState?.visibleColumns?.split(',') || [];
@@ -194,6 +194,20 @@ export class FillFormComponent implements OnInit {
         });
       });
     });
+    let exportSection = [];
+    let elementData = entry;
+
+    for (let item in elementData) {
+      exportSection.push([item, elementData[item]]);
+    }
+    this.exportData.push({
+      state: elementData["state"],
+      data: exportSection,
+      created_by: elementData["created_by"],
+      created_at: elementData["log_create_dt"]
+    });
+
+
     this.IsFormLoaded = true;
     this.toggleCommentsButton = true;
   }
@@ -209,7 +223,7 @@ export class FillFormComponent implements OnInit {
 
   handleSubmit(submission: any, callback: any) {
     let submittedData = this.form.formio.submission.data;
-    if(submittedData.apiList !== undefined && Object.values(submittedData.apiList).length) {
+    if (submittedData.apiList !== undefined && Object.values(submittedData.apiList).length) {
       let observableList: Observable<string>[] = [];
       let metaData = {};
       (Object.values(submittedData.apiList)).forEach((apiData: any) => {
@@ -220,27 +234,27 @@ export class FillFormComponent implements OnInit {
 
       // && !components.fixEquipmentOperation.disabled
       combineLatest(observableList)
-      .subscribe({
-        next: (data) => {
-          submittedData.apiList = '';
-          // for (let item in submittedData) {
-          //   if (this.disabledColumns.includes(item) || !this.visibleColumns.includes(item)) {
-          //     delete submittedData[`${item}`]
-          //   }
-          // }
-          this.tempFunction(submittedData, callback);
-        },
-        error: (err) => {
-          callback(err.error.message);
-          console.log(err.error.message)
-        }
-      })
+        .subscribe({
+          next: (data) => {
+            submittedData.apiList = '';
+            // for (let item in submittedData) {
+            //   if (this.disabledColumns.includes(item) || !this.visibleColumns.includes(item)) {
+            //     delete submittedData[`${item}`]
+            //   }
+            // }
+            this.tempFunction(submittedData, callback);
+          },
+          error: (err) => {
+            callback(err.error.message);
+            console.log(err.error.message)
+          }
+        })
     } else {
       submittedData.apiList = '';
       this.tempFunction(submittedData, callback);
     }
 
-  } 
+  }
 
   sendBack() {
     this.isGettingSendBack = true;
@@ -303,5 +317,35 @@ export class FillFormComponent implements OnInit {
         }
       });
     }
+  }
+
+  exportToPDF() {
+    const doc = new jsPDF();
+
+    var img = new Image()
+    img.src = 'assets/Images/digit4.png'
+
+    doc.addImage(img, 'png', 10, 0, 70, 20);
+    doc.setTextColor("#00ADB5");
+    doc.text(`Audit record for ${this.formName} - ${this.formName.charAt(0)}${this.formName.charAt((this.formName.length) / 2)}-${this.entryId} `, 100, 12);
+    doc.setTextColor(0, 0, 0);
+    var finalY = (doc as any).lastAutoTable.finalY || 30;
+    doc.text(`Form Name  : ${this.formName}`, 14, finalY);
+
+    this.exportData.forEach((element: any) => {
+      finalY = finalY + 20;
+      doc.text(`Target State : ${element["state"]}`, 14, finalY);
+      finalY = finalY + 5;
+      autoTable(doc, {
+        head: [['Reference', 'New Value']],
+        body: element["data"],
+        startY: finalY
+      });
+      finalY = (doc as any).lastAutoTable.finalY
+    });
+
+
+
+    doc.save('tableToPdf.pdf');
   }
 }

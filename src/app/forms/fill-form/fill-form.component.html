@@ -1,5 +1,7 @@
 <mat-sidenav-container class="app-container" *ngIf="IsFormLoaded">
-    <mat-sidenav #sidenav *ngIf="showComments" class="right-side-nav" opened mode="side" position="end" [fixedInViewport]="true" fixedTopGap="65" [(opened)]="showComments" (opened)="events.push('open!')" (closed)="events.push('close!')">
+    <mat-sidenav #sidenav *ngIf="showComments" class="right-side-nav" opened mode="side" position="end"
+        [fixedInViewport]="true" fixedTopGap="65" [(opened)]="showComments" (opened)="events.push('open!')"
+        (closed)="events.push('close!')">
         <app-comments [formId]="formId" [entryId]="entryId"></app-comments>
     </mat-sidenav>
 
@@ -11,12 +13,23 @@
                         Comments
                     </mat-slide-toggle>
                 </div>
+
+
             </div>
             <div class="submit-button">
-                <button type="submit" *ngIf="!disableSave" class="button" (click)="onSubmit()" [disabled]="disableSave">{{sendToButtonLabel}}</button>
+                <button type="submit" *ngIf="!disableSave" class="button" (click)="onSubmit()"
+                    [disabled]="disableSave">{{sendToButtonLabel}}</button>
                 <button type="button" class="button-cancel" (click)="sendBack()" *ngIf="undefined!=sendBackState">Send
                     Back to
-                    {{sendBackState}}</button>
+                    {{sendBackState}}
+                </button>
+
+                <div class="export-parent" *ngIf="disableSave && undefined==sendBackState" (click)="exportToPDF()">
+                    <span>Export data</span>
+                    <span class="material-icons">
+                        file_download
+                    </span>
+                </div>
             </div>
         </div>
         <formio [form]='CurrentForm' #formio [options]='FormOptions'></formio>
