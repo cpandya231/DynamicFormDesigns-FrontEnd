@@ -2,10 +2,19 @@
 
     <mat-sidenav-content>
 
+
         <div class="audit-header">
-            <h4>Audit Report</h4>
-            <h6>Entry Id : {{entryId}}</h6>
-            <h6>Form Name : {{formName}}</h6>
+            <div class="audit-subheader">
+                <h4>Audit Report</h4>
+                <h6>Entry Id : {{entryId}}</h6>
+                <h6>Form Name : {{formName}}</h6>
+            </div>
+            <div class="export-parent" (click)="exportToPDF()">
+                <span>Export data</span>
+                <span class="material-icons">
+                    file_download
+                </span>
+            </div>
         </div>
         <div *ngFor="let form of forms " class="audit-container">
             <span> Updated by <b>{{form.updatedBy}}</b> on {{form.updatedOn}}</span>
