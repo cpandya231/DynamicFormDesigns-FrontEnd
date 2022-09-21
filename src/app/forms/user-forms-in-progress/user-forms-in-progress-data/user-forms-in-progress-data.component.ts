@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormsService } from 'src/app/common/services/forms.service';
 import { DisplayWorkflowStatusComponent } from 'src/app/common/display-workflow-status/display-workflow-status.component';
@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
 import { IGetWorkflowStateTransitionsModel, IWorkflowStateModel } from '../../form-workflow/form-workflow.model';
 import { combineLatest } from 'rxjs';
+
 @Component({
   selector: 'app-user-forms-in-progress-data',
   templateUrl: './user-forms-in-progress-data.component.html',
@@ -31,6 +32,8 @@ export class UserFormsInProgressDataComponent implements OnInit {
   finalState: IWorkflowStateModel | undefined;
   PendingEntries: any[] = [];
   ShowfilteredEntries: boolean = false;
+
+  @ViewChild('pdfTable', { static: false }) pdfTable: ElementRef;
   constructor(private formsService: FormsService,
     private authService: AuthService,
     private router: Router,
