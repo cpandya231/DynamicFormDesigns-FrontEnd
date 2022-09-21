@@ -4,7 +4,7 @@ import { FormsService } from 'src/app/common/services/forms.service';
 import { DisplayWorkflowStatusComponent } from 'src/app/common/display-workflow-status/display-workflow-status.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
-import { IGetWorkflowStateTransitionsModel } from '../../form-workflow/form-workflow.model';
+import { IGetWorkflowStateTransitionsModel, IWorkflowStateModel } from '../../form-workflow/form-workflow.model';
 import { combineLatest } from 'rxjs';
 @Component({
   selector: 'app-user-forms-in-progress-data',
@@ -14,6 +14,7 @@ import { combineLatest } from 'rxjs';
 export class UserFormsInProgressDataComponent implements OnInit {
   userRoles: any;
   logEntries: any[];
+  copyLogEntries: any[];
   formId: number;
   formName: string;
   workflowId: number;
@@ -26,6 +27,10 @@ export class UserFormsInProgressDataComponent implements OnInit {
   defaultFirstColumns: string[] = ["id", "state",];
   defaultLastColumns: string[] = ["created_by", "log_create_dt", "updated_by", "log_update_dt"];
   isMasterForm = false;
+  Headers: string[] = [];
+  finalState: IWorkflowStateModel | undefined;
+  PendingEntries: any[] = [];
+  ShowfilteredEntries: boolean = false;
   constructor(private formsService: FormsService,
     private authService: AuthService,
     private router: Router,
@@ -45,7 +50,9 @@ export class UserFormsInProgressDataComponent implements OnInit {
     let transitionsObservable = this.formsService.GetWorkflowStatesTransitions(this.workflowId);
     combineLatest([logEntriesObservable, transitionsObservable]).subscribe(items => {
       let entryData = items[0];
-      let transitionData = items[1];
+      let transitionData= items[1];
+      this.finalState = transitionData.states.find((state: IWorkflowStateModel) => state.endState == true);
+      this.PendingEntries = entryData.filter((entry: any) => entry.data.state !== this.finalState?.name);
       this.getLogEntries(entryData, transitionData);
       this.canCreateNewEntry(transitionData);
     })
@@ -61,7 +68,13 @@ export class UserFormsInProgressDataComponent implements OnInit {
 
     if (entryData.length > 0) {
       this.logEntries = entryData;
-      this.columns = this.defaultFirstColumns.concat(this.visibleColumns).concat(this.defaultLastColumns)
+      this.copyLogEntries = [...entryData];
+      this.columns = this.defaultFirstColumns.concat(this.visibleColumns).concat(this.defaultLastColumns);
+      this.Headers = this.columns.map(column => {
+        const result = column.replace(/([A-Z])/g,' $1');
+        const final = result.charAt(0).toUpperCase()+result.slice(1);
+        return final;
+      })
       this.isDataLoaded = true;
     } else {
       this.logEntries = [];
@@ -117,6 +130,16 @@ export class UserFormsInProgressDataComponent implements OnInit {
         });
       })
     })
+  }
+
+  SortPendingItems() {
+    this.logEntries = this.PendingEntries;
+    this.ShowfilteredEntries = true;
+  }
+  
+  ShowAllItems() {
+    this.logEntries = this.copyLogEntries;
+    this.ShowfilteredEntries = false;
   }
 
   protected transformStateTransitions(data: any, statusData: any, workflowLinks: any): any {

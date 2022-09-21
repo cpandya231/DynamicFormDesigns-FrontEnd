@@ -1,11 +1,11 @@
 @import "../../users/users-info/users-info.component.scss";
 @import "../../forms/forms-dashboard/forms-dashboard.component.scss";
 .td-link {
-    color: blue;
+    color: #60afaf;
+    text-decoration: underline;
     &:hover {
         pointer-events: all;
         cursor: pointer;
-        text-decoration-line: underline;
     }
 }
 

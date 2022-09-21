@@ -2,9 +2,10 @@
     padding: 2rem;
     margin-top: 4em;
     height: 100%;
-    background: linear-gradient(to bottom right, #e3ebf5, #d4e8e7);
+    background: linear-gradient(to bottom right, #ddffda, #cdf5ff);
     .btn-primary {
         word-spacing: 3px;
+        background-color: #41924B;
     }
     .table {
         scrollbar-width: thin;
@@ -18,9 +19,9 @@
         thead {
             position: sticky;
             top: 0;
-            color: whitesmoke;
             max-height: 3rem;
-            background: #24c3bc;
+            background: #6BCAE2;
+            pointer-events: none;
             .form_id {
                 width: 5%;
                 text-align: center;
@@ -30,7 +31,7 @@
             font-weight: normal;
             tr {
                 &:hover {
-                    background-color: #33b5af1f;
+                    background-color: #f6f6f6;
                 }
             }
             td {

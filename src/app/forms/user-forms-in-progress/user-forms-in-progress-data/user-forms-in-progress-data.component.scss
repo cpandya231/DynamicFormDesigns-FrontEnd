@@ -1,4 +1,25 @@
 @import "../user-forms-in-progress.component.scss";
+.form_entries {
+    width: 92vw;
+    height: 93vh;
+    .table {
+        max-width: 100%;
+        max-height: 80vh;
+        thead {
+            th {
+                padding: 0.5rem 1rem;
+            }
+        }
+        tbody {
+            vertical-align: middle;
+            tr {
+                td {
+                    padding: 0.5rem 1rem;
+                }
+            }
+        }
+    }
+}
 
 .cta-buttons {
     display: flex;
@@ -9,7 +30,6 @@
 
 .filter {
     position: relative;
-
     .filter-menu {
         z-index: 999;
     }
@@ -18,11 +38,9 @@
 .mat-button {
     background-color: #fff;
     font-weight: initial;
-
     &:hover {
         background-color: #EFEFEF;
     }
-
     &:focus {
         border: 1px solid #00ADB5;
     }
@@ -30,7 +48,6 @@
 
 .mat-menu-item {
     background-color: #fff;
-
     &:hover {
         background-color: #EFEFEF;
     }
@@ -39,13 +56,25 @@
 .submit-button {
     justify-content: flex-end;
     gap: 3em;
+    .filter_buttons {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 1rem;
+        border: 1px solid #6BCAE2;
+        .btn {
+            padding: 8px;
+            border-radius: 0;
+        }
+        .not-active {
+            background-color: gray;
+        }
+    }
 }
 
 .filter-choice {
     padding: 1em;
     display: flex;
     gap: 1em;
-
     &:hover {
         background-color: #EFEFEF;
     }
@@ -53,12 +82,10 @@
 
 .table {
     margin-top: 1em;
-
     .icon_column {
         width: 6rem;
         padding: 0.5rem 1rem;
         vertical-align: middle;
-
         .fas {
             font-size: 1.25rem;
         }
@@ -66,7 +93,5 @@
 }
 
 .state {
-
     font-weight: bold;
-
 }
