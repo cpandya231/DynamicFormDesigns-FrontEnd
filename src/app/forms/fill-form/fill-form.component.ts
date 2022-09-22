@@ -91,6 +91,10 @@ export class FillFormComponent implements OnInit {
         this.transitionData = items[0];
         let entryData = items[1];
         let entryMetaData = items[2];
+        entryMetaData.forEach((em: any) => {
+          let emTranstions = this.transitionData.transitions.find((tr: any) => tr.toState.name == em["data"].state);
+          em["data"]["fromState"] = emTranstions["fromState"]["label"];
+        })
         if (entryData.length > 0) {
           this.processToHandleExistingEntry(entryData, entryMetaData, this.transitionData);
           this.showComments = true;
@@ -203,8 +207,7 @@ export class FillFormComponent implements OnInit {
     this.exportData.push({
       state: elementData["state"],
       data: exportSection,
-      created_by: elementData["created_by"],
-      created_at: elementData["log_create_dt"]
+      update_history: entryMetaData
     });
 
 
@@ -333,15 +336,24 @@ export class FillFormComponent implements OnInit {
     doc.text(`Form Name  : ${this.formName}`, 14, finalY);
 
     this.exportData.forEach((element: any) => {
-      finalY = finalY + 20;
-      doc.text(`Target State : ${element["state"]}`, 14, finalY);
-      finalY = finalY + 5;
+      finalY = finalY + 10;
+
       autoTable(doc, {
         head: [['Reference', 'New Value']],
         body: element["data"],
         startY: finalY
       });
-      finalY = (doc as any).lastAutoTable.finalY
+      finalY = (doc as any).lastAutoTable.finalY;
+      doc.setFontSize(8)
+      element["update_history"].forEach((history: any) => {
+        finalY += 10;
+        let historyData = history["data"];
+
+        doc.text(`${historyData["fromState"]} by :`, 14, finalY);
+        doc.text(`${historyData["created_by"]} on ${historyData["log_create_dt"]}`, 14 + historyData["fromState"].length + 10, finalY);
+
+
+      });
     });
 
 
