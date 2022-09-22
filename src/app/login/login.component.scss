@@ -1,6 +1,4 @@
 @import '../variables.scss';
-
-
 .wrapper {
     position: relative;
 }
@@ -13,7 +11,6 @@
 }
 
 #login-screen {
-
     position: relative;
     border-color: #c4c4c4;
     border-radius: 10px;
@@ -23,9 +20,6 @@
     margin: 2em;
     display: flex;
     overflow: hidden;
-
-
-
 }
 
 .login-screen-subparent {
@@ -33,19 +27,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
 
 .welcome-screen {
     background-color: $main-navy;
-
     font-weight: initial;
-
     color: #fff;
     position: relative;
     -moz-border-radius: 10px 10px 0 0;
-
-
 }
 
 .welcome-screen p {
@@ -60,42 +49,38 @@
     /* Gives that scrolling effect as the typing happens */
     letter-spacing: .10em;
     /* Adjust as needed */
-    animation: typing 1s steps(100, end),
-        blink-caret 0.70s step-end infinite;
+    animation: typing 1s steps(100, end), blink-caret 0.70s step-end infinite;
 }
 
 
-
 /* The typing effect */
+
 @keyframes typing {
     from {
         width: 0
     }
-
     to {
         width: 20%
     }
 }
 
-/* The typewriter cursor effect */
-@keyframes blink-caret {
 
+/* The typewriter cursor effect */
+
+@keyframes blink-caret {
     from,
     to {
         border-color: transparent
     }
-
     50% {
         border-color: #FFC947;
     }
 }
 
-
 #login-screen-box {
     display: flex;
     height: 80%;
     flex-direction: column;
-
     justify-content: center;
 }
 
@@ -107,14 +92,12 @@
 
 .login-screen-header::after {
     content: '';
-
     /* this sets the position and size of the pseudo-element */
     position: absolute;
     top: 55%;
     width: 2.5em;
     height: 0.3em;
     background-color: #FFC947;
-
     /* draw behind child elements */
     z-index: -1;
 }
@@ -131,20 +114,18 @@
     display: flex;
     flex-direction: column;
     position: relative;
+    margin-bottom: 0.8rem;
 }
 
 .showPasswordIcon {
     position: absolute;
     right: 0.2em;
     bottom: 0.3em;
-
 }
 
 .label-style {
     color: black;
-
 }
-
 
 .label-style-password-visibility {
     font-size: 0.8rem;
@@ -159,23 +140,18 @@
     height: 2.5em;
     border-radius: 5px;
     border: 1px solid $main-navy-light;
-
-
 }
 
 .textbox-style::placeholder {
     font-size: x-small;
     font-weight: lighter;
-
 }
 
 .textbox-style:focus::placeholder {
     color: transparent;
 }
 
-
 #email {}
-
 
 .button {
     background-color: $main-teal;
@@ -187,7 +163,6 @@
     text-decoration: none;
     width: 20em;
     font-size: 1rem;
-
     cursor: pointer;
 }
 
@@ -198,7 +173,6 @@
 .button:disabled,
 .button[disabled] {
     border: 1px solid #999999;
-
     background-color: #c4c4c4;
     color: #000;
     cursor: default;
@@ -210,16 +184,12 @@
     font-size: 0.8rem;
     font-weight: initial;
     text-align: right;
-
 }
 
-.submit-button {
-    flex-direction: column;
-    text-align: right;
-}
-
-
-
+// .submit-button {
+//     flex-direction: column;
+//     text-align: right;
+// }
 .ng-valid[required],
 .ng-valid.required {
     border-left: 5px solid #42A948;
@@ -232,12 +202,10 @@
 }
 
 .invalid-credentials {
-
     color: red;
     width: 20rem;
     font-size: 0.7rem;
     text-align: center;
-
 }
 
 .toggle-password-visibility-parent {
@@ -247,10 +215,69 @@
 
 .logo {
     position: absolute;
-    top: 1em;
-    left: 1em;
-
+    left: 50%;
+    transform: translate(-50%, 20%);
     img {
-        width: 70%;
+        width: 60%;
+        margin-left: 16%;
+    }
+}
+
+.login_outer_container {
+    background: #deecff;
+    height: 100vh;
+    .login_inner_container {
+        height: 80%;
+        background-image: linear-gradient(to right top, #fbf8f8, #fff7f1, #ffe4de, #ffe2e6, #ffe1ee, #fae1f3, #f4e1f7, #ede2fb, #e7e2fd, #e0e3fe, #d8e3ff, #d1e4ff);
+        width: 80%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        box-shadow: rgb(0 0 0 / 35%) 2px 5px 20px 0px;
+        border-radius: 10px;
+        .sub_header_text {
+            color: #03c4cb;
+        }
+        .left_part {
+            width: 50%;
+            img {
+                margin-left: 30%;
+                margin-top: 14%;
+            }
+        }
+        .right_part {
+            height: 54%;
+            width: 27%;
+            background: azure;
+            margin-top: 15%;
+            margin-left: 5%;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #ffe1ee, #d1e4ff);
+            box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+            .login_main {
+                 ::placeholder {
+                    color: gray;
+                    font-size: 0.8rem;
+                }
+                padding: 2rem;
+                .header_text {
+                    text-align: center;
+                    color: #3c3c3c;
+                    font-weight: 600;
+                    font-size: 1.1rem;
+                    margin-bottom: 2rem;
+                }
+                .submit-button {
+                    width: 100%;
+                    margin-top: 1rem;
+                    .button {
+                        width: 100%;
+                        padding: 7px 0;
+                    }
+                }
+            }
+        }
     }
 }
