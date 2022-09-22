@@ -183,7 +183,7 @@ export class FillFormComponent implements OnInit {
             if (this.disabledColumns.includes(component.key) || (this.disableSave)) {
               component.disabled = true;
             }
-            if (this.visibleColumns && !this.visibleColumns.includes(component.key)) {
+            if (this.visibleColumns && !this.visibleColumns.includes(component.key) && !(this.disableSave)) {
               component.hidden = true;
             }
             let entryMetadataInfo = entryMetaData.find((em: any) => {
