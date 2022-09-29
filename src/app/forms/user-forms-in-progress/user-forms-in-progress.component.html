@@ -1,30 +1,28 @@
 <div class="forms_dashboard">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Form ID</th>
-                <th scope="col">Form Name</th>
-                <th scope="col">Created By</th>
-                <th scope="col">Created On</th>
+    <h2>
+        Execute Log Records
+    </h2>
 
+    <div class="filters-and-button">
+        <div class="search-box-container">
+            <input class="search-box" type="text" placeholder="Search Log Name">
+        </div>
+        <div class="back-button">
+            <img src="../../../assets/next-arow-5738 9.svg">
+            Back to eLogbook Home
+        </div>
 
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let form of FormTemplates">
-                <td>{{form.id}}</td>
-                <td (click)="SeeEntries(form)" class="td-link">{{form.name}}</td>
-                <td>{{form.createdBy}}</td>
-                <td>{{form.createDt | date: DATE_FORMAT }}</td>
+    </div>
+    <div class="user-forms-in-progress-content">
+        <div *ngFor="let form of FormTemplates" class="form-card">
+            <span>{{form.id}}</span>
+            <span>{{form.createdBy}}</span>
+            <span>{{form.createDt | date: DATE_FORMAT }}</span>
+        </div>
+        <div *ngIf="!FormTemplates?.length" class="no_data_message">
+            No Forms Available
+        </div>
+    </div>
 
-
-            </tr>
-            <tr *ngIf="!FormTemplates?.length" class="no_data_message">
-                <td colspan="6">
-                    No Forms Available
-                </td>
-            </tr>
-        </tbody>
-    </table>
 </div>

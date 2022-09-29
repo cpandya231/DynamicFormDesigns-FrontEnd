@@ -1,14 +1,74 @@
 @import "../../users/users-info/users-info.component.scss";
 @import "../../forms/forms-dashboard/forms-dashboard.component.scss";
-.td-link {
-    color: blue;
-    &:hover {
-        pointer-events: all;
-        cursor: pointer;
-        text-decoration-line: underline;
+
+
+.filters-and-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-forms-in-progress-content {
+    display: flex;
+    align-content: flex-start;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 4em;
+
+}
+
+.form-card {
+    border: .15em solid;
+    height: 5em;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-box {
+    // background-color: #DFF4F4;
+    text-align: center;
+    border-radius: 1em;
+    color: #7DC5C9;
+    margin: 0em;
+
+    &::placeholder {
+        color: #7DC5C9;
+        opacity: 1;
+
+    }
+
+
+    &:-ms-input-placeholder {
+        /* Internet Explorer 10-11 */
+        color: #7DC5C9;
+
+    }
+
+    &::-ms-input-placeholder {
+        /* Microsoft Edge */
+        color: #7DC5C9;
+
     }
 }
 
-.table {
-    width: fit-content;
+.back-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #DFF4F4;
+    color: #222831;
+    border-radius: 1em;
+    padding: 1em;
+    font-weight: bold;
+    box-shadow: 0 2px 4px -1px #0003, 0 4px 5px #00000024, 0 1px 10px #0000001f, 0 1px 10px #0000001f;
+    height: 2.5em;
+
+    &:hover {
+        cursor: pointer;
+        background-color: #7DC5C9;
+
+    }
 }
