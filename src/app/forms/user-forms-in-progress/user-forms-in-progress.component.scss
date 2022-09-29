@@ -19,12 +19,39 @@
 }
 
 .form-card {
-    border: .15em solid;
-    height: 5em;
-    padding: 1rem;
+    background-color: #DFF4F4;
+    height: 10em;
+    width: 10em;
     display: flex;
+    flex-direction: column;
+    border-radius: 1.2rem;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    border: 0.1em solid #22283120;
+
+    &:hover {
+        transform: scale(1.1);
+        transition: all .3s ease-in-out;
+        cursor: pointer;
+    }
+}
+
+.form-name-container {
+    display: flex;
+    align-self: flex-end;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    background-color: #0F2938;
+    color: #fff;
+    border-radius: 1em;
+    padding: 0.3em;
+
+    span {
+        word-break: break-all;
+    }
+
+
 }
 
 .search-box {
@@ -63,7 +90,7 @@
     border-radius: 1em;
     padding: 1em;
     font-weight: bold;
-    box-shadow: 0 2px 4px -1px #0003, 0 4px 5px #00000024, 0 1px 10px #0000001f, 0 1px 10px #0000001f;
+    border: 0.1em solid #22283120;
     height: 2.5em;
 
     &:hover {

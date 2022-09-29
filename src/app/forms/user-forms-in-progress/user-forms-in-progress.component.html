@@ -15,10 +15,14 @@
 
     </div>
     <div class="user-forms-in-progress-content">
-        <div *ngFor="let form of FormTemplates" class="form-card">
-            <span>{{form.id}}</span>
-            <span>{{form.createdBy}}</span>
-            <span>{{form.createDt | date: DATE_FORMAT }}</span>
+        <div *ngFor="let form of FormTemplates ;let indexOfelement=index;" class="form-card" (click)="SeeEntries(form)">
+            <div></div>
+            <div>
+                <img src="../../../assets/form-template-icons/icon-{{(indexOfelement%10)+1}}.svg">
+            </div>
+            <div class="form-name-container">
+                <span>{{form.name}}</span><img src="../../../assets/next-arow-5738 4.svg">
+            </div>
         </div>
         <div *ngIf="!FormTemplates?.length" class="no_data_message">
             No Forms Available
