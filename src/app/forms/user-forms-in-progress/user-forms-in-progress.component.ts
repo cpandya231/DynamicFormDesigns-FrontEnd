@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { FormsService } from 'src/app/common/services/forms.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { SettingsService } from 'src/app/services/settings.service';
-import { PreviewFormComponent } from '../preview-form/preview-form.component';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-user-forms-in-progress',
@@ -20,6 +18,7 @@ export class UserFormsInProgressComponent implements OnInit {
   DATE_FORMAT: string;
   constructor(private formsService: FormsService,
     private router: Router,
+    private location: Location,
     private settingsService: SettingsService,
     private route: ActivatedRoute,) { }
 
@@ -37,5 +36,8 @@ export class UserFormsInProgressComponent implements OnInit {
 
   SeeEntries(form: any) {
     this.router.navigate(['./formsInProgressData', form.id, form.name, form.workflow.id], { relativeTo: this.route });
+  }
+  back() {
+    this.location.back();
   }
 }

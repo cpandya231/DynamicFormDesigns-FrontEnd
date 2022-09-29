@@ -55,7 +55,7 @@ const routes: Routes = [
   },
   {
     path: 'userFormsDashboard',
-    component: UserFormsDashboardComponent,
+
     children: [
 
       {
@@ -116,7 +116,10 @@ const routes: Routes = [
 
       },
 
-      { path: '', redirectTo: 'userForms', pathMatch: 'full' },
+      {
+        path: '',
+        component: UserFormsDashboardComponent,
+      }
     ]
   },
 

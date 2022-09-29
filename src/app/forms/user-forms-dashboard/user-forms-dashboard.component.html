@@ -1,17 +1,21 @@
-<mat-sidenav-container class="example-container">
-    <mat-sidenav class="left-side-nav" mode="side" [fixedInViewport]="true" fixedTopGap="65" opened>
+<div class="app-container">
+    <div class="form-card" routerLink="/userFormsDashboard/userForms">
+        <div></div>
+        <div>
+            <img src="../../../assets/eLogBook.svg" class="template-type">
+        </div>
+        <div class="form-name-container">
+            <span>Log Entries</span><img src="../../../assets/next-arow-5738 4.svg">
+        </div>
+    </div>
+    <div class="form-card" routerLink="/userFormsDashboard/masterForms">
+        <div></div>
+        <div>
+            <img src="../../../assets/masterForms.svg" class="template-type">
+        </div>
+        <div class=" form-name-container">
+            <span>Master Records</span><img src="../../../assets/next-arow-5738 4.svg">
+        </div>
+    </div>
 
-        <mat-nav-list>
-            <a mat-list-item routerLink="/userFormsDashboard/userForms" [routerLinkActive]="['active']">Log Entries</a>
-
-            <a mat-list-item routerLink="/userFormsDashboard/masterForms" [routerLinkActive]="['active']">Masters</a>
-
-
-        </mat-nav-list>
-    </mat-sidenav>
-
-    <mat-sidenav-content>
-        <router-outlet></router-outlet>
-    </mat-sidenav-content>
-
-</mat-sidenav-container>
+</div>
