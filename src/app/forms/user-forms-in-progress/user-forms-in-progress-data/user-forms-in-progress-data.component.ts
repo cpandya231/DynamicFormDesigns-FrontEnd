@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
 import { IGetWorkflowStateTransitionsModel } from '../../form-workflow/form-workflow.model';
 import { combineLatest } from 'rxjs';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-user-forms-in-progress-data',
@@ -34,6 +35,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private location: Location,
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -157,4 +159,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
     })
   }
 
+  back() {
+    this.location.back();
+  }
 }

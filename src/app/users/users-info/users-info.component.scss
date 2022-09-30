@@ -34,9 +34,9 @@
 
 
 .button {
-    background-color: $main-teal;
+    background-color: #0F2938;
     border: none;
-    border-radius: 0.2rem;
+    border-radius: 0.5rem;
     color: #fff;
     padding: 0em 2em;
     text-align: center;
@@ -57,7 +57,7 @@
 
 
 .button:hover {
-    background-color: $main-teal-dark;
+    background-color: $main-navy;
 }
 
 .button[disabled]:hover {
