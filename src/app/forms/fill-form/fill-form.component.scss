@@ -22,6 +22,16 @@
     align-self: flex-end;
     justify-content: flex-end;
     gap: 1em;
+    flex-direction: row;
+}
+
+.subheader {
+    display: flex;
+    flex-direction: column;
+
+    span {
+        color: #7DC5C9;
+    }
 }
 
 .comments-toggle {
