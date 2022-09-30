@@ -5,7 +5,7 @@ import { DisplayWorkflowStatusComponent } from 'src/app/common/display-workflow-
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
 import { IGetWorkflowStateTransitionsModel } from '../../form-workflow/form-workflow.model';
-import { combineLatest } from 'rxjs';
+import { combineLatest, elementAt } from 'rxjs';
 import { Location } from '@angular/common'
 
 @Component({
@@ -14,6 +14,9 @@ import { Location } from '@angular/common'
   styleUrls: ['./user-forms-in-progress-data.component.scss']
 })
 export class UserFormsInProgressDataComponent implements OnInit {
+  currentPage = 1;
+  pageSize = 5;
+  count = 80;
   userRoles: any;
   logEntries: any[];
   formId: number;
@@ -40,6 +43,10 @@ export class UserFormsInProgressDataComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.setData();
+  }
+
+  private setData() {
     this.userRoles = this.authService.getRoles();
     let params = this.activatedRoute.snapshot.paramMap;
     const queryParams = this.activatedRoute.snapshot.queryParams;
@@ -54,7 +61,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
       let transitionData = items[1];
       this.getLogEntries(entryData, transitionData);
       this.canCreateNewEntry(transitionData);
-    })
+    });
   }
 
   private getLogEntries(entryData: any, transitionData: IGetWorkflowStateTransitionsModel) {
@@ -65,9 +72,13 @@ export class UserFormsInProgressDataComponent implements OnInit {
     this.finalStateName = transitionData.states.find(state => state.endState)?.name;
     this.disabledColumns = userTransition?.fromState?.disabledColumns?.split(',') || [];
     this.visibleColumns = userTransition?.fromState?.visibleColumns?.split(',') || [];
-
+    this.count = entryData.length;
     if (entryData.length > 0) {
-      this.logEntries = entryData;
+
+      this.logEntries = entryData.map((element: any, index: number) => {
+        element["page"] = Math.floor(index / this.pageSize);
+        return element;
+      }).filter((el: any) => el["page"] == this.currentPage - 1);
       this.columns = this.defaultFirstColumns.concat(this.visibleColumns).concat(this.defaultLastColumns)
       this.isDataLoaded = true;
     } else {
@@ -161,5 +172,10 @@ export class UserFormsInProgressDataComponent implements OnInit {
 
   back() {
     this.location.back();
+  }
+
+  handlePageChange(event: any) {
+    this.currentPage = event;
+    this.setData();
   }
 }
