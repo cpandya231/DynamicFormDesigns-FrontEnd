@@ -3,30 +3,35 @@
     <h2>
         Execute Log Records
     </h2>
-
-    <div class="filters-and-button">
-        <div class="search-box-container">
-            <input class="search-box" type="text" placeholder="Search Log Name">
-        </div>
-        <div class="back-button" (click)="back()">
-            <img src="../../../assets/next-arow-5738 9.svg">
-            Back to eLogbook Home
-        </div>
-
-    </div>
     <div class="user-forms-in-progress-content">
-        <div *ngFor="let form of FormTemplates ;let indexOfelement=index;" class="form-card" (click)="SeeEntries(form)">
-            <div></div>
-            <div>
-                <img src="../../../assets/form-template-icons/icon-{{(indexOfelement%10)+1}}.svg">
+
+        <div class="filters-and-button">
+            <div class="search-box-container">
+                <input class="search-box" type="text" placeholder="Search Log Name">
             </div>
-            <div class="form-name-container">
-                <span>{{form.name}}</span><img src="../../../assets/next-arow-5738 4.svg">
+            <div class="back-button" (click)="back()">
+                <img src="../../../assets/next-arow-5738 9.svg">
+                Back to eLogbook Home
             </div>
+
         </div>
-        <div *ngIf="!FormTemplates?.length" class="no_data_message">
-            No Forms Available
+        <div class="user-forms-in-progress-cards">
+            <div *ngFor="let form of FormTemplates ;let indexOfelement=index;" class="form-card"
+                (click)="SeeEntries(form)" mat-raised-button matBadge="{{indexOfelement+1}}" matBadgeColor="warn"
+                matBadgeHidden="{{indexOfelement%3==0?false:true}}">
+                <div></div>
+                <div>
+                    <img src="../../../assets/form-template-icons/icon-{{(form.id%10)+1}}.svg">
+                </div>
+                <div class="form-name-container">
+                    <span>{{form.name}}</span><img src="../../../assets/next-arow-5738 4.svg">
+                </div>
+            </div>
+            <div *ngIf="!FormTemplates?.length" class="no_data_message">
+                No Forms Available
+            </div>
         </div>
     </div>
+
 
 </div>

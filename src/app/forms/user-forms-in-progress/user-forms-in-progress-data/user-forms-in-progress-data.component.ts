@@ -27,6 +27,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
   defaultFirstColumns: string[] = ["id", "state",];
   defaultLastColumns: string[] = ["created_by", "log_create_dt", "updated_by", "log_update_dt"];
   isMasterForm = false;
+  finalStateName: any;
 
   @ViewChild('pdfTable', { static: false }) pdfTable: ElementRef;
   constructor(private formsService: FormsService,
@@ -59,6 +60,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
     let userTransition = transitionData.transitions.
       find(transition => transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0)
 
+    this.finalStateName = transitionData.states.find(state => state.endState)?.name;
     this.disabledColumns = userTransition?.fromState?.disabledColumns?.split(',') || [];
     this.visibleColumns = userTransition?.fromState?.visibleColumns?.split(',') || [];
 

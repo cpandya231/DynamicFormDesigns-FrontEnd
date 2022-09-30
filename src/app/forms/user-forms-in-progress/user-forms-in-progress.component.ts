@@ -30,7 +30,6 @@ export class UserFormsInProgressComponent implements OnInit {
     this.formsService.GetFormTemplates().subscribe(data => {
       this.FormTemplates = data.filter(form => !form.type);
 
-
     })
   }
 

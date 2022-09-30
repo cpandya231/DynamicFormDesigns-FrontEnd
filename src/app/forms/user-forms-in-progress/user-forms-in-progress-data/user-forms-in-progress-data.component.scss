@@ -1,5 +1,13 @@
 @import "../user-forms-in-progress.component.scss";
 
+.header {
+    display: flex;
+    align-items: center;
+
+    gap: 1em;
+}
+
+
 .cta-buttons {
     display: flex;
     flex-direction: row;
@@ -68,5 +76,11 @@
 .state {
 
     font-weight: bold;
+    color: red;
 
+}
+
+.FinalState {
+    font-weight: bold;
+    color: green;
 }

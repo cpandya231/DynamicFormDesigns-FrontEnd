@@ -1,4 +1,13 @@
 <div class="forms_dashboard">
+
+    <div class="header">
+        <img src="../../../assets/form-template-icons/icon-{{(formId%10)+1}}.svg">
+        <h2>
+
+            Execute Log Records
+        </h2>
+    </div>
+
     <div class="cta-buttons">
         <div class="filters">
 
@@ -7,7 +16,7 @@
                     <mat-icon class="material-icons-outlined">filter_alt</mat-icon>
 
                 </button>
-        
+
                 <mat-menu #menu="matMenu">
                     <div class="mat-menu">
 
@@ -49,8 +58,7 @@
         <tbody>
             <tr *ngFor="let entry of logEntries">
 
-                <td *ngFor="let col of columns" class="{{col}}">{{entry.data[""+col]}}</td>
-                <td class="icon_column">
+                <td class=" icon_column">
                     <span title="Edit" class="fas fa-edit" (click)="FillForm(entry.data['id'])"></span>
                 </td>
                 <td class="icon_column">
@@ -60,6 +68,10 @@
                     <span title="Report" class="fas fa-file-text" (click)="viewAuditReport(entry.data['id'])"></span>
 
                 </td>
+
+                <td *ngFor="let col of columns"
+                    class="{{col}} {{(col=='state') && (entry.data[col]==finalStateName?'FinalState':'')?'FinalState':''}}">
+                    {{entry.data[""+col]}}</td>
 
 
             </tr>
