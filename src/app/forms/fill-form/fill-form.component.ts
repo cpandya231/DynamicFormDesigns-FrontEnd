@@ -271,7 +271,7 @@ export class FillFormComponent implements OnInit {
 
   close(delay: number) {
     setTimeout(() => {                           // <<<---using ()=> syntax
-      this._location.back();
+      this.back();
     }, delay);
   }
 
@@ -359,5 +359,8 @@ export class FillFormComponent implements OnInit {
 
 
     doc.save('tableToPdf.pdf');
+  }
+  back() {
+    this._location.back();
   }
 }

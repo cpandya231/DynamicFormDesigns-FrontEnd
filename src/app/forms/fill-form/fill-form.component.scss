@@ -1,11 +1,13 @@
 @import "../create-form-template/create-form-template.component.scss";
 @import "../../users/create-user/create-user.component.scss";
+@import "../user-forms-in-progress/user-forms-in-progress-data/user-forms-in-progress-data.component.scss";
 
 .app-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 80vh;
+
+    align-items: stretch;
 }
 
 .right-side-nav {
