@@ -192,6 +192,9 @@ export class FillFormComponent implements OnInit {
             if (this.visibleColumns && !this.visibleColumns.includes(component.key) && !(this.disableSave)) {
               component.hidden = true;
             }
+            if (this.currentState?.endState && this.IsMasterForm) {
+              component.hidden = false;
+            }
             let entryMetadataInfo = entryMetaData.find((em: any) => {
               return (em.data["" + component.key])
             });
