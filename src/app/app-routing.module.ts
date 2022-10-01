@@ -104,7 +104,10 @@ const routes: Routes = [
             component: FillFormComponent
           },
 
-
+          {
+            path: 'auditLogEntry/:formName/:formId/:entryId',
+            component: EntryAuditDataComponent
+          },
           {
             path: 'createLogEntry/:formName',
             component: FillFormComponent
