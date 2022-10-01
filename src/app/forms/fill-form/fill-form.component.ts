@@ -66,13 +66,14 @@ export class FillFormComponent implements OnInit {
     let params = this.activatedRoute.snapshot.paramMap;
     this.formName = String(params.get('formName') || '');
     this.entryId = Number(params.get('entryId') || '');
-    const state: any = this._location.getState();
-    this.formId = state.formId;
+
+    this.formId = Number(params.get('formId') || '');
     this.userRoles = this.authService.getRoles();
-    this.IsMasterForm = state.isMasterForm;
+
 
 
     this.formService.GetFormTemplate(this.formName, this.formId).subscribe(data => {
+      this.IsMasterForm = data.type == 'master';
       this.CurrentForm.components = JSON.parse(data.template).components;
       this.workflowId = data.workflow["id"];
       this.formId = data.id;
@@ -156,6 +157,7 @@ export class FillFormComponent implements OnInit {
   private processToHandleExistingEntry(entryData: any, entryMetaData: any, transitionData: IGetWorkflowStateTransitionsModel) {
     let entry = entryData[0].data;
     this.currentState = transitionData.states.find(state => state.name === entry.state);
+
     let requiredTransition = transitionData.transitions.
       find(transition => (transition.fromState.name == entry.state && !transition.sendBackTransition)
         && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
