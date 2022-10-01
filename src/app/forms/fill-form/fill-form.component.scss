@@ -1,11 +1,13 @@
 @import "../create-form-template/create-form-template.component.scss";
 @import "../../users/create-user/create-user.component.scss";
 @import "../user-forms-in-progress/user-forms-in-progress-data/user-forms-in-progress-data.component.scss";
+
 .app-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
+    flex-wrap: nowrap;
 }
 
 .right-side-nav {
@@ -26,6 +28,7 @@
 .subheader {
     display: flex;
     flex-direction: column;
+
     span {
         color: #7DC5C9;
     }
@@ -35,6 +38,7 @@
     display: flex;
     align-items: center;
     flex-direction: row;
+
     label {
         font-size: 0.8rem;
         margin-top: 0.2em;
@@ -60,6 +64,7 @@ input[type=password] {
     margin-right: 3em;
     display: flex;
     cursor: pointer;
+
     &:hover {
         color: #00ADB5;
     }

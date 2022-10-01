@@ -339,7 +339,8 @@ export class FillFormComponent implements OnInit {
 
     doc.addImage(img, 'png', 10, 0, 70, 20);
     doc.setTextColor("#00ADB5");
-    doc.text(`Audit record for ${this.formName} - ${this.formName.charAt(0)}${this.formName.charAt((this.formName.length) / 2)}-${this.entryId} `, 100, 12);
+
+    doc.text(`Audit record for ${this.formName} - ${this.formName.charAt(0)}${this.formName.charAt((this.formName.length) / 2)}-${this.entryId} `, 100, 12, { maxWidth: 80 });
     doc.setTextColor(0, 0, 0);
     var finalY = (doc as any).lastAutoTable.finalY || 30;
     doc.text(`Form Name  : ${this.formName}`, 14, finalY);
@@ -353,7 +354,8 @@ export class FillFormComponent implements OnInit {
         startY: finalY
       });
       finalY = (doc as any).lastAutoTable.finalY;
-      doc.setFontSize(8)
+      doc.setFontSize(8);
+
       element["update_history"].forEach((history: any) => {
         finalY += 10;
         let historyData = history["data"];

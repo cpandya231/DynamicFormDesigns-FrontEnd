@@ -61,7 +61,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
     let transitionsObservable = this.formsService.GetWorkflowStatesTransitions(this.workflowId);
     combineLatest([logEntriesObservable, transitionsObservable]).subscribe(items => {
       let entryData = items[0];
-      let transitionData= items[1];
+      let transitionData = items[1];
       this.finalState = transitionData.states.find((state: IWorkflowStateModel) => state.endState == true);
       this.PendingEntries = entryData.filter((entry: any) => entry.data.state !== this.finalState?.name);
       this.getLogEntries(entryData, transitionData);
@@ -147,7 +147,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
     this.logEntries = this.PendingEntries;
     this.ShowfilteredEntries = true;
   }
-  
+
   ShowAllItems() {
     this.logEntries = this.copyLogEntries;
     this.ShowfilteredEntries = false;
