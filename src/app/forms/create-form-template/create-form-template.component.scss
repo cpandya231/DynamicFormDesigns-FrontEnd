@@ -34,16 +34,29 @@
         .cancel_button {
             background-color: #EFEFEF;
             color: #0a1931;
+            margin-left: 1rem;
         }
     }
 }
 
-.formbuilder {
+::ng-deep .formbuilder {
+    .formarea {
+        max-height: 77vh;
+        overflow: auto;
+        border: 1px solid $main-gray-light;
+        margin-bottom: 5px;
+    }
     .builder-sidebar .btn {
-        background-color: $main-teal !important;
+        background-color: $main-teal;
     }
     .builder-sidebar_scroll {
         margin-top: 1rem;
+    }
+    .form-builder-group-header {
+        .btn {
+            background-color: #0F2938;
+            color: white;
+        }
     }
 }
 

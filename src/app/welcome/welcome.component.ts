@@ -14,19 +14,31 @@ export class WelcomeComponent implements OnInit {
     private router: Router) { }
   token: any = "";
   email: any = "";
+  IsAdminUser = false;
 
   ngOnInit(): void {
-
+    this.IsAdminUser = this.authSevice.isAdmin();
   }
 
 
-  navigate(): any {
-    let isAdmin = this.authSevice.isAdmin();
-    if (isAdmin) {
+  OpenELogBook(): any {
+    if (this.IsAdminUser) {
       this.router.navigate(['/formsDashboard']);
     } else {
       this.router.navigate(['/userFormsDashboard']);
     }
+  }
+
+  OpenSmartJobs(): void {
+
+  }
+
+  OpenEUAM(): void {
+
+  }
+
+  OpenEWatchTower(): void {
+    this.router.navigate(['/watchTower']);
   }
 
 }

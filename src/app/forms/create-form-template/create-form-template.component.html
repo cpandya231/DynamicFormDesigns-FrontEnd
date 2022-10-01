@@ -13,7 +13,7 @@
     </div>
     <form-builder *ngIf="IsFormLoaded" [form]='CurrentForm' [options]='FormOptions' #formio></form-builder>
     <div class="buttons_container">
-        <button class="btn save_button" (click)="SaveTemplate()" [disabled]="!FormName.length || SaveInProgress">Save
+        <button class="btn btn-primary" (click)="SaveTemplate()" [disabled]="!FormName.length || SaveInProgress">Save
             Template</button>
         <button class="btn cancel_button" (click)="CancelChanges()">Cancel</button>
     </div>

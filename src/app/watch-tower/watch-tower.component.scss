@@ -1,0 +1,39 @@
+@import '../welcome/welcome.component.scss';
+.header_text {
+    height: 13%;
+    margin-top: 4rem;
+    padding: 2%;
+    background: #F1F1F1;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.welcome-container {
+    height: 80vh;
+    .app-container {
+        margin-top: 0;
+        .app {
+            height: 14rem;
+            width: 11rem;
+            .logo_container {
+                height: 71%;
+            }
+            .app_name {
+                height: 30%;
+                padding: 5% 0;
+                img {
+                    height: 50%;
+                }
+            }
+        }
+    }
+    .usage_insights {
+        margin-top: 4rem;
+        width: 100%;
+        height: 90vh;
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}

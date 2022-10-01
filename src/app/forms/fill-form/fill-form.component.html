@@ -1,7 +1,5 @@
 <mat-sidenav-container class="app-container" *ngIf="IsFormLoaded">
-    <mat-sidenav #sidenav *ngIf="showComments" class="right-side-nav" opened mode="side" position="end"
-        [fixedInViewport]="true" fixedTopGap="65" [(opened)]="showComments" (opened)="events.push('open!')"
-        (closed)="events.push('close!')">
+    <mat-sidenav #sidenav *ngIf="showComments" class="right-side-nav" opened mode="side" position="end" [fixedInViewport]="true" fixedTopGap="65" [(opened)]="showComments" (opened)="events.push('open!')" (closed)="events.push('close!')">
         <app-comments [formId]="formId" [entryId]="entryId"></app-comments>
     </mat-sidenav>
 
@@ -17,15 +15,14 @@
                     <div class="subheader" *ngIf="entryId">
                         <div><label>Record Id:</label> <span> {{entryId}}</span></div>
 
-                        <div> <label>Current State:</label><span> {{this.currentState.name}}</span></div>
+                        <div> <label>Current State:</label><span> {{this.currentState?.name}}</span></div>
                     </div>
 
                 </div>
 
             </div>
             <div class="back-button" (click)="back()">
-                <img src="../../../assets/left-arrow.svg">
-                Back
+                <img src="../../../assets/left-arrow.svg"> Back
             </div>
         </div>
         <div class="content">
@@ -40,10 +37,8 @@
 
                 </div>
                 <div class="submit-button">
-                    <button type="submit" *ngIf="!disableSave" class="button" (click)="onSubmit()"
-                        [disabled]="disableSave">{{sendToButtonLabel}}</button>
-                    <button type="button" class="button-cancel" (click)="sendBack()"
-                        *ngIf="undefined!=sendBackState">Send
+                    <button type="submit" *ngIf="!disableSave" class="button" (click)="onSubmit()" [disabled]="disableSave">{{sendToButtonLabel}}</button>
+                    <button type="button" class="button-cancel" (click)="sendBack()" *ngIf="undefined!=sendBackState">Send
                         Back to
                         {{sendBackState}}
                     </button>

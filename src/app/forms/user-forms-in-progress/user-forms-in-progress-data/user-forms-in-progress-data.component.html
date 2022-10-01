@@ -9,8 +9,7 @@
             </h2>
         </div>
         <div class="back-button" (click)="back()">
-            <img src="../../../assets/left-arrow.svg">
-            Back
+            <img src="../../../assets/left-arrow.svg"> Back
         </div>
     </div>
 
@@ -68,16 +67,13 @@
             let i = index">
                         <div class="table-icons">
                             <span title="Edit" class="fas fa-edit" (click)="FillForm(entry.data['id'])"></span>
-                            <span title="Status" class="fas fa-hourglass-half"
-                                (click)="ShowProgress(entry.data['id'])"></span>
-                            <span title="Report" class="fas fa-file-text"
-                                (click)="viewAuditReport(entry.data['id'])"></span>
+                            <span title="Status" class="fas fa-hourglass-half" (click)="ShowProgress(entry.data['id'])"></span>
+                            <span title="Report" class="fas fa-file-text" (click)="viewAuditReport(entry.data['id'])"></span>
                         </div>
 
 
 
-                        <td *ngFor="let col of columns"
-                            class="{{col}} {{(col=='state') && (entry.data[col]==finalStateName?'FinalState':'')?'FinalState':''}}">
+                        <td *ngFor="let col of columns" class="{{col}} {{(col=='state') && (entry.data[col]==finalStateName?'FinalState':'')?'FinalState':''}}">
                             {{entry.data[""+col]}}</td>
 
 
@@ -92,8 +88,7 @@
         </div>
 
         <div class="pagination-controls">
-            <pagination-controls previousLabel="Prev" nextLabel="Next" [responsive]="true" [maxSize]="5"
-                (pageChange)="handlePageChange($event)">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" [responsive]="true" [maxSize]="5" (pageChange)="handlePageChange($event)">
 
             </pagination-controls>
         </div>

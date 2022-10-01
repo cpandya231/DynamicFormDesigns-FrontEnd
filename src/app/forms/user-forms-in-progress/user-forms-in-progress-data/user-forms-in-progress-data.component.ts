@@ -4,7 +4,7 @@ import { FormsService } from 'src/app/common/services/forms.service';
 import { DisplayWorkflowStatusComponent } from 'src/app/common/display-workflow-status/display-workflow-status.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
-import { IGetWorkflowStateTransitionsModel } from '../../form-workflow/form-workflow.model';
+import { IGetWorkflowStateTransitionsModel, IWorkflowStateModel } from '../../form-workflow/form-workflow.model';
 import { combineLatest, elementAt } from 'rxjs';
 import { Location } from '@angular/common'
 
@@ -19,6 +19,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
   count = 80;
   userRoles: any;
   logEntries: any[];
+  copyLogEntries: any[];
   formId: number;
   formName: string;
   workflowId: number;
@@ -32,7 +33,9 @@ export class UserFormsInProgressDataComponent implements OnInit {
   defaultLastColumns: string[] = ["created_by", "log_create_dt", "updated_by", "log_update_dt"];
   isMasterForm = false;
   finalStateName: any;
-
+  PendingEntries: any;
+  ShowfilteredEntries: boolean = false;
+  finalState: any;
   @ViewChild('pdfTable', { static: false }) pdfTable: ElementRef;
   constructor(private formsService: FormsService,
     private authService: AuthService,
@@ -58,7 +61,9 @@ export class UserFormsInProgressDataComponent implements OnInit {
     let transitionsObservable = this.formsService.GetWorkflowStatesTransitions(this.workflowId);
     combineLatest([logEntriesObservable, transitionsObservable]).subscribe(items => {
       let entryData = items[0];
-      let transitionData = items[1];
+      let transitionData= items[1];
+      this.finalState = transitionData.states.find((state: IWorkflowStateModel) => state.endState == true);
+      this.PendingEntries = entryData.filter((entry: any) => entry.data.state !== this.finalState?.name);
       this.getLogEntries(entryData, transitionData);
       this.canCreateNewEntry(transitionData);
     });
@@ -136,6 +141,16 @@ export class UserFormsInProgressDataComponent implements OnInit {
         });
       })
     })
+  }
+
+  SortPendingItems() {
+    this.logEntries = this.PendingEntries;
+    this.ShowfilteredEntries = true;
+  }
+  
+  ShowAllItems() {
+    this.logEntries = this.copyLogEntries;
+    this.ShowfilteredEntries = false;
   }
 
   protected transformStateTransitions(data: any, statusData: any, workflowLinks: any): any {

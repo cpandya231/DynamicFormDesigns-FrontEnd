@@ -1,41 +1,59 @@
 @import '../variables.scss';
-
 .welcome-container {
     display: flex;
     height: 90vh;
 }
 
 .app-container {
-
     display: flex;
-    padding: 2rem;
-    align-content: flex-start;
+    padding: 0 10% 5% 10%;
+    align-content: center;
     gap: 2rem;
     flex-wrap: wrap;
     margin-top: 4em;
-
 }
 
 .app {
     border: .15em solid;
-    height: 5em;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+    height: 12rem;
+    width: 10rem;
+    background: #DFF4F4;
+    border-radius: 15px;
+    .logo_container {
+        height: 80%;
+        padding: 1.5rem;
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .app_name {
+        background: #0F2938;
+        border-radius: 10px;
+        color: white;
+        text-align: center;
+        height: 21%;
+        padding: 5% 0;
+        img {
+            height: 100%;
+            margin-left: 5px;
+        }
+    }
 }
 
 .app:hover {
-    background-color: #EFEFEF;
     cursor: pointer;
     font-weight: initial;
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
 
 .app-create {
-    border: dashed $main-teal;
-    color: $main-teal;
-
-
+    position: relative;
+    .create_container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: 60%
+    }
 }

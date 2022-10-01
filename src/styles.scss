@@ -1,5 +1,6 @@
 /* @import '~@fortawesome/fontawesome-free/scss/fontawesome.scss'; */
 
+// https://www.colorcombos.com/color-schemes/142/ColorCombo142.html
 @import '~@fortawesome/fontawesome-free/scss/solid.scss';
 @import '~@fortawesome/fontawesome-free/scss/regular.scss';
 @import '~@fortawesome/fontawesome-free/scss/brands.scss';
@@ -12,14 +13,15 @@ $white: #ffffff;
 $blue: #185ADB;
 $yellow: #FFC947;
 $gray: #EFEFEF;
-
 body {
     margin: 0;
-    height: 93vh;
+    overflow: hidden;
+    max-height: 95vh;
+    height: 95vh;
 }
 
 .btn .btn-primary {
-    background-color: $navy;
+    background-color: $main-navy;
 }
 
 input[type="text"],
@@ -32,10 +34,9 @@ input[type="password"] {
     height: 2.5em;
     border-radius: 5px;
     border: 1px solid $main-navy-light;
-
     // background-color: #c4c4c430;   //commenting this as this makes normal field disabled, if you need this make it in respective component style
     &:focus {
-        border: thin solid blue;
+        border: thin solid $main-blue;
     }
 }
 
@@ -45,10 +46,9 @@ textarea {
     transition: border .2s ease;
     border-radius: 5px;
     border: 1px solid $main-navy-light;
-
     // background-color: #c4c4c430;   //commenting this as this makes normal field disabled, if you need this make it in respective component style
     &:focus {
-        border: thin solid blue;
+        border: thin solid $main-blue;
     }
 }
 
@@ -72,21 +72,18 @@ select {
     background-size: 5px 5px, 5px 5px, 1px 1.5em;
     background-repeat: no-repeat;
     border: 1px solid $main-navy-light;
-
     &:focus {
         outline: none;
     }
-
     &:focus-visible {
-        border: thin solid blue !important;
+        border: thin solid $main-blue !important;
     }
 }
 
 .formbuilder .btn-primary {
     background-color: $main-teal;
-
-    :hover {
-        background-color: $main-teal-dark;
+     :hover {
+        background-color: $primary;
     }
 }
 
@@ -107,7 +104,6 @@ small {
         height: 40vh;
         width: 60vw;
         background: linear-gradient(#d1fff9, #fdfceb);
-
         h2 {
             border-bottom: 1px solid #20b5be;
         }
@@ -115,14 +111,12 @@ small {
 }
 
 .text-muted {
-    color: $main-gray-light  !important;
-
+    color: $main-gray-light !important;
     b {
         color: $main-gray-dark;
     }
 }
 
 .mat-drawer-content {
-
     overflow: hidden !important;
 }
