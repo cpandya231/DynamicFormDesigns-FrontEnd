@@ -1,32 +1,34 @@
 @import "../../variables.scss";
-@import "../../users/users-info/users-info.component.scss";
-@import "../../forms/forms-dashboard/forms-dashboard.component.scss";
+@import "../../welcome/welcome.component.scss";
 
-.app-container {
-    display: flex;
-    padding: 2rem;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-    margin-top: 4em;
-    height: 90vh;
-}
 
 .left-side-nav {
     width: 10em
 }
 
+.logo_container {
+    height: 80%;
+    padding: 1.5rem;
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+
 .form-card {
+
     background-color: #DFF4F4;
     height: 15em;
-    width: 15em;
+
     display: flex;
     flex-direction: column;
     border-radius: 1.2rem;
     align-items: center;
     justify-content: space-between;
-    border: 0.1em solid #22283120;
+
+    border: 0.15em solid;
 
     &:hover {
         transform: scale(1.1);
@@ -34,9 +36,7 @@
         cursor: pointer;
     }
 
-    .template-type {
-        height: 10em;
-    }
+
 }
 
 .form-name-container {

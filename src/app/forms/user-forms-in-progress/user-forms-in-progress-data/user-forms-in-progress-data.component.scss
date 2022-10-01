@@ -1,26 +1,15 @@
 @import "../user-forms-in-progress.component.scss";
 
-// .form_entries {
-//     width: 92vw;
-//     height: 93vh;
-//     .table {
-//         max-width: 100%;
-//         max-height: 80vh;
-//         thead {
-//             th {
-//                 padding: 0.5rem 1rem;
-//             }
-//         }
-//         tbody {
-//             vertical-align: middle;
-//             tr {
-//                 td {
-//                     padding: 0.5rem 1rem;
-//                 }
-//             }
-//         }
-//     }
-// }
+@import "../../../users/users-info/users-info.component.scss";
+@import "../../../forms/forms-dashboard/forms-dashboard.component.scss";
+
+
+.forms_dashboard {
+    margin-top: 4em;
+    padding: 2% 5% 5% 5%;
+
+}
+
 .header {
     display: flex;
     align-items: center;
