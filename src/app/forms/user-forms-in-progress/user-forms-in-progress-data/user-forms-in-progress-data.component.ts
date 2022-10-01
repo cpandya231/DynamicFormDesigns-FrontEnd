@@ -74,12 +74,13 @@ export class UserFormsInProgressDataComponent implements OnInit {
     this.visibleColumns = userTransition?.fromState?.visibleColumns?.split(',') || [];
     this.count = entryData.length;
     if (entryData.length > 0) {
-
+      entryData = entryData.sort((a: any, b: any) => (parseInt(a.data.id) > parseInt(b.data.id) ? -1 : 1));
       this.logEntries = entryData.map((element: any, index: number) => {
         element["page"] = Math.floor(index / this.pageSize);
         return element;
       }).filter((el: any) => el["page"] == this.currentPage - 1);
-      this.columns = this.defaultFirstColumns.concat(this.visibleColumns).concat(this.defaultLastColumns)
+      this.columns = this.defaultFirstColumns.concat(this.visibleColumns).concat(this.defaultLastColumns);
+      this.columns = this.columns.filter(col => col);
       this.isDataLoaded = true;
     } else {
       this.logEntries = [];
