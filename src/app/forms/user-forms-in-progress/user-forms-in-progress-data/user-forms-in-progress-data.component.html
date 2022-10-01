@@ -31,7 +31,7 @@
 
             <div class="sub-cta-buttons">
                 <div class="comments-toggle">
-                    <mat-slide-toggle color="primary">
+                    <mat-slide-toggle color="primary" [checked]="showPending" (change)="togglePendingAll($event)">
                         Pending Tasks ({{formId+1}})
                     </mat-slide-toggle>
                 </div>

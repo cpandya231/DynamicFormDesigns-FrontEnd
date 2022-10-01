@@ -5,6 +5,7 @@ import { map, Observable, startWith } from 'rxjs';
 import { AuditTrailService } from 'src/app/services/audit-trail.service';
 import { DateUtil } from 'src/app/services/utility/DateUtil';
 import { IAuditTrailItem } from './audit-trail-item-model';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-audit-trail',
@@ -21,7 +22,8 @@ export class AuditTrailComponent implements OnInit {
   count = 80;
   username: any = '';
 
-  constructor(private auditTrailService: AuditTrailService,) { }
+  constructor(private auditTrailService: AuditTrailService,
+    private location: Location) { }
 
   ngOnInit(): void {
     this.setData();
@@ -62,4 +64,7 @@ export class AuditTrailComponent implements OnInit {
     this.setData();
   }
 
+  back() {
+    this.location.back();
+  }
 }
