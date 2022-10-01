@@ -1,30 +1,37 @@
 <div class="forms_dashboard">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Form ID</th>
-                <th scope="col">Form Name</th>
-                <th scope="col">Created By</th>
-                <th scope="col">Created On</th>
+    <h2>
+        Execute Log Records
+    </h2>
+    <div class="user-forms-in-progress-content">
+
+        <div class="filters-and-button">
+            <div class="search-box-container">
+                <input class="search-box" type="text" placeholder="Search Log Name">
+            </div>
+            <div class="back-button" (click)="back()">
+                <img src="../../../assets/left-arrow.svg">
+                Back to eLogbook Home
+            </div>
+
+        </div>
+        <div class="user-forms-in-progress-cards">
+            <div *ngFor="let form of FormTemplates ;let indexOfelement=index;" class="form-card"
+                (click)="SeeEntries(form)" mat-raised-button matBadge="{{indexOfelement+1}}" matBadgeColor="warn"
+                matBadgeHidden="{{indexOfelement%3==0?false:true}}">
+                <div></div>
+                <div>
+                    <img src="../../../assets/form-template-icons/icon-{{(form.id%10)+1}}.svg">
+                </div>
+                <div class="form-name-container">
+                    <span>{{form.name}}</span><img src="../../../assets/right-arrow.svg">
+                </div>
+            </div>
+            <div *ngIf="!FormTemplates?.length" class="no_data_message">
+                No Forms Available
+            </div>
+        </div>
+    </div>
 
 
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let form of FormTemplates">
-                <td>{{form.id}}</td>
-                <td (click)="SeeEntries(form)" class="td-link">{{form.name}}</td>
-                <td>{{form.createdBy}}</td>
-                <td>{{form.createDt | date: DATE_FORMAT }}</td>
-
-
-            </tr>
-            <tr *ngIf="!FormTemplates?.length" class="no_data_message">
-                <td colspan="6">
-                    No Forms Available
-                </td>
-            </tr>
-        </tbody>
-    </table>
 </div>

@@ -5,7 +5,8 @@ import { DisplayWorkflowStatusComponent } from 'src/app/common/display-workflow-
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
 import { IGetWorkflowStateTransitionsModel } from '../../form-workflow/form-workflow.model';
-import { combineLatest } from 'rxjs';
+import { combineLatest, elementAt } from 'rxjs';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-user-forms-in-progress-data',
@@ -13,6 +14,9 @@ import { combineLatest } from 'rxjs';
   styleUrls: ['./user-forms-in-progress-data.component.scss']
 })
 export class UserFormsInProgressDataComponent implements OnInit {
+  currentPage = 1;
+  pageSize = 5;
+  count = 80;
   userRoles: any;
   logEntries: any[];
   formId: number;
@@ -27,16 +31,22 @@ export class UserFormsInProgressDataComponent implements OnInit {
   defaultFirstColumns: string[] = ["id", "state",];
   defaultLastColumns: string[] = ["created_by", "log_create_dt", "updated_by", "log_update_dt"];
   isMasterForm = false;
+  finalStateName: any;
 
   @ViewChild('pdfTable', { static: false }) pdfTable: ElementRef;
   constructor(private formsService: FormsService,
     private authService: AuthService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private location: Location,
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
 
+    this.setData();
+  }
+
+  private setData() {
     this.userRoles = this.authService.getRoles();
     let params = this.activatedRoute.snapshot.paramMap;
     const queryParams = this.activatedRoute.snapshot.queryParams;
@@ -51,7 +61,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
       let transitionData = items[1];
       this.getLogEntries(entryData, transitionData);
       this.canCreateNewEntry(transitionData);
-    })
+    });
   }
 
   private getLogEntries(entryData: any, transitionData: IGetWorkflowStateTransitionsModel) {
@@ -59,11 +69,16 @@ export class UserFormsInProgressDataComponent implements OnInit {
     let userTransition = transitionData.transitions.
       find(transition => transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0)
 
+    this.finalStateName = transitionData.states.find(state => state.endState)?.name;
     this.disabledColumns = userTransition?.fromState?.disabledColumns?.split(',') || [];
     this.visibleColumns = userTransition?.fromState?.visibleColumns?.split(',') || [];
-
+    this.count = entryData.length;
     if (entryData.length > 0) {
-      this.logEntries = entryData;
+
+      this.logEntries = entryData.map((element: any, index: number) => {
+        element["page"] = Math.floor(index / this.pageSize);
+        return element;
+      }).filter((el: any) => el["page"] == this.currentPage - 1);
       this.columns = this.defaultFirstColumns.concat(this.visibleColumns).concat(this.defaultLastColumns)
       this.isDataLoaded = true;
     } else {
@@ -155,4 +170,12 @@ export class UserFormsInProgressDataComponent implements OnInit {
     })
   }
 
+  back() {
+    this.location.back();
+  }
+
+  handlePageChange(event: any) {
+    this.currentPage = event;
+    this.setData();
+  }
 }

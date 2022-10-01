@@ -12,6 +12,7 @@ $white: #ffffff;
 $blue: #185ADB;
 $yellow: #FFC947;
 $gray: #EFEFEF;
+
 body {
     margin: 0;
     height: 93vh;
@@ -31,6 +32,7 @@ input[type="password"] {
     height: 2.5em;
     border-radius: 5px;
     border: 1px solid $main-navy-light;
+
     // background-color: #c4c4c430;   //commenting this as this makes normal field disabled, if you need this make it in respective component style
     &:focus {
         border: thin solid blue;
@@ -43,6 +45,7 @@ textarea {
     transition: border .2s ease;
     border-radius: 5px;
     border: 1px solid $main-navy-light;
+
     // background-color: #c4c4c430;   //commenting this as this makes normal field disabled, if you need this make it in respective component style
     &:focus {
         border: thin solid blue;
@@ -69,9 +72,11 @@ select {
     background-size: 5px 5px, 5px 5px, 1px 1.5em;
     background-repeat: no-repeat;
     border: 1px solid $main-navy-light;
+
     &:focus {
         outline: none;
     }
+
     &:focus-visible {
         border: thin solid blue !important;
     }
@@ -79,7 +84,8 @@ select {
 
 .formbuilder .btn-primary {
     background-color: $main-teal;
-     :hover {
+
+    :hover {
         background-color: $main-teal-dark;
     }
 }
@@ -101,6 +107,7 @@ small {
         height: 40vh;
         width: 60vw;
         background: linear-gradient(#d1fff9, #fdfceb);
+
         h2 {
             border-bottom: 1px solid #20b5be;
         }
@@ -108,8 +115,14 @@ small {
 }
 
 .text-muted {
-    color: $main-gray-light !important;
+    color: $main-gray-light  !important;
+
     b {
         color: $main-gray-dark;
     }
+}
+
+.mat-drawer-content {
+
+    overflow: hidden !important;
 }
