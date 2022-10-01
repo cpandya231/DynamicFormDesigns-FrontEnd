@@ -12,12 +12,13 @@ export class DisplayWorkflowStatusComponent implements OnInit {
   WorkflowLinks: any;
   WorkflowStates: any;
   curve: any = shape.curveLinear;
-  draggingEnabled: boolean = false;
+  draggingEnabled: boolean = true;
   panningEnabled: boolean = false;
-  zoomEnabled: boolean = false;
+  zoomEnabled: boolean = true;
   zoomSpeed: number = 0.2;
-  minZoomLevel: number = 0.2;
-  maxZoomLevel: number = 2.0;
+  zoomLevel: number = 2.0;
+  minZoomLevel: number = 0.4;
+  maxZoomLevel: number = 3.0;
   panOnZoom: boolean = false;
   autoCenter = true;
   autoZoom = true;

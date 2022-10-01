@@ -1,8 +1,29 @@
 .graph_container {
     height: calc(100% - 30px);
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
+    // display: flex;
+    // flex-flow: column;
+    // justify-content: center;
+    // align-items: center;
+    display: grid;
     box-sizing: border-box;
+    width: 100%;
+}
+
+::ng-deep {
+    .ngx-charts-outer {
+        width: 100% !important;
+        .ngx-charts {
+            width: 100% !important;
+        }
+    }
+}
+
+.node {
+    background-color: #F4F4F4;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    height: 4em;
+    width: 10em;
+    font-size: 1.4rem;
 }

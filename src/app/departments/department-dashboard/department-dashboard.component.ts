@@ -7,6 +7,8 @@ import { IDepartmentItem } from '../department-item-model';
 import * as shape from 'd3-shape';
 import { Edge, Layout } from '@swimlane/ngx-graph';
 import { MatDialog } from '@angular/material/dialog';
+import { Location } from '@angular/common'
+
 @Component({
   selector: 'app-department-dashboard',
   templateUrl: './department-dashboard.component.html',
@@ -36,7 +38,8 @@ export class DepartmentDashboardComponent implements OnInit {
     private departmentService: DepartmentService,
     private router: Router,
     private route: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private location: Location
   ) {
   }
 
@@ -81,5 +84,9 @@ export class DepartmentDashboardComponent implements OnInit {
 
   AddDepartment() {
     this.router.navigate(['./create', this.nodes[0].id], { relativeTo: this.route });
+  }
+
+  back() {
+    this.location.back();
   }
 }

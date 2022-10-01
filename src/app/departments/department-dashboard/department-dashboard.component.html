@@ -1,6 +1,8 @@
 <div class="add_btn">
     <button class="btn btn-primary" (click)="AddDepartment()">Add Department</button>
 </div>
+
+<button class="btn back_button" (click)="back()">Back</button>
 <div class="page">
     <ngx-graph [links]="links" [nodes]="nodes" layout="dagre" [curve]="curve" [draggingEnabled]="draggingEnabled" [panningEnabled]="panningEnabled" [enableZoom]="zoomEnabled" [zoomSpeed]="zoomSpeed" [minZoomLevel]="minZoomLevel" [maxZoomLevel]="maxZoomLevel"
         [panOnZoom]="panOnZoom" [autoZoom]="autoZoom" [layoutSettings]="layoutSettings">

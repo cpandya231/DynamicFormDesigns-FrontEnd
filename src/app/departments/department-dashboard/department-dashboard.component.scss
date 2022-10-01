@@ -11,11 +11,12 @@
         padding-top: 10rem;
         padding-left: 10rem;
     }
-    .add_btn {
-        position: absolute;
-        top: 100px;
-        left: 20px;
-    }
+}
+
+.add_btn {
+    position: absolute;
+    top: 10%;
+    left: 20px;
 }
 
 .custom-node {
@@ -52,4 +53,15 @@
 .dept-code {
     color: #00000070;
     font-size: 0.7rem;
+}
+
+.back_button {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    background-color: #DFF4F4;
+    color: #222831;
+    border-radius: 1em;
+    font-weight: bold;
+    border: 0.1em solid #22283120;
 }
