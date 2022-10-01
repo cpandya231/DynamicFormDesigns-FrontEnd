@@ -1,6 +1,13 @@
 @import '../variables.scss';
 .welcome-container {
     height: 90vh;
+    .welcome_user {
+        position: absolute;
+        top: 20%;
+        left: 10%;
+        font-weight: 500;
+        font-size: 1.2rem;
+    }
 }
 
 .app-container {
