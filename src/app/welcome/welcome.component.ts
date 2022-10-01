@@ -15,6 +15,7 @@ export class WelcomeComponent implements OnInit {
   token: any = "";
   email: any = "";
   IsAdminUser = false;
+  username = localStorage.getItem('username');
 
   ngOnInit(): void {
     this.IsAdminUser = this.authSevice.isAdmin();
