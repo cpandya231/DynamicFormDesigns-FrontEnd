@@ -1,41 +1,61 @@
+@import '../../variables.scss';
 .forms_dashboard {
     padding: 2rem;
-    margin-top: 4em;
+    margin-top: 4rem;
     height: 100%;
-    background: linear-gradient(to bottom right, #ddffda, #cdf5ff);
+    background: white;
+    display: flex;
     .btn-primary {
         word-spacing: 3px;
-        background-color: #41924B;
+        position: absolute;
+        left: 7%;
     }
     .table {
         scrollbar-width: thin;
         border-radius: 10px;
-        margin-top: 1rem;
+        margin-top: 3rem;
         max-height: 90%;
         overflow-y: auto;
         display: block;
         background: white;
-        width: fit-content;
+        width: 75%;
         thead {
             position: sticky;
             top: 0;
             max-height: 3rem;
-            background: #6BCAE2;
             pointer-events: none;
-            .form_id {
-                width: 5%;
-                text-align: center;
+            color: white;
+            th {
+                background: #48C6C5;
+                border: 1px solid #FFFFFF;
+                padding: 0.5rem 1rem;
+                border-radius: 5px;
+                &.icons_header {
+                    background: white;
+                    width: 3%;
+                    padding: 0;
+                }
             }
+            // .form_id {
+            //     width: 5%;
+            //     text-align: center;
+            // }
         }
         tbody {
             font-weight: normal;
             tr {
                 &:hover {
-                    background-color: #f6f6f6;
+                    background-color: $main-gray-light;
+                }
+                .icons_container {
+                    padding: 0.5rem 0;
                 }
             }
             td {
-                border-bottom: 1px solid #e5e5e5;
+                background: #E8F5F4;
+                border: 1px solid #FFFFFF;
+                border-radius: 5px;
+                padding: 0.5rem 1rem;
                 img {
                     cursor: pointer;
                 }
@@ -64,22 +84,37 @@
             }
         }
     }
+    .navigation_controls {
+        margin-left: 10%;
+        margin-top: 5%;
+        div {
+            text-align: center;
+            color: #0F2938;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            img {
+                width: 6rem;
+            }
+        }
+    }
     .no_data_message {
         height: 5rem;
         width: 90%;
         text-align: center;
         margin-top: 2rem;
         font-size: 2rem;
-        background-color: gray;
     }
     .svg_icon {
         height: 20px;
         width: 20px;
+        margin-left: 10px;
     }
 }
 
 table::-webkit-scrollbar {
     width: 0.5rem;
+    height: 0.5rem;
 }
 
 table::-webkit-scrollbar-track {
@@ -88,7 +123,7 @@ table::-webkit-scrollbar-track {
 }
 
 table::-webkit-scrollbar-thumb {
-    background-color: #badedc;
+    background-color: #b0b0b0;
     border-radius: 10px;
 }
 

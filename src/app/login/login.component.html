@@ -52,41 +52,45 @@
     <img src="../../assets/Ellipse-1.png" id="background-image">
 </div> -->
 
-<div class="login_outer_container">
-    <div class="login_inner_container">
-        <div class="logo">
-            <img src="../../assets/Images/digit6.png">
-            <div class="sub_header_text">Strategic Transformation With an Edge</div>
+<div class="login_inner_container">
+    <div class="background-image-container"></div>
+    <div class="logo">
+        <div>
+            <img src="../../assets/Images/flux_logo_login.png" />
         </div>
-        <div class="left_part">
-            <img src="../../assets/Images/image.png">
+        <div class="app_header_name">Flux-Intelligent
+            <div class="slogan">Workflow Orchestration Platform</div>
         </div>
-        <div class="right_part">
-            <div class="login_main">
-                <div class="header_text">Sign in</div>
-
-                <form (ngSubmit)="loginForm.form.valid && onSubmit()" #loginForm="ngForm" id="login-screen-item-container" novalidate>
-                    <div class="login-screen-item">
-                        <!-- <div>
-                            <label for="email" class="label-style">Username</label>
-                        </div> -->
-                        <input type="email" id="email" class="textbox-style" placeholder="Username" required [(ngModel)]="loginModel.username" name="username">
-                    </div>
-                    <div class="login-screen-item">
-                        <!-- <div>
-                            <label for="password" class="label-style">Password</label>
-                        </div> -->
-                        <input [type]="showPassword ? 'text' : 'password'" placeholder="Password " id="password" #password="ngModel" class="textbox-style" required [(ngModel)]="loginModel.password" name="password" required>
-                        <mat-icon class="showPasswordIcon" (click)="togglePasswordVisibility()">
-                            {{showPassword?'visibility':'visibility_off'}}</mat-icon>
-                    </div>
-                    <div class="submit-button">
-                        <button type="submit" class="button">Sign In</button>
-                    </div>
-                    <a href="#" id="forgot-password">Forgot Password?</a>
-                </form>
-                <div [hidden]="!errorOccured" class="invalid-credentials">Invalid username or password</div>
+        <div class="initials_box">
+            <div class="letter_d">D</div>
+            <div>
+                E
             </div>
         </div>
+
+
+    </div>
+    <div class="login_main">
+        <div class="header_text">Welcome User, </div>
+
+        <form (ngSubmit)="loginForm.form.valid && onSubmit()" #loginForm="ngForm" id="login-screen-item-container" novalidate>
+            <div class="login-screen-item">
+                <input type="email" id="email" class="textbox-style" placeholder="User Name" required [(ngModel)]="loginModel.username" name="username">
+            </div>
+            <div class="login-screen-item">
+                <input [type]="showPassword ? 'text' : 'password'" placeholder="Password " id="password" #password="ngModel" class="textbox-style" required [(ngModel)]="loginModel.password" name="password" required>
+                <div class="forgot-password"><a href="#">Forgot Password?</a></div>
+            </div>
+            <div class="submit-button">
+                <button type="submit" class="button">Sign In</button>
+            </div>
+
+        </form>
+        <div [hidden]="!errorOccured" class="invalid-credentials">Invalid username or password</div>
+    </div>
+    <div class="parent_brand_logo">
+        <div class="sub_title">A Product By</div>
+        <div class="parent_name">Digit</div>
+        <div class="parent_name second_part">Edgy</div>
     </div>
 </div>

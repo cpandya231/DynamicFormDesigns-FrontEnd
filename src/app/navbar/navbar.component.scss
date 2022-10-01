@@ -1,14 +1,20 @@
+@import "../variables.scss";
 #logo {
     color: #FFC947;
     font-weight: initial;
 }
 
 .navbar {
-    background-color: #0A1931;
+    background-color: #0F2938;
     padding: 0rem;
+    height: 4rem;
+    .container-fluid {
+        justify-content: normal;
+    }
     .logo_image {
         img {
-            width: 70%;
+            height: 3rem;
+            margin-right: 0.5rem;
         }
     }
 }
@@ -39,7 +45,7 @@
 }
 
 .rounded-circle {
-    height: 3rem;
+    height: 2rem;
 }
 
 .dropdown-menu {
@@ -55,4 +61,17 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    margin-left: 1rem;
+}
+
+.app_header_name {
+    color: white;
+}
+
+.home_icon {
+    margin-left: auto;
+    img {
+        height: 2rem;
+        margin-right: 1rem;
+    }
 }

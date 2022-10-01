@@ -1,283 +1,307 @@
 @import '../variables.scss';
-.wrapper {
-    position: relative;
-}
-
-#background-image {
-    position: absolute;
-    top: -10em;
-    left: -10em;
-    z-index: -999;
-}
-
-#login-screen {
-    position: relative;
-    border-color: #c4c4c4;
-    border-radius: 10px;
-    border-style: solid;
-    border-width: thin;
-    height: 90vh;
-    margin: 2em;
-    display: flex;
-    overflow: hidden;
-}
-
-.login-screen-subparent {
-    flex: 0 1 calc(50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.welcome-screen {
-    background-color: $main-navy;
-    font-weight: initial;
-    color: #fff;
-    position: relative;
-    -moz-border-radius: 10px 10px 0 0;
-}
-
-.welcome-screen p {
-    font-size: xx-large;
-    overflow: hidden;
-    animation-name: text-animation;
-    border-right: .15em solid #FFC947;
-    /* The typwriter cursor */
-    white-space: nowrap;
-    /* Keeps the content on a single line */
-    margin: 0 auto;
-    /* Gives that scrolling effect as the typing happens */
-    letter-spacing: .10em;
-    /* Adjust as needed */
-    animation: typing 1s steps(100, end), blink-caret 0.70s step-end infinite;
-}
-
-
-/* The typing effect */
-
-@keyframes typing {
-    from {
-        width: 0
-    }
-    to {
-        width: 20%
-    }
-}
-
-
-/* The typewriter cursor effect */
-
-@keyframes blink-caret {
-    from,
-    to {
-        border-color: transparent
-    }
-    50% {
-        border-color: #FFC947;
-    }
-}
-
-#login-screen-box {
-    display: flex;
-    height: 80%;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.login-screen-header {
-    color: $main-teal;
-    text-align: center;
-    position: relative;
-}
-
-.login-screen-header::after {
-    content: '';
-    /* this sets the position and size of the pseudo-element */
-    position: absolute;
-    top: 55%;
-    width: 2.5em;
-    height: 0.3em;
-    background-color: #FFC947;
-    /* draw behind child elements */
-    z-index: -1;
-}
-
-#login-screen-item-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    height: 60%;
-    position: relative;
-}
-
-.login-screen-item {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    margin-bottom: 0.8rem;
-}
-
-.showPasswordIcon {
-    position: absolute;
-    right: 0.2em;
-    bottom: 0.3em;
-}
-
-.label-style {
-    color: black;
-}
-
-.label-style-password-visibility {
-    font-size: 0.8rem;
-}
-
-.textbox-style {
-    margin-top: 0.5em;
-    outline: none;
-    /* transition: border .2s ease; */
-    border-style: none;
-    /* width: 100%; */
-    height: 2.5em;
-    border-radius: 5px;
-    border: 1px solid $main-navy-light;
-}
-
-.textbox-style::placeholder {
-    font-size: x-small;
-    font-weight: lighter;
-}
-
-.textbox-style:focus::placeholder {
-    color: transparent;
-}
-
-#email {}
-
-.button {
-    background-color: $main-teal;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    width: 20em;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-.button:hover {
-    background-color: $main-teal-dark;
-}
-
-.button:disabled,
-.button[disabled] {
-    border: 1px solid #999999;
-    background-color: #c4c4c4;
-    color: #000;
-    cursor: default;
-}
-
-#forgot-password {
-    color: #FFC947;
-    text-decoration: none;
+// .wrapper {
+//     position: relative;
+// }
+// #background-image {
+//     position: absolute;
+//     top: -10em;
+//     left: -10em;
+//     z-index: -999;
+// }
+// #login-screen {
+//     position: relative;
+//     border-color: #c4c4c4;
+//     border-radius: 10px;
+//     border-style: solid;
+//     border-width: thin;
+//     height: 90vh;
+//     margin: 2em;
+//     display: flex;
+//     overflow: hidden;
+// }
+// .login-screen-subparent {
+//     flex: 0 1 calc(50%);
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+// }
+// .welcome-screen {
+//     background-color: $main-navy;
+//     font-weight: initial;
+//     color: #fff;
+//     position: relative;
+//     -moz-border-radius: 10px 10px 0 0;
+// }
+// .welcome-screen p {
+//     font-size: xx-large;
+//     overflow: hidden;
+//     animation-name: text-animation;
+//     border-right: .15em solid #FFC947;
+//     /* The typwriter cursor */
+//     white-space: nowrap;
+//     /* Keeps the content on a single line */
+//     margin: 0 auto;
+//     /* Gives that scrolling effect as the typing happens */
+//     letter-spacing: .10em;
+//     /* Adjust as needed */
+//     animation: typing 1s steps(100, end), blink-caret 0.70s step-end infinite;
+// }
+// /* The typing effect */
+// @keyframes typing {
+//     from {
+//         width: 0
+//     }
+//     to {
+//         width: 20%
+//     }
+// }
+// /* The typewriter cursor effect */
+// @keyframes blink-caret {
+//     from,
+//     to {
+//         border-color: transparent
+//     }
+//     50% {
+//         border-color: #FFC947;
+//     }
+// }
+// #login-screen-box {
+//     display: flex;
+//     height: 80%;
+//     flex-direction: column;
+//     justify-content: center;
+// }
+// .login-screen-header {
+//     color: $main-teal;
+//     text-align: center;
+//     position: relative;
+// }
+// .login-screen-header::after {
+//     content: '';
+//     /* this sets the position and size of the pseudo-element */
+//     position: absolute;
+//     top: 55%;
+//     width: 2.5em;
+//     height: 0.3em;
+//     background-color: #FFC947;
+//     /* draw behind child elements */
+//     z-index: -1;
+// }
+// #login-screen-item-container {
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: space-evenly;
+//     height: 60%;
+//     position: relative;
+// }
+// .login-screen-item {
+//     display: flex;
+//     flex-direction: column;
+//     position: relative;
+//     margin-bottom: 0.8rem;
+// }
+// .showPasswordIcon {
+//     position: absolute;
+//     right: 0.2em;
+//     bottom: 0.3em;
+// }
+// .label-style {
+//     color: black;
+// }
+// .label-style-password-visibility {
+//     font-size: 0.8rem;
+// }
+// .textbox-style {
+//     margin-top: 0.5em;
+//     outline: none;
+//     /* transition: border .2s ease; */
+//     border-style: none;
+//     /* width: 100%; */
+//     height: 2.5em;
+//     border-radius: 5px;
+//     border: 1px solid $main-gray-dark;
+// }
+// .textbox-style::placeholder {
+//     font-size: x-small;
+//     font-weight: lighter;
+// }
+// .textbox-style:focus::placeholder {
+//     color: transparent;
+// }
+// #email {}
+// .button {
+//     background-color: $main-teal;
+//     border: none;
+//     border-radius: 5px;
+//     color: #fff;
+//     padding: 15px 32px;
+//     text-align: center;
+//     text-decoration: none;
+//     width: 20em;
+//     font-size: 1rem;
+//     cursor: pointer;
+// }
+// .button:hover {
+//     background-color: $main-teal;
+// }
+// .button:disabled,
+// .button[disabled] {
+//     border: 1px solid $main-gray-dark;
+//     background-color: $main-gray-light;
+//     color: #000;
+//     cursor: default;
+// }
+.forgot-password {
+    text-decoration: underline;
     font-size: 0.8rem;
     font-weight: initial;
     text-align: right;
-}
-
-// .submit-button {
-//     flex-direction: column;
-//     text-align: right;
-// }
-.ng-valid[required],
-.ng-valid.required {
-    border-left: 5px solid #42A948;
-    /* green */
-}
-
-.ng-invalid:not(form) {
-    border-left: 5px solid #a94442;
-    /* red */
-}
-
-.invalid-credentials {
-    color: red;
-    width: 20rem;
-    font-size: 0.7rem;
-    text-align: center;
-}
-
-.toggle-password-visibility-parent {
-    display: flex;
-    gap: 1em
-}
-
-.logo {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 20%);
-    img {
-        width: 60%;
-        margin-left: 16%;
+    a {
+        color: #222831;
     }
 }
 
-.login_outer_container {
-    background: #deecff;
+// // .submit-button {
+// //     flex-direction: column;
+// //     text-align: right;
+// // }
+// .ng-valid[required],
+// .ng-valid.required {
+//     border-left: 5px solid #42A948;
+//     /* green */
+// }
+// .ng-invalid:not(form) {
+//     border-left: 5px solid #a94442;
+//     /* red */
+// }
+// .invalid-credentials {
+//     color: red;
+//     width: 20rem;
+//     font-size: 0.7rem;
+//     text-align: center;
+// }
+// .toggle-password-visibility-parent {
+//     display: flex;
+//     gap: 1em
+// }
+.login_inner_container {
     height: 100vh;
-    .login_inner_container {
-        height: 80%;
-        background-image: linear-gradient(to right top, #fbf8f8, #fff7f1, #ffe4de, #ffe2e6, #ffe1ee, #fae1f3, #f4e1f7, #ede2fb, #e7e2fd, #e0e3fe, #d8e3ff, #d1e4ff);
-        width: 80%;
+    width: 100%;
+    .background-image-container {
+        background-image: url(../../assets/Images/TaeApril201.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        top: 10%;
+        height: 80vh;
+        left: 0;
+        width: 100vw;
+        opacity: 0.2;
+        mix-blend-mode: darken;
+    }
+    .logo {
+        position: absolute;
+        width: 96%;
+        height: 14%;
+        left: 0;
+        top: 1%;
+        align-items: center;
         display: flex;
-        box-shadow: rgb(0 0 0 / 35%) 2px 5px 20px 0px;
-        border-radius: 10px;
-        .sub_header_text {
-            color: #03c4cb;
-        }
-        .left_part {
-            width: 50%;
+        padding: 1rem;
+        div {
+            height: 100%;
             img {
-                margin-left: 30%;
-                margin-top: 14%;
+                height: 100%;
             }
         }
-        .right_part {
-            height: 54%;
-            width: 27%;
-            background: azure;
-            margin-top: 15%;
-            margin-left: 5%;
-            border-radius: 10px;
-            background: linear-gradient(45deg, #ffe1ee, #d1e4ff);
-            box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
-            .login_main {
-                 ::placeholder {
-                    color: gray;
-                    font-size: 0.8rem;
-                }
-                padding: 2rem;
-                .header_text {
-                    text-align: center;
-                    color: #3c3c3c;
-                    font-weight: 600;
-                    font-size: 1.1rem;
-                    margin-bottom: 2rem;
-                }
-                .submit-button {
-                    width: 100%;
-                    margin-top: 1rem;
-                    .button {
-                        width: 100%;
-                        padding: 7px 0;
-                    }
-                }
+        .app_header_name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #372B47;
+            margin-left: 1rem;
+            margin-top: 0.5rem;
+            .slogan {
+                font-size: 1rem;
+                color: #9B95A3;
+                font-family: "poppins";
             }
+        }
+        .initials_box {
+            font-size: 4rem;
+            margin-left: auto;
+            position: relative;
+            width: fit-content;
+            font-weight: 700;
+            .letter_d {
+                position: absolute;
+                right: 55%;
+                color: #48C6C5;
+                ;
+            }
+        }
+    }
+    .login_main {
+        width: 20%;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+         ::placeholder {
+            color: white;
+            font-size: 1rem;
+        }
+        .header_text {
+            text-align: left;
+            color: $main-gray-dark;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        .login-screen-item {
+            margin: 0 0 1rem 0;
+            input[type=email],
+            input[type=password] {
+                background: #7DC5C9;
+                border-radius: 10px;
+                margin-top: 0;
+                width: 100%;
+                padding: 1rem;
+                color: white;
+            }
+        }
+        .submit-button {
+            width: 100%;
+            margin-top: 1rem;
+            text-align: center;
+            .button {
+                width: 50%;
+                padding: 7px 0;
+                background: #222831;
+                border-radius: 15px;
+                color: white;
+                height: 2.5em;
+            }
+        }
+    }
+    .parent_brand_logo {
+        height: 10%;
+        position: absolute;
+        right: 3%;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        .sub_title {
+            margin-right: 10px;
+            color: #9FA5A5;
+            margin-top: 4px;
+        }
+        .parent_name {
+            font-size: 2.1rem;
+            font-weight: 600;
+            color: #7DC5C9;
+            letter-spacing: 1px;
+        }
+        .second_part {
+            color: #222831;
         }
     }
 }

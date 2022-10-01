@@ -7,19 +7,15 @@
 @import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
 @import '~ngx-toastr/toastr.css';
 @import '../src/app/variables.scss';
-$primary: #00ADB5;
-$navy: #0A1931;
-$white: #ffffff;
-$blue: #185ADB;
-$yellow: #FFC947;
-$gray: #EFEFEF;
-$goblin_green: #41924B;
 body {
     margin: 0;
+    overflow: hidden;
+    max-height: 95vh;
+    height: 95vh;
 }
 
 .btn .btn-primary {
-    background-color: $navy;
+    background-color: $main-navy;
 }
 
 input[type="text"],
@@ -31,10 +27,10 @@ input[type="password"] {
     transition: border .2s ease;
     height: 2.5em;
     border-radius: 5px;
-    border: 1px solid $main-navy-light;
+    border: 1px solid $main-gray-light;
     // background-color: #c4c4c430;   //commenting this as this makes normal field disabled, if you need this make it in respective component style
     &:focus {
-        border: thin solid blue;
+        border: thin solid $main-blue;
     }
 }
 
@@ -43,10 +39,10 @@ textarea {
     outline: none;
     transition: border .2s ease;
     border-radius: 5px;
-    border: 1px solid $main-navy-light;
+    border: 1px solid $main-gray-light;
     // background-color: #c4c4c430;   //commenting this as this makes normal field disabled, if you need this make it in respective component style
     &:focus {
-        border: thin solid blue;
+        border: thin solid $main-blue;
     }
 }
 
@@ -69,19 +65,19 @@ select {
     background-position: calc(100% - 20px) calc(1em), calc(100% - 17px) calc(1em), calc(100% - 2.5em) 0.3em;
     background-size: 5px 5px, 5px 5px, 1px 1.5em;
     background-repeat: no-repeat;
-    border: 1px solid $main-navy-light;
+    border: 1px solid -light;
     &:focus {
         outline: none;
     }
     &:focus-visible {
-        border: thin solid blue !important;
+        border: thin solid $main-blue !important;
     }
 }
 
 .formbuilder .btn-primary {
     background-color: $main-teal;
      :hover {
-        background-color: $main-teal-dark;
+        background-color: $main-teal;
     }
 }
 
@@ -113,4 +109,9 @@ small {
     b {
         color: $main-gray-dark;
     }
+}
+
+@font-face {
+    font-family: poppins;
+    src: url(assets/Poppins-Regular.ttf) format("truetype");
 }
