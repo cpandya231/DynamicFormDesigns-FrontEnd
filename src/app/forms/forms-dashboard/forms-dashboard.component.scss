@@ -4,7 +4,6 @@
     margin-top: 4rem;
     height: 100%;
     background: white;
-    display: flex;
     .btn-primary {
         word-spacing: 3px;
         position: absolute;
@@ -131,4 +130,8 @@ table::-webkit-scrollbar-thumb {
     .modal-dialog {
         max-width: 750px;
     }
+}
+
+.dashboard_container {
+    display: flex;
 }

@@ -7,6 +7,12 @@
 @import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
 @import '~ngx-toastr/toastr.css';
 @import '../src/app/variables.scss';
+$primary: #00ADB5;
+$navy: #0A1931;
+$white: #ffffff;
+$blue: #185ADB;
+$yellow: #FFC947;
+$gray: #EFEFEF;
 body {
     margin: 0;
     overflow: hidden;
@@ -27,7 +33,7 @@ input[type="password"] {
     transition: border .2s ease;
     height: 2.5em;
     border-radius: 5px;
-    border: 1px solid $main-gray-light;
+    border: 1px solid $main-navy-light;
     // background-color: #c4c4c430;   //commenting this as this makes normal field disabled, if you need this make it in respective component style
     &:focus {
         border: thin solid $main-blue;
@@ -39,7 +45,7 @@ textarea {
     outline: none;
     transition: border .2s ease;
     border-radius: 5px;
-    border: 1px solid $main-gray-light;
+    border: 1px solid $main-navy-light;
     // background-color: #c4c4c430;   //commenting this as this makes normal field disabled, if you need this make it in respective component style
     &:focus {
         border: thin solid $main-blue;
@@ -65,7 +71,7 @@ select {
     background-position: calc(100% - 20px) calc(1em), calc(100% - 17px) calc(1em), calc(100% - 2.5em) 0.3em;
     background-size: 5px 5px, 5px 5px, 1px 1.5em;
     background-repeat: no-repeat;
-    border: 1px solid -light;
+    border: 1px solid $main-navy-light;
     &:focus {
         outline: none;
     }
@@ -77,7 +83,7 @@ select {
 .formbuilder .btn-primary {
     background-color: $main-teal;
      :hover {
-        background-color: $main-teal;
+        background-color: $primary;
     }
 }
 
@@ -111,7 +117,6 @@ small {
     }
 }
 
-@font-face {
-    font-family: poppins;
-    src: url(assets/Poppins-Regular.ttf) format("truetype");
+.mat-drawer-content {
+    overflow: hidden !important;
 }

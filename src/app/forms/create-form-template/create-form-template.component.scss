@@ -47,10 +47,16 @@
         margin-bottom: 5px;
     }
     .builder-sidebar .btn {
-        background-color: $main-teal !important;
+        background-color: $main-teal;
     }
     .builder-sidebar_scroll {
         margin-top: 1rem;
+    }
+    .form-builder-group-header {
+        .btn {
+            background-color: #0F2938;
+            color: white;
+        }
     }
 }
 

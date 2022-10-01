@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { CreateDepartmentComponent } from './departments/create-department/create-department.component';
 import { DepartmentDashboardComponent } from './departments/department-dashboard/department-dashboard.component';
-import { DepartmentsComponent } from './departments/departments.component';
 import { EditDepartmentComponent } from './departments/edit-department/edit-department.component';
 
 import { CreateFormTemplateComponent } from './forms/create-form-template/create-form-template.component';
@@ -18,12 +17,11 @@ import { UserFormsInProgressDataComponent } from './forms/user-forms-in-progress
 import { UserFormsInProgressComponent } from './forms/user-forms-in-progress/user-forms-in-progress.component';
 import { LoginComponent } from './login/login.component';
 import { RolesComponent } from './roles/roles.component';
-import { MasterForms } from './services/utility/master.forms.constants';
 import { AuditTrailComponent } from './settings/audit-trail/audit-trail.component';
 import { SystemConfigComponent } from './settings/system-config/system-config.component';
 import { CreateUserComponent } from './users/create-user/create-user.component';
 import { UsersInfoComponent } from './users/users-info/users-info.component';
-import { UsersComponent } from './users/users.component';
+import { WatchTowerComponent } from './watch-tower/watch-tower.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 const routes: Routes = [
@@ -33,6 +31,10 @@ const routes: Routes = [
     path: 'formsDashboard',
     component: FormsDashboardComponent,
 
+  },
+  {
+    path: 'watchTower',
+    component: WatchTowerComponent
   },
   {
     path: 'formManagement/:formName/:formId/:workflowId',
@@ -55,7 +57,7 @@ const routes: Routes = [
   },
   {
     path: 'userFormsDashboard',
-    component: UserFormsDashboardComponent,
+
     children: [
 
       {
@@ -116,7 +118,10 @@ const routes: Routes = [
 
       },
 
-      { path: '', redirectTo: 'userForms', pathMatch: 'full' },
+      {
+        path: '',
+        component: UserFormsDashboardComponent,
+      }
     ]
   },
 

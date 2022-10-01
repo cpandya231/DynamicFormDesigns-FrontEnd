@@ -1,16 +1,60 @@
 @import "../../variables.scss";
+@import "../../users/users-info/users-info.component.scss";
+@import "../../forms/forms-dashboard/forms-dashboard.component.scss";
+.app-container {
+    display: flex;
+    padding: 2rem;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 4em;
+    height: 90vh;
+}
+
 .left-side-nav {
     width: 10em
 }
 
-.right-side-nav {
-    overflow: hidden;
-    height: 100vh;
+.form-card {
+    background-color: #DFF4F4;
+    height: 15em;
+    width: 15em;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1.2rem;
+    align-items: center;
+    justify-content: space-between;
+    border: 0.1em solid #22283120;
+    &:hover {
+        transform: scale(1.1);
+        transition: all .3s ease-in-out;
+        cursor: pointer;
+    }
+    .template-type {
+        height: 10em;
+    }
+}
+
+.form-name-container {
+    display: flex;
+    align-self: flex-end;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    width: 100%;
+    background-color: #0F2938;
+    color: #fff;
+    border-radius: 1em;
+    padding: 0.2em;
+    span {
+        word-break: break-all;
+    }
 }
 
 .active {
     background-color: $main-teal-light;
-    color: $main-teal-dark;
+    color: $primary;
     font-weight: initial;
     border-top-right-radius: 1em;
     border-bottom-right-radius: 1em;
@@ -20,14 +64,14 @@
 .mat-list-item {
     &:hover {
         background-color: $main-teal-light;
-        color: $main-teal-dark;
+        color: $primary;
         border-top-right-radius: 1em;
         border-bottom-right-radius: 1em;
         font-weight: normal;
     }
     &:focus {
         background-color: $main-teal-light;
-        color: $main-teal-dark;
+        color: $primary;
         border-top-right-radius: 1em;
         border-bottom-right-radius: 1em;
         font-weight: normal;

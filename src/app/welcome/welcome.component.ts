@@ -38,7 +38,7 @@ export class WelcomeComponent implements OnInit {
   }
 
   OpenEWatchTower(): void {
-
+    this.router.navigate(['/watchTower']);
   }
 
 }

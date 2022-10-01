@@ -1,11 +1,11 @@
 @import "../create-form-template/create-form-template.component.scss";
 @import "../../users/create-user/create-user.component.scss";
-
+@import "../user-forms-in-progress/user-forms-in-progress-data/user-forms-in-progress-data.component.scss";
 .app-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 80vh;
+    align-items: stretch;
 }
 
 .right-side-nav {
@@ -20,13 +20,21 @@
     align-self: flex-end;
     justify-content: flex-end;
     gap: 1em;
+    flex-direction: row;
+}
+
+.subheader {
+    display: flex;
+    flex-direction: column;
+    span {
+        color: #7DC5C9;
+    }
 }
 
 .comments-toggle {
     display: flex;
     align-items: center;
     flex-direction: row;
-
     label {
         font-size: 0.8rem;
         margin-top: 0.2em;
@@ -52,10 +60,14 @@ input[type=password] {
     margin-right: 3em;
     display: flex;
     cursor: pointer;
-
     &:hover {
         color: #00ADB5;
     }
+}
 
-
+::ng-deep app-fill-form .content {
+    .formio-component-form {
+        height: 60vh;
+        overflow: auto;
+    }
 }

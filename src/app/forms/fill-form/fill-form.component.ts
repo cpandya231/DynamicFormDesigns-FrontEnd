@@ -22,6 +22,7 @@ export class FillFormComponent implements OnInit {
   entryId: any;
   userRoles: any;
   toState: any;
+  currentState: any;
   sendBackState: any;
   isGettingSendBack: boolean = false;
   workflowId: any;
@@ -97,7 +98,7 @@ export class FillFormComponent implements OnInit {
         })
         if (entryData.length > 0) {
           this.processToHandleExistingEntry(entryData, entryMetaData, this.transitionData);
-          this.showComments = true;
+
         } else {
           if (this.entryId > 0) {
             alert(`No Valid entry found for entryId ${this.entryId}`);
@@ -151,19 +152,19 @@ export class FillFormComponent implements OnInit {
 
   private processToHandleExistingEntry(entryData: any, entryMetaData: any, transitionData: IGetWorkflowStateTransitionsModel) {
     let entry = entryData[0].data;
-    const currentState = transitionData.states.find(state => state.name === entry.state);
+    this.currentState = transitionData.states.find(state => state.name === entry.state);
     let requiredTransition = transitionData.transitions.
       find(transition => (transition.fromState.name == entry.state && !transition.sendBackTransition)
         && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
     if (null != requiredTransition) {
       this.toState = requiredTransition.toState.name;
-      this.sendToButtonLabel = currentState?.label;
+      this.sendToButtonLabel = this.currentState?.label;
       this.sendToEndState = requiredTransition.toState.endState;
       let sendBackTransition = transitionData.transitions.
         find(transition => (transition.fromState.name == entry.state && transition.sendBackTransition)
           && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
       this.sendBackState = sendBackTransition?.toState.name;
-    } else if (currentState?.endState && this.IsMasterForm) {
+    } else if (this.currentState?.endState && this.IsMasterForm) {
       this.processToHandleNewEntry(this.transitionData);
     } else {
       this.toState = "no_access";
@@ -271,7 +272,7 @@ export class FillFormComponent implements OnInit {
 
   close(delay: number) {
     setTimeout(() => {                           // <<<---using ()=> syntax
-      this._location.back();
+      this.back();
     }, delay);
   }
 
@@ -359,5 +360,8 @@ export class FillFormComponent implements OnInit {
 
 
     doc.save('tableToPdf.pdf');
+  }
+  back() {
+    this._location.back();
   }
 }

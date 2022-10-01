@@ -9,7 +9,7 @@
         <div class="app_header_name">Flux-Intelligent</div>
         <div class="home_icon">
             <img src="../../assets/Images/home.png" [routerLinkActive]="['active']" routerLink="welcome" />
-            <img src="../../assets/Images/settings.png" routerLink="../settingsParent/system-config" />
+            <img src="../../assets/Images/settings.png" *ngIf="isAdmin" routerLink="../settingsParent/system-config" />
         </div>
         <!-- Toggle button -->
 

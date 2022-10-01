@@ -1,24 +1,35 @@
 @import "../user-forms-in-progress.component.scss";
-.form_entries {
-    width: 92vw;
-    height: 93vh;
-    .table {
-        max-width: 100%;
-        max-height: 80vh;
-        thead {
-            th {
-                padding: 0.5rem 1rem;
-            }
-        }
-        tbody {
-            vertical-align: middle;
-            tr {
-                td {
-                    padding: 0.5rem 1rem;
-                }
-            }
-        }
-    }
+// .form_entries {
+//     width: 92vw;
+//     height: 93vh;
+//     .table {
+//         max-width: 100%;
+//         max-height: 80vh;
+//         thead {
+//             th {
+//                 padding: 0.5rem 1rem;
+//             }
+//         }
+//         tbody {
+//             vertical-align: middle;
+//             tr {
+//                 td {
+//                     padding: 0.5rem 1rem;
+//                 }
+//             }
+//         }
+//     }
+// }
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-name {
+    display: flex;
+    align-items: center;
+    gap: 1em;
 }
 
 .cta-buttons {
@@ -82,7 +93,8 @@
 
 .table {
     margin-top: 1em;
-    .icon_column {
+    width: auto !important;
+    td {
         width: 6rem;
         padding: 0.5rem 1rem;
         vertical-align: middle;
@@ -94,4 +106,35 @@
 
 .state {
     font-weight: bold;
+    color: red;
+}
+
+.FinalState {
+    font-weight: bold;
+    color: green;
+}
+
+.empty-header {
+    background: #fff;
+    border-bottom-color: #fff !important;
+}
+
+.table-icons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 8em;
+    span {
+        width: 1em;
+    }
+}
+
+.content {
+    margin-top: 2em;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
 }
