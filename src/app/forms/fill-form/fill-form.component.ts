@@ -79,14 +79,20 @@ export class FillFormComponent implements OnInit {
       let transitionsObservable = this.formService.GetWorkflowStatesTransitions(this.workflowId);
       let entryDataObservable = this.formService.GetSpecificLogEntry(this.formId, this.entryId);
       let entryMetaDataObservable = this.formService.LogEntryMetadata(this.formId, this.entryId);
+      let userDataObservable = this.userService.getUserByUsername(localStorage.getItem("username"));
       this.authService.getAccessToken().asObservable().subscribe(authData => {
         const token = authData;
         Object.assign(this.CurrentForm, { 'Authorization': `Bearer ${token}` })
       });
-      combineLatest([transitionsObservable, entryDataObservable, entryMetaDataObservable]).subscribe(items => {
+      combineLatest([transitionsObservable, entryDataObservable, entryMetaDataObservable, userDataObservable]).subscribe(items => {
         this.transitionData = items[0];
         let entryData = items[1];
         let entryMetaData = items[2];
+        let userData = items[3];
+        Object.assign(this.CurrentForm, {
+          department: userData.department.name,
+          site: userData.department.site
+        });
         entryMetaData.forEach((em: any) => {
           let emTranstions = this.transitionData.transitions.find((tr: any) => tr.toState.name == em["data"].state);
           em["data"]["fromState"] = emTranstions["fromState"]["label"];
@@ -142,13 +148,9 @@ export class FillFormComponent implements OnInit {
         });
       });
     });
-    this.userService.getUserByUsername(localStorage.getItem("username")).subscribe(userData => {
-      Object.assign(this.CurrentForm, {
-        department: userData.department.name,
-        site: userData.department.site
-      });
-      this.IsFormLoaded = true;
-    });
+    this.IsFormLoaded = true;
+
+
   }
 
   private processToHandleExistingEntry(entryData: any, entryMetaData: any, transitionData: IGetWorkflowStateTransitionsModel) {
@@ -213,13 +215,7 @@ export class FillFormComponent implements OnInit {
     });
 
 
-    this.userService.getUserByUsername(localStorage.getItem("username")).subscribe(userData => {
-      Object.assign(this.CurrentForm, {
-        department: userData.department.name,
-        site: userData.department.site
-      });
-      this.IsFormLoaded = true;
-    });
+    this.IsFormLoaded = true;
     this.toggleCommentsButton = true;
   }
 
