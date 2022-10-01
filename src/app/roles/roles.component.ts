@@ -7,6 +7,7 @@ import { RoleService } from '../services/roles.service';
 
 import { CreateRoleComponent } from './create-role/create-role.component';
 import { IRoleItem } from './role-item-model';
+import { Location } from '@angular/common'
 
 
 export type SortColumn = keyof IRoleItem | '';
@@ -30,7 +31,8 @@ export class RolesComponent implements OnInit {
   filter = new FormControl('');
   private modalRef: MdbModalRef<CreateRoleComponent> | null = null;
 
-  constructor(private modalService: MdbModalService, private roleService: RoleService) { }
+  constructor(private modalService: MdbModalService, private roleService: RoleService,
+    private location: Location) { }
 
   roles$!: Observable<IRoleItem[]>;
   ROLES!: IRoleItem[];
@@ -114,4 +116,7 @@ export class RolesComponent implements OnInit {
     }
   }
 
+  back() {
+    this.location.back();
+  }
 }

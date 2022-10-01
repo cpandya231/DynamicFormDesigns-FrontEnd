@@ -14,6 +14,7 @@ import { Location } from '@angular/common'
   styleUrls: ['./user-forms-in-progress-data.component.scss']
 })
 export class UserFormsInProgressDataComponent implements OnInit {
+  ShowfilteredEntries: boolean;
   currentPage = 1;
   pageSize = 5;
   count = 80;
@@ -34,8 +35,8 @@ export class UserFormsInProgressDataComponent implements OnInit {
   isMasterForm = false;
   finalStateName: any;
   PendingEntries: any;
-  ShowfilteredEntries: boolean = false;
   finalState: any;
+  showPending = false;
   @ViewChild('pdfTable', { static: false }) pdfTable: ElementRef;
   constructor(private formsService: FormsService,
     private authService: AuthService,
@@ -84,6 +85,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
         element["page"] = Math.floor(index / this.pageSize);
         return element;
       }).filter((el: any) => el["page"] == this.currentPage - 1);
+      this.copyLogEntries = [...this.logEntries];
       this.columns = this.defaultFirstColumns.concat(this.visibleColumns).concat(this.defaultLastColumns);
       this.columns = this.columns.filter(col => col);
       this.isDataLoaded = true;
@@ -143,6 +145,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
     })
   }
 
+
   SortPendingItems() {
     this.logEntries = this.PendingEntries;
     this.ShowfilteredEntries = true;
@@ -152,7 +155,17 @@ export class UserFormsInProgressDataComponent implements OnInit {
     this.logEntries = this.copyLogEntries;
     this.ShowfilteredEntries = false;
   }
+  togglePendingAll(event: any) {
+    console.log('toggle', event.checked);
+    this.showPending = event.checked;
+    if (this.showPending) {
+      this.logEntries = this.PendingEntries;
+    } else {
+      this.logEntries = this.copyLogEntries;
+    }
 
+
+  }
   protected transformStateTransitions(data: any, statusData: any, workflowLinks: any): any {
     return data.states.map((state: any) => {
       const toStateName = (data.transitions.find((link: any) => (link.fromState.id === state.id) && !link.sendBackTransition))?.toState.name;
@@ -161,8 +174,8 @@ export class UserFormsInProgressDataComponent implements OnInit {
         id: state.id,
         label: state.name,
         dimension: {
-          width: 150,
-          height: 50
+          width: 170,
+          height: 70
         },
         createdBy: updateDetails ? `${updateDetails.created_by} completed at ` : toStateName ? 'Pending' : '',
         timeStamp: updateDetails ? `${updateDetails.log_create_dt}` : ''
