@@ -201,7 +201,8 @@ export class CreateFormTemplateComponent implements OnInit {
 
     this.userService.getUserByUsername(localStorage.getItem("username")).subscribe(userData => {
         Object.assign(this.CurrentForm, {
-          department: userData.department
+          department: userData.department.name,
+          site: userData.department.site
         });
         
     });
