@@ -71,11 +71,6 @@ export class FillFormComponent implements OnInit {
     this.userRoles = this.authService.getRoles();
     this.IsMasterForm = state.isMasterForm;
 
-    this.userService.getUserByUsername(localStorage.getItem("username")).subscribe(userData => {
-      Object.assign(this.CurrentForm, {
-        department: userData.department
-      })
-    });
 
     this.formService.GetFormTemplate(this.formName, this.formId).subscribe(data => {
       this.CurrentForm.components = JSON.parse(data.template).components;
@@ -147,7 +142,13 @@ export class FillFormComponent implements OnInit {
         });
       });
     });
-    this.IsFormLoaded = true;
+    this.userService.getUserByUsername(localStorage.getItem("username")).subscribe(userData => {
+      Object.assign(this.CurrentForm, {
+        department: userData.department.name,
+        site: userData.department.site
+      });
+      this.IsFormLoaded = true;
+    });
   }
 
   private processToHandleExistingEntry(entryData: any, entryMetaData: any, transitionData: IGetWorkflowStateTransitionsModel) {
@@ -212,7 +213,13 @@ export class FillFormComponent implements OnInit {
     });
 
 
-    this.IsFormLoaded = true;
+    this.userService.getUserByUsername(localStorage.getItem("username")).subscribe(userData => {
+      Object.assign(this.CurrentForm, {
+        department: userData.department.name,
+        site: userData.department.site
+      });
+      this.IsFormLoaded = true;
+    });
     this.toggleCommentsButton = true;
   }
 
