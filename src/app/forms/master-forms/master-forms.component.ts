@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormsService } from 'src/app/common/services/forms.service';
 import { SettingsService } from 'src/app/services/settings.service';
-
+import { Location } from '@angular/common'
 @Component({
   selector: 'app-master-forms',
   templateUrl: './master-forms.component.html',
@@ -17,6 +17,7 @@ export class MasterFormsComponent implements OnInit {
   DATE_FORMAT: string;
   constructor(private formsService: FormsService,
     private router: Router,
+    private location: Location,
     private settingsService: SettingsService,
     private route: ActivatedRoute,) { }
 
@@ -31,6 +32,9 @@ export class MasterFormsComponent implements OnInit {
   }
 
   SeeEntries(form: any) {
-    this.router.navigate(['./formsInProgressData', form.id, form.name, form.workflow.id, {isMasterForm: true}], { relativeTo: this.route });
+    this.router.navigate(['./formsInProgressData', form.id, form.name, form.workflow.id, { isMasterForm: true }], { relativeTo: this.route });
+  }
+  back() {
+    this.location.back();
   }
 }

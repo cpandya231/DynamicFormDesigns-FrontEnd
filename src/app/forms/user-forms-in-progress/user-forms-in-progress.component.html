@@ -17,8 +17,8 @@
         </div>
         <div class="user-forms-in-progress-cards">
             <div *ngFor="let form of FormTemplates ;let indexOfelement=index;" class="form-card"
-                (click)="SeeEntries(form)" mat-raised-button matBadge="{{indexOfelement+1}}" matBadgeColor="warn"
-                matBadgeHidden="{{indexOfelement%3==0?false:true}}">
+                (click)="SeeEntries(form)" mat-raised-button matBadge="{{form.id+1}}" matBadgeColor="warn"
+                matBadgeHidden="{{(form.id+1)%3==0?false:true}}">
                 <div></div>
                 <div>
                     <img src="../../../assets/form-template-icons/icon-{{(form.id%10)+1}}.svg">

@@ -18,80 +18,74 @@
         <div class="cta-buttons">
             <div class="filters">
 
-                <div class="filter-menu">
-                    <button mat-button [matMenuTriggerFor]="menu" class="mat-button">Filters
-                        <mat-icon class="material-icons-outlined">filter_alt</mat-icon>
-
-                    </button>
-
-                    <mat-menu #menu="matMenu">
-                        <div class="mat-menu">
-
-                            <div class="filter-choice">
-                                <input type="radio" id="filter-by-all" (change)="handleChange()" [value]="'all'" [(ngModel)]="selectedChoice">
-                                <label for="filter-by-all" class="label-filter-checkbox">All</label>
-                            </div>
-                            <div class="filter-choice">
-                                <input type="radio" id="filter-by-username" (change)="handleChange()" [value]="'username'" [(ngModel)]="selectedChoice">
-                                <label for="filter-by-username" class="label-filter-checkbox">Submitted by me</label>
-                            </div>
-                            <div class="filter-choice">
-                                <input type="radio" id="filter-by-department" (change)="handleChange()" [value]="'department'" [(ngModel)]="selectedChoice">
-                                <label for=" filter-by-department" class="label-filter-checkbox">Department</label>
-                            </div>
-
-
-                        </div>
-                    </mat-menu>
-
+                <div class="form-select-parent">
+                    <select class="form-select">
+                        <option value="">Choose Column Name </option>
+                        <option *ngFor="let col of columns" [ngValue]="col">
+                            {{col}}
+                        </option>
+                    </select>
                 </div>
+                <input class="search-box" type="text" placeholder="Search">
             </div>
 
+            <div class="sub-cta-buttons">
+                <div class="comments-toggle">
+                    <mat-slide-toggle color="primary">
+                        Pending Tasks ({{formId+1}})
+                    </mat-slide-toggle>
+                </div>
 
-            <div class="submit-button" *ngIf="enableCreateNewEntry">
-                <button type="submit" class="button" (click)="createNewEntry()">Create New Entry
-                    <img src="../../../assets/right-arrow.svg">
 
-                </button>
+
+                <div class="submit-button" *ngIf="enableCreateNewEntry">
+                    <button type="submit" class="button" (click)="createNewEntry()">Create New Entry
+                        <img src="../../../assets/right-arrow.svg">
+
+                    </button>
+                </div>
+
             </div>
         </div>
 
-        <table class="table" *ngIf="isDataLoaded" #pdfTable>
-            <thead>
-                <tr>
-                    <th colspan="1" class="empty-header"></th>
-                    <th scope="col" *ngFor="let col of columns">{{col}}</th>
+        <div class="table-parent">
+            <table class="table" *ngIf="isDataLoaded" #pdfTable>
+                <thead>
+                    <tr>
+                        <th colspan="1" class="empty-header"></th>
+                        <th scope="col" *ngFor="let col of columns">{{col}}</th>
 
-                </tr>
+                    </tr>
 
-            </thead>
-            <tbody>
-                <tr *ngFor="let entry of logEntries | paginate : {
+                </thead>
+                <tbody>
+                    <tr *ngFor="let entry of logEntries | paginate : {
                     itemsPerPage: pageSize,
                     currentPage: currentPage,
                     totalItems: count
                   }; 
             let i = index">
-                    <div class="table-icons">
-                        <span title="Edit" class="fas fa-edit" (click)="FillForm(entry.data['id'])"></span>
-                        <span title="Status" class="fas fa-hourglass-half" (click)="ShowProgress(entry.data['id'])"></span>
-                        <span title="Report" class="fas fa-file-text" (click)="viewAuditReport(entry.data['id'])"></span>
-                    </div>
+                        <div class="table-icons">
+                            <span title="Edit" class="fas fa-edit" (click)="FillForm(entry.data['id'])"></span>
+                            <span title="Status" class="fas fa-hourglass-half" (click)="ShowProgress(entry.data['id'])"></span>
+                            <span title="Report" class="fas fa-file-text" (click)="viewAuditReport(entry.data['id'])"></span>
+                        </div>
 
 
 
-                    <td *ngFor="let col of columns" class="{{col}} {{(col=='state') && (entry.data[col]==finalStateName?'FinalState':'')?'FinalState':''}}">
-                        {{entry.data[""+col]}}</td>
+                        <td *ngFor="let col of columns" class="{{col}} {{(col=='state') && (entry.data[col]==finalStateName?'FinalState':'')?'FinalState':''}}">
+                            {{entry.data[""+col]}}</td>
 
 
-                </tr>
-                <tr *ngIf="!logEntries?.length" class="no_data_message">
-                    <td [attr.colspan]="(columns.length)+2">
-                        No Entries Available
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    </tr>
+                    <tr *ngIf="!logEntries?.length" class="no_data_message">
+                        <td [attr.colspan]="(columns.length)+2">
+                            No Entries Available
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <div class="pagination-controls">
             <pagination-controls previousLabel="Prev" nextLabel="Next" [responsive]="true" [maxSize]="5" (pageChange)="handlePageChange($event)">
