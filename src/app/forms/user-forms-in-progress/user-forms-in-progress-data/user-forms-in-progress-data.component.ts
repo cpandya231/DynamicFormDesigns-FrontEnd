@@ -14,6 +14,7 @@ import { Location } from '@angular/common'
   styleUrls: ['./user-forms-in-progress-data.component.scss']
 })
 export class UserFormsInProgressDataComponent implements OnInit {
+  ShowfilteredEntries: boolean;
   currentPage = 1;
   pageSize = 5;
   count = 80;
@@ -61,7 +62,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
     let transitionsObservable = this.formsService.GetWorkflowStatesTransitions(this.workflowId);
     combineLatest([logEntriesObservable, transitionsObservable]).subscribe(items => {
       let entryData = items[0];
-      let transitionData= items[1];
+      let transitionData = items[1];
       this.finalState = transitionData.states.find((state: IWorkflowStateModel) => state.endState == true);
       this.PendingEntries = entryData.filter((entry: any) => entry.data.state !== this.finalState?.name);
       this.getLogEntries(entryData, transitionData);
@@ -144,6 +145,16 @@ export class UserFormsInProgressDataComponent implements OnInit {
     })
   }
 
+
+  SortPendingItems() {
+    this.logEntries = this.PendingEntries;
+    this.ShowfilteredEntries = true;
+  }
+
+  ShowAllItems() {
+    this.logEntries = this.copyLogEntries;
+    this.ShowfilteredEntries = false;
+  }
   togglePendingAll(event: any) {
     console.log('toggle', event.checked);
     this.showPending = event.checked;
@@ -152,8 +163,9 @@ export class UserFormsInProgressDataComponent implements OnInit {
     } else {
       this.logEntries = this.copyLogEntries;
     }
-  }
 
+
+  }
   protected transformStateTransitions(data: any, statusData: any, workflowLinks: any): any {
     return data.states.map((state: any) => {
       const toStateName = (data.transitions.find((link: any) => (link.fromState.id === state.id) && !link.sendBackTransition))?.toState.name;

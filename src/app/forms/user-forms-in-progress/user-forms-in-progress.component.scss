@@ -1,6 +1,21 @@
 @import "../user-forms-dashboard/user-forms-dashboard.component.scss";
 
 
+.forms_dashboard {
+    margin-top: 4em;
+    padding: 2% 5% 5% 5%;
+
+}
+
+.logo_container {
+    height: 80%;
+    padding: 1.5rem;
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
+}
 
 .filters-and-button {
     display: flex;
@@ -13,6 +28,7 @@
     display: flex;
     flex-direction: column;
     margin-top: 2em;
+    padding: 0 5% 5% 5%;
 }
 
 .user-forms-in-progress-cards {
