@@ -9,7 +9,7 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Flux Intelligent';
+  title = 'Flux-Intelligent';
   showNavbar = true;
   showNavbarItems = false;
   isAdmin = false;
