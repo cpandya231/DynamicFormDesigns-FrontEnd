@@ -1,4 +1,5 @@
 @import '../variables.scss';
+
 // .wrapper {
 //     position: relative;
 // }
@@ -156,6 +157,7 @@
     font-size: 0.8rem;
     font-weight: initial;
     text-align: right;
+
     a {
         color: #222831;
     }
@@ -187,6 +189,7 @@
 .login_inner_container {
     height: 100vh;
     width: 100%;
+
     .background-image-container {
         background-image: url(../../assets/Images/TaeApril201.jpg);
         background-repeat: no-repeat;
@@ -199,6 +202,7 @@
         opacity: 0.2;
         mix-blend-mode: darken;
     }
+
     .logo {
         position: absolute;
         width: 96%;
@@ -208,30 +212,36 @@
         align-items: center;
         display: flex;
         padding: 1rem;
+
         div {
             height: 100%;
+
             img {
                 height: 100%;
             }
         }
+
         .app_header_name {
             font-size: 1.5rem;
             font-weight: 700;
             color: #372B47;
             margin-left: 1rem;
             margin-top: 0.5rem;
+
             .slogan {
                 font-size: 1rem;
                 color: #9B95A3;
                 font-family: "poppins";
             }
         }
+
         .initials_box {
             font-size: 4rem;
             margin-left: auto;
             position: relative;
             width: fit-content;
             font-weight: 700;
+
             .letter_d {
                 position: absolute;
                 right: 55%;
@@ -240,15 +250,18 @@
             }
         }
     }
+
     .login_main {
         width: 20%;
         position: absolute;
         top: 20%;
         left: 20%;
-         ::placeholder {
+
+        ::placeholder {
             color: white;
             font-size: 1rem;
         }
+
         .header_text {
             text-align: left;
             color: $main-gray-dark;
@@ -256,8 +269,10 @@
             font-size: 1.1rem;
             margin-bottom: 1.5rem;
         }
+
         .login-screen-item {
             margin: 0 0 1rem 0;
+
             input[type=email],
             input[type=password] {
                 background: #7DC5C9;
@@ -268,10 +283,12 @@
                 color: white;
             }
         }
+
         .submit-button {
             width: 100%;
             margin-top: 1rem;
             text-align: center;
+
             .button {
                 width: 50%;
                 padding: 7px 0;
@@ -282,6 +299,7 @@
             }
         }
     }
+
     .parent_brand_logo {
         height: 10%;
         position: absolute;
@@ -289,17 +307,20 @@
         bottom: 0;
         display: flex;
         align-items: center;
+
         .sub_title {
             margin-right: 10px;
             color: #9FA5A5;
             margin-top: 4px;
         }
+
         .parent_name {
             font-size: 2.1rem;
             font-weight: 600;
             color: #7DC5C9;
             letter-spacing: 1px;
         }
+
         .second_part {
             color: #222831;
         }

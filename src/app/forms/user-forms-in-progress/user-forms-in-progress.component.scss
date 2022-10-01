@@ -1,8 +1,6 @@
 @import "../user-forms-dashboard/user-forms-dashboard.component.scss";
-.form-card {
-    width: 10em;
-    height: 10em;
-}
+
+
 
 .filters-and-button {
     display: flex;
@@ -22,31 +20,40 @@
     gap: 2rem;
     flex-wrap: wrap;
     margin-top: 4em;
+
 }
 
 .search-box {
     // background-color: #DFF4F4;
     text-align: center;
     border-radius: 1em;
-    background-color: #DFF4f4;
     color: #7DC5C9;
     border: thin solid #7DC5C9;
     margin: 0em;
+
     &:focus {
         border: thin solid #222831;
         color: #222831;
     }
+
     &::placeholder {
         color: #7DC5C9;
         opacity: 0.5;
+
+
     }
+
+
     &:-ms-input-placeholder {
         /* Internet Explorer 10-11 */
         color: #7DC5C9;
+
     }
+
     &::-ms-input-placeholder {
         /* Microsoft Edge */
         color: #7DC5C9;
+
     }
 }
 
@@ -61,8 +68,10 @@
     font-weight: bold;
     border: 0.1em solid #22283120;
     height: 2.5em;
+
     &:hover {
         cursor: pointer;
         border: 0.1em solid #222831;
+
     }
 }
