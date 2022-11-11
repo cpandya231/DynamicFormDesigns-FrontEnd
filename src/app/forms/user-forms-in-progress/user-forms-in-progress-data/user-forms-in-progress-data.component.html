@@ -2,14 +2,14 @@
 
     <div class="header">
         <div class="header-name">
-            <img src="../../../assets/form-template-icons/icon-{{(formId%10)+1}}.svg">
+            <img src="assets/form-template-icons/icon-{{(formId%10)+1}}.svg">
             <h2>
 
                 {{formName}}
             </h2>
         </div>
         <div class="back-button" (click)="back()">
-            <img src="../../../assets/left-arrow.svg"> Back
+            <img src="assets/left-arrow.svg"> Back
         </div>
     </div>
 
@@ -40,7 +40,7 @@
 
                 <div class="submit-button" *ngIf="enableCreateNewEntry">
                     <button type="submit" class="button" (click)="createNewEntry()">Create New Entry
-                        <img src="../../../assets/right-arrow.svg">
+                        <img src="assets/right-arrow.svg">
 
                     </button>
                 </div>

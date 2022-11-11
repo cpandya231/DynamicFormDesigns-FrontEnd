@@ -10,7 +10,7 @@
                 <input class="search-box" type="text" placeholder="Search Log Name">
             </div>
             <div class="back-button" (click)="back()">
-                <img src="../../../assets/left-arrow.svg">
+                <img src="assets/left-arrow.svg">
                 Back to eLogbook Home
             </div>
 
@@ -21,10 +21,10 @@
                 matBadgeHidden="{{indexOfelement%3==0?false:true}}">
                 <div></div>
                 <div>
-                    <img src="../../../assets/form-template-icons/icon-{{(form.id%10)+1}}.svg">
+                    <img src="assets/form-template-icons/icon-{{(form.id%10)+1}}.svg">
                 </div>
                 <div class="form-name-container">
-                    <span>{{form.name}}</span><img src="../../../assets/right-arrow.svg">
+                    <span>{{form.name}}</span><img src="assets/right-arrow.svg">
                 </div>
             </div>
             <div *ngIf="!FormTemplates?.length" class="no_data_message">
