@@ -1,0 +1,27 @@
+.type_column {
+    width: 10rem;
+    border: 1px solid gray;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 30px;
+}
+
+td {
+    border: 1px solid gray;
+    padding: 5px 10px;
+}
+
+.header {
+    margin-top: 1rem;
+    border-bottom: 1px solid gray;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.inbound_rules_box {
+    border: 1px solid lightgray;
+    margin: 1rem;
+    padding: 1rem;
+}

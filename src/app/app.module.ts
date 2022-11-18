@@ -70,6 +70,7 @@ import { DisplayWorkflowStatusComponent } from './common/display-workflow-status
 import { MasterFormsComponent } from './forms/master-forms/master-forms.component';
 import { EntryAuditDataComponent } from './forms/entry-audit-data/entry-audit-data.component';
 import { WatchTowerComponent } from './watch-tower/watch-tower.component';
+import { SecurityConfigComponent } from './settings/system-config/security-config/security-config.component';
 
 
 @NgModule({
@@ -113,6 +114,7 @@ import { WatchTowerComponent } from './watch-tower/watch-tower.component';
     MasterFormsComponent,
     EntryAuditDataComponent,
     WatchTowerComponent,
+    SecurityConfigComponent,
 
 
   ],

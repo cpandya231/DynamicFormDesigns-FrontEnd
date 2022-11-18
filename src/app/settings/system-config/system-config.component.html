@@ -2,26 +2,24 @@
 
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <button class="nav-link" [ngClass]="{'active': IsUsernameTabVisible}" id="username-tab" type="button"
-                (click)="LoadUsernameScreen()">Username</button>
+            <button class="nav-link" [ngClass]="{'active': IsUsernameTabVisible}" id="username-tab" type="button" (click)="LoadUsernameScreen()">Username</button>
         </li>
         <li class="nav-item">
-            <button class="nav-link" [ngClass]="{'active': IsPasswordTabVisible}" id="password-tab" type="button"
-                (click)="LoadPasswordScreen()">Password</button>
+            <button class="nav-link" [ngClass]="{'active': IsPasswordTabVisible}" id="password-tab" type="button" (click)="LoadPasswordScreen()">Password</button>
         </li>
 
         <li class="nav-item">
-            <button class="nav-link" [ngClass]="{'active': IsSessionTabVisible}" id="session-tab" type="button"
-                (click)="LoadSessionScreen()">Session</button>
+            <button class="nav-link" [ngClass]="{'active': IsSessionTabVisible}" id="session-tab" type="button" (click)="LoadSessionScreen()">Session</button>
         </li>
         <li class="nav-item">
-            <button class="nav-link" [ngClass]="{'active': IsSmtpTabVisible}" id="smpt-tab" type="button"
-                (click)="LoadSmtpScreen()">SMTP</button>
+            <button class="nav-link" [ngClass]="{'active': IsSmtpTabVisible}" id="smpt-tab" type="button" (click)="LoadSmtpScreen()">SMTP</button>
         </li>
 
         <li class="nav-item">
-            <button class="nav-link" [ngClass]="{'active': IsGlobalTabVisible}" id="global-tab" type="button"
-                (click)="LoadGlobalScreen()">Global</button>
+            <button class="nav-link" [ngClass]="{'active': IsGlobalTabVisible}" id="global-tab" type="button" (click)="LoadGlobalScreen()">Global</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [ngClass]="{'active': IsSecurityTabVisible}" id="security-tab" type="button" (click)="LoadSecurityScreen()">Security</button>
         </li>
     </ul>
     <div class="tab-content" *ngIf="isDataLoaded">
@@ -56,6 +54,9 @@
             </app-global-config>
         </div>
 
+        <div id="security" *ngIf="IsSecurityTabVisible">
+            <app-security-config></app-security-config>
+        </div>
 
     </div>
 

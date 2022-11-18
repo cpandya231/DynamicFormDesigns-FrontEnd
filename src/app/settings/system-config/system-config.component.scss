@@ -1,5 +1,4 @@
 @import "../../users/users-info/users-info.component.scss";
-
 .app-container {
     padding-top: 0em;
 }
@@ -12,10 +11,8 @@
 
 .nav-tabs {
     justify-content: space-evenly;
-    margin: 0em 20em;
+    margin: 0em 10em;
     border-bottom: 1px solid #EFEFEF;
-
-
 }
 
 .nav-link {
@@ -23,7 +20,6 @@
         background-color: #fff;
         border-bottom: 1px solid #EFEFEF;
         color: #1266f1;
-
     }
 }
 

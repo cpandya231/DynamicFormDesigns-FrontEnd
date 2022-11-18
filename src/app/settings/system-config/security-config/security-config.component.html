@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="inbound_rules_box">
+        <div class="header">Inbound Rules</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Protocol</th>
+                    <th>Port range</th>
+                    <th></th>
+                    <th>Description - optional</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="type_column">
+                        <mat-select value="customTCP">
+                            <mat-option value="customTCP">Custom TCP</mat-option>
+                            <mat-option value="allTraffic">All traffic </mat-option>
+                            <mat-option value="customUDP">Custom UDP</mat-option>
+                            <mat-option value="customProtocol">Custom Protocol</mat-option>
+                            <mat-option value="allTCP">All TCP</mat-option>
+                        </mat-select>
+                    </td>
+                    <td>
+                        TCP
+                    </td>
+                    <td>0</td>
+                    <td>138.199.37.94/32</td>
+                    <td>GoodAccess GW</td>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-select value="allTraffic">
+                            <mat-option value="customTCP">Custom TCP</mat-option>
+                            <mat-option value="allTraffic">All traffic </mat-option>
+                            <mat-option value="customUDP">Custom UDP</mat-option>
+                            <mat-option value="customProtocol">Custom Protocol</mat-option>
+                            <mat-option value="allTCP">All TCP</mat-option>
+                        </mat-select>
+                    </td>
+                    <td>
+                        All
+                    </td>
+                    <td>All</td>
+                    <td>sg-09fae48eeaecb600d</td>
+                    <td>AWS cloud access</td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="add_btn">Add Rule</button>
+    </div>
+</div>

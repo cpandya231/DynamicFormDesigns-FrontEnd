@@ -19,6 +19,7 @@ export class SystemConfigComponent implements OnInit {
   IsSessionTabVisible: any = false;
   IsSmtpTabVisible: any = false;
   IsGlobalTabVisible: any = false;
+  IsSecurityTabVisible: any = false;
   constructor(private settingService: SettingsService,) {
 
   }
@@ -61,12 +62,18 @@ export class SystemConfigComponent implements OnInit {
     this.IsGlobalTabVisible = true;
   }
 
+  LoadSecurityScreen() {
+    this.hideAll();
+    this.IsSecurityTabVisible = true;
+  }
+
   hideAll() {
     this.IsUsernameTabVisible = false;
     this.IsPasswordTabVisible = false;
     this.IsSessionTabVisible = false;
     this.IsSmtpTabVisible = false;
     this.IsGlobalTabVisible = false;
+    this.IsSecurityTabVisible = false;
   }
 
 
