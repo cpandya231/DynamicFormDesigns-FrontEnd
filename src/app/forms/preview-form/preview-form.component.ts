@@ -3,7 +3,7 @@ import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
 import { FormsService } from 'src/app/common/services/forms.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
-
+import { ServiceUtil } from 'src/app/services/utility/ServiceUtil';
 @Component({
   selector: 'app-preview-form',
   templateUrl: './preview-form.component.html',
@@ -28,7 +28,7 @@ export class PreviewFormComponent implements OnInit {
       this.FormData.title = this.formTemplate.formName;
       this.authService.getAccessToken().asObservable().subscribe(authData => {
         const token = authData;
-        Object.assign(this.FormData, { 'Authorization': `Bearer ${token}` })
+        Object.assign(this.FormData, { 'Authorization': `Bearer ${token}`,"url":`${ServiceUtil.API_ENDPOINT}` })
       });
       this.userService.getUserByUsername(localStorage.getItem("username")).subscribe(userData => {
         Object.assign(this.FormData, {

@@ -12,8 +12,8 @@ export class DisplayWorkflowStatusComponent implements OnInit {
   WorkflowLinks: any;
   WorkflowStates: any;
   curve: any = shape.curveLinear;
-  draggingEnabled: boolean = true;
-  panningEnabled: boolean = false;
+  draggingEnabled: boolean = false;
+  panningEnabled: boolean = true;
   zoomEnabled: boolean = true;
   zoomSpeed: number = 0.2;
   zoomLevel: number = 2.0;
