@@ -12,6 +12,7 @@ import { ValidateUserComponent } from 'src/app/common/components/validate-user/v
 import { UsersService } from 'src/app/services/users.service';
 import { jsPDF } from "jspdf";
 import autoTable from 'jspdf-autotable';
+import { ServiceUtil } from 'src/app/services/utility/ServiceUtil';
 @Component({
   selector: 'app-fill-form',
   templateUrl: './fill-form.component.html',
@@ -83,7 +84,7 @@ export class FillFormComponent implements OnInit {
       let userDataObservable = this.userService.getUserByUsername(localStorage.getItem("username"));
       this.authService.getAccessToken().asObservable().subscribe(authData => {
         const token = authData;
-        Object.assign(this.CurrentForm, { 'Authorization': `Bearer ${token}` })
+        Object.assign(this.CurrentForm, { 'Authorization': `Bearer ${token}`,"url":`${ServiceUtil.API_ENDPOINT}` })
       });
       combineLatest([transitionsObservable, entryDataObservable, entryMetaDataObservable, userDataObservable]).subscribe(items => {
         this.transitionData = items[0];

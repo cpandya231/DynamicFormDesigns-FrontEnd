@@ -61,7 +61,7 @@
 .submit-button {
     justify-content: flex-end;
     gap: 3em;
-
+    width: 15em;
     .filter_buttons {
         display: inline-block;
         vertical-align: middle;
@@ -151,8 +151,9 @@
 .sub-cta-buttons {
     display: flex;
     align-items: center;
+    width: 35%;
     justify-content: space-between;
-    width: 30%;
+    
 }
 
 .comments-toggle {

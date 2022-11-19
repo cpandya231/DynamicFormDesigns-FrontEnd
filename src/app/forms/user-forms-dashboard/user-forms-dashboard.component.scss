@@ -2,6 +2,13 @@
 @import "../../welcome/welcome.component.scss";
 
 
+.welcome_user {
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    font-weight: 500;
+    font-size: 1.2rem;
+}
 .left-side-nav {
     width: 10em
 }
