@@ -82,7 +82,7 @@ export class UsersInfoComponent implements OnInit {
       this.USERS = items[0];
       this.roles = items[1];
       this.departments = items[2];
-      this.DATE_FORMAT = items[3].filter(setting => (setting.type == "GLOBAL") && (setting.key == "TIMESTAMP_FORMAT"))[0].value;
+      this.DATE_FORMAT = items[3].filter(setting => (setting.type == "GLOBAL") && (setting.key == "DATE_FORMAT"))[0].value;
       this.isDataLoaded = true;
       this.registerForSearch();
     });
