@@ -6,7 +6,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
 import { IGetWorkflowStateTransitionsModel, IWorkflowStateModel } from '../../form-workflow/form-workflow.model';
 import { combineLatest, elementAt } from 'rxjs';
-import { Location } from '@angular/common'
+import { Location } from '@angular/common';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+
 
 @Component({
   selector: 'app-user-forms-in-progress-data',
@@ -20,24 +23,27 @@ export class UserFormsInProgressDataComponent implements OnInit {
   count = 80;
   userRoles: any;
   logEntries: any[];
+  dataSource: any;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  logEntries$: any;
   copyLogEntries: any[];
   formId: number;
   formName: string;
   workflowId: number;
   isDataLoaded: boolean = false;
-  columns: string[];
+  columnsToDisplay: string[];
   selectedChoice: any = 'all';
   enableCreateNewEntry: boolean = false;
   disabledColumns: string[];
   visibleColumns: string[];
-  defaultFirstColumns: string[] = ["id", "state",];
+  defaultFirstColumns: string[] = ["cta_buttons", "id", "state",];
   defaultLastColumns: string[] = ["created_by", "log_create_dt", "updated_by", "log_update_dt"];
   isMasterForm = false;
   finalStateName: any;
   PendingEntries: any;
   finalState: any;
   showPending = false;
-  @ViewChild('pdfTable', { static: false }) pdfTable: ElementRef;
+
   constructor(private formsService: FormsService,
     private authService: AuthService,
     private router: Router,
@@ -50,6 +56,10 @@ export class UserFormsInProgressDataComponent implements OnInit {
     this.setData();
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
   private setData() {
     this.userRoles = this.authService.getRoles();
     let params = this.activatedRoute.snapshot.paramMap;
@@ -59,9 +69,13 @@ export class UserFormsInProgressDataComponent implements OnInit {
     this.workflowId = Number(params.get('workflowId') || '');
     this.isMasterForm = params.get('isMasterForm') ? true : false;
     let logEntriesObservable = this.formsService.GetLogEntries(this.formId, false);
+    this.logEntries$ = logEntriesObservable;
     let transitionsObservable = this.formsService.GetWorkflowStatesTransitions(this.workflowId);
     combineLatest([logEntriesObservable, transitionsObservable]).subscribe(items => {
       let entryData = items[0];
+      let mappedData = items[0].map((item: any) => item.data);
+      this.dataSource = new MatTableDataSource<any>(mappedData);
+
       let transitionData = items[1];
       this.finalState = transitionData.states.find((state: IWorkflowStateModel) => state.endState == true);
       this.PendingEntries = entryData.filter((entry: any) => entry.data.state !== this.finalState?.name);
@@ -86,8 +100,9 @@ export class UserFormsInProgressDataComponent implements OnInit {
         return element;
       }).filter((el: any) => el["page"] == this.currentPage - 1);
       this.copyLogEntries = [...this.logEntries];
-      this.columns = this.defaultFirstColumns.concat(this.visibleColumns).concat(this.defaultLastColumns);
-      this.columns = this.columns.filter(col => col);
+      this.columnsToDisplay = this.defaultFirstColumns.concat(this.visibleColumns).concat(this.defaultLastColumns);
+      this.columnsToDisplay = this.columnsToDisplay.filter(col => col);
+      // this.columnsToDisplay = this.columnsToDisplay.slice(0, 4)
       this.isDataLoaded = true;
     } else {
       this.logEntries = [];
@@ -206,5 +221,12 @@ export class UserFormsInProgressDataComponent implements OnInit {
   handlePageChange(event: any) {
     this.currentPage = event;
     this.setData();
+  }
+
+  applyFilter(event: any) {
+    let filterValue = event.target.value;
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
 }
