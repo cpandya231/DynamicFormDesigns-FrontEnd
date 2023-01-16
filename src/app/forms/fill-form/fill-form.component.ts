@@ -95,8 +95,11 @@ export class FillFormComponent implements OnInit {
         Object.assign(this.CurrentForm, {
           department: userData.department.name,
           site: userData.department.site,
-          userName: userData.first_name +' '+ lastName,
-          email: userData.email
+          userName: userData.username,
+          fullName: userData.first_name +' '+ lastName,
+          email: userData.email,
+          designation: userData.designation,
+          empCode: userData.code
         });
         entryMetaData.forEach((em: any) => {
           let emTranstions = this.transitionData.transitions.find((tr: any) => tr.toState.name == em["data"].state);
@@ -239,6 +242,7 @@ export class FillFormComponent implements OnInit {
 
   handleSubmit(submission: any, callback: any) {
     let submittedData = this.form.formio.submission.data;
+    delete submittedData.requiredAccessGroups;
     if (submittedData.apiList !== undefined && Object.values(submittedData.apiList).length) {
       let observableList: Observable<string>[] = [];
       let metaData = {};
