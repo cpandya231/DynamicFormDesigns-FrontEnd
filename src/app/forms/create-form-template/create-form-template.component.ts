@@ -5,6 +5,7 @@ import { UsersService } from 'src/app/services/users.service';
 import { FormsService } from '../../common/services/forms.service';
 import { forkJoin } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { ServiceUtil } from 'src/app/services/utility/ServiceUtil';
 
 @Component({
   selector: 'app-create-form-template',
@@ -172,7 +173,7 @@ export class CreateFormTemplateComponent implements OnInit {
           {
             key: 'data',
             components: this.ignoreComponents(
-              [ 'inputFormat', 'protected', 'dbIndex', 'encrypted', 'calculateServer', 'idPath', 'selectThreshold', 'useExactSearch',
+              [ 'inputFormat', 'protected', 'dbIndex', 'encrypted',  'idPath', 'selectThreshold', 'useExactSearch',
                 'searchEnabled', 'calculateValue-json', 'allowCalculateOverride', 'customDefaultValue-json']
             )
           },
@@ -193,6 +194,10 @@ export class CreateFormTemplateComponent implements OnInit {
       Object.assign(eleObj, obj);
     });
     this.FormOptions.editForm = { ...eleObj };
+    this.authService.getAccessToken().asObservable().subscribe(authData => {
+      const token = authData;
+      Object.assign(this.CurrentForm, { 'Authorization': `Bearer ${token}`,"url":`${ServiceUtil.API_ENDPOINT}` })
+    });
 
     this.authService.getAccessToken().asObservable().subscribe(authData => {
       const token = authData;
@@ -202,9 +207,10 @@ export class CreateFormTemplateComponent implements OnInit {
     this.userService.getUserByUsername(localStorage.getItem("username")).subscribe(userData => {
         Object.assign(this.CurrentForm, {
           department: userData.department.name,
-          site: userData.department.site
+          site: userData.department.site,
+          userName: userData.first_name +' '+ userData.last_name || '',
+          email: userData.email
         });
-        
     });
 
     if (this.FormName.length) {

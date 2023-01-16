@@ -18,7 +18,6 @@ body {
     overflow: auto;
     max-height: 95vh;
     height: 95vh;
-
 }
 
 .btn .btn-primary {
@@ -29,7 +28,7 @@ input[type="text"],
 input[type="number"],
 input[type="email"],
 input[type="password"] {
-    margin-top: 0.5em;
+    margin-top: 0;
     outline: none;
     transition: border .2s ease;
     height: 2.5em;
@@ -120,4 +119,8 @@ small {
 
 .mat-drawer-content {
     overflow: hidden !important;
+}
+
+.formio-component {
+    margin-top: 0.5rem;
 }

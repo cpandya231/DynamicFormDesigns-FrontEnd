@@ -93,7 +93,9 @@ export class FillFormComponent implements OnInit {
         let userData = items[3];
         Object.assign(this.CurrentForm, {
           department: userData.department.name,
-          site: userData.department.site
+          site: userData.department.site,
+          userName: userData.first_name +' '+ userData.last_name || '',
+          email: userData.email
         });
         entryMetaData.forEach((em: any) => {
           let emTranstions = this.transitionData.transitions.find((tr: any) => tr.toState.name == em["data"].state);
