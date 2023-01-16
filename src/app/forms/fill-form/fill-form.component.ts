@@ -91,10 +91,11 @@ export class FillFormComponent implements OnInit {
         let entryData = items[1];
         let entryMetaData = items[2];
         let userData = items[3];
+        let lastName = userData.last_name ? userData.last_name : '';
         Object.assign(this.CurrentForm, {
           department: userData.department.name,
           site: userData.department.site,
-          userName: userData.first_name +' '+ userData.last_name || '',
+          userName: userData.first_name +' '+ lastName,
           email: userData.email
         });
         entryMetaData.forEach((em: any) => {
