@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormsService } from '../../common/services/forms.service';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { PreviewFormComponent } from '../preview-form/preview-form.component';
@@ -18,19 +18,24 @@ export class FormsDashboardComponent implements OnInit {
   isAdmin: boolean = false;
   private modalRef: MdbModalRef<PreviewFormComponent> | null = null;
   DATE_FORMAT: string;
+  appName: string;
   constructor(private formsService: FormsService,
     private router: Router,
     private settingsService: SettingsService,
     private authService: AuthService,
-    private modalService: MdbModalService) { }
+    private modalService: MdbModalService,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.isAdmin = this.authService.isAdmin();
+    this.appName = this.route.snapshot.paramMap.get('appName') || '';
+    localStorage.setItem('appName', this.appName);
     this.settingsService.getAllSettings().subscribe(setting => {
       this.DATE_FORMAT = setting.filter(setting => (setting.type == "GLOBAL") && (setting.key == "DATE_FORMAT"))[0].value;
     })
     this.formsService.GetFormTemplates().subscribe(data => {
-      this.FormTemplates = data;
+      this.FormTemplates = data.filter(form => form.name.includes(this.appName));
+
     })
   }
 

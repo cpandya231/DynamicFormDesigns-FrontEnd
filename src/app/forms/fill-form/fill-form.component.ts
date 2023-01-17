@@ -84,7 +84,11 @@ export class FillFormComponent implements OnInit {
       let userDataObservable = this.userService.getUserByUsername(localStorage.getItem("username"));
       this.authService.getAccessToken().asObservable().subscribe(authData => {
         const token = authData;
-        Object.assign(this.CurrentForm, { 'Authorization': `Bearer ${token}`,"url":`${ServiceUtil.API_ENDPOINT}` })
+        Object.assign(this.CurrentForm, { 
+          'Authorization': `Bearer ${token}`,
+          "url":`${ServiceUtil.API_ENDPOINT}`,
+          "formId": this.formId
+        });
       });
       combineLatest([transitionsObservable, entryDataObservable, entryMetaDataObservable, userDataObservable]).subscribe(items => {
         this.transitionData = items[0];
@@ -242,6 +246,11 @@ export class FillFormComponent implements OnInit {
 
   handleSubmit(submission: any, callback: any) {
     let submittedData = this.form.formio.submission.data;
+    for (const prop in submittedData) {
+      if (typeof(submittedData[prop]) == 'object') {
+        delete submittedData[prop]
+      }
+    }
     delete submittedData.requiredAccessGroups;
     if (submittedData.apiList !== undefined && Object.values(submittedData.apiList).length) {
       let observableList: Observable<string>[] = [];

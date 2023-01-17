@@ -1,6 +1,6 @@
 <div class="app-container">
     <div class="welcome_user"> Your Records:</div>
-    <div class="form-card" routerLink="/userFormsDashboard/userForms">
+    <div class="form-card" [routerLink]="['/userFormsDashboard/userForms', {appName: appName}]">
         <div></div>
         <div class="logo_container">
             <img src="assets/eLogBook.svg" class="template-type">
@@ -9,7 +9,7 @@
             <span>General Records</span><img src="assets/right-arrow.svg">
         </div>
     </div>
-    <div class="form-card" routerLink="/userFormsDashboard/masterForms">
+    <div class="form-card" [routerLink]="['/userFormsDashboard/masterForms', {appName: appName}]">
         <div></div>
         <div class="logo_container">
             <img src="assets/masterForms.svg" class="template-type">

@@ -35,7 +35,11 @@ export class WelcomeComponent implements OnInit {
   }
 
   OpenEUAM(): void {
-
+    if (this.IsAdminUser) {
+      this.router.navigate(['/formsDashboard', {appName:'UAM'}]);
+    } else {
+      this.router.navigate(['/userFormsDashboard', {appName:'UAM'}]);
+    }
   }
 
   OpenEWatchTower(): void {

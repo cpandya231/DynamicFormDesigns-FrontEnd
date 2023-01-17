@@ -15,6 +15,7 @@ export class MasterFormsComponent implements OnInit {
 
 
   DATE_FORMAT: string;
+  appName: string;
   constructor(private formsService: FormsService,
     private router: Router,
     private location: Location,
@@ -22,12 +23,12 @@ export class MasterFormsComponent implements OnInit {
     private route: ActivatedRoute,) { }
 
   ngOnInit(): void {
-
+    this.appName = localStorage.getItem('appName') || '';
     this.settingsService.getAllSettings().subscribe(setting => {
       this.DATE_FORMAT = setting.filter(setting => (setting.type == "GLOBAL") && (setting.key == "DATE_FORMAT"))[0].value;
     })
     this.formsService.GetFormTemplates().subscribe(data => {
-      this.FormTemplates = data.filter(form => form.type == 'master');
+      this.FormTemplates = data.filter(form => form.type == 'master' && form.name.includes(this.appName));
     })
   }
 

@@ -8,10 +8,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class UserFormsDashboardComponent implements OnInit {
 
+  appName: string;
   constructor(private router: Router,
-    private activatedRoute: ActivatedRoute,) { }
+    private route: ActivatedRoute,) { }
 
   ngOnInit(): void {
+    this.appName = this.route.snapshot.paramMap.get('appName') || '';
+    localStorage.setItem('appName', this.appName);
   }
 
 
