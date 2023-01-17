@@ -1,14 +1,17 @@
 @import '../../variables.scss';
+
 .forms_dashboard {
     padding: 2rem;
     margin-top: 4rem;
     height: 100%;
     background: white;
+
     .btn-primary {
         word-spacing: 3px;
         position: absolute;
         left: 7%;
     }
+
     .table {
         scrollbar-width: thin;
         border-radius: 10px;
@@ -18,85 +21,106 @@
         display: block;
         background: white;
         width: 75%;
+
+        th {
+            background: #48C6C5;
+            border: 1px solid #FFFFFF;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+
+            &.icons_header {
+                background: white;
+                width: 3%;
+                padding: 0;
+            }
+        }
+
         thead {
             position: sticky;
             top: 0;
             max-height: 3rem;
             pointer-events: none;
             color: white;
-            th {
-                background: #48C6C5;
-                border: 1px solid #FFFFFF;
-                padding: 0.5rem 1rem;
-                border-radius: 5px;
-                &.icons_header {
-                    background: white;
-                    width: 3%;
-                    padding: 0;
-                }
-            }
             // .form_id {
             //     width: 5%;
             //     text-align: center;
             // }
         }
+
+        tr {
+            &:hover {
+                background-color: $main-gray-light;
+            }
+
+            .icons_container {
+                padding: 0.5rem 0;
+            }
+        }
+
+        td {
+            background: #E8F5F4;
+            border: 1px solid #FFFFFF;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+
+            img {
+                cursor: pointer;
+            }
+        }
+
         tbody {
             font-weight: normal;
-            tr {
-                &:hover {
-                    background-color: $main-gray-light;
-                }
-                .icons_container {
-                    padding: 0.5rem 0;
-                }
-            }
-            td {
-                background: #E8F5F4;
-                border: 1px solid #FFFFFF;
-                border-radius: 5px;
-                padding: 0.5rem 1rem;
-                img {
-                    cursor: pointer;
-                }
-            }
+
+
+
             .form_id {
                 width: 5%;
                 text-align: center;
             }
+
             .form_name {
                 width: 15%;
             }
+
             .form_type {
                 width: 10%;
             }
+
             .form_createdBy {
                 width: 10%;
             }
+
             .form_createDt {
                 width: 10%;
             }
+
             .form_edit {
                 width: 6%;
             }
+
             .form_preview {
                 width: 6%;
             }
         }
     }
+
     .navigation_controls {
         margin-left: 10%;
         margin-top: 5%;
+
         div {
             text-align: center;
             color: #0F2938;
             font-weight: 500;
             cursor: pointer;
             margin-bottom: 1rem;
+
             img {
                 width: 6rem;
             }
         }
     }
+
     .no_data_message {
         height: 5rem;
         width: 90%;
@@ -104,6 +128,7 @@
         margin-top: 2rem;
         font-size: 2rem;
     }
+
     .svg_icon {
         height: 20px;
         width: 20px;

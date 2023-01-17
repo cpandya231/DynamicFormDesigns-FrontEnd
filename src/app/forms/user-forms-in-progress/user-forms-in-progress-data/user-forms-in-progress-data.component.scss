@@ -62,6 +62,7 @@
     justify-content: flex-end;
     gap: 3em;
     width: 15em;
+
     .filter_buttons {
         display: inline-block;
         vertical-align: middle;
@@ -153,7 +154,7 @@
     align-items: center;
     width: 35%;
     justify-content: space-between;
-    
+
 }
 
 .comments-toggle {
@@ -196,4 +197,21 @@
     color: #fff;
 
 
+}
+
+th {
+    position: sticky;
+    top: 0;
+    max-height: 3rem;
+    pointer-events: none;
+    color: white;
+    vertical-align: middle;
+    // .form_id {
+    //     width: 5%;
+    //     text-align: center;
+    // }
+}
+
+.mat-header-cell {
+    font-size: 0.9rem;
 }
