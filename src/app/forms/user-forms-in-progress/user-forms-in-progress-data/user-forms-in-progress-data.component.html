@@ -1,92 +1,121 @@
 <div class="forms_dashboard">
+  <div class="header">
+    <div class="header-name">
+      <img src="assets/form-template-icons/icon-{{ (formId % 10) + 1 }}.svg" />
+      <h2>
+        {{ formName }}
+      </h2>
+    </div>
+    <div class="back-button" (click)="back()">
+      <img src="assets/left-arrow.svg" /> Back
+    </div>
+  </div>
 
-    <div class="header">
-        <div class="header-name">
-            <img src="assets/form-template-icons/icon-{{(formId%10)+1}}.svg">
-            <h2>
+  <div class="content">
+    <div class="cta-buttons">
+      <div class="filters">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Search" />
+        </mat-form-field>
+      </div>
 
-                {{formName}}
-            </h2>
+      <div class="sub-cta-buttons">
+        <div class="comments-toggle">
+          <mat-slide-toggle
+            color="primary"
+            [checked]="showPending"
+            (change)="togglePendingAll($event)"
+          >
+            Pending Tasks ({{ PendingEntries.length }})
+          </mat-slide-toggle>
         </div>
-        <div class="back-button" (click)="back()">
-            <img src="assets/left-arrow.svg"> Back
+
+        <div class="comments-toggle">
+          <mat-slide-toggle
+            color="primary"
+            [checked]="showReport"
+            (change)="toggleShowReport($event)"
+          >
+            Show Report
+          </mat-slide-toggle>
         </div>
+
+        <div class="submit-button" *ngIf="enableCreateNewEntry">
+          <button type="submit" class="button" (click)="createNewEntry()">
+            Create New Entry
+            <img src="assets/right-arrow.svg" />
+          </button>
+        </div>
+      </div>
     </div>
 
-    <div class="content">
-
-        <div class="cta-buttons">
-            <div class="filters">
-
-
-                <mat-form-field>
-                    <input matInput (keyup)="applyFilter($event)" placeholder="Search">
-                </mat-form-field>
+    <div class="table-parent">
+      <table mat-table [dataSource]="dataSource" class="table">
+        <ng-container
+          *ngFor="let col of columnsToDisplay"
+          matColumnDef="{{ col }}"
+          sticky="{{ col == 'cta_buttons' }}"
+        >
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            class=" {{ col == 'cta_buttons' ? 'empty-header' : '' }}"
+          >
+            {{
+              col == "cta_buttons"
+                ? ""
+                : col.charAt(0).toUpperCase() + col.slice(1)
+            }}
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let entry"
+            class="{{ col }} 
+                        {{
+              col == 'state' &&
+              (entry[col] == finalStateName ? 'FinalState' : '')
+                ? 'FinalState'
+                : ''
+            }}
+                        {{ col == 'cta_buttons' ? 'empty-header' : '' }}"
+          >
+            <div *ngIf="col == 'cta_buttons'" class="table-icons">
+              <span
+                title="Edit"
+                class="fas fa-edit"
+                (click)="FillForm(entry['id'])"
+              ></span>
+              <span
+                title="Status"
+                class="fas fa-hourglass-half"
+                (click)="ShowProgress(entry['id'])"
+              ></span>
+              <span
+                title="Report"
+                class="fas fa-file-text"
+                (click)="viewAuditReport(entry['id'])"
+              ></span>
             </div>
+            <span *ngIf="col != 'cta_buttons'">{{ entry["" + col] }}</span>
+          </td>
+        </ng-container>
 
-            <div class="sub-cta-buttons">
-                <div class="comments-toggle">
-                    <mat-slide-toggle color="primary" [checked]="showPending" (change)="togglePendingAll($event)">
-                        Pending Tasks ({{PendingEntries.length}})
-                    </mat-slide-toggle>
-                </div>
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
 
-
-
-                <div class="submit-button" *ngIf="enableCreateNewEntry">
-                    <button type="submit" class="button" (click)="createNewEntry()">Create New Entry
-                        <img src="assets/right-arrow.svg">
-
-                    </button>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="table-parent">
-
-
-            <table mat-table [dataSource]="dataSource" class="table">
-
-
-
-                <ng-container *ngFor="let col of columnsToDisplay" matColumnDef={{col}} sticky="{{col=='cta_buttons'}}">
-                    <th mat-header-cell *matHeaderCellDef class=" {{(col=='cta_buttons') ?'empty-header':''}}">
-                        {{(col=='cta_buttons')?"":col.charAt(0).toUpperCase() + col.slice(1)}}
-
-                    </th>
-                    <td mat-cell *matCellDef="let entry" class="{{col}} 
-                        {{(col=='state') && (entry[col]==finalStateName?'FinalState':'')?'FinalState':''}}
-                        {{(col=='cta_buttons') ?'empty-header':''}}">
-
-
-                        <div *ngIf="col=='cta_buttons'" class="table-icons">
-                            <span title="Edit" class="fas fa-edit" (click)="FillForm(entry['id'])"></span>
-                            <span title="Status" class="fas fa-hourglass-half"
-                                (click)="ShowProgress(entry['id'])"></span>
-                            <span title="Report" class="fas fa-file-text" (click)="viewAuditReport(entry['id'])"></span>
-                        </div>
-                        <span *ngIf="col!='cta_buttons'">{{entry[""+col]}}</span>
-                    </td>
-                </ng-container>
-
-
-                <tr mat-header-row *matHeaderRowDef=" columnsToDisplay"></tr>
-                <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay">
-
-                </tr>
-
-                <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell" [attr.colspan]="columnsToDisplay.length">
-                        No data matching the filter.
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
-            aria-label="Select page of periodic elements">
-        </mat-paginator>
-
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="columnsToDisplay.length">
+            No data matching the filter.
+          </td>
+        </tr>
+      </table>
     </div>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements"
+    >
+    </mat-paginator>
+  </div>
 </div>

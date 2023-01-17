@@ -1,39 +1,49 @@
 <div class="welcome-container">
-    <div class="welcome_user">Welcome {{username}},</div>
-    <div class="app-container">
-        <div class="form-card" (click)="OpenELogBook()">
-            <div></div>
-            <div class="logo_container">
-                <img src="assets/eLogBook.svg" class="template-type">
-            </div>
-            <div class="form-name-container">
-                <span>Log Entries</span><img src="assets/right-arrow.svg">
-            </div>
-        </div>
-        <div class="form-card" (click)="OpenSmartJobs()">
-            <div class="logo_container">
-                <a href="http://checkmeout-frontend.s3-website.ap-south-1.amazonaws.com/" target="_blank"> <img src="assets/Images/checklist_logo.png" /></a>
-
-            </div>
-            <div class="form-name-container">Smart Jobs<img src="assets/Images/next-arrow.png" /></div>
-        </div>
-        <div class="form-card" (click)="OpenEUAM()" *ngIf="IsAdminUser">
-            <div class="logo_container">
-                <img src="assets/Images/eUAM_logo.png" />
-            </div>
-            <div class="form-name-container">eUAM<img src="assets/Images/next-arrow.png" /></div>
-        </div>
-        <div class="form-card" (click)="OpenEWatchTower()">
-            <div class="logo_container">
-                <img src="assets/Images/e_watch_tower.png" />
-            </div>
-            <div class="form-name-container">eWatchTower<img src="assets/Images/next-arrow.png" /></div>
-        </div>
-        <div class="form-card app-create" *ngIf="IsAdminUser">
-            <div class="create_container">
-                <img src="assets/Images/create_new_logo.png" />
-                <div>Create New</div>
-            </div>
-        </div>
+  <div class="welcome_user">Welcome {{ username }},</div>
+  <div class="app-container">
+    <div class="form-card" (click)="OpenELogBook()">
+      <div></div>
+      <div class="logo_container">
+        <img src="assets/eLogBook.svg" class="template-type" />
+      </div>
+      <div class="form-name-container">
+        <span>Log Entries</span><img src="assets/right-arrow.svg" />
+      </div>
     </div>
+    <div class="form-card" (click)="OpenSmartJobs()">
+      <div class="logo_container">
+        <a
+          href="http://checkmeout-frontend.s3-website.ap-south-1.amazonaws.com/"
+          target="_blank"
+        >
+          <img src="assets/Images/checklist_logo.png"
+        /></a>
+      </div>
+      <div class="form-name-container">
+        Smart Jobs<img src="assets/Images/next-arrow.png" />
+      </div>
+    </div>
+    <div class="form-card" (click)="OpenEUAM()">
+      <div class="logo_container">
+        <img src="assets/Images/eUAM_logo.png" />
+      </div>
+      <div class="form-name-container">
+        eUAM<img src="assets/Images/next-arrow.png" />
+      </div>
+    </div>
+    <div class="form-card" (click)="OpenEWatchTower()">
+      <div class="logo_container">
+        <img src="assets/Images/e_watch_tower.png" />
+      </div>
+      <div class="form-name-container">
+        eWatchTower<img src="assets/Images/next-arrow.png" />
+      </div>
+    </div>
+    <div class="form-card app-create" *ngIf="IsAdminUser">
+      <div class="create_container">
+        <img src="assets/Images/create_new_logo.png" />
+        <div>Create New</div>
+      </div>
+    </div>
+  </div>
 </div>
