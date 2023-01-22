@@ -9,6 +9,7 @@ import { combineLatest, elementAt } from 'rxjs';
 import { Location } from '@angular/common';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 
 
 @Component({
@@ -43,7 +44,11 @@ export class UserFormsInProgressDataComponent implements OnInit {
   PendingEntries: any;
   finalState: any;
   showPending = false;
-
+  defaultColDef!: ColDef;
+  columnDefs: any[] = [];
+  rowData: any[] = [];
+  showGrid = false;
+  private gridApi!: GridApi<any>;
   constructor(private formsService: FormsService,
     private authService: AuthService,
     private router: Router,
@@ -52,13 +57,17 @@ export class UserFormsInProgressDataComponent implements OnInit {
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
-
     this.setData();
+    this.defaultColDef = {
+      sortable: true,
+      resizable: true,
+      filter: true
+    };
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
+  // ngAfterViewInit() {
+  //   this.dataSource.paginator = this.paginator;
+  // }
 
   private setData() {
     this.userRoles = this.authService.getRoles();
@@ -78,7 +87,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
 
       let transitionData = items[1];
       this.finalState = transitionData.states.find((state: IWorkflowStateModel) => state.endState == true);
-      this.PendingEntries = entryData.filter((entry: any) => entry.data.state !== this.finalState?.name);
+      this.PendingEntries = entryData.filter((entry: any) => entry.data.state !== this.finalState?.name).map((columnData: any) => columnData.data);
       this.getLogEntries(entryData, transitionData);
       this.canCreateNewEntry(transitionData);
     });
@@ -99,9 +108,17 @@ export class UserFormsInProgressDataComponent implements OnInit {
         element["page"] = Math.floor(index / this.pageSize);
         return element;
       }).filter((el: any) => el["page"] == this.currentPage - 1);
-      this.copyLogEntries = [...this.logEntries];
       this.columnsToDisplay = this.defaultFirstColumns.concat(this.visibleColumns).concat(this.defaultLastColumns);
       this.columnsToDisplay = this.columnsToDisplay.filter(col => col);
+      this.columnsToDisplay.forEach(column => {
+        this.columnDefs.push(
+          {
+            field: column
+          }
+        )
+      });
+      this.rowData = entryData.map((columnData: any) => columnData.data);
+      this.copyLogEntries = [...this.rowData];
       // this.columnsToDisplay = this.columnsToDisplay.slice(0, 4)
       this.isDataLoaded = true;
     } else {
@@ -160,23 +177,26 @@ export class UserFormsInProgressDataComponent implements OnInit {
     })
   }
 
+  onGridReady(params: GridReadyEvent<any>) {
+    this.gridApi = params.api;
+  }
 
   SortPendingItems() {
-    this.logEntries = this.PendingEntries;
+    this.rowData = this.PendingEntries;
     this.ShowfilteredEntries = true;
   }
 
   ShowAllItems() {
-    this.logEntries = this.copyLogEntries;
+    this.rowData = this.copyLogEntries;
     this.ShowfilteredEntries = false;
   }
   togglePendingAll(event: any) {
     console.log('toggle', event.checked);
     this.showPending = event.checked;
     if (this.showPending) {
-      this.logEntries = this.PendingEntries;
+      this.rowData = this.PendingEntries;
     } else {
-      this.logEntries = this.copyLogEntries;
+      this.rowData = this.copyLogEntries;
     }
 
 
@@ -227,6 +247,12 @@ export class UserFormsInProgressDataComponent implements OnInit {
     let filterValue = event.target.value;
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+    this.gridApi.setQuickFilter(filterValue);
+  }
+
+   onPageSizeChanged() {
+    var value = (document.getElementById('page-size') as HTMLInputElement)
+      .value;
+    this.gridApi.paginationSetPageSize(Number(value));
   }
 }

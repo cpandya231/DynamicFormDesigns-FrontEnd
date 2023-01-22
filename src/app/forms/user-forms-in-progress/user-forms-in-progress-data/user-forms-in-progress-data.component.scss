@@ -1,25 +1,28 @@
 @import "../user-forms-in-progress.component.scss";
-
 @import "../../../users/users-info/users-info.component.scss";
 @import "../../../forms/forms-dashboard/forms-dashboard.component.scss";
-
-
 .forms_dashboard {
-    margin-top: 4em;
-    padding: 2% 5% 5% 5%;
-
+    margin-top: 3em;
+    font-family: 'Inter', sans-serif;
 }
 
 .header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    // justify-content: space-between;
+    .back_arrow_div {
+        width: 80px;
+        img {
+            height: 45px;
+        }
+    }
 }
 
 .header-name {
-    display: flex;
-    align-items: center;
-    gap: 1em;
+    font-size: 22px;
+    font-weight: 500;
+    height: 33px;
+    border-bottom: 1px solid
 }
 
 .cta-buttons {
@@ -27,11 +30,13 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    .example-header {
+        font-size: 14px;
+    }
 }
 
 .filter {
     position: relative;
-
     .filter-menu {
         z-index: 999;
     }
@@ -40,11 +45,9 @@
 .mat-button {
     background-color: #fff;
     font-weight: initial;
-
     &:hover {
         background-color: #EFEFEF;
     }
-
     &:focus {
         border: 1px solid #00ADB5;
     }
@@ -52,28 +55,27 @@
 
 .mat-menu-item {
     background-color: #fff;
-
     &:hover {
         background-color: #EFEFEF;
     }
 }
 
 .submit-button {
-    justify-content: flex-end;
+    margin-left: auto;
     gap: 3em;
-    width: 15em;
-
+    width: 9em;
+    .button {
+        padding: 0 1em;
+    }
     .filter_buttons {
         display: inline-block;
         vertical-align: middle;
         margin-right: 1rem;
         border: 1px solid #6BCAE2;
-
         .btn {
             padding: 8px;
             border-radius: 0;
         }
-
         .not-active {
             background-color: gray;
         }
@@ -84,7 +86,6 @@
     padding: 1em;
     display: flex;
     gap: 1em;
-
     &:hover {
         background-color: #EFEFEF;
     }
@@ -93,18 +94,16 @@
 .table-parent {
     display: flex;
     justify-content: center;
-    margin-top: 2em;
+    height: 75vh;
 }
 
 .table {
     margin-top: 1em;
     width: auto !important;
-
     td {
         width: 6rem;
         padding: 0.5rem 1rem;
         vertical-align: middle;
-
         .fas {
             font-size: 1.25rem;
         }
@@ -132,15 +131,10 @@
     justify-content: space-between;
     width: 9em;
     padding-right: 1em;
-
     span {
         width: 1em;
         font-size: 1.3em;
     }
-}
-
-.content {
-    margin-top: 2em;
 }
 
 .pagination-controls {
@@ -154,7 +148,6 @@
     align-items: center;
     width: 35%;
     justify-content: space-between;
-
 }
 
 .comments-toggle {
@@ -163,13 +156,10 @@
 
 .filters {
     display: flex;
-
-
 }
 
 .form-select-parent {
     position: relative;
-
     &::after {
         content: '';
         position: absolute;
@@ -182,21 +172,16 @@
         border-top: 8px solid #fff;
         pointer-events: none;
     }
-
 }
 
 .search-box {
     border-radius: 0px 50px 50px 0px;
-
-
 }
 
 .form-select {
     border-radius: 50px 0px 0px 50px;
     background-color: #0F2938;
     color: #fff;
-
-
 }
 
 th {
@@ -214,4 +199,31 @@ th {
 
 .mat-header-cell {
     font-size: 0.9rem;
+}
+
+::ng-deep .ag-theme-balham {
+    --ag-grid-size: 10px;
+    --ag-list-item-height: 40px;
+    --ag-header-height: 44px;
+    --ag-grid-row-height: 50px;
+    --ag-background-color: #fffff;
+    --ag-header-background-color: #F5F8Fd;
+    font-size: 14px;
+    font-family: Inter;
+    font-weight: 400;
+    .ag-cell {
+        display: flex;
+        align-items: center;
+    }
+    .ag-header {
+        min-height: 44px !important;
+        border-bottom: 1px solid #CDD7E3;
+        .ag-header-row {
+            height: 44px !important;
+        }
+    }
+    .ag-popup,
+    .ag-simple-filter-body-wrapper {
+        background: white;
+    }
 }

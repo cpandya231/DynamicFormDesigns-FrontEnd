@@ -1,49 +1,55 @@
 <div class="forms_dashboard">
 
     <div class="header">
-        <div class="header-name">
-            <img src="assets/form-template-icons/icon-{{(formId%10)+1}}.svg">
-            <h2>
-
-                {{formName}}
-            </h2>
+        <div class="back_arrow_div">
+            <img (click)="back()" src="assets/Images/arrow-left-long.svg">
         </div>
-        <div class="back-button" (click)="back()">
-            <img src="assets/left-arrow.svg"> Back
+        <div class="header-name">
+            <!-- <img src="assets/form-template-icons/icon-{{(formId%10)+1}}.svg"> -->
+            {{formName}}
+        </div>
+
+        <div class="submit-button" *ngIf="enableCreateNewEntry">
+            <button type="submit" class="button" (click)="createNewEntry()">New Request
+            </button>
         </div>
     </div>
 
     <div class="content">
-
         <div class="cta-buttons">
+            <div class="example-header">
+                Page Size:
+                <select (change)="onPageSizeChanged()" id="page-size">
+                <option value="10" selected="">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                </select>
+            </div>
             <div class="filters">
-
-
                 <mat-form-field>
                     <input matInput (keyup)="applyFilter($event)" placeholder="Search">
                 </mat-form-field>
             </div>
-
             <div class="sub-cta-buttons">
                 <div class="comments-toggle">
                     <mat-slide-toggle color="primary" [checked]="showPending" (change)="togglePendingAll($event)">
                         Pending Tasks ({{PendingEntries.length}})
                     </mat-slide-toggle>
                 </div>
-
-
-
-                <div class="submit-button" *ngIf="enableCreateNewEntry">
-                    <button type="submit" class="button" (click)="createNewEntry()">Create New Entry
-                        <img src="assets/right-arrow.svg">
-
-                    </button>
-                </div>
-
             </div>
         </div>
 
-        <div class="table-parent">
+        <div class="table-parent" *ngIf="isDataLoaded">
+            <ag-grid-angular style="width: 100%" class="ag-theme-balham" [rowData]="rowData" [columnDefs]="columnDefs" [rowHeight]="44" (gridReady)="onGridReady($event)" [defaultColDef]="defaultColDef" [pagination]="true" [paginationPageSize]="10">
+
+            </ag-grid-angular>
+        </div>
+        <!-- <div style="height: 100%; box-sizing: border-box;">
+            <ag-grid-angular style="width: 100%; height: 100%;" class="ag-theme-balham" [columnDefs]="columnDefs" [rowData]="rowData"></ag-grid-angular>
+        </div> -->
+
+        <!-- <div class="table-parent">
 
 
             <table mat-table [dataSource]="dataSource" class="table">
@@ -86,7 +92,7 @@
 
         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
             aria-label="Select page of periodic elements">
-        </mat-paginator>
+        </mat-paginator> -->
 
     </div>
 </div>

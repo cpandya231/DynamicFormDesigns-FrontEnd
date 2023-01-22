@@ -22,7 +22,7 @@
         "@angular/platform-browser-dynamic": "~13.3.0",
         "@angular/router": "~13.3.0",
         "@formio/angular": "^5.2.2",
-        "@fortawesome/fontawesome-free": "^6.0.0",
+        "@fortawesome/fontawesome-free": "^6.2.1",
         "@swimlane/ngx-graph": "^8.0.1",
         "@types/d3-dispatch": "^3.0.1",
         "@types/d3-drag": "^3.0.1",
@@ -42,7 +42,10 @@
         "ngx-toastr": "^14.3.0",
         "rxjs": "~7.5.0",
         "tslib": "^2.3.0",
-        "zone.js": "~0.11.4"
+        "zone.js": "~0.11.4",
+        "ag-grid-angular": "^28.0.0",
+        "ag-grid-community": "^28.0.0",
+        "@ag-grid-community/angular": "^28.0.0"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "~13.3.1",

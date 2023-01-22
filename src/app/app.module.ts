@@ -71,7 +71,7 @@ import { MasterFormsComponent } from './forms/master-forms/master-forms.componen
 import { EntryAuditDataComponent } from './forms/entry-audit-data/entry-audit-data.component';
 import { WatchTowerComponent } from './watch-tower/watch-tower.component';
 import { SecurityConfigComponent } from './settings/system-config/security-config/security-config.component';
-
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [
@@ -148,8 +148,8 @@ import { SecurityConfigComponent } from './settings/system-config/security-confi
     MatNativeDateModule,
     NgxGraphModule,
     ToastrModule.forRoot(),
-    MaterialExampleModule
-
+    MaterialExampleModule,
+    AgGridModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: GlobalAppIntercepter, multi: true },
