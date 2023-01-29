@@ -89,7 +89,7 @@ export class FormsService {
     return this.http.get(`${ServiceUtil.API_ENDPOINT}/entry/${formId}?filterByUsername=${filterByUsername}`, this.getHeaders());
   }
   GetSpecificLogEntry(formId: number, entryId: number): Observable<any> {
-    return this.http.get(`${ServiceUtil.API_ENDPOINT}/entry/${formId}?entryId=${entryId}`, this.getHeaders());
+    return this.http.get(`${ServiceUtil.API_ENDPOINT}/entry/${formId}/${entryId}`, this.getHeaders());
   }
 
   SaveLogEntryComment(formId: number, entryId: number, commentObj: any): Observable<any> {
@@ -104,8 +104,8 @@ export class FormsService {
   // }
 
   updateMasterEntry(apiData: any, formId: number): Observable<any> {
-    return this.http.put(`${ServiceUtil.API_ENDPOINT}${apiData.api}`,{
-      metadata: JSON.stringify ({
+    return this.http.put(`${ServiceUtil.API_ENDPOINT}${apiData.api}`, {
+      metadata: JSON.stringify({
         ...apiData.metaData,
         formId
       })

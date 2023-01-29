@@ -84,9 +84,9 @@ export class FillFormComponent implements OnInit {
       let userDataObservable = this.userService.getUserByUsername(localStorage.getItem("username"));
       this.authService.getAccessToken().asObservable().subscribe(authData => {
         const token = authData;
-        Object.assign(this.CurrentForm, { 
+        Object.assign(this.CurrentForm, {
           'Authorization': `Bearer ${token}`,
-          "url":`${ServiceUtil.API_ENDPOINT}`,
+          "url": `${ServiceUtil.API_ENDPOINT}`,
           "formId": this.formId
         });
       });
@@ -100,7 +100,7 @@ export class FillFormComponent implements OnInit {
           department: userData.department.name,
           site: userData.department.site,
           userName: userData.username,
-          fullName: userData.first_name +' '+ lastName,
+          fullName: userData.first_name + ' ' + lastName,
           email: userData.email,
           designation: userData.designation,
           empCode: userData.code
@@ -171,7 +171,9 @@ export class FillFormComponent implements OnInit {
 
     let requiredTransition = transitionData.transitions.
       find(transition => (transition.fromState.name == entry.state && !transition.sendBackTransition)
-        && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0);
+        && transition.fromState.roles.filter(transitionRole => this.userRoles == transitionRole.role).length > 0
+        || (transition.fromState.roles.filter(tr => (tr.role == 'INITIATOR')
+          && (entry.created_by == localStorage.getItem('username'))).length > 0));
     if (null != requiredTransition) {
       this.toState = requiredTransition.toState.name;
       this.sendToButtonLabel = this.currentState?.label;
@@ -247,7 +249,7 @@ export class FillFormComponent implements OnInit {
   handleSubmit(submission: any, callback: any) {
     let submittedData = this.form.formio.submission.data;
     for (const prop in submittedData) {
-      if (typeof(submittedData[prop]) == 'object') {
+      if (typeof (submittedData[prop]) == 'object') {
         delete submittedData[prop]
       }
     }
