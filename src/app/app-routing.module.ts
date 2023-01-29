@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { ReportDashboardComponent } from './create-report/report-dashboard.component';
 import { CreateDepartmentComponent } from './departments/create-department/create-department.component';
 import { DepartmentDashboardComponent } from './departments/department-dashboard/department-dashboard.component';
 import { EditDepartmentComponent } from './departments/edit-department/edit-department.component';
@@ -21,6 +22,7 @@ import { AuditTrailComponent } from './settings/audit-trail/audit-trail.componen
 import { SystemConfigComponent } from './settings/system-config/system-config.component';
 import { CreateUserComponent } from './users/create-user/create-user.component';
 import { UsersInfoComponent } from './users/users-info/users-info.component';
+import { ViewReportsComponent } from './view-reports/view-reports.component';
 import { WatchTowerComponent } from './watch-tower/watch-tower.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
@@ -185,7 +187,14 @@ const routes: Routes = [
       },
     ],
   },
-
+  {
+    path: 'reports',
+    component: ReportDashboardComponent
+  },
+  {
+    path: 'viewReports',
+    component: ViewReportsComponent
+  },
   { path: '', component: LoginComponent },
   { path: '**', component: AppComponent }
 ];

@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { CtaButtonsRenderer } from './cta-buttons.renderer.component';
 
 
 @Component({
@@ -49,12 +50,15 @@ export class UserFormsInProgressDataComponent implements OnInit {
   rowData: any[] = [];
   showGrid = false;
   private gridApi!: GridApi<any>;
+  context: any;
   constructor(private formsService: FormsService,
     private authService: AuthService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private location: Location,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog) { 
+      this.context = { componentParent: this };
+    }
 
   ngOnInit(): void {
     this.setData();
@@ -63,6 +67,36 @@ export class UserFormsInProgressDataComponent implements OnInit {
       resizable: true,
       filter: true
     };
+
+    this.columnDefs.push(...[
+      {
+        field: 'cta_buttons',
+        headerName: '',
+        cellRenderer: CtaButtonsRenderer,
+        cellRendererParams: {
+          formName: this.formName,
+          formId: this.formId,
+          isMasterForm: this.isMasterForm
+        },
+        width: 100
+      },
+      {
+        field: 'id',
+        width: 90
+      },
+      {
+        field: 'state',
+        cellStyle: (params: any) => {
+          if (params.value !== this.finalStateName) {
+              //mark police cells as red
+              return {color: 'red',};
+          } else {
+            return {color: 'green'}
+          }
+          return null;
+      }
+      }
+    ])
   }
 
   // ngAfterViewInit() {
@@ -108,7 +142,7 @@ export class UserFormsInProgressDataComponent implements OnInit {
         element["page"] = Math.floor(index / this.pageSize);
         return element;
       }).filter((el: any) => el["page"] == this.currentPage - 1);
-      this.columnsToDisplay = this.defaultFirstColumns.concat(this.visibleColumns).concat(this.defaultLastColumns);
+      this.columnsToDisplay = this.visibleColumns.concat(this.defaultLastColumns);
       this.columnsToDisplay = this.columnsToDisplay.filter(col => col);
       this.columnsToDisplay.forEach(column => {
         this.columnDefs.push(
@@ -138,9 +172,9 @@ export class UserFormsInProgressDataComponent implements OnInit {
     }
   }
 
-  FillForm(entryId: number) {
-    this.router.navigate(['../../../../updateLogEntry', this.formName, entryId], { relativeTo: this.activatedRoute, state: { formId: this.formId, isMasterForm: this.isMasterForm } });
-  }
+  // FillForm(entryId: number) {
+  //   this.router.navigate(['../../../../updateLogEntry', this.formName, entryId], { relativeTo: this.activatedRoute, state: { formId: this.formId, isMasterForm: this.isMasterForm } });
+  // }
 
   createNewEntry() {
     this.router.navigate(['../../../../createLogEntry', this.formName], { relativeTo: this.activatedRoute, state: { formId: this.formId, isMasterForm: this.isMasterForm } });

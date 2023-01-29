@@ -1,0 +1,31 @@
+.report_container {
+    margin-top: 5rem;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    // justify-content: space-between;
+    .back_arrow_div {
+        width: 70px;
+        img {
+            height: 45px;
+        }
+    }
+}
+
+.header-name {
+    font-size: 22px;
+    font-weight: 500;
+    height: 33px;
+    border-bottom: 1px solid
+}
+
+.submit-button {
+    margin-left: auto;
+    gap: 3em;
+    width: 9em;
+    .button {
+        padding: 0 1em;
+    }
+}

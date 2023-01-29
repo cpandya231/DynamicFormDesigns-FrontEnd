@@ -1,0 +1,25 @@
+<div class="reports_container">
+    <div class="header">
+        <div class="back_arrow_div">
+            <img (click)="back()" src="assets/Images/arrow-left-long.svg">
+        </div>
+        <div class="header-name">
+            <!-- <img src="assets/form-template-icons/icon-{{(formId%10)+1}}.svg"> -->
+            Reports
+        </div>
+    </div>
+    <mat-form-field appearance="fill" class="report-selection">
+        <mat-label>Select Report</mat-label>
+        <mat-select (selectionChange)="onReportChange()" [(ngModel)]="selectedReport">
+            <mat-option *ngFor="let report of ActiveReports" [value]="report">
+                {{report.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div class="table-parent" *ngIf="isDataLoaded">
+        <ag-grid-angular style="width: 100%; height: 100%" class="ag-theme-balham" [rowData]="rowData" [columnDefs]="columnDefs" [rowHeight]="44" [defaultColDef]="defaultColDef">
+
+        </ag-grid-angular>
+    </div>
+</div>

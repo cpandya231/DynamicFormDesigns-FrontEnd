@@ -72,6 +72,10 @@ import { EntryAuditDataComponent } from './forms/entry-audit-data/entry-audit-da
 import { WatchTowerComponent } from './watch-tower/watch-tower.component';
 import { SecurityConfigComponent } from './settings/system-config/security-config/security-config.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { CtaButtonsRenderer } from './forms/user-forms-in-progress/user-forms-in-progress-data/cta-buttons.renderer.component';
+import { ReportDashboardComponent } from './create-report/report-dashboard.component';
+import { CreateReportComponent } from './create-report/create-report.component';
+import { ViewReportsComponent } from './view-reports/view-reports.component';
 
 @NgModule({
   declarations: [
@@ -115,7 +119,10 @@ import { AgGridModule } from 'ag-grid-angular';
     EntryAuditDataComponent,
     WatchTowerComponent,
     SecurityConfigComponent,
-
+    CtaButtonsRenderer,
+    ReportDashboardComponent,
+    CreateReportComponent,
+    ViewReportsComponent
 
   ],
   imports: [

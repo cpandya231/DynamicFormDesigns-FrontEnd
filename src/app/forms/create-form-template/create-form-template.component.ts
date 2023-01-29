@@ -44,7 +44,7 @@ export class CreateFormTemplateComponent implements OnInit {
       layout: {
         components: {
           htmlelement: false,
-          content: false,
+          content: true,
           well: false,
           panel: false,
           columns: true,
@@ -161,7 +161,7 @@ export class CreateFormTemplateComponent implements OnInit {
             key: 'display',
             components: this.ignoreComponents(
               ['widget', 'autocomplete', 'inputMask', 'displayMask', 'allowMultipleMasks', 'tabindex', 'modalEdit',
-                'hideLabel', 'showWordCount', 'showCharCount', 'mask', 'description']
+                'showWordCount', 'showCharCount', 'mask', 'description']
             )
           },
           {
@@ -173,7 +173,7 @@ export class CreateFormTemplateComponent implements OnInit {
           {
             key: 'data',
             components: this.ignoreComponents(
-              [ 'inputFormat', 'protected', 'dbIndex', 'encrypted',  'idPath', 'selectThreshold', 'useExactSearch',
+              [ 'inputFormat', 'dbIndex', 'encrypted',  'idPath', 'selectThreshold', 'useExactSearch',
                 'searchEnabled', 'calculateValue-json', 'allowCalculateOverride', 'customDefaultValue-json']
             )
           },
@@ -225,20 +225,20 @@ export class CreateFormTemplateComponent implements OnInit {
       this.IsFormLoaded = true;
     }
 
-    setTimeout(() => {
-      this.formIO.formio.events.on('formio.saveComponent', (comp: any) => {
-        if (comp.persistent == 'client-only' || !comp.persistent) {
-          return;
-        }
-        let keyValue = '';
-        comp.label.split(" ").forEach((el: any, index: number) => {
-          let add = el.toLowerCase();
-          keyValue += (index === 0 ? add : add[0].toUpperCase() + add.slice(1));
-        });
-        comp.key = keyValue;
-      }
-      )
-    }, 5000)
+    // setTimeout(() => {
+    //   this.formIO.formio.events.on('formio.saveComponent', (comp: any) => {
+    //     if (comp.persistent == 'client-only' || !comp.persistent) {
+    //       return;
+    //     }
+    //     let keyValue = '';
+    //     comp.label.split(" ").forEach((el: any, index: number) => {
+    //       let add = el.toLowerCase();
+    //       keyValue += (index === 0 ? add : add[0].toUpperCase() + add.slice(1));
+    //     });
+    //     comp.key = keyValue;
+    //   }
+    //   )
+    // }, 5000)
   }
 
   SaveTemplate(): void {

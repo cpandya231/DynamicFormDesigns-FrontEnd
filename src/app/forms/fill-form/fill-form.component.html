@@ -5,52 +5,40 @@
 
     <mat-sidenav-content>
         <div class="header">
-            <div class="header-name">
-                <img src="assets/form-template-icons/icon-{{(formId%10)+1}}.svg">
-                <div>
-                    <h4 class="mb-0">
-
-                        {{formName}}
-                    </h4>
-                    <div class="subheader" *ngIf="entryId">
-                        <div><label>Record Id:</label> <span> {{entryId}}</span></div>
-
-                        <div> <label>Current State:</label><span> {{this.currentState?.name}}</span></div>
-                    </div>
-
-                </div>
-
+            <div class="back_arrow_div">
+                <img (click)="back()" src="assets/Images/arrow-left-long.svg">
             </div>
-            <div class="back-button" (click)="back()">
-                <img src="assets/left-arrow.svg"> Back
+            <div class="header-name">
+                {{formName}}
+            </div>
+            <div class="submit-button">
+                <button type="submit" *ngIf="!disableSave" class="button" (click)="onSubmit()" [disabled]="disableSave">{{sendToButtonLabel}}</button>
+                <button type="button" class="button-cancel" (click)="sendBack()" *ngIf="undefined!=sendBackState">Send
+                    Back to
+                    {{sendBackState}}
+                </button>
+
+                <div class="export-parent" *ngIf="(disableSave && undefined==sendBackState) || (currentState?.endState && IsMasterForm)" (click)="exportToPDF()">
+                    <span>Export data</span>
+                    <span class="material-icons">
+                        file_download
+                    </span>
+                </div>
             </div>
         </div>
-        <div class="content">
-            <div class="toggle-and-submit-buttons">
-                <div>
-                    <div class="comments-toggle" *ngIf="toggleCommentsButton">
-                        <mat-slide-toggle [(ngModel)]="showComments" color="primary">
-                            Comments
-                        </mat-slide-toggle>
-                    </div>
-
-
-                </div>
-                <div class="submit-button">
-                    <button type="submit" *ngIf="!disableSave" class="button" (click)="onSubmit()" [disabled]="disableSave">{{sendToButtonLabel}}</button>
-                    <button type="button" class="button-cancel" (click)="sendBack()" *ngIf="undefined!=sendBackState">Send
-                        Back to
-                        {{sendBackState}}
-                    </button>
-
-                    <div class="export-parent" *ngIf="(disableSave && undefined==sendBackState) || (currentState?.endState && IsMasterForm)" (click)="exportToPDF()">
-                        <span>Export data</span>
-                        <span class="material-icons">
-                            file_download
-                        </span>
-                    </div>
-                </div>
+        <div class="subheader" *ngIf="entryId">
+            <div>
+                <div><label>Record Id:</label> <span> {{entryId}}</span></div>
+                <div> <label>Current State:</label><span> {{this.currentState?.name}}</span></div>
             </div>
+            <div class="comments-toggle" *ngIf="toggleCommentsButton">
+                <mat-slide-toggle [(ngModel)]="showComments" color="primary">
+                    Comments
+                </mat-slide-toggle>
+            </div>
+        </div>
+
+        <div class="content">
             <formio [form]='CurrentForm' #formio [options]='FormOptions'></formio>
         </div>
 

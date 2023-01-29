@@ -1,0 +1,33 @@
+<div class="form_container">
+    <div class="title">Create Report</div>
+    <form [formGroup]="ReportForm" class="form-inline" (ngSubmit)="SaveReport()">
+        <div class="form-group row">
+            <label for="reportName" class="col-2 col-form-label">Report Name</label>
+            <div class="col-7">
+                <input type="text" class="form-control" id="reportName" formControlName="name">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="reportType" class="col-2 col-form-label">Type</label>
+            <div class="col-7">
+                <input type="text" class="form-control" id="reportType" formControlName="type">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="columns" class="col-2 col-form-label">Columns</label>
+            <div class="col-7">
+                <textarea class="form-control" id="columns" formControlName="columns"></textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="template" class="col-2 col-form-label">Template</label>
+            <div class="col-7">
+                <textarea class="form-control" id="template" formControlName="template"></textarea>
+            </div>
+        </div>
+
+        <div class="row btn_container">
+            <button class="btn btn-primary" type="submit"> Save Report</button>
+        </div>
+    </form>
+</div>

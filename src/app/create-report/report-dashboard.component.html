@@ -1,0 +1,53 @@
+<div class="report_container">
+    <div class="header">
+        <div class="back_arrow_div">
+            <img (click)="back()" src="assets/Images/arrow-left-long.svg">
+        </div>
+        <div class="header-name">
+            <!-- <img src="assets/form-template-icons/icon-{{(formId%10)+1}}.svg"> -->
+            Reports
+        </div>
+
+        <div class="submit-button">
+            <button type="submit" class="button" (click)="createNewReport()">New Report
+            </button>
+        </div>
+    </div>
+
+    <div class="table_container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Columns</th>
+                    <th>Template</th>
+                    <th>Version</th>
+                    <th>Reason For Change</th>
+                    <th>Created By</th>
+                    <th>Created Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let report  of ActiveReports">
+                    <td>{{report.id}}</td>
+                    <td>{{report.name}}</td>
+                    <td>{{report.type}}</td>
+                    <td>{{report.columns}}</td>
+                    <td>{{report.template}}</td>
+                    <td>{{report.version}}</td>
+                    <td>{{report.reasonForChange}}</td>
+                    <td>{{report.createdBy}}</td>
+                    <td>{{report.createDt | date: DATE_FORMAT }}</td>
+                </tr>
+                <tr *ngIf="ActiveReports && !ActiveReports.length" class="no_data_message">
+                    <td colspan="9">
+                        No Reports Available
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
